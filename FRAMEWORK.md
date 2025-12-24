@@ -1,120 +1,127 @@
-# Framework: Domains, Roles & Decision Approach
+# KubeCompass Framework
+
+This document outlines the complete decision-making framework for building and operating production-ready Kubernetes platforms.
+
+---
 
 ## 1. Domains & Subdomains
 
-Based on the CNCF Landscape and real-world practice, we structure the Kubernetes ecosystem into these domains:
+Every production Kubernetes cluster requires decisions across multiple operational domains. This section maps out those domains and the key choices within each.
 
 ### 1.1 Provisioning & Infrastructure
+- **Cluster Creation**: Managed vs. self-hosted, cloud vs. on-prem
+- **Node Management**: Instance types, auto-scaling, spot/preemptible instances
+- **Infrastructure as Code**: Terraform, Pulumi, Crossplane, etc.
 
-- IaC (Infrastructure as Code): Terraform, Cluster API
-- Node provisioning, control plane setup
-- Storage foundation
-- Optional: Bare metal specific provisioners
-
-### 1.2 Cluster Lifecycle & Management
-
-- Upgrades and patching
-- Multi-cluster management
-- Governance
-- Optional: Lifecycle tools (Gardener, Kamaji)
+### 1.2 Application Deployment & Packaging
+- **Manifest Management**: Helm, Kustomize, raw YAML
+- **Application Delivery**: ArgoCD, Flux, manual kubectl
 
 ### 1.3 Identity, Access & Security (Pre-Run)
-
-- RBAC, authentication/authorization
-- Secrets management: Vault, Sealed Secrets
-- Policy engines (OPA/Gatekeeper, Kyverno)
-- Encryption (at rest/in transit)
+- **Authentication**: OIDC, LDAP, service accounts
+- **Authorization**: RBAC, ABAC, OPA
+- **Secrets Management**: External Secrets Operator, Sealed Secrets, Vault
+- **Image Security**: Registry scanning, admission policies
 
 ### 1.4 Runtime Security
-
-- Falco, Tetragon, eBPF-based monitoring
-- Policy enforcement / sandboxing
-- Optional: SIEM integration
+- **Threat Detection**: Falco, Tetragon
+- **Network Policies**: Calico, Cilium policies
+- **Workload Isolation**: Pod Security Standards, seccomp, AppArmor
 
 ### 1.5 Networking & Service Mesh
+- **CNI Plugin**: Calico, Cilium, Flannel, etc.
+- **Ingress**: NGINX, Traefik, HAProxy, cloud-native LBs
+- **Service Mesh**: Istio, Linkerd, Cilium, or none
 
-- CNI plugins: Calico, Cilium
-- Service mesh: Linkerd, Istio
-- Ingress controllers, DNS, load-balancing
-- Optional: Advanced mesh features
+### 1.6 CI/CD & GitOps
+- **CI/CD Pipeline**: GitHub Actions, GitLab CI, Jenkins, Tekton
+- **GitOps**: Yes/No, and if yes → ArgoCD, Flux
+- **Image Building**: Kaniko, Buildah, Docker-in-Docker
 
-### 1.6 CI/CD & Application Delivery
-
-- GitOps: Argo CD, Flux
-- Pipelines, artifact management
-- Rollout strategies, multi-cluster deployment
-
-### 1.7 Observability, Monitoring & Analysis
-
-- Metrics, logging, tracing
-- Dashboards, alerting
-- Chaos testing / fault injection
-- Tools: Prometheus, Grafana, Loki, Jaeger/Tempo
+### 1.7 Observability
+- **Metrics**: Prometheus, VictoriaMetrics, Datadog
+- **Logging**: Loki, ELK, Fluentd
+- **Tracing**: Jaeger, Tempo, Zipkin
+- **Dashboards**: Grafana, Kibana, cloud-native tools
 
 ### 1.8 Data Management & Storage
+- **Persistent Storage**: CSI drivers, cloud disks, Rook-Ceph, Longhorn
+- **Backup & DR**: Velero, Kasten K10, cloud-native snapshots
+- **Databases**: StatefulSets vs. managed DBs (RDS, CloudSQL, etc.)
 
-- Persistent Volumes, CSI drivers
-- Backups, Disaster Recovery: Velero
-- Object/multi-region storage
+### 1.9 Developer Experience
+- **Local Development**: Kind, K3d, Minikube, Tilt
+- **Remote Debugging**: Telepresence, Skaffold
+- **Self-Service**: Internal developer platforms (Backstage, etc.)
 
-### 1.9 Developer Experience & Platform Tooling
-
-- Templates, SDKs, CLIs
-- Helm, Kustomize, Telepresence, etc.
-- Dev portals, local testing frameworks
-
-### 1.10 Governance, Compliance & Policy
-
-- Audit logging
-- Policy automation, drift detection
-- Compliance dashboards (GDPR, SOC, ISO)
-
-### 1.11 Platforms & Bundles
-
-- Curated distros: k3s, k0s, Rancher, OpenShift, Tanzu
-- Optional for enterprise convenience, *beware of lock-in*
+### 1.10 Governance & Policy
+- **Policy Enforcement**: OPA/Gatekeeper, Kyverno
+- **Compliance**: CIS benchmarks, PCI-DSS, SOC2
+- **Cost Management**: Kubecost, OpenCost, cloud billing tools
 
 ---
 
-## 2. Roles & Goals
+## 2. Decision Layers & Timing
 
-### **Roles:**
+Not all decisions are equal. Some are **foundational** — hard to change later and with high architectural impact. Others are **additive** — easy to introduce or swap without disrupting the platform.
 
-- **Cluster Admin** – Operations, upgrades, SRE, response
-- **MDT/Dev team** – Workflow, CI/CD, autonomy
-- **Enterprise Architect** – Strategy, governance, costs, exit strategy
+### Understanding Decision Layers
 
-### **Scales / Goals:**
+| Layer | When to Decide | Migration Cost | Examples |
+|-------|----------------|----------------|----------|
+| **Layer 0: Foundational** | Day 1, before workloads | **High** — requires platform rebuild or major refactoring | CNI plugin, GitOps (yes/no), RBAC model, storage backend, service mesh architecture |
+| **Layer 1: Core Operations** | Within first month | **Medium** — significant effort but possible | Observability stack, secrets management, ingress controller, backup strategy |
+| **Layer 2: Enhancement** | Add when needed | **Low** — plug-and-play or easy replacement | Image scanning (Trivy), policy enforcement (OPA), chaos tooling, cost monitoring |
 
-- Single cluster, small team
-- Multi-cluster, single region
-- Multi-cluster, multi-region, enterprise grade
-- Compliance-critical setups
+### Why This Matters
 
-**Matrix Approach:**  
-Each domain is reviewed per role and per scale, documenting trade-offs and optional vs. required elements.
+**Example: GitOps**  
+- **If chosen Day 1**: Your repo structure, deployment patterns, and team workflows are designed around it from the start.
+- **If added later**: You must refactor all existing manifests, retrain teams, and migrate deployment processes — expensive and risky.
+
+**Example: Image Scanning (Trivy)**  
+- **Can be added anytime**: Plug it into existing CI/CD pipelines or admission controllers.
+- **Easy to replace**: Swap Trivy for Grype or Snyk with minimal disruption.
+
+### Decision Criteria: What Makes Something Foundational?
+
+1. **Architectural Impact**: Does it change how the platform is structured?
+2. **Team Workflow Impact**: Does it change how teams deploy or operate?
+3. **Migration Complexity**: How much time/risk to change later?
+4. **Blast Radius**: If it fails, what breaks?
+
+### Applying Layers to Domains
+
+Each domain in section 1 should be tagged with its decision layer:
+
+| Domain | Layer | Rationale |
+|--------|-------|-----------|  
+| 1.1 Provisioning & Infrastructure | 0 - Foundational | IaC and node setup define the entire platform base |
+| 1.3 Identity, Access & Security (Pre-Run) | 0 - Foundational | RBAC model is hard to retrofit; secrets mgmt affects all workloads |
+| 1.5 Networking & Service Mesh | 0 - Foundational | CNI and mesh architecture are deeply embedded |
+| 1.6 CI/CD & GitOps | 0 - Foundational | Defines deployment patterns and team workflow |
+| 1.7 Observability | 1 - Core Operations | Important early, but can be replaced with moderate effort |
+| 1.8 Data Management & Storage | 1 - Core Operations | CSI drivers are swappable, but backups should be planned early |
+| 1.4 Runtime Security | 2 - Enhancement | Tools like Falco are additive and don't change platform architecture |
+| 1.9 Developer Experience | 2 - Enhancement | Tooling can be introduced incrementally |
+| 1.10 Governance & Policy | 2 - Enhancement | Can be layered on as maturity grows |
 
 ---
 
-## 3. Practical Approach
-
-1. Start broad: Inventory all domains/subdomains (based on CNCF Landscape).
-2. Focus on proven, popular tools first (e.g., Kubernetes, Argo CD, Prometheus, Grafana, Helm).
-3. **Hands-on testing**: Document pros, cons, pitfalls.
-4. Add context: Decisions explained by role and scale.
-5. Create "gold paths": e.g., small single cluster vs. multi-region enterprise.
-6. Cite external references clearly (AlternativeTo, Awesome-lists, blogs), always as “supplement, not advice”.
-7. Iterate: Add less-known OSS projects as baseline matures.
+This layered approach prevents the common mistake of obsessing over "cool tools" (service mesh, chaos engineering) before the foundation (RBAC, backups, secrets) is solid.
 
 ---
 
-## 4. Output / Formats
+## 3. The Decision Matrix
 
-- Decision matrix per domain: _Question → Conditions → Recommendation → Optional/Required_
-- Diagrams: single vs. multi-cluster setups, with optional domains
-- Documentation: rationale, choices, experiences, trade-offs
-- **(Future)** Interactive decision tool or blueprint PDFs
+*(Coming soon: Interactive matrix mapping domains to tools with filtering by maturity, license, complexity, etc.)*
 
 ---
 
-This framework guides all content in KubeCompass.
+## 4. Real-World Scenarios
+
+*(Coming soon: Example architectures for different use cases — startup MVP, enterprise multi-tenant, edge computing, etc.)*
+
+---
+
+This framework is a living document and will evolve based on real-world testing and community feedback.
