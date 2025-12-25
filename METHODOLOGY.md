@@ -14,12 +14,28 @@ Each tool is assessed across the following dimensions:
 ### 1. Maturity
 **What it measures**: Project stability and production-readiness.
 
+Multiple indicators contribute to maturity assessment:
+
+**Project Status:**
 | Level | Description |
 |-------|-------------|
 | **Alpha** | Experimental, expect breaking changes |
 | **Beta** | Usable, but not recommended for critical production |
 | **Stable** | Production-ready, maintained actively |
 | **CNCF Graduated** | Battle-tested, widely adopted, long-term support expected |
+
+**Additional Maturity Indicators:**
+- **GitHub Stars**: Reflects adoption and community interest
+  - < 500: Emerging project
+  - 500-2000: Growing adoption
+  - 2000-5000: Established project
+  - 5000+: Widely adopted
+  - **Note**: Stars alone don't determine production-readiness; consider in context with other factors
+- **CNCF Status**: Indicates vendor-neutral governance and community maturity
+  - **Sandbox**: Early-stage, community interest
+  - **Incubating**: Growing adoption, meets CNCF standards
+  - **Graduated**: Production-proven, sustainable
+  - **Note**: Non-CNCF projects can be equally mature; this is an additional quality signal, not a requirement
 
 ### 2. Community Activity
 **What it measures**: Health and responsiveness of the project.
@@ -72,6 +88,37 @@ Common licenses and implications:
 - **GPL / AGPL**: Copyleft, may affect derivative works
 - **Proprietary / Source-available**: Usage restrictions, potential costs
 
+### 7. Installation Methods
+**What it measures**: Ease of deployment and operational maturity.
+
+| Method | Description | Benefits |
+|--------|-------------|----------|
+| **Helm Chart** | Kubernetes package manager | Templating, versioning, easy upgrades |
+| **Operator** | Kubernetes-native automation | Self-healing, day-2 operations, lifecycle management |
+| **Raw Manifests** | Direct YAML application | Simple, transparent, full control |
+| **CLI Tool** | Command-line installer | Quick setup, guided installation |
+
+**Evaluation criteria**:
+- **Multiple options available**: More flexibility for different use cases
+- **Operator support**: Indicates mature automation and operational best practices
+- **Official vs. community**: Vendor-maintained preferred for reliability
+
+### 8. Container Image Security
+**What it measures**: Security posture of distributed container images.
+
+| Indicator | Description | Importance |
+|-----------|-------------|------------|
+| **Hardened Images** | Minimal attack surface (distroless, scratch-based) | Reduces vulnerability exposure |
+| **Image Signing** | Cryptographically signed images (Sigstore, Notary) | Verifies authenticity and integrity |
+| **Regular Scanning** | Automated CVE scanning by maintainers | Ensures timely security patches |
+| **Non-root by Default** | Runs as non-privileged user | Defense-in-depth security |
+| **SBOM Available** | Software Bill of Materials provided | Supply chain transparency |
+
+**Evaluation criteria**:
+- **Best practice**: Hardened images + signing + regular updates
+- **Acceptable**: Standard images with regular security updates
+- **Concern**: Outdated images, runs as root, no security updates
+
 ---
 
 ## How We Use These Scores
@@ -80,6 +127,8 @@ Common licenses and implications:
 - "Show me only CNCF Graduated tools"
 - "Exclude single-vendor solutions"
 - "Only Apache/MIT licensed"
+- "Show tools with Operator support"
+- "Only hardened container images"
 
 → The matrix adjusts recommendations accordingly.
 
@@ -88,11 +137,11 @@ Common licenses and implications:
 
 ### Example:
 
-| Tool | Maturity | Community | Independence | Lock-in Risk | Complexity | License |
-|------|----------|-----------|--------------|--------------|------------|------|
-| Argo CD | CNCF Graduated | High | Foundation | Low | Medium | Apache 2.0 |
-| Flux | CNCF Graduated | High | Foundation | Low | Medium | Apache 2.0 |
-| Tool X | Beta | Medium | Single Vendor | High | Simple | Proprietary |
+| Tool | Maturity | Stars | Community | Independence | Lock-in Risk | Complexity | Install Methods | License |
+|------|----------|-------|-----------|--------------|--------------|------------|----------------|------|
+| Argo CD | CNCF Graduated | 20,000+ | High | Foundation | Low | Medium | Helm, Operator | Apache 2.0 |
+| Flux | CNCF Graduated | 7,500+ | High | Foundation | Low | Medium | CLI, Helm | Apache 2.0 |
+| Tool X | Beta | 800 | Medium | Single Vendor | High | Simple | Helm | Proprietary |
 
 **Our take**: We prefer Argo CD for its UI and ease of use, but Flux is equally solid and more GitOps-pure. Tool X is easy to start with but risky long-term.
 

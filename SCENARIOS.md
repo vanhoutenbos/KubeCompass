@@ -244,9 +244,102 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
+#### 9. Container Registry: Harbor
+
+**Why Harbor**:
+- **CNCF Graduated**: Production-proven, vendor-neutral
+- **Built-in security**: Vulnerability scanning (Trivy integration), image signing (Notary/Cosign)
+- **Multi-tenancy**: Project-based isolation with RBAC
+- **Compliance**: Audit logs for image pulls, retention policies, immutable tags
+- **Artifact Hub**: Stores Helm charts and OCI artifacts
+
+**Configuration highlights**:
+- **RBAC integration**: Keycloak OIDC for SSO authentication
+- **Vulnerability scanning**: Automatic Trivy scans on push, block vulnerable images
+- **Image signing**: Cosign integration for supply chain security
+- **Replication**: Cross-region replication for DR
+- **Retention policies**: Automatically delete old images based on rules
+
+**Compliance benefits**:
+- **Supply chain security**: Image signing and SBOM generation (SOC 2)
+- **Audit trails**: Track who pushed/pulled which images (ISO 27001)
+- **Immutable tags**: Prevent image tampering (compliance requirement)
+
+---
+
+#### 10. Object Storage: MinIO
+
+**Why MinIO**:
+- **S3-compatible**: Drop-in replacement for AWS S3
+- **Self-hosted**: Data sovereignty and GDPR compliance
+- **High performance**: Erasure coding, distributed architecture
+- **Versioning**: Object versioning for backup integrity
+
+**Configuration highlights**:
+- **Multi-zone deployment**: 3 zones for high availability
+- **Encryption**: Server-side encryption at rest (AES-256)
+- **Velero integration**: Primary backup target for cluster backups
+- **Loki storage**: Long-term log storage backend
+- **Lifecycle policies**: Automatic transition to cheaper storage tiers
+
+**Use cases**:
+- **Backup repository**: Velero backup storage
+- **Log archival**: Loki long-term storage (1-year retention)
+- **Artifact storage**: Build artifacts, ML models, data lakes
+
+---
+
+#### 11. Caching: Valkey (Redis-compatible)
+
+**Why Valkey**:
+- **Fully open-source**: Linux Foundation project, no licensing concerns
+- **Redis-compatible**: Drop-in replacement, same APIs and data structures
+- **Performance**: In-memory caching for sub-millisecond response times
+- **Persistence**: Optional RDB/AOF for durability
+
+**Configuration highlights**:
+- **High availability**: Redis Sentinel for automatic failover
+- **Clustering**: Redis Cluster mode for horizontal scaling
+- **Resource limits**: Memory limits and eviction policies
+- **TLS encryption**: Encrypted client connections
+
+**Use cases**:
+- **Session storage**: User session caching (web applications)
+- **Rate limiting**: API rate limiter (prevent abuse)
+- **Job queues**: Background job processing (Sidekiq, Celery)
+- **Cache layer**: Database query caching, API response caching
+
+---
+
+#### 12. Message Broker: NATS (for microservices communication)
+
+**Why NATS**:
+- **CNCF Incubating**: Kubernetes-native, vendor-neutral
+- **Lightweight**: Low resource footprint, fast message delivery
+- **JetStream**: Adds persistence and exactly-once delivery
+- **Simple**: Easy to deploy and operate
+
+**Configuration highlights**:
+- **JetStream enabled**: Persistent streams for critical messages
+- **High availability**: 3-node cluster for fault tolerance
+- **TLS encryption**: Secure communication between services
+- **Monitoring**: Prometheus metrics and Grafana dashboards
+
+**Use cases**:
+- **Service-to-service messaging**: Request-reply patterns between microservices
+- **Event notifications**: Asynchronous event broadcasting
+- **Job distribution**: Distribute tasks across workers
+
+**When to use Kafka instead**:
+- Event sourcing with long retention (days/weeks)
+- High-throughput log aggregation (millions of messages/sec)
+- Stream processing with Kafka Streams or Flink
+
+---
+
 ### Layer 2: Security Enhancements (Added After Core Platform is Stable)
 
-#### 9. Image Scanning: Trivy
+#### 13. Image Scanning: Trivy
 
 **Why Trivy**:
 - **CI/CD integration**: Scans images in GitHub Actions/GitLab CI before push
@@ -260,7 +353,7 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
-#### 10. Policy Enforcement: Kyverno
+#### 14. Policy Enforcement: Kyverno
 
 **Why Kyverno**:
 - **Compliance as code**: Enforce Pod Security Standards, require labels, disallow privileged pods
@@ -275,7 +368,7 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
-#### 11. Runtime Security: Falco
+#### 15. Runtime Security: Falco
 
 **Why Falco**:
 - **Threat detection**: Real-time alerts for suspicious activity
@@ -301,11 +394,14 @@ This document provides concrete architectural examples for common Kubernetes use
 | **Secrets** | Encrypted storage | Vault + ESO | Protect credentials, dynamic secrets |
 | **Network** | Zero-trust policies | Cilium | L7 policies, tenant isolation |
 | **Ingress** | TLS + rate limiting | NGINX Ingress | Protect APIs, enforce HTTPS |
+| **Registry** | Secure image storage | Harbor | Vulnerability scanning, image signing |
 | **Images** | Vulnerability scanning | Trivy | Block CVEs before deploy |
 | **Runtime** | Threat detection | Falco | Detect anomalies in real-time |
 | **Policy** | Compliance enforcement | Kyverno | Pod Security Standards, labels |
 | **Observability** | Audit logging | Prometheus + Loki | Detect incidents, compliance audits |
-| **Backup** | Disaster recovery | Velero | RPO/RTO compliance |
+| **Backup** | Disaster recovery | Velero + MinIO | RPO/RTO compliance, S3-compatible storage |
+| **Caching** | Secure session storage | Valkey | Encrypted connections, rate limiting |
+| **Messaging** | Secure communication | NATS | TLS encryption, authentication |
 
 ---
 
@@ -353,6 +449,10 @@ This document provides concrete architectural examples for common Kubernetes use
 - [ ] Configure Alertmanager and PagerDuty integration
 - [ ] Deploy NGINX Ingress with cert-manager
 - [ ] Set up Velero for backups and test restore
+- [ ] Deploy Harbor container registry
+- [ ] Set up MinIO object storage (for backups and logs)
+- [ ] Deploy Valkey for caching (session storage, rate limiting)
+- [ ] Deploy NATS message broker (if microservices architecture)
 
 **Week 4: GitOps**
 - [ ] Deploy Argo CD
@@ -361,7 +461,7 @@ This document provides concrete architectural examples for common Kubernetes use
 - [ ] Train teams on Argo CD workflow
 
 **Month 2: Security Enhancements**
-- [ ] Integrate Trivy into CI/CD pipelines
+- [ ] Integrate Trivy into CI/CD pipelines and Harbor
 - [ ] Deploy Kyverno and create baseline policies
 - [ ] Deploy Falco and tune rules for environment
 - [ ] Conduct security audit and penetration test
@@ -409,6 +509,10 @@ This document provides concrete architectural examples for common Kubernetes use
 - Skip Keycloak (use kubeconfig files initially)
 - Sealed Secrets instead of Vault
 - Prometheus without Thanos (shorter retention)
+- Docker Registry or cloud-native registry instead of Harbor
+- Cloud-native object storage (S3) instead of MinIO
+- Memcached instead of Valkey for simple caching
+- Skip NATS initially (add if event-driven architecture needed)
 - Skip Falco and Kyverno (add later)
 
 ---
@@ -422,6 +526,9 @@ This document provides concrete architectural examples for common Kubernetes use
 - Lightweight storage (Longhorn)
 - Local-first observability (no cloud dependencies)
 - Offline-capable GitOps (Flux with Git over HTTPS caching)
+- Local container registry (Docker Registry on edge nodes)
+- MinIO for local object storage (no cloud dependency)
+- Redis/Valkey for local caching (if resources permit)
 
 ---
 

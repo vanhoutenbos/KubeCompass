@@ -181,4 +181,109 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ---
 
+## Gap 6: Tool Selection Criteria Too Restrictive ✅
+
+**Status**: RESOLVED — See updated [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
+
+**Issue**: The combination of 1000+ GitHub stars AND CNCF Graduated status was too restrictive, potentially excluding mature and production-ready tools.
+
+**Impact**: May have overlooked quality tools that don't meet both criteria, limiting platform options.
+
+**Solution**: Expanded and clarified tool selection criteria:
+
+**Enhanced Maturity Assessment**:
+- **GitHub Stars**: Now a flexible indicator (500+ emerging, 2000+ established, 5000+ widely adopted)
+  - Stars considered in context with other maturity factors
+  - Lower thresholds acceptable for newer projects with strong backing
+- **CNCF Status**: Clarified as an additional quality signal, not a requirement
+  - Sandbox, Incubating, Graduated levels indicate vendor-neutral governance
+  - Non-CNCF projects can be equally mature and production-ready
+
+**New Evaluation Dimensions**:
+- **Installation Methods**: Helm charts, Operators, CLI tools, hardened images
+  - Operator support indicates mature automation capabilities
+  - Multiple installation options provide flexibility
+- **Container Image Security**: 
+  - Hardened images (distroless, minimal attack surface)
+  - Image signing (Sigstore, Notary)
+  - Regular security scanning and updates
+  - Non-root execution by default
+  - SBOM (Software Bill of Materials) availability
+
+**Resolution**: Updated METHODOLOGY.md with comprehensive scoring rubric and MATRIX.md with flexible filtering options.
+
+---
+
+## Gap 7: Missing Platform Infrastructure Domains ✅
+
+**Status**: RESOLVED — See updated [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+
+**Issue**: Framework lacked coverage for critical platform engineering and solution architecture components like container registries, message brokers, caching, and object storage.
+
+**Impact**: Incomplete guidance for building production-ready Kubernetes platforms; risk of overlooking critical infrastructure components.
+
+**Solution**: Added comprehensive platform infrastructure domains:
+
+**New Domains Added**:
+
+1. **Container Registry & Artifacts (Domain 1.9)**:
+   - Harbor (CNCF Graduated, vulnerability scanning, image signing)
+   - Docker Registry (simple, lightweight)
+   - Cloud-native options (ECR, ACR, GCR)
+   - Layer 1: Core Operations
+
+2. **Message Brokers & Event Streaming (Domain 1.10)**:
+   - NATS (CNCF Incubating, lightweight, Kubernetes-native)
+   - RabbitMQ (mature, flexible routing)
+   - Apache Kafka (event streaming, high throughput)
+   - Apache Pulsar (multi-tenancy, geo-replication)
+   - Layer 1: Core Operations
+
+3. **Data Stores & Caching (Domain 1.11)**:
+   - Valkey (Redis fork, fully open-source, Linux Foundation)
+   - Redis (mature, data structures, pub/sub)
+   - Memcached (simple, fast, pure caching)
+   - Hazelcast (distributed cache, in-memory grid)
+   - Layer 1: Core Operations
+
+4. **Object Storage (Domain 1.8, expanded)**:
+   - MinIO (S3-compatible, cloud-agnostic)
+   - Rook-Ceph S3 (distributed, unified storage)
+   - Cloud-native (S3, Azure Blob, GCS)
+   - Critical for backups, artifacts, data lakes
+   - Layer 1: Core Operations
+
+**Rationale for Layer 1 Placement**:
+- Container registries are essential for deployment pipelines
+- Message brokers are foundational for event-driven architectures
+- Caching is critical for application performance
+- Object storage is necessary for backups and disaster recovery
+- All can be changed with moderate effort (not foundational like CNI or GitOps)
+
+**Tool Recommendations Added**:
+- Detailed tool comparisons with maturity, stars, complexity, features
+- Clear guidance on when to choose each option
+- Installation methods and deployment considerations
+- Use cases and decision impact analysis
+
+**Resolution**: Updated FRAMEWORK.md with new domains and MATRIX.md with complete tool recommendations and scoring.
+
+---
+
+## Next Steps
+
+1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](PRODUCTION_READY.md)
+2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](TESTING_METHODOLOGY.md)
+4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
+5. ✅ Clarify target audience in README and VISION — [README.md](README.md) and [VISION.md](VISION.md)
+6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](reviews/cilium.md) (first example)
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](MATRIX.md) with Layer 0/1/2 structure
+8. ✅ Expand tool selection criteria — [METHODOLOGY.md](METHODOLOGY.md)
+9. ✅ Add missing platform infrastructure domains — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+10. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)
+11. ⏳ Add more scenarios (startup MVP, edge computing)
+
+---
+
 *This gap analysis will be updated as the framework evolves.*
