@@ -47,12 +47,25 @@ If you're lost in the Kubernetes ecosystem and need a rational push in the right
 
 ## How It Works
 
-### 1. The Framework
+### 1. Interactive Visual Diagrams 🎨 NEW!
+Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
+
+🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
+📊 **[See All Diagrams](DIAGRAMS.md)** (Complete visual guide)
+
+**What you'll find:**
+- Domain architecture overview with dependency flows
+- Decision layer timing model (when to decide what)
+- Scale-based deployment models (1 team → multi-team → enterprise)
+- CNCF alignment mapping
+- Interactive navigation (click domains to learn more)
+
+### 2. The Framework
 We map the entire Kubernetes operational landscape into **domains** (CI/CD, security, networking, observability, etc.), then identify the key **decision points** within each.
 
 📖 **[Read the Framework](FRAMEWORK.md)**
 
-### 2. The Decision Matrix
+### 3. The Decision Matrix
 An interactive guide that maps domains to tools, with filters for:
 - Maturity (Alpha / Beta / Stable / CNCF Graduated)
 - Vendor independence
@@ -61,7 +74,7 @@ An interactive guide that maps domains to tools, with filters for:
 
 🔧 **[Explore the Matrix](MATRIX.md)**
 
-### 3. Testing Methodology
+### 4. Testing Methodology
 Every tool recommendation is backed by **hands-on testing** using a consistent methodology:
 - Installation & setup
 - Core functionality
@@ -71,7 +84,7 @@ Every tool recommendation is backed by **hands-on testing** using a consistent m
 
 📋 **[See the Testing Methodology](TESTING_METHODOLOGY.md)**
 
-### 4. Real-World Scenarios
+### 5. Real-World Scenarios
 Example architectures for common use cases:
 - Startup MVP (cost-optimized, fast iteration)
 - Enterprise multi-tenant (compliance, governance, scale)
@@ -112,11 +125,14 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [x] Production-ready definition
 - [x] Decision matrix with tool recommendations
 - [x] Enterprise multi-tenant scenario
+- [x] Visual diagrams and interactive navigation
+- [x] Scale-based deployment models (single team, multi-team, enterprise)
 
 **What's in progress:**
 - [ ] Additional tool reviews (GitOps, secrets management, observability)
 - [ ] Additional scenarios (startup MVP, edge computing)
-- [ ] Interactive filtering for decision matrix
+- [ ] Fully interactive filtering for decision matrix
+- [ ] Enhanced interactive features (guided wizard, architecture generator)
 
 **How to contribute:**
 - 🐛 Found a gap or error? [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues)
@@ -127,9 +143,10 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 
 ## Quick Start
 
-1. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
-2. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
-3. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
+1. **🎨 Explore the [Visual Diagrams](DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
+2. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
+3. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
+4. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
 4. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
 5. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
 6. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
