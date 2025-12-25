@@ -114,13 +114,13 @@ This layered approach prevents the common mistake of obsessing over "cool tools"
 
 ## 3. The Decision Matrix
 
-*(Coming soon: Interactive matrix mapping domains to tools with filtering by maturity, license, complexity, etc.)*
+📖 **[See the full Decision Matrix](MATRIX.md)** — complete tool recommendations across all layers with filtering guidance.
 
 ---
 
 ## 4. Real-World Scenarios
 
-*(Coming soon: Example architectures for different use cases — startup MVP, enterprise multi-tenant, edge computing, etc.)*
+📚 **[Browse Real-World Scenarios](SCENARIOS.md)** — including enterprise multi-tenant architecture with detailed tool selections and security posture.
 
 ---
 

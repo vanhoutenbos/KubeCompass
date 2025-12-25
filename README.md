@@ -59,7 +59,7 @@ An interactive guide that maps domains to tools, with filters for:
 - Operational complexity
 - License type
 
-🔧 **[Explore the Matrix](MATRIX.md)** *(coming soon)*
+🔧 **[Explore the Matrix](MATRIX.md)**
 
 ### 3. Testing Methodology
 Every tool recommendation is backed by **hands-on testing** using a consistent methodology:
@@ -77,7 +77,7 @@ Example architectures for common use cases:
 - Enterprise multi-tenant (compliance, governance, scale)
 - Edge computing (resource-constrained, intermittent connectivity)
 
-📚 **[Browse Scenarios](SCENARIOS.md)** *(coming soon)*
+📚 **[Browse Scenarios](SCENARIOS.md)**
 
 ---
 
@@ -109,11 +109,14 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [x] Scoring rubric
 - [x] Decision layers (foundational vs. additive)
 - [x] Vision and philosophy
+- [x] Production-ready definition
+- [x] Decision matrix with tool recommendations
+- [x] Enterprise multi-tenant scenario
 
 **What's in progress:**
-- [ ] Decision matrix (interactive tool)
-- [ ] First tool reviews (starting with CI/CD and security)
-- [ ] Real-world scenario examples
+- [ ] Additional tool reviews (GitOps, secrets management, observability)
+- [ ] Additional scenarios (startup MVP, edge computing)
+- [ ] Interactive filtering for decision matrix
 
 **How to contribute:**
 - 🐛 Found a gap or error? [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues)
@@ -125,9 +128,13 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 ## Quick Start
 
 1. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
-2. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-3. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-4. **Explore the [Vision](VISION.md)** to see where we're headed
+2. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
+3. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
+4. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
+5. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+6. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
+7. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
+8. **Explore the [Vision](VISION.md)** to see where we're headed
 
 ---
 
