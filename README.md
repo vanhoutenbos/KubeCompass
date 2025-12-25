@@ -135,6 +135,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 6. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
 7. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
 8. **Explore the [Vision](VISION.md)** to see where we're headed
+9. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 
 ---
 

@@ -20,6 +20,15 @@ You can filter tools by:
 
 **Default view**: When no filters are applied, you'll see **our opinionated recommendations** based on hands-on testing, but all scores are shown so you can make your own informed choice.
 
+### CNCF Cloud Native Landscape Alignment
+
+Each tool section now includes **CNCF category tags** to help you understand how tools map to the CNCF Cloud Native Landscape. This enables:
+- **Cross-reference**: Navigate between KubeCompass and CNCF taxonomy
+- **Multi-domain tools**: See tools that span multiple CNCF categories
+- **Ecosystem context**: Understand tool positioning in cloud-native ecosystem
+
+📖 **[See full CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive mapping and domain coverage assessment.
+
 ---
 
 ## Layer 0: Foundational Decisions (Decide Day 1)
@@ -27,6 +36,8 @@ You can filter tools by:
 These decisions are **architecturally significant** and expensive to change later. Make them before deploying workloads.
 
 ### 1. Container Networking (CNI)
+
+**CNCF Categories**: Runtime (Cloud Native Network), Orchestration & Management (Service Mesh for L7 capabilities)
 
 **Why it's foundational**: The CNI plugin defines how pods communicate, implements network policies, and affects observability. Changing it requires draining nodes and redeploying workloads.
 
@@ -56,6 +67,8 @@ These decisions are **architecturally significant** and expensive to change late
 ---
 
 ### 2. GitOps Strategy
+
+**CNCF Categories**: App Definition & Development (Continuous Integration & Delivery), Orchestration & Management (Deployment Automation)
 
 **Why it's foundational**: GitOps defines how your team deploys, how repositories are structured, and how changes are tracked. Retrofitting GitOps later requires restructuring all manifests and retraining teams.
 
@@ -92,6 +105,8 @@ These decisions are **architecturally significant** and expensive to change late
 ---
 
 ### 3. Identity & Access Control (RBAC)
+
+**CNCF Categories**: Provisioning (Key Management / Identity, Security & Compliance)
 
 **Why it's foundational**: Your RBAC model defines who can do what in the cluster. Retrofitting fine-grained access control is painful once teams are onboarded.
 
@@ -134,6 +149,8 @@ These decisions are **architecturally significant** and expensive to change late
 ---
 
 ### 4. Secrets Management
+
+**CNCF Categories**: Provisioning (Key Management / Identity, Security & Compliance)
 
 **Why it's foundational**: Secrets are needed by all workloads. Choosing a weak solution creates security debt that's expensive to fix.
 
@@ -201,6 +218,8 @@ These are important for production operations but can be added or changed with m
 
 ### 6. Observability: Metrics
 
+**CNCF Categories**: Observability & Analysis (Monitoring), Orchestration & Management (Service Discovery)
+
 **Why it's Layer 1**: You need monitoring early, but metrics backends are swappable with some effort.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
@@ -227,6 +246,8 @@ These are important for production operations but can be added or changed with m
 
 ### 7. Observability: Logging
 
+**CNCF Categories**: Observability & Analysis (Logging)
+
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
 | **Loki** | CNCF Sandbox | 23,000+ | Foundation (Grafana) | Medium | Prometheus-like for logs, label-based indexing, low storage cost |
@@ -245,6 +266,8 @@ These are important for production operations but can be added or changed with m
 ---
 
 ### 8. Ingress Controller
+
+**CNCF Categories**: Orchestration & Management (API Gateway & Service Proxy)
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -268,6 +291,8 @@ These are important for production operations but can be added or changed with m
 ---
 
 ### 9. Container Registry
+
+**CNCF Categories**: Provisioning (Container Registry, Security & Compliance), App Definition & Development (Artifact Storage)
 
 **Why it's Layer 1**: Essential for storing and distributing container images; changing registries affects image pull configurations across all workloads.
 
@@ -297,6 +322,8 @@ These are important for production operations but can be added or changed with m
 ---
 
 ### 10. Object Storage
+
+**CNCF Categories**: Runtime (Cloud Native Storage), App Definition & Development (Data Storage)
 
 **Why it's Layer 1**: Critical for backups, artifacts, and data lakes; choosing the wrong solution can impact DR strategy and costs.
 
@@ -330,6 +357,8 @@ These are important for production operations but can be added or changed with m
 ---
 
 ### 11. Message Brokers & Event Streaming
+
+**CNCF Categories**: App Definition & Development (Streaming/Messaging), Orchestration & Management (Service Communication)
 
 **Why it's Layer 1**: Event-driven architectures depend on message brokers; changing brokers affects application integration patterns.
 
@@ -365,6 +394,8 @@ These are important for production operations but can be added or changed with m
 ---
 
 ### 12. Data Stores & Caching
+
+**CNCF Categories**: App Definition & Development (Databases - In-Memory Data Stores), Runtime (Cloud Native Storage)
 
 **Why it's Layer 1**: Caching is critical for application performance; migration requires careful data transition.
 
@@ -410,6 +441,8 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 
 ### 13. Image Scanning
 
+**CNCF Categories**: Provisioning (Security & Compliance), App Definition & Development (Image Build Security)
+
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
 | **Trivy** | CNCF Incubating | 23,000+ | Multi-vendor (Aqua) | Simple | Fast, comprehensive DB, CI/CD and admission controller modes |
@@ -428,6 +461,8 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 ---
 
 ### 14. Policy Enforcement
+
+**CNCF Categories**: Provisioning (Security & Compliance), Orchestration & Management (Policy Management)
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -450,6 +485,8 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 ---
 
 ### 15. Runtime Security & Threat Detection
+
+**CNCF Categories**: Provisioning (Security & Compliance), Observability & Analysis (Threat Detection)
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
