@@ -4,7 +4,7 @@
 **Decision Type**: Foundational (Layer 0)  
 **Tested Version**: v1.14.5  
 **Test Date**: 2024-12-20  
-**Reviewer**: KubeCompass Team  
+**Reviewer**: @vanhoutenbos (KubeCompass maintainer)  
 **GitHub Stars**: 17,000+  
 **CNCF Status**: Graduated
 

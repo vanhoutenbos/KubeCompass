@@ -46,7 +46,7 @@ These decisions are **architecturally significant** and expensive to change late
 
 **Decision impact**: High — requires cluster rebuild or significant downtime to change
 
-📖 **[See full Cilium review](reviews/cilium.md)** *(coming soon)*
+📖 **[See full Cilium review](reviews/cilium.md)**
 
 ---
 
@@ -82,7 +82,7 @@ These decisions are **architecturally significant** and expensive to change late
 
 **Decision impact**: High — changing GitOps tool requires repository restructuring, team retraining, and manifest migration
 
-📖 **[See full Argo CD review](reviews/argocd.md)** *(coming soon)*
+📖 **[See full Argo CD review](reviews/argo-cd.md)** *(coming soon)*
 
 ---
 

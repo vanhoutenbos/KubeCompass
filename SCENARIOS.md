@@ -16,7 +16,7 @@ This document provides concrete architectural examples for common Kubernetes use
 **Target sectors**: Finance and government  
 **Organization size**: 200-500 employees, 10-20 development teams  
 **Compliance requirements**: ISO 27001, SOC 2 Type II, GDPR  
-**Uptime target**: 99.99% (four nines) for critical systems  
+**Uptime target**: 99.99% (four nines) for critical systems (see tier model in PRODUCTION_READY.md)  
 **Security posture**: Zero-trust, defense-in-depth, audit everything  
 **Tenancy model**: Multiple departments/teams with strict isolation  
 
@@ -25,6 +25,8 @@ This document provides concrete architectural examples for common Kubernetes use
 - Compliance requires audit trails for all changes and access
 - Security teams need visibility without impacting performance
 - Multiple teams must deploy independently without interfering with each other
+
+**Note on uptime targets**: The 99.99% target applies to **critical systems only** (payment processing, authentication, core APIs). Less critical workloads may have lower targets (99.9% or 99%) to optimize costs. See [Application Tier Model](PRODUCTION_READY.md#maturity-progression-not-all-systems-are-critical) for details.
 
 ---
 
