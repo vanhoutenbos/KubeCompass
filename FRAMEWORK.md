@@ -48,13 +48,29 @@ Every production Kubernetes cluster requires decisions across multiple operation
 - **Persistent Storage**: CSI drivers, cloud disks, Rook-Ceph, Longhorn
 - **Backup & DR**: Velero, Kasten K10, cloud-native snapshots
 - **Databases**: StatefulSets vs. managed DBs (RDS, CloudSQL, etc.)
+- **Object Storage**: MinIO, Rook-Ceph S3, cloud object stores (S3, Azure Blob, GCS)
 
-### 1.9 Developer Experience
+### 1.9 Container Registry & Artifacts
+- **Container Registry**: Harbor, Docker Registry, cloud-native registries (ECR, ACR, GCR)
+- **Artifact Management**: Vulnerability scanning, image signing, retention policies
+- **Private Registry**: Self-hosted vs. managed options
+
+### 1.10 Message Brokers & Event Streaming
+- **Message Queues**: RabbitMQ, NATS, Amazon SQS
+- **Event Streaming**: Apache Kafka, NATS Streaming, Pulsar
+- **Service Communication**: Event-driven architectures, async processing
+
+### 1.11 Data Stores & Caching
+- **In-Memory Caching**: Redis, Memcached, Valkey
+- **Session Storage**: Redis, Hazelcast
+- **Rate Limiting**: Redis-based rate limiters
+
+### 1.12 Developer Experience
 - **Local Development**: Kind, K3d, Minikube, Tilt
 - **Remote Debugging**: Telepresence, Skaffold
 - **Self-Service**: Internal developer platforms (Backstage, etc.)
 
-### 1.10 Governance & Policy
+### 1.13 Governance & Policy
 - **Policy Enforcement**: OPA/Gatekeeper, Kyverno
 - **Compliance**: CIS benchmarks, PCI-DSS, SOC2
 - **Cost Management**: Kubecost, OpenCost, cloud billing tools
@@ -101,10 +117,13 @@ Each domain in section 1 should be tagged with its decision layer:
 | 1.5 Networking & Service Mesh | 0 - Foundational | CNI and mesh architecture are deeply embedded |
 | 1.6 CI/CD & GitOps | 0 - Foundational | Defines deployment patterns and team workflow |
 | 1.7 Observability | 1 - Core Operations | Important early, but can be replaced with moderate effort |
-| 1.8 Data Management & Storage | 1 - Core Operations | CSI drivers are swappable, but backups should be planned early |
+| 1.8 Data Management & Storage | 1 - Core Operations | CSI drivers are swappable, but backups should be planned early; object storage critical for backups and artifacts |
+| 1.9 Container Registry & Artifacts | 1 - Core Operations | Essential for deployment pipeline; can be changed but affects all image pulls |
+| 1.10 Message Brokers & Event Streaming | 1 - Core Operations | Important for event-driven architectures; moderate effort to migrate |
+| 1.11 Data Stores & Caching | 1 - Core Operations | Critical for application performance; caching can be changed with moderate effort |
 | 1.4 Runtime Security | 2 - Enhancement | Tools like Falco are additive and don't change platform architecture |
-| 1.9 Developer Experience | 2 - Enhancement | Tooling can be introduced incrementally |
-| 1.10 Governance & Policy | 2 - Enhancement | Can be layered on as maturity grows |
+| 1.12 Developer Experience | 2 - Enhancement | Tooling can be introduced incrementally |
+| 1.13 Governance & Policy | 2 - Enhancement | Can be layered on as maturity grows |
 
 ---
 

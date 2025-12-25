@@ -7,11 +7,16 @@ This matrix helps you **prioritize decisions** when building a Kubernetes platfo
 ### Filters & Preferences
 
 You can filter tools by:
-- **Maturity**: Alpha, Beta, Stable, CNCF Graduated
-- **Stars threshold**: Minimum GitHub stars (1000+ recommended for production)
+- **Maturity**: Alpha, Beta, Stable, CNCF Graduated (CNCF status is an additional quality signal, not a requirement)
+- **GitHub Stars**: Community adoption indicator (flexible threshold, consider context)
+  - Tools with 500+ stars typically have active communities
+  - Tools with 2000+ stars have established adoption
+  - Lower star counts acceptable for newer tools with strong vendor backing or other maturity signals
+- **Installation Methods**: Helm charts, Operators, hardened images
 - **License**: Open-source only, permissive licenses, etc.
 - **Vendor independence**: Foundation-hosted, multi-vendor, single-vendor
 - **Complexity**: Simple, medium, expert-level
+- **Container Image Security**: Hardened images, signing, regular scanning
 
 **Default view**: When no filters are applied, you'll see **our opinionated recommendations** based on hands-on testing, but all scores are shown so you can make your own informed choice.
 
@@ -262,11 +267,148 @@ These are important for production operations but can be added or changed with m
 
 ---
 
+### 9. Container Registry
+
+**Why it's Layer 1**: Essential for storing and distributing container images; changing registries affects image pull configurations across all workloads.
+
+| Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
+|------|----------|----------------|---------------------|------------|--------------|
+| **Harbor** | CNCF Graduated | 23,000+ | Foundation | Medium | Vulnerability scanning, image signing, RBAC, replication, Helm chart storage |
+| **Docker Registry** | Stable | 16,000+ | Multi-vendor (Docker) | Simple | Lightweight, basic registry functionality, no UI |
+| **Cloud-native** (ECR, ACR, GCR) | Managed | Commercial | Single-vendor | Simple | Fully managed, integrated with cloud IAM, automatic scanning |
+| **Dragonfly** | CNCF Incubating | 12,000+ | Foundation | Medium | P2P distribution for large-scale deployments, reduces registry load |
+
+**Our Recommendation**: **Harbor** for self-hosted, **cloud-native registries** for managed
+
+**Why Harbor**:
+- **CNCF Graduated**: Production-proven, vendor-neutral
+- **Built-in security**: Vulnerability scanning (Trivy integration), image signing (Notary/Cosign)
+- **Multi-tenancy**: Project-based isolation with RBAC
+- **Compliance**: Audit logs, retention policies, immutable images
+- **Artifact Hub**: Stores Helm charts and OCI artifacts
+
+**Why cloud-native**:
+- **Simplicity**: No infrastructure to manage
+- **Integration**: Native IAM integration, automatic vulnerability scanning
+- **Reliability**: High availability, global replication
+
+**Decision impact**: Medium — changing registries requires updating image pull secrets and CI/CD pipelines
+
+---
+
+### 10. Object Storage
+
+**Why it's Layer 1**: Critical for backups, artifacts, and data lakes; choosing the wrong solution can impact DR strategy and costs.
+
+| Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
+|------|----------|----------------|---------------------|------------|--------------|
+| **MinIO** | Stable | 47,000+ | Multi-vendor | Medium | S3-compatible, high performance, erasure coding, versioning |
+| **Rook-Ceph (S3 via RGW)** | CNCF Graduated | 12,000+ | Foundation | Expert | Distributed, multi-protocol (S3, block, file), unified storage |
+| **Cloud-native** (S3, Azure Blob, GCS) | Managed | Commercial | Single-vendor | Simple | Fully managed, global distribution, lifecycle policies |
+
+**Our Recommendation**: **Cloud-native object storage** for simplicity, **MinIO** for cloud-agnostic requirements
+
+**Why cloud-native**:
+- **Simplicity**: No infrastructure management
+- **Scalability**: Unlimited storage, automatic scaling
+- **Integration**: Works with Velero, Loki, and other Kubernetes tools
+- **Cost-effective**: Pay-per-use, tiered storage options
+
+**Why MinIO**:
+- **S3-compatible**: Drop-in replacement for S3 APIs
+- **Cloud-agnostic**: Runs anywhere (on-prem, multi-cloud, edge)
+- **Performance**: Optimized for high-throughput workloads
+- **Compliance**: Self-hosted, data sovereignty requirements
+
+**Use cases**:
+- **Backup storage**: Velero backup repository
+- **Log archival**: Long-term Loki storage
+- **Artifact storage**: Build artifacts, ML models, data lakes
+
+**Decision impact**: Medium — changing object storage requires data migration and configuration updates
+
+---
+
+### 11. Message Brokers & Event Streaming
+
+**Why it's Layer 1**: Event-driven architectures depend on message brokers; changing brokers affects application integration patterns.
+
+| Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
+|------|----------|----------------|---------------------|------------|--------------|
+| **RabbitMQ** | Stable | 12,000+ | Multi-vendor (VMware) | Medium | AMQP, flexible routing, plugins, management UI, high availability |
+| **NATS** | CNCF Incubating | 15,000+ | Foundation | Simple | Lightweight, high performance, JetStream (persistence), Kubernetes-native |
+| **Apache Kafka** | Apache Foundation | 28,000+ | Foundation | Expert | High throughput, log-based streaming, strong durability, ecosystem (Kafka Connect, Streams) |
+| **Pulsar** | Apache Foundation | 14,000+ | Foundation | Expert | Multi-tenancy, geo-replication, unified messaging and streaming |
+
+**Our Recommendation**: **NATS** for simple message queuing, **Kafka** for event streaming
+
+**Why NATS**:
+- **CNCF Incubating**: Kubernetes-native, vendor-neutral
+- **Simple**: Easy to deploy and operate (Helm chart, Operator available)
+- **JetStream**: Adds persistence and exactly-once delivery
+- **Lightweight**: Low resource footprint, fast message delivery
+- **Use cases**: Service-to-service messaging, request-reply patterns, microservices communication
+
+**Why Kafka**:
+- **Event streaming**: Designed for high-throughput log aggregation and stream processing
+- **Durability**: Persistent, replicated logs for event sourcing
+- **Ecosystem**: Rich tooling (Connect, Streams, Schema Registry)
+- **Use cases**: Event sourcing, log aggregation, real-time analytics, CDC (Change Data Capture)
+
+**When to choose RabbitMQ**:
+- Complex routing patterns (topic exchanges, headers routing)
+- Need for management UI and plugins
+- Existing RabbitMQ expertise
+
+**Decision impact**: High — changing message brokers requires rewriting application integration code
+
+---
+
+### 12. Data Stores & Caching
+
+**Why it's Layer 1**: Caching is critical for application performance; migration requires careful data transition.
+
+| Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
+|------|----------|----------------|---------------------|------------|--------------|
+| **Redis** | Stable | 66,000+ | Redis Ltd (open-source with some restrictions) | Simple-Medium | In-memory cache, pub/sub, data structures, persistence, Lua scripting |
+| **Valkey** | Emerging | 16,000+ | Linux Foundation | Simple-Medium | Redis fork, fully open-source (BSD-3), compatible with Redis APIs |
+| **Memcached** | Stable | 13,000+ | Multi-vendor | Simple | Pure cache, simple key-value, multi-threaded, very fast |
+| **Hazelcast** | Stable | 6,000+ | Multi-vendor (Hazelcast) | Medium | Distributed cache, in-memory data grid, compute alongside data |
+
+**Our Recommendation**: **Valkey** for general-purpose caching, **Memcached** for pure caching needs
+
+**Why Valkey**:
+- **Fully open-source**: Linux Foundation project, BSD-3 license (no licensing concerns)
+- **Redis-compatible**: Drop-in replacement for Redis, supports same APIs and data structures
+- **Community-driven**: Forked from Redis to ensure open-source future
+- **Use cases**: Session storage, rate limiting, job queues, pub/sub, leaderboards
+
+**Why Memcached**:
+- **Simple**: Pure cache, no persistence or complex features
+- **Fast**: Multi-threaded, optimized for high-throughput caching
+- **Mature**: Battle-tested for decades
+- **Use cases**: Page caching, database query caching, API response caching
+
+**When to choose Redis/Valkey over Memcached**:
+- Need data structures (lists, sets, sorted sets, hashes)
+- Need persistence (RDB snapshots or AOF logs)
+- Need pub/sub messaging
+- Need Lua scripting for atomic operations
+
+**Deployment options**:
+- **Helm charts**: Available for Redis, Valkey, Memcached
+- **Operators**: Redis Operator, Valkey Operator for advanced lifecycle management
+- **Managed services**: AWS ElastiCache, Azure Cache for Redis (vendor lock-in consideration)
+
+**Decision impact**: Medium — changing caching solutions requires application reconfiguration and data migration
+
+---
+
 ## Layer 2: Enhancements (Add When Needed)
 
 These tools are **plug-and-play** and can be added or removed without disrupting the platform.
 
-### 9. Image Scanning
+### 13. Image Scanning
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -285,7 +427,7 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 
 ---
 
-### 10. Policy Enforcement
+### 14. Policy Enforcement
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -307,7 +449,7 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 
 ---
 
-### 11. Runtime Security & Threat Detection
+### 15. Runtime Security & Threat Detection
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -338,11 +480,15 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 6. ✅ Deploy observability (Prometheus + Loki + Grafana)
 7. ✅ Set up ingress (NGINX Ingress or Traefik)
 8. ✅ Implement backup strategy (Velero)
+9. ✅ Choose container registry (Harbor or cloud-native)
+10. ✅ Set up object storage (MinIO or cloud-native S3)
+11. ✅ Deploy message broker if needed (NATS or Kafka)
+12. ✅ Set up caching layer (Valkey/Redis or Memcached)
 
 ### Phase 3: Security Enhancements (Month 2+)
-9. ✅ Add image scanning (Trivy in CI/CD)
-10. ✅ Implement policy enforcement (Kyverno)
-11. ✅ Deploy runtime security (Falco)
+13. ✅ Add image scanning (Trivy in CI/CD)
+14. ✅ Implement policy enforcement (Kyverno)
+15. ✅ Deploy runtime security (Falco)
 
 ---
 
@@ -353,6 +499,7 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 - GitOps: Argo CD or Flux
 - Metrics: Prometheus
 - Logging: Fluentd/Fluent Bit (paired with Loki)
+- Container Registry: Harbor
 - Policy: OPA/Gatekeeper
 - Runtime Security: Falco
 
@@ -363,6 +510,9 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 - Metrics: Prometheus
 - Logging: Loki
 - Ingress: NGINX
+- Registry: Docker Registry
+- Object Storage: Cloud-native S3
+- Cache: Memcached
 - Image Scanning: Trivy
 
 ### "Show me enterprise multi-tenant stack"
@@ -374,6 +524,10 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 - Metrics: Prometheus + Thanos
 - Logging: Loki
 - Ingress: NGINX with rate limiting
+- Registry: Harbor with vulnerability scanning
+- Object Storage: MinIO or cloud S3
+- Message Broker: Kafka (if event-driven) or NATS (for microservices)
+- Cache: Valkey/Redis
 - Policy: Kyverno
 - Runtime Security: Falco
 - Image Scanning: Trivy
