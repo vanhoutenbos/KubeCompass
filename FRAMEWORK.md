@@ -4,6 +4,19 @@ This document outlines the complete decision-making framework for building and o
 
 ---
 
+## Visual Overview
+
+🎨 **Looking for visual diagrams?** See **[DIAGRAMS.md](DIAGRAMS.md)** for:
+- Interactive domain architecture maps
+- Decision layer visualizations
+- Scale-based deployment models (single team → multi-team → enterprise)
+- CNCF alignment mapping
+- Decision flow navigation
+
+📖 Continue reading below for detailed domain descriptions and decision guidance.
+
+---
+
 ## 1. Domains & Subdomains
 
 Every production Kubernetes cluster requires decisions across multiple operational domains. This section maps out those domains and the key choices within each.
