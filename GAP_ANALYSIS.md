@@ -169,13 +169,15 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ## Next Steps
 
-1. ✅ Define "production-ready" with measurable criteria
-2. ✅ Document decision layers (foundational vs. additive)
-3. ✅ Create testing methodology document
-4. ✅ Build scoring rubric and filter system
-5. ✅ Clarify target audience in README and VISION
-6. ⏳ Implement scoring system in tool reviews
-7. ⏳ Add "decision timing" guidance to each domain
+1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](PRODUCTION_READY.md)
+2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](TESTING_METHODOLOGY.md)
+4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
+5. ✅ Clarify target audience in README and VISION — [README.md](README.md) and [VISION.md](VISION.md)
+6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](reviews/cilium.md) (first example)
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](MATRIX.md) with Layer 0/1/2 structure
+8. ⏳ Expand tool reviews (GitOps, secrets management, observability)
+9. ⏳ Add more scenarios (startup MVP, edge computing)
 
 ---
 
