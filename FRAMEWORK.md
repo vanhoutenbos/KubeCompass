@@ -143,4 +143,53 @@ This layered approach prevents the common mistake of obsessing over "cool tools"
 
 ---
 
+## 5. CNCF Cloud Native Landscape Alignment
+
+KubeCompass domains are carefully aligned with the CNCF Cloud Native Landscape to ensure comprehensive coverage of the cloud-native ecosystem. This mapping helps users familiar with CNCF navigate KubeCompass and vice versa.
+
+### CNCF Category Mapping
+
+| KubeCompass Domain | CNCF Primary Category | CNCF Subcategory |
+|-------------------|----------------------|------------------|
+| **1.1 Provisioning & Infrastructure** | Provisioning | Automation & Configuration |
+| **1.2 Application Deployment & Packaging** | App Definition & Development | Application Definition & Image Build |
+| **1.3 Identity, Access & Security (Pre-Run)** | Provisioning | Key Management / Identity, Security & Compliance |
+| **1.4 Runtime Security** | Provisioning | Security & Compliance |
+| **1.5 Networking & Service Mesh** | Runtime, Orchestration & Management | Cloud Native Network, Service Mesh |
+| **1.6 CI/CD & GitOps** | App Definition & Development | Continuous Integration & Delivery |
+| **1.7 Observability** | Observability & Analysis | Monitoring, Logging, Tracing |
+| **1.8 Data Management & Storage** | Runtime, App Definition & Development | Cloud Native Storage, Databases |
+| **1.9 Container Registry & Artifacts** | Provisioning | Container Registry |
+| **1.10 Message Brokers & Event Streaming** | App Definition & Development | Streaming/Messaging |
+| **1.11 Data Stores & Caching** | App Definition & Development | Databases (in-memory data stores) |
+| **1.12 Developer Experience** | Platform, App Definition & Development | PaaS, Application Definition |
+| **1.13 Governance & Policy** | Provisioning | Security & Compliance |
+
+### Multi-Domain Tool Mapping
+
+Many cloud-native tools span multiple CNCF categories. KubeCompass places tools in their **primary decision context** while acknowledging their multi-domain capabilities:
+
+| Tool | KubeCompass Primary Domain | CNCF Categories (Multiple) |
+|------|---------------------------|---------------------------|
+| **Cilium** | 1.5 Networking & Service Mesh | Runtime (CNI), Orchestration (Service Mesh), Observability (Network Monitoring) |
+| **Harbor** | 1.9 Container Registry | Provisioning (Registry), Security (Scanning), App Definition (Artifact Storage) |
+| **Vault** | 1.3 Identity & Security | Provisioning (Key Management), Security (Encryption as Service) |
+| **Prometheus** | 1.7 Observability | Observability (Monitoring), Orchestration (Service Discovery) |
+| **ArgoCD** | 1.6 CI/CD & GitOps | App Definition (Delivery), Orchestration (Deployment Automation) |
+| **Kafka** | 1.10 Message Brokers | App Definition (Streaming), Observability (Log Aggregation) |
+
+### KubeCompass Value-Add: Decision Timing Layers
+
+Unlike the CNCF Landscape (which is descriptive), KubeCompass adds a **prescriptive layer model** to help prioritize decisions:
+
+- **Layer 0 (Foundational)**: Must decide Day 1 — hard to change later
+- **Layer 1 (Core Operations)**: Decide within first month — medium migration cost
+- **Layer 2 (Enhancement)**: Add when needed — low migration cost
+
+This timing framework is **unique to KubeCompass** and complements the CNCF taxonomy.
+
+📖 **[See full CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** — comprehensive mapping, gap analysis, and recommendations.
+
+---
+
 This framework is a living document and will evolve based on real-world testing and community feedback.
