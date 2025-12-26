@@ -118,6 +118,15 @@ Example architectures for common use cases:
 
 📚 **[Browse Scenarios](SCENARIOS.md)**
 
+### 8. Layer 0 Case Studies
+Deep-dive foundational analysis for real-world Kubernetes adoption scenarios:
+- **[Dutch Webshop Migration](LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform transitioning from manual VM management to Kubernetes
+  - Availability requirements and downtime expectations
+  - Data criticality with RPO/RTO definitions
+  - Security baseline and ownership models
+  - Vendor independence principles
+  - Foundational architecture decisions
+
 ---
 
 ## Philosophy
@@ -177,11 +186,12 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 5. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
 6. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
 7. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-8. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
-9. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-10. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-11. **Explore the [Vision](VISION.md)** to see where we're headed
-12. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
+8. **Study the [Layer 0 Case Studies](LAYER_0_WEBSHOP_CASE.md)** — real-world foundational analysis (Dutch webshop migration)
+9. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+10. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
+11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
+12. **Explore the [Vision](VISION.md)** to see where we're headed
+13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 
 ---
 
