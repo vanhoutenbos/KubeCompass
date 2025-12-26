@@ -92,6 +92,14 @@ Example architectures for common use cases:
 
 📚 **[Browse Scenarios](SCENARIOS.md)**
 
+### 6. Case Studies (NEW!)
+Detailed, layer-by-layer case studies for systematic platform design:
+- E-Commerce platform migrating from VMs to Kubernetes
+- Designed for iterative use with AI assistants
+- Progress from business context → capabilities → tool selection
+
+🎯 **[Explore Case Studies](case-studies/)**
+
 ---
 
 ## Philosophy
@@ -127,6 +135,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [x] Enterprise multi-tenant scenario
 - [x] Visual diagrams and interactive navigation
 - [x] Scale-based deployment models (single team, multi-team, enterprise)
+- [x] Layer-by-layer case studies (e-commerce legacy migration)
 
 **What's in progress:**
 - [ ] Additional tool reviews (GitOps, secrets management, observability)
@@ -147,12 +156,13 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 2. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
 3. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
 4. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
-4. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-5. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
-6. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-7. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-8. **Explore the [Vision](VISION.md)** to see where we're headed
-9. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
+5. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
+6. **Dive into [Case Studies](case-studies/)** for layer-by-layer platform design guides
+7. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+8. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
+9. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
+10. **Explore the [Vision](VISION.md)** to see where we're headed
+11. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 
 ---
 
