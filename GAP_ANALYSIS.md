@@ -343,8 +343,11 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 11. ✅ Enhance Chaos Engineering coverage — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.2
 12. ✅ Add Container Runtime guidance — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.3
 13. ✅ Add RPC framework positioning — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.4
-14. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)
-15. ⏳ Add more scenarios (startup MVP, edge computing)
+14. ✅ Add RPC framework positioning — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.4
+15. ✅ Implement interactive tool selector wizard — [tool-selector-wizard.html](tool-selector-wizard.html)
+16. ✅ Create AI chat integration guide — [AI_CHAT_GUIDE.md](AI_CHAT_GUIDE.md)
+17. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)
+18. ⏳ Add more scenarios (startup MVP, edge computing)
 
 ---
 

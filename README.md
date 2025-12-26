@@ -47,7 +47,33 @@ If you're lost in the Kubernetes ecosystem and need a rational push in the right
 
 ## How It Works
 
-### 1. Interactive Visual Diagrams 🎨 NEW!
+### 1. Interactive Tool Selector Wizard 🛒 NEW!
+Shop for Kubernetes tools like picking a new computer! Answer a few questions and get personalized recommendations:
+
+🧭 **[Open Tool Selector Wizard](tool-selector-wizard.html)** (Open in browser)
+
+**Features:**
+- Webshop-style interactive filtering
+- Select your scale, priorities, and preferences
+- Get instant personalized tool recommendations
+- Export results to Markdown or JSON
+- "Use X unless Y" decision guidance
+- Complete stack recommendations with rationale
+
+### 2. AI Chat Integration 🤖 NEW!
+Describe your use case to an AI assistant and get intelligent "Use X unless..." recommendations:
+
+💬 **[AI Chat Integration Guide](AI_CHAT_GUIDE.md)**
+
+**What you get:**
+- Copy-paste prompts for ChatGPT, Claude, Gemini
+- Scenario-based templates (startup, enterprise, performance-critical)
+- Structured output formats (JSON, Markdown, checklists)
+- Interactive workflow patterns
+- "Use X unless Y" decision trees
+- Integration with KubeCompass framework
+
+### 3. Interactive Visual Diagrams 🎨
 Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
 
 🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
@@ -60,12 +86,12 @@ Explore our visual diagrams showing domains, subdomains, and decision layers acr
 - CNCF alignment mapping
 - Interactive navigation (click domains to learn more)
 
-### 2. The Framework
+### 4. The Framework
 We map the entire Kubernetes operational landscape into **domains** (CI/CD, security, networking, observability, etc.), then identify the key **decision points** within each.
 
 📖 **[Read the Framework](FRAMEWORK.md)**
 
-### 3. The Decision Matrix
+### 5. The Decision Matrix
 An interactive guide that maps domains to tools, with filters for:
 - Maturity (Alpha / Beta / Stable / CNCF Graduated)
 - Vendor independence
@@ -74,7 +100,7 @@ An interactive guide that maps domains to tools, with filters for:
 
 🔧 **[Explore the Matrix](MATRIX.md)**
 
-### 4. Testing Methodology
+### 6. Testing Methodology
 Every tool recommendation is backed by **hands-on testing** using a consistent methodology:
 - Installation & setup
 - Core functionality
@@ -84,7 +110,7 @@ Every tool recommendation is backed by **hands-on testing** using a consistent m
 
 📋 **[See the Testing Methodology](TESTING_METHODOLOGY.md)**
 
-### 5. Real-World Scenarios
+### 7. Real-World Scenarios
 Example architectures for common use cases:
 - Startup MVP (cost-optimized, fast iteration)
 - Enterprise multi-tenant (compliance, governance, scale)
@@ -127,12 +153,13 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [x] Enterprise multi-tenant scenario
 - [x] Visual diagrams and interactive navigation
 - [x] Scale-based deployment models (single team, multi-team, enterprise)
+- [x] Interactive Tool Selector Wizard (webshop-style filtering)
+- [x] AI Chat Integration Guide with prompt templates
 
 **What's in progress:**
 - [ ] Additional tool reviews (GitOps, secrets management, observability)
 - [ ] Additional scenarios (startup MVP, edge computing)
-- [ ] Fully interactive filtering for decision matrix
-- [ ] Enhanced interactive features (guided wizard, architecture generator)
+- [ ] Community-contributed AI chat patterns
 
 **How to contribute:**
 - 🐛 Found a gap or error? [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues)
@@ -143,16 +170,18 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 
 ## Quick Start
 
-1. **🎨 Explore the [Visual Diagrams](DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
-2. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
-3. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
-4. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
-4. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-5. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
-6. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-7. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-8. **Explore the [Vision](VISION.md)** to see where we're headed
-9. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
+1. **🛒 Try the [Interactive Tool Selector](tool-selector-wizard.html)** — webshop-style tool selection
+2. **🤖 Use the [AI Chat Guide](AI_CHAT_GUIDE.md)** — get "Use X unless Y" recommendations from AI
+3. **🎨 Explore the [Visual Diagrams](DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
+4. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
+5. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
+6. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
+7. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
+8. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+9. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
+10. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
+11. **Explore the [Vision](VISION.md)** to see where we're headed
+12. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 
 ---
 
