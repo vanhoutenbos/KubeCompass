@@ -307,7 +307,7 @@ Zonder duidelijk Layer 0 fundament:
 - **Identity provider**: Self-hosted (Keycloak) of cloud-agnostic → geen AWS IAM / Azure AD exclusieve integraties
 - **Load balancing**: Kubernetes Ingress (niet cloud-specific ALB/NLB configuraties)
 
-### 7.3 Realistische Acceptatiecriteria
+### 7.3 Realistische Beperkingen en Concessies
 
 **Wat WEL haalbaar is**:
 - ✅ Workloads draaien op elke Kubernetes distributie (AKS, GKE, EKS, on-prem)
@@ -461,15 +461,15 @@ Layer 0 maakt **strategische keuzes**, maar niet alles is nu bekend. De volgende
 
 **Aanname**: Huidige MVC monoliet kan **zonder refactor** naar Kubernetes.
 - **Validatie nodig**: 
-  - [ ] Is de applicatie **stateless** (sessies in database/Redis, niet in-memory)?
-  - [ ] Kan de applicatie **horizontaal schalen** (meerdere replicas zonder issues)?
-  - [ ] Zijn er **hardcoded localhost/IP dependencies** (database connection strings, etc.)?
+  - [ ] Is de applicatie **stateless** (sessies in database/Redis, niet in geheugen)?
+  - [ ] Kan de applicatie **horizontaal schalen** (meerdere replica's zonder problemen)?
+  - [ ] Zijn er **hardcoded localhost/IP afhankelijkheden** (database connectiestrings, etc.)?
 
 **Aanname**: Database migratie naar Kubernetes is gewenst.
 - **Validatie nodig**:
-  - [ ] Is het beter om database **buiten Kubernetes** te houden (managed cloud DB)?
-  - [ ] Wat is de effort van database HA setup (replicatie, failover)?
-  - [ ] Is StatefulSet voldoende, of hebben we Kubernetes Operator nodig?
+  - [ ] Is het beter om database **buiten Kubernetes** te houden (beheerde cloud database)?
+  - [ ] Wat is de inspanning van database HA-configuratie (replicatie, failover)?
+  - [ ] Is StatefulSet voldoende, of hebben we een Kubernetes Operator nodig?
 
 **Aanname**: Geen microservices architectuur **nu**, maar moet mogelijk zijn **later**.
 - **Validatie nodig**:
@@ -480,7 +480,7 @@ Layer 0 maakt **strategische keuzes**, maar niet alles is nu bekend. De volgende
 
 **Aanname**: Nederlandse datacenter leverancier biedt **Kubernetes-compatibele infrastructuur**.
 - **Validatie nodig**:
-  - [ ] Is er managed Kubernetes beschikbaar, of self-hosted (Kubeadm, RKE)?
+  - [ ] Is er beheerde Kubernetes beschikbaar, of zelf-gehost (Kubeadm, RKE)?
   - [ ] Welke storage opties zijn beschikbaar (block storage, NFS, object storage)?
   - [ ] Welke netwerk features zijn beschikbaar (load balancers, VPC, etc.)?
 

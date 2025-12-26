@@ -120,7 +120,12 @@ Example architectures for common use cases:
 
 ### 8. Layer 0 Case Studies
 Deep-dive foundational analysis for real-world Kubernetes adoption scenarios:
-- **[Dutch Webshop Migration](LAYER_0_WEBSHOP_CASE.md)**: E-commerce platform transitioning from manual VM management to Kubernetes (in Dutch) — covers availability requirements, data criticality, security baseline, observability expectations, ownership models, and vendor independence principles
+- **[Dutch Webshop Migration](LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform transitioning from manual VM management to Kubernetes
+  - Availability requirements and downtime expectations
+  - Data criticality with RPO/RTO definitions
+  - Security baseline and ownership models
+  - Vendor independence principles
+  - Foundational architecture decisions
 
 ---
 
