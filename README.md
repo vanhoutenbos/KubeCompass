@@ -170,6 +170,12 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [ ] Additional scenarios (startup MVP, edge computing)
 - [ ] Community-contributed AI chat patterns
 
+**Project challenges & opportunities:**
+- 📋 **[Project Challenges](CHALLENGES.md)** — see what we're struggling with and how you can help
+  - Keeping up with rapidly changing tools
+  - Testing across all environments and variants
+  - Finding contributors and building community
+
 **How to contribute:**
 - 🐛 Found a gap or error? [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues)
 - 💡 Have a tool recommendation or review? [Submit a PR](https://github.com/vanhoutenbos/KubeCompass/pulls)
@@ -192,6 +198,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
 12. **Explore the [Vision](VISION.md)** to see where we're headed
 13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
+14. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
 
 ---
 

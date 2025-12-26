@@ -328,6 +328,49 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ---
 
+## Gap 9: Project Maintenance Challenges 🆕
+
+**Status**: DOCUMENTED — See [CHALLENGES.md](CHALLENGES.md)
+
+**Issue**: Need to document and address ongoing project maintenance challenges:
+- Keeping up with rapidly changing tools and versions
+- Testing across multiple environments and variants
+- Finding and onboarding contributors
+
+**Impact**: Without transparent acknowledgment of challenges and community engagement, the project risks becoming outdated or unsustainable as a solo effort.
+
+**Solution**: Created comprehensive challenges documentation with actionable solutions:
+
+**Challenges Identified**:
+
+1. **Rapidly Changing Ecosystem**: Tools evolve quickly, reviews can become stale
+   - Solution: Versioned reviews, community-driven updates, automated monitoring
+   - Solution: Focus on stable/mature tools, layer-based prioritization
+
+2. **Testing Environment Limitations**: Can't test all cloud providers, distributions, and configurations
+   - Solution: Community test matrix, ephemeral CI environments, standards-focused tools
+   - Solution: Prioritize Layer 0/1 tools, document known limitations
+
+3. **Contributor Shortage**: Currently solo-maintained, limiting scope and velocity
+   - Solution: Lower barriers (CONTRIBUTING.md, templates, good first issues)
+   - Solution: Recognition system, domain-specific ownership, community engagement
+
+**Documentation Added**:
+- ✅ Created comprehensive [CHALLENGES.md](CHALLENGES.md)
+- ✅ Updated README with challenges section
+- ✅ Documented contribution opportunities at multiple skill levels
+- ✅ Outlined path to community-driven sustainability
+
+**Key Features**:
+- Transparent about project limitations
+- Clear contribution opportunities (low/medium/high effort)
+- Specific solutions for each challenge
+- Path forward for long-term sustainability
+
+**Resolution**: Created [CHALLENGES.md](CHALLENGES.md) documenting all three challenges with detailed solutions and community contribution pathways.
+
+---
+
 ## Next Steps
 
 1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](PRODUCTION_READY.md)
@@ -346,8 +389,11 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 14. ✅ Add RPC framework positioning — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.4
 15. ✅ Implement interactive tool selector wizard — [tool-selector-wizard.html](tool-selector-wizard.html)
 16. ✅ Create AI chat integration guide — [AI_CHAT_GUIDE.md](AI_CHAT_GUIDE.md)
-17. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)
-18. ⏳ Add more scenarios (startup MVP, edge computing)
+17. ✅ Document project maintenance challenges — [CHALLENGES.md](CHALLENGES.md)
+18. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)
+19. ⏳ Add more scenarios (startup MVP, edge computing)
+20. ⏳ Create CONTRIBUTING.md with contribution guidelines
+21. ⏳ Implement automated tool version monitoring
 
 ---
 
