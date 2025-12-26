@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KubeCompass Tool Selector Wizard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .wizard-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .wizard-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #a0aec0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: #667eea;
+            color: white;
+        }
+
+        .step.completed .step-circle {
+            background: #48bb78;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9em;
+            color: #718096;
+        }
+
+        .step.active .step-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .wizard-content {
+            display: none;
+        }
+
+        .wizard-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .section-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .filter-group {
+            margin-bottom: 30px;
+        }
+
+        .filter-label {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .filter-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-option {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .filter-option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .filter-option.selected {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .filter-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .option-description {
+            font-size: 0.9em;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .recommendation-card {
+            background: #f7fafc;
+            border-left: 5px solid #667eea;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .domain-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .layer-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .layer-0 {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .layer-1 {
+            background: #ffd93d;
+            color: #2d3748;
+        }
+
+        .layer-2 {
+            background: #6bcf7f;
+            color: white;
+        }
+
+        .tool-recommendation {
+            margin-bottom: 20px;
+        }
+
+        .tool-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .tool-features {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+
+        .tool-features li {
+            color: #4a5568;
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .tool-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: 700;
+        }
+
+        .rationale {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .rationale-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .rationale-text {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .alternative {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .alternative-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .alternative-text {
+            color: #718096;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .summary-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .summary-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .summary-item-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .summary-item-value {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            background: white;
+            color: #667eea;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: 2px solid white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-export:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .link-section {
+            background: #edf2f7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .link-title {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link-item {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .link-item:hover {
+            color: #5a67d8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧭 KubeCompass Tool Selector</h1>
+            <p class="subtitle">Vind de perfecte Kubernetes tools voor jouw situatie</p>
+        </header>
+
+        <div class="wizard-steps">
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Schaal & Gebruik</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Prioriteiten</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Voorkeuren</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Aanbevelingen</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Scale & Use Case -->
+        <div class="wizard-content active" id="step1">
+            <h2 class="section-title">Schaal & Gebruik</h2>
+            <p class="section-description">
+                Laten we beginnen met het begrijpen van jouw situatie. Dit helpt ons de juiste tools te selecteren die passen bij jouw schaal en behoeften.
+            </p>
+
+            <div class="filter-group">
+                <label class="filter-label">Wat is jouw organisatieschaal?</label>
+                <div class="filter-options">
+                    <div class="filter-option" data-value="single-team" onclick="selectOption(this, 'scale')">
+                        <div class="option-title">🏢 Enkel Team</div>
+                        <div class="option-description">
+                            Klein team, enkele developers, prototype of MVP fase
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="multi-team" onclick="selectOption(this, 'scale')">
+                        <div class="option-title">🏭 Meerdere Teams</div>
+                        <div class="option-description">
+                            Verschillende teams, scale-up fase, groeiende productie omgeving
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="enterprise" onclick="selectOption(this, 'scale')">
+                        <div class="option-title">🌐 Enterprise</div>
+                        <div class="option-description">
+                            Multi-tenant, compliance vereisten, grote schaal productie
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Wat is jouw primaire use case?</label>
+                <div class="filter-options">
+                    <div class="filter-option" data-value="startup-mvp" onclick="selectOption(this, 'usecase')">
+                        <div class="option-title">🚀 Startup MVP</div>
+                        <div class="option-description">
+                            Snelle iteratie, kosten-optimalisatie, eenvoud boven volledigheid
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="production-app" onclick="selectOption(this, 'usecase')">
+                        <div class="option-title">💼 Productie Applicatie</div>
+                        <div class="option-description">
+                            Stabiele productie, high availability, monitoring & observability
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="enterprise-platform" onclick="selectOption(this, 'usecase')">
+                        <div class="option-title">🏛️ Enterprise Platform</div>
+                        <div class="option-description">
+                            Multi-tenant, compliance (SOC2/ISO27001), governance, audit trails
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="edge-iot" onclick="selectOption(this, 'usecase')">
+                        <div class="option-title">📡 Edge / IoT</div>
+                        <div class="option-description">
+                            Resource-beperkt, intermitterende connectiviteit, edge computing
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" disabled>Vorige</button>
+                <button class="btn btn-primary" onclick="nextStep()">Volgende</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Priorities -->
+        <div class="wizard-content" id="step2">
+            <h2 class="section-title">Prioriteiten</h2>
+            <p class="section-description">
+                Welke aspecten zijn voor jou het belangrijkste? Selecteer alle items die prioriteit hebben.
+            </p>
+
+            <div class="filter-group">
+                <label class="filter-label">Wat zijn jouw belangrijkste prioriteiten?</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-security" value="security">
+                        <label for="priority-security">
+                            <strong>🔒 Security First</strong> - Strikte security vereisten, audit trails, compliance
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-simplicity" value="simplicity">
+                        <label for="priority-simplicity">
+                            <strong>⚡ Eenvoud</strong> - Minimale complexiteit, snel operationeel, lage leercurve
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-performance" value="performance">
+                        <label for="priority-performance">
+                            <strong>🚄 Performance</strong> - Hoge throughput, lage latency, optimale resource gebruik
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-observability" value="observability">
+                        <label for="priority-observability">
+                            <strong>👁️ Observability</strong> - Uitgebreide monitoring, logging, tracing, debugging
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-gitops" value="gitops">
+                        <label for="priority-gitops">
+                            <strong>🔄 GitOps</strong> - Git als single source of truth, declaratieve deployments
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-cost" value="cost">
+                        <label for="priority-cost">
+                            <strong>💰 Kosten-optimalisatie</strong> - Lage operationele kosten, resource efficiency
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-multitenancy" value="multitenancy">
+                        <label for="priority-multitenancy">
+                            <strong>🏢 Multi-tenancy</strong> - Isolatie tussen teams/klanten, RBAC, namespace management
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousStep()">Vorige</button>
+                <button class="btn btn-primary" onclick="nextStep()">Volgende</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Preferences -->
+        <div class="wizard-content" id="step3">
+            <h2 class="section-title">Voorkeuren</h2>
+            <p class="section-description">
+                Laatste stap! Wat zijn jouw voorkeuren voor tool selectie?
+            </p>
+
+            <div class="filter-group">
+                <label class="filter-label">Maturity niveau voorkeur</label>
+                <div class="filter-options">
+                    <div class="filter-option" data-value="stable-only" onclick="selectOption(this, 'maturity')">
+                        <div class="option-title">🛡️ Alleen Stabiel</div>
+                        <div class="option-description">
+                            CNCF Graduated of production-proven tools met lange track record
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="balanced" onclick="selectOption(this, 'maturity')">
+                        <div class="option-title">⚖️ Gebalanceerd</div>
+                        <div class="option-description">
+                            Mix van stabiele tools en veelbelovende emerging solutions
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="cutting-edge" onclick="selectOption(this, 'maturity')">
+                        <div class="option-title">🔬 Cutting Edge</div>
+                        <div class="option-description">
+                            Open voor nieuwe technologieën en innovatieve oplossingen
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Vendor voorkeur</label>
+                <div class="filter-options">
+                    <div class="filter-option" data-value="foundation-only" onclick="selectOption(this, 'vendor')">
+                        <div class="option-title">🏛️ Foundation Hosted</div>
+                        <div class="option-description">
+                            Alleen CNCF of andere foundation-hosted projecten (vendor-neutral)
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="open-source" onclick="selectOption(this, 'vendor')">
+                        <div class="option-title">📖 Open Source</div>
+                        <div class="option-description">
+                            Open source tools met permissive licenses (multi-vendor mogelijk)
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="any" onclick="selectOption(this, 'vendor')">
+                        <div class="option-title">🌍 Alles</div>
+                        <div class="option-description">
+                            Open voor alle tools ongeacht vendor of governance model
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Complexiteit voorkeur</label>
+                <div class="filter-options">
+                    <div class="filter-option" data-value="simple" onclick="selectOption(this, 'complexity')">
+                        <div class="option-title">🎯 Eenvoudig</div>
+                        <div class="option-description">
+                            Minimale configuratie, quick start, lage leercurve
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="moderate" onclick="selectOption(this, 'complexity')">
+                        <div class="option-title">🔧 Matig</div>
+                        <div class="option-description">
+                            Balans tussen functionaliteit en beheersbaarheid
+                        </div>
+                    </div>
+                    <div class="filter-option" data-value="advanced" onclick="selectOption(this, 'complexity')">
+                        <div class="option-title">⚙️ Geavanceerd</div>
+                        <div class="option-description">
+                            Maximale functionaliteit en controle, expert-level configuratie
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousStep()">Vorige</button>
+                <button class="btn btn-primary" onclick="generateRecommendations()">Genereer Aanbevelingen</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Results -->
+        <div class="wizard-content" id="step4">
+            <div class="summary-box">
+                <div class="summary-title">Jouw Gepersonaliseerde Kubernetes Stack</div>
+                <p>Op basis van jouw voorkeuren hebben we een complete tool selectie samengesteld.</p>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <div class="summary-item-label">Schaal</div>
+                        <div class="summary-item-value" id="summary-scale">-</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Use Case</div>
+                        <div class="summary-item-value" id="summary-usecase">-</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Maturity</div>
+                        <div class="summary-item-value" id="summary-maturity">-</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Prioriteiten</div>
+                        <div class="summary-item-value" id="summary-priorities">-</div>
+                    </div>
+                </div>
+                <div class="export-buttons">
+                    <button class="btn-export" onclick="exportToMarkdown()">📄 Exporteer naar Markdown</button>
+                    <button class="btn-export" onclick="exportToJSON()">📋 Exporteer naar JSON</button>
+                    <button class="btn-export" onclick="window.print()">🖨️ Print</button>
+                </div>
+            </div>
+
+            <div id="recommendations-container"></div>
+
+            <div class="link-section">
+                <div class="link-title">📚 Meer informatie</div>
+                <div class="links">
+                    <a href="MATRIX.md" class="link-item">→ Volledige Decision Matrix</a>
+                    <a href="FRAMEWORK.md" class="link-item">→ KubeCompass Framework</a>
+                    <a href="SCENARIOS.md" class="link-item">→ Real-World Scenarios</a>
+                    <a href="reviews/" class="link-item">→ Gedetailleerde Tool Reviews</a>
+                    <a href="ai-chat-guide.md" class="link-item">→ AI Chat Integration Guide</a>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="resetWizard()">🔄 Opnieuw Beginnen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const wizardState = {
+            currentStep: 1,
+            scale: null,
+            usecase: null,
+            priorities: [],
+            maturity: null,
+            vendor: null,
+            complexity: null
+        };
+
+        // Tool database - comprehensive recommendations
+        const toolRecommendations = {
+            networking: {
+                layer: 0,
+                domain: "Container Networking (CNI)",
+                recommendations: {
+                    'enterprise': { 
+                        tool: 'Cilium', 
+                        features: ['eBPF-based performance', 'L7 network policies', 'Hubble observability', 'Native encryption', 'CNCF Graduated'],
+                        rationale: 'Voor enterprise omgevingen biedt Cilium de beste combinatie van security, observability en performance. De L7 policies zijn cruciaal voor compliance.',
+                        alternatives: 'Calico als je bestaande BGP routing hebt of sterke voorkeur voor iptables-based networking.'
+                    },
+                    'multi-team': { 
+                        tool: 'Cilium', 
+                        features: ['Moderne eBPF networking', 'Network policies', 'Goede observability', 'Relatief eenvoudig'],
+                        rationale: 'Cilium biedt moderne features zonder te complex te zijn voor mid-size teams. Network policies zijn essentieel voor team-isolatie.',
+                        alternatives: 'Flannel voor zeer eenvoudige setups zonder speciale netwerk vereisten.'
+                    },
+                    'single-team': { 
+                        tool: 'Flannel', 
+                        features: ['Simpel en betrouwbaar', 'Minimale configuratie', 'Lichte overhead', 'Goed gedocumenteerd'],
+                        rationale: 'Voor kleine teams is Flannel perfect - simpel, betrouwbaar en snel werkend zonder onnodige complexiteit.',
+                        alternatives: 'Cilium als je vanaf dag 1 wilt investeren in moderne networking (voor toekomstige groei).'
+                    }
+                }
+            },
+            gitops: {
+                layer: 0,
+                domain: "GitOps & Deployment",
+                recommendations: {
+                    'with-gitops': {
+                        tool: 'Argo CD',
+                        features: ['User-friendly UI', 'Multi-tenancy support', 'RBAC integration', 'SSO support', 'CNCF Graduated'],
+                        rationale: 'Argo CD combineert krachtige GitOps functionaliteit met een toegankelijke UI. Perfect voor teams die zichtbaarheid en controle willen.',
+                        alternatives: 'Flux als je een pure GitOps filosofie prefereert (geen UI) of sterke Helm automation nodig hebt.'
+                    },
+                    'simple': {
+                        tool: 'Flux',
+                        features: ['GitOps toolkit', 'Helm support', 'Image automation', 'GitOps-pure', 'CNCF Graduated'],
+                        rationale: 'Flux is ideaal voor teams die een lichtgewicht, pure GitOps aanpak willen zonder extra UI overhead.',
+                        alternatives: 'Argo CD als je een UI wilt voor niet-technische stakeholders.'
+                    }
+                }
+            },
+            secrets: {
+                layer: 0,
+                domain: "Secrets Management",
+                recommendations: {
+                    'enterprise': {
+                        tool: 'External Secrets Operator + Vault',
+                        features: ['Centralized secrets', 'Audit logging', 'Dynamic secrets', 'Multi-cloud support', 'Compliance-ready'],
+                        rationale: 'Voor enterprise omgevingen is Vault de gouden standaard. External Secrets Operator maakt integratie met Kubernetes native.',
+                        alternatives: 'Cloud-native secrets managers (AWS Secrets Manager, Azure Key Vault) als je al in die cloud zit.'
+                    },
+                    'simple': {
+                        tool: 'Sealed Secrets',
+                        features: ['Eenvoudig concept', 'Git-friendly', 'Minimale infrastructure', 'Open source'],
+                        rationale: 'Sealed Secrets is perfect voor kleinere teams - simpel concept, geen extra infrastructure, en goed te begrijpen.',
+                        alternatives: 'External Secrets Operator + cloud provider voor groei-pad naar enterprise-grade solution.'
+                    }
+                }
+            },
+            observability: {
+                layer: 1,
+                domain: "Observability (Metrics, Logs, Traces)",
+                recommendations: {
+                    'full-stack': {
+                        tool: 'Prometheus + Grafana + Loki + Tempo',
+                        features: ['Complete observability stack', 'Industry standard', 'Excellent ecosystem', 'Open source', 'CNCF Graduated (Prometheus)'],
+                        rationale: 'De klassieke CNCF stack biedt complete observability met metrics, logs en traces. Breed ondersteund en goed gedocumenteerd.',
+                        alternatives: 'Managed oplossingen (Datadog, New Relic) als je liever outsourced.'
+                    },
+                    'simple': {
+                        tool: 'Prometheus + Grafana',
+                        features: ['Metrics monitoring', 'Alerting', 'Dashboards', 'Kubernetes-native', 'CNCF Graduated'],
+                        rationale: 'Start met metrics en alerting - dat is het belangrijkste. Logs en traces kun je later toevoegen.',
+                        alternatives: 'VictoriaMetrics als je schaal-problemen verwacht met Prometheus.'
+                    }
+                }
+            },
+            ingress: {
+                layer: 1,
+                domain: "Ingress & Load Balancing",
+                recommendations: {
+                    'enterprise': {
+                        tool: 'Istio (Service Mesh) of NGINX Ingress',
+                        features: ['Advanced traffic management', 'mTLS', 'Observability', 'Circuit breaking', 'Rate limiting'],
+                        rationale: 'Voor enterprise omgevingen kan een service mesh zoals Istio of een robuuste ingress zoals NGINX de benodigde features bieden.',
+                        alternatives: 'Traefik voor eenvoudigere setups met goede features, of cloud-native load balancers.'
+                    },
+                    'simple': {
+                        tool: 'Traefik',
+                        features: ['Automatische configuratie', 'Let\'s Encrypt integratie', 'Dashboard', 'Kubernetes-native'],
+                        rationale: 'Traefik is perfect voor teams die snel iets werkends willen - minimale configuratie, automatische discovery.',
+                        alternatives: 'NGINX Ingress Controller voor meer controle en customization mogelijkheden.'
+                    }
+                }
+            },
+            registry: {
+                layer: 1,
+                domain: "Container Registry",
+                recommendations: {
+                    'enterprise': {
+                        tool: 'Harbor',
+                        features: ['Vulnerability scanning', 'Image signing', 'Replication', 'RBAC', 'Audit logging', 'CNCF Graduated'],
+                        rationale: 'Harbor is enterprise-grade met ingebouwde security scanning en compliance features. Essentieel voor gereguleerde industrieën.',
+                        alternatives: 'Cloud-native registries (ECR, ACR, GCR) als je liever managed.'
+                    },
+                    'simple': {
+                        tool: 'Cloud-native registry (ECR/ACR/GCR)',
+                        features: ['Fully managed', 'Seamless cloud integration', 'Security scanning', 'Pay-per-use'],
+                        rationale: 'Voor kleinere teams is een managed registry de beste keuze - geen operationele overhead.',
+                        alternatives: 'Harbor als je on-premise moet of multi-cloud portability wilt.'
+                    }
+                }
+            },
+            security: {
+                layer: 2,
+                domain: "Runtime Security & Policy",
+                recommendations: {
+                    'security-focused': {
+                        tool: 'Falco + OPA/Gatekeeper',
+                        features: ['Runtime threat detection', 'Policy enforcement', 'Compliance automation', 'Audit logging'],
+                        rationale: 'Voor security-first omgevingen is runtime detection (Falco) plus policy enforcement (OPA) de beste combinatie.',
+                        alternatives: 'Kyverno als alternatief voor OPA - eenvoudiger te gebruiken maar minder flexibel.'
+                    },
+                    'basic': {
+                        tool: 'Pod Security Standards + Kyverno',
+                        features: ['Built-in Kubernetes security', 'Policy as code', 'Validation & mutation', 'Eenvoudig'],
+                        rationale: 'Start met Kubernetes native security (PSS) en voeg Kyverno toe voor custom policies - pragmatisch en effectief.',
+                        alternatives: 'OPA/Gatekeeper voor meer complexe policy requirements.'
+                    }
+                }
+            },
+            backup: {
+                layer: 1,
+                domain: "Backup & Disaster Recovery",
+                recommendations: {
+                    'all': {
+                        tool: 'Velero',
+                        features: ['Cluster backup', 'Disaster recovery', 'Migration support', 'Multi-cloud', 'CNCF project'],
+                        rationale: 'Velero is de de-facto standaard voor Kubernetes backups. Cloud-agnostic en goed ondersteund.',
+                        alternatives: 'Cloud-native backup oplossingen (AWS Backup, Azure Backup) als je single-cloud bent.'
+                    }
+                }
+            }
+        };
+
+        function selectOption(element, category) {
+            // Remove selection from siblings
+            const siblings = element.parentElement.querySelectorAll('.filter-option');
+            siblings.forEach(sib => sib.classList.remove('selected'));
+            
+            // Add selection to clicked element
+            element.classList.add('selected');
+            
+            // Store selection
+            wizardState[category] = element.dataset.value;
+        }
+
+        function nextStep() {
+            if (wizardState.currentStep < 4) {
+                // Mark current step as completed
+                document.querySelector(`.step[data-step="${wizardState.currentStep}"]`).classList.add('completed');
+                
+                // Hide current step
+                document.getElementById(`step${wizardState.currentStep}`).classList.remove('active');
+                
+                // Move to next step
+                wizardState.currentStep++;
+                
+                // Show next step
+                document.getElementById(`step${wizardState.currentStep}`).classList.add('active');
+                document.querySelector(`.step[data-step="${wizardState.currentStep}"]`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function previousStep() {
+            if (wizardState.currentStep > 1) {
+                // Remove active from current step
+                document.querySelector(`.step[data-step="${wizardState.currentStep}"]`).classList.remove('active');
+                document.getElementById(`step${wizardState.currentStep}`).classList.remove('active');
+                
+                // Move to previous step
+                wizardState.currentStep--;
+                
+                // Remove completed from previous step
+                document.querySelector(`.step[data-step="${wizardState.currentStep}"]`).classList.remove('completed');
+                
+                // Show previous step
+                document.getElementById(`step${wizardState.currentStep}`).classList.add('active');
+                document.querySelector(`.step[data-step="${wizardState.currentStep}"]`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function generateRecommendations() {
+            // Collect priorities
+            wizardState.priorities = [];
+            document.querySelectorAll('#step2 input[type="checkbox"]:checked').forEach(cb => {
+                wizardState.priorities.push(cb.value);
+            });
+            
+            // Update summary
+            updateSummary();
+            
+            // Generate recommendations
+            const container = document.getElementById('recommendations-container');
+            container.innerHTML = '';
+            
+            // Determine which recommendations to show based on state
+            const recommendations = getRecommendations();
+            
+            recommendations.forEach(rec => {
+                const card = createRecommendationCard(rec);
+                container.appendChild(card);
+            });
+            
+            // Move to results step
+            nextStep();
+        }
+
+        function getRecommendations() {
+            const recs = [];
+            const scale = wizardState.scale;
+            const priorities = wizardState.priorities;
+            const complexity = wizardState.complexity;
+            
+            // Networking - always foundational
+            let netKey = scale === 'single-team' ? 'single-team' : 
+                        scale === 'multi-team' ? 'multi-team' : 'enterprise';
+            recs.push({
+                ...toolRecommendations.networking,
+                ...toolRecommendations.networking.recommendations[netKey]
+            });
+            
+            // GitOps - if prioritized or not startup
+            if (priorities.includes('gitops') || scale !== 'single-team') {
+                let gitopsKey = complexity === 'simple' ? 'simple' : 'with-gitops';
+                recs.push({
+                    ...toolRecommendations.gitops,
+                    ...toolRecommendations.gitops.recommendations[gitopsKey]
+                });
+            }
+            
+            // Secrets - always foundational
+            let secretsKey = scale === 'enterprise' || priorities.includes('security') ? 'enterprise' : 'simple';
+            recs.push({
+                ...toolRecommendations.secrets,
+                ...toolRecommendations.secrets.recommendations[secretsKey]
+            });
+            
+            // Observability - if prioritized or not single-team
+            if (priorities.includes('observability') || scale !== 'single-team') {
+                let obsKey = scale === 'enterprise' || priorities.includes('observability') ? 'full-stack' : 'simple';
+                recs.push({
+                    ...toolRecommendations.observability,
+                    ...toolRecommendations.observability.recommendations[obsKey]
+                });
+            }
+            
+            // Ingress - always needed
+            let ingressKey = scale === 'enterprise' ? 'enterprise' : 'simple';
+            recs.push({
+                ...toolRecommendations.ingress,
+                ...toolRecommendations.ingress.recommendations[ingressKey]
+            });
+            
+            // Registry
+            let registryKey = scale === 'enterprise' || priorities.includes('security') ? 'enterprise' : 'simple';
+            recs.push({
+                ...toolRecommendations.registry,
+                ...toolRecommendations.registry.recommendations[registryKey]
+            });
+            
+            // Security - if prioritized
+            if (priorities.includes('security') || scale === 'enterprise') {
+                let secKey = priorities.includes('security') || scale === 'enterprise' ? 'security-focused' : 'basic';
+                recs.push({
+                    ...toolRecommendations.security,
+                    ...toolRecommendations.security.recommendations[secKey]
+                });
+            }
+            
+            // Backup - always recommended
+            recs.push({
+                ...toolRecommendations.backup,
+                ...toolRecommendations.backup.recommendations['all']
+            });
+            
+            return recs;
+        }
+
+        function createRecommendationCard(rec) {
+            const card = document.createElement('div');
+            card.className = 'recommendation-card';
+            
+            const layerClass = `layer-${rec.layer}`;
+            const layerName = rec.layer === 0 ? 'Foundational' : rec.layer === 1 ? 'Core Operations' : 'Enhancement';
+            
+            card.innerHTML = `
+                <div class="recommendation-header">
+                    <div class="domain-name">${rec.domain}</div>
+                    <div class="layer-badge ${layerClass}">${layerName}</div>
+                </div>
+                <div class="tool-recommendation">
+                    <div class="tool-name">✓ ${rec.tool}</div>
+                    <ul class="tool-features">
+                        ${rec.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <div class="rationale">
+                        <div class="rationale-title">Waarom deze keuze?</div>
+                        <div class="rationale-text">${rec.rationale}</div>
+                    </div>
+                    ${rec.alternatives ? `
+                    <div class="alternative">
+                        <div class="alternative-title">Alternatieven:</div>
+                        <div class="alternative-text">${rec.alternatives}</div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function updateSummary() {
+            const scaleLabels = {
+                'single-team': 'Enkel Team',
+                'multi-team': 'Meerdere Teams',
+                'enterprise': 'Enterprise'
+            };
+            
+            const usecaseLabels = {
+                'startup-mvp': 'Startup MVP',
+                'production-app': 'Productie App',
+                'enterprise-platform': 'Enterprise Platform',
+                'edge-iot': 'Edge/IoT'
+            };
+            
+            const maturityLabels = {
+                'stable-only': 'Stabiel',
+                'balanced': 'Gebalanceerd',
+                'cutting-edge': 'Cutting Edge'
+            };
+            
+            document.getElementById('summary-scale').textContent = scaleLabels[wizardState.scale] || '-';
+            document.getElementById('summary-usecase').textContent = usecaseLabels[wizardState.usecase] || '-';
+            document.getElementById('summary-maturity').textContent = maturityLabels[wizardState.maturity] || '-';
+            document.getElementById('summary-priorities').textContent = wizardState.priorities.length || '0';
+        }
+
+        function exportToMarkdown() {
+            const recommendations = getRecommendations();
+            let markdown = `# Kubernetes Stack Aanbevelingen\n\n`;
+            markdown += `Gegenereerd op: ${new Date().toLocaleDateString('nl-NL')}\n\n`;
+            markdown += `## Configuratie\n\n`;
+            markdown += `- **Schaal**: ${wizardState.scale}\n`;
+            markdown += `- **Use Case**: ${wizardState.usecase}\n`;
+            markdown += `- **Maturity**: ${wizardState.maturity}\n`;
+            markdown += `- **Prioriteiten**: ${wizardState.priorities.join(', ')}\n\n`;
+            markdown += `## Aanbevolen Tools\n\n`;
+            
+            recommendations.forEach(rec => {
+                markdown += `### ${rec.domain}\n\n`;
+                markdown += `**Tool**: ${rec.tool}\n\n`;
+                markdown += `**Features**:\n`;
+                rec.features.forEach(f => {
+                    markdown += `- ${f}\n`;
+                });
+                markdown += `\n**Rationale**: ${rec.rationale}\n\n`;
+                if (rec.alternatives) {
+                    markdown += `**Alternatieven**: ${rec.alternatives}\n\n`;
+                }
+                markdown += `---\n\n`;
+            });
+            
+            // Download
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'kubecompass-aanbevelingen.md';
+            a.click();
+        }
+
+        function exportToJSON() {
+            const recommendations = getRecommendations();
+            const data = {
+                generated_at: new Date().toISOString(),
+                configuration: wizardState,
+                recommendations: recommendations
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'kubecompass-aanbevelingen.json';
+            a.click();
+        }
+
+        function resetWizard() {
+            wizardState.currentStep = 1;
+            wizardState.scale = null;
+            wizardState.usecase = null;
+            wizardState.priorities = [];
+            wizardState.maturity = null;
+            wizardState.vendor = null;
+            wizardState.complexity = null;
+            
+            // Reset UI
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.querySelector('.step[data-step="1"]').classList.add('active');
+            
+            document.querySelectorAll('.wizard-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+            
+            document.querySelectorAll('.filter-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
