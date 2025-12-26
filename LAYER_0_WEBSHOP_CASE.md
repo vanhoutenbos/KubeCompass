@@ -54,8 +54,8 @@ Nederlandse webshop met Essential SAFe organisatie (meerdere teams: Dev, Ops, Fu
 - 🎯 **Business impact driven** — Beslissingen gebaseerd op omzetrisico, niet tech hype
 
 ### Kritieke Succes Criteria
-| Criterium | Target | Huidige Situatie |
-|-----------|--------|-----------------|
+| Criterium | Doel | Huidige Situatie |
+|-----------|------|-----------------|
 | **Deployment downtime** | 0 minuten (rolling updates) | 1-4 uur per release |
 | **Incident detectie** | < 2 minuten (alerts) | 10-60 minuten (klanten bellen) |
 | **Data recovery** | Point-in-time (max 15 min verlies) | Laatste nachtelijke backup |
@@ -871,7 +871,7 @@ Voordat je Layer 1 (concrete tool selectie en platform capabilities) kan beginne
 
 #### Team Skills & Capaciteit
 - **Q15**: Hoeveel FTE heeft het Ops team?
-  - Kunnen ze platform maintainance doen naast BAU werk?
+  - Kunnen ze platform maintenance doen naast BAU werk?
   - Impact: Managed Kubernetes vs. self-hosted, automation priorities
 
 - **Q16**: Wat is de huidige Git workflow?
@@ -1150,6 +1150,6 @@ Dit document is **NIET compleet** als:
 ---
 
 **Layer 0 Document Versie**: 2.0  
-**Laatste Update**: 2025-12-26  
+**Laatste Update**: December 2024  
 **Auteur**: KubeCompass Framework + Community Feedback  
 **Licentie**: MIT — vrij te gebruiken en aan te passen voor eigen situaties
