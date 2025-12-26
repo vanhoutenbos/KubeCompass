@@ -114,7 +114,7 @@ Comprehensive testing requires multiple environments:
 
 ### The Problem
 
-KubeCompass is currently maintained by a small team (primarily solo), which limits:
+KubeCompass is currently maintained by a single developer ([@vanhoutenbos](https://github.com/vanhoutenbos)), which limits:
 - **Review coverage**: Can't test every tool thoroughly
 - **Domain expertise**: Some areas require specialized knowledge
 - **Maintenance velocity**: Updates and new content take time
@@ -200,7 +200,7 @@ KubeCompass is currently maintained by a small team (primarily solo), which limi
 4. **Submit a pull request** with a clear description
 5. **Respond to feedback** during review
 
-For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md) *(to be created)*.
+**Note**: Detailed contribution guidelines (CONTRIBUTING.md) will be added soon to further streamline the contribution process.
 
 ---
 
@@ -225,7 +225,7 @@ For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md) *(to be created)
 
 **Want to help but not sure where to start?**
 
-- 💬 Open a [GitHub Discussion](https://github.com/vanhoutenbos/KubeCompass/discussions)
+- 💬 Start a [GitHub Discussion](https://github.com/vanhoutenbos/KubeCompass/discussions) to ask questions or share ideas
 - 🐛 Check [open issues](https://github.com/vanhoutenbos/KubeCompass/issues) for tasks
 - 📧 Reach out to [@vanhoutenbos](https://github.com/vanhoutenbos) directly
 - 🤝 Connect on LinkedIn or Twitter (links in profile)
