@@ -314,8 +314,9 @@ These assumptions underpin the Layer 0 design. Follow-up questions in Section 9 
 ### 6.1 Business & Organization
 
 **Assumption 1: Team Size**
-- **Assumption**: 3-5 development teams, 2-4 operations engineers, 5-10 support agents
+- **Assumption**: 3-5 development teams (5-8 people each), 2-4 FTE operations engineers, 5-10 FTE support agents
 - **Impact on Design**: Scale of platform tooling, RBAC complexity, training needs
+- **Note**: Mix of employees and contractors can impact training investment and knowledge retention
 
 **Assumption 2: Traffic & Scale**
 - **Assumption**: Thousands to tens of thousands of daily users, not millions
@@ -495,6 +496,7 @@ These questions must be answered to progress from Layer 0 (business context) to 
    - How many development teams?
    - How many people in operations?
    - Support team size and shifts (24/7 or business hours)?
+   - Contractor vs. employee ratio? (impacts training investment and knowledge retention)
 
 2. **What are the current SLAs/SLOs (if any)?**
    - Uptime targets? (99.9%, 99.99%?)
