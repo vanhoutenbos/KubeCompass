@@ -4,6 +4,20 @@
 
 ---
 
+## Nieuwe: AI Case Advisor 🎯
+
+Voor een **gestructureerde, interactieve workflow** die je stap-voor-stap door kritieke beslissingen leidt:
+
+➡️ **Zie [AI_CASE_ADVISOR.md](AI_CASE_ADVISOR.md)** voor een conversational AI advisor die:
+- Je 5 kritieke vragen stelt (één per keer)
+- Uitlegt waarom elke vraag belangrijk is
+- Context-specifieke aanbevelingen geeft op basis van jouw antwoorden
+- Een gepersonaliseerd platform plan genereert
+
+Deze guide hieronder biedt **copy-paste prompts** voor directe integratie met ChatGPT, Claude, Gemini.
+
+---
+
 ## Wat is dit?
 
 Deze gids helpt je om KubeCompass te gebruiken met AI chatbots (zoals ChatGPT, Claude, Gemini) om gepersonaliseerde Kubernetes tool aanbevelingen te krijgen. In plaats van door documentatie te zoeken, beschrijf je gewoon jouw situatie en krijg je direct relevante "**Gebruik X, tenzij...**" adviezen.

@@ -60,20 +60,38 @@ Shop for Kubernetes tools like picking a new computer! Answer a few questions an
 - "Use X unless Y" decision guidance
 - Complete stack recommendations with rationale
 
-### 2. AI Chat Integration 🤖 NEW!
-Describe your use case to an AI assistant and get intelligent "Use X unless..." recommendations:
+### 2. AI Case Advisor: Interactive Decision Support 🤖 NEW!
+Get personalized Kubernetes platform recommendations through an AI-guided conversation:
 
-💬 **[AI Chat Integration Guide](AI_CHAT_GUIDE.md)**
+💬 **[AI Case Advisor](AI_CASE_ADVISOR.md)** - Answer 5 critical questions, receive tailored architecture
+
+**Interactive workflow:**
+- AI asks critical questions one at a time
+- Explains why each question matters for your architecture
+- Provides context-aware responses based on your answers
+- Generates personalized provider recommendations and tool stack
+- Includes "Choose X unless Y" decision rules specific to your organization
+
+**Also available:**
+- **[AI Chat Integration Guide](AI_CHAT_GUIDE.md)** - Copy-paste prompts for ChatGPT, Claude, Gemini
+- Scenario-based templates and structured output formats
+
+### 3. Unified Case Analysis Framework 📋 NEW!
+Transform raw requirements into structured, AI-friendly decision frameworks:
+
+📖 **[Unified Case Structure](UNIFIED_CASE_STRUCTURE.md)** - Template for case analysis  
+📘 **[Case Analysis Template](CASE_ANALYSIS_TEMPLATE.md)** - Step-by-step guide for creating new cases  
+📚 **[Example: Webshop Migration](cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete SME case study
 
 **What you get:**
-- Copy-paste prompts for ChatGPT, Claude, Gemini
-- Scenario-based templates (startup, enterprise, performance-critical)
-- Structured output formats (JSON, Markdown, checklists)
-- Interactive workflow patterns
-- "Use X unless Y" decision trees
-- Integration with KubeCompass framework
+- Structured requirements extraction (Layer 0/1/2 methodology)
+- "Choose X unless Y" decision rules for all domains
+- Provider recommendations mapped to scenarios
+- Prioritized question list (Critical/Important/Defer)
+- Risk assessment with mitigations
+- Machine-readable JSON for automation
 
-### 3. Interactive Visual Diagrams 🎨
+### 4. Interactive Visual Diagrams 🎨
 Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
 
 🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
@@ -86,12 +104,12 @@ Explore our visual diagrams showing domains, subdomains, and decision layers acr
 - CNCF alignment mapping
 - Interactive navigation (click domains to learn more)
 
-### 4. The Framework
+### 5. The Framework
 We map the entire Kubernetes operational landscape into **domains** (CI/CD, security, networking, observability, etc.), then identify the key **decision points** within each.
 
 📖 **[Read the Framework](FRAMEWORK.md)**
 
-### 5. The Decision Matrix
+### 6. The Decision Matrix
 An interactive guide that maps domains to tools, with filters for:
 - Maturity (Alpha / Beta / Stable / CNCF Graduated)
 - Vendor independence
