@@ -6,6 +6,16 @@
 
 ---
 
+## 🚀 Quick Start
+
+**Nieuw bij TransIP Kubernetes?** Start hier:
+
+👉 **[TransIP Quick Start Guide](TRANSIP_QUICK_START.md)** - 30-minute getting started guide
+
+Dit document bevat de complete implementatie details. Voor een snelle overview, zie de Quick Start Guide.
+
+---
+
 ## Executive Summary
 
 TransIP wordt aanbevolen als top keuze voor Nederlandse organisaties (GDPR, support, betrouwbaarheid), maar heeft **geen native Terraform provider voor Kubernetes cluster lifecycle management**. Dit document beschrijft hoe je toch Infrastructure as Code (IaC) principes kunt toepassen en hoe je omgaat met uitdagingen zoals node scaling.
