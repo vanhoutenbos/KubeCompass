@@ -118,7 +118,7 @@ Example architectures for common use cases:
 
 📚 **[Browse Scenarios](SCENARIOS.md)**
 
-### 8. Layer 0 & Layer 1 Case Studies
+### 8. Layer 0, 1 & 2 Case Studies
 Deep-dive analysis for real-world Kubernetes adoption scenarios:
 - **Layer 0: [Dutch Webshop Migration - Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
   - Availability requirements and downtime expectations
@@ -132,13 +132,19 @@ Deep-dive analysis for real-world Kubernetes adoption scenarios:
   - Observability stack (Prometheus, Grafana, Loki)
   - Security implementation (RBAC, secrets management, network policies)
   - Migration roadmap and open questions for implementation
-- **🚀 NEW: [Complete Layer 1 Implementation](IMPLEMENTATION_README.md)**: Production-ready implementation
+- **🚀 NEW: Layer 2: [Platform Enhancements & Resilience - Decision Framework](LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
+  - **NOT an implementation guide** - this is a decision framework
+  - When to add service mesh, distributed tracing, chaos engineering
+  - Trade-offs and timing considerations for each capability
+  - Policy enforcement, cost visibility, multi-region readiness
+  - "When does this complexity investment become worthwhile?"
+- **[Complete Layer 1 Implementation](IMPLEMENTATION_README.md)**: Production-ready implementation reference
   - **52 files** with 7,800+ lines of Terraform, Kubernetes manifests, CI/CD pipelines
   - **Terraform modules** for infrastructure (cluster, networking, storage)
   - **Kubernetes manifests** for platform and applications (ArgoCD, Cilium, NGINX, Prometheus, Harbor)
   - **GitHub Actions workflows** for automation
   - **Comprehensive documentation** with runbooks and DR procedures
-  - **Ready to deploy**: Complete 20-week roadmap to production
+  - **Reference architecture**: Complete roadmap, not copy-paste deployment
 
 ---
 
@@ -205,7 +211,10 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 5. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
 6. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
 7. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-8. **Study the [Layer 0 Case Studies](LAYER_0_WEBSHOP_CASE.md)** — real-world foundational analysis (Dutch webshop migration)
+8. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
+   - **[Layer 0: Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
+   - **[Layer 1: Tool Selection](LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
+   - **[Layer 2: Enhancement Decisions](LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
 9. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
 10. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
 11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
