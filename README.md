@@ -120,6 +120,8 @@ Example architectures for common use cases:
 
 ### 8. Layer 0, 1 & 2 Case Studies
 Deep-dive analysis for real-world Kubernetes adoption scenarios:
+
+#### Original Case Study Documents
 - **Layer 0: [Dutch Webshop Migration - Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
   - Availability requirements and downtime expectations
   - Data criticality with RPO/RTO definitions
@@ -132,12 +134,56 @@ Deep-dive analysis for real-world Kubernetes adoption scenarios:
   - Observability stack (Prometheus, Grafana, Loki)
   - Security implementation (RBAC, secrets management, network policies)
   - Migration roadmap and open questions for implementation
-- **🚀 NEW: Layer 2: [Platform Enhancements & Resilience - Decision Framework](LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
+- **Layer 2: [Platform Enhancements & Resilience - Decision Framework](LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
   - **NOT an implementation guide** - this is a decision framework
   - When to add service mesh, distributed tracing, chaos engineering
   - Trade-offs and timing considerations for each capability
   - Policy enforcement, cost visibility, multi-region readiness
   - "When does this complexity investment become worthwhile?"
+
+#### 🆕 Architecture Review Documents (NEW!)
+Structured decision support documentation for audit-proof, interactive architecture decisions:
+
+- **📊 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Start here! Executive summary + navigation guide
+  - Overview of restructured documentation
+  - Stakeholder-specific reading paths (Management, Architects, Engineers, AI Agents)
+  - Decision flow from week 1 to implementation
+  - Validation checklist for audit-proof documentation
+
+- **🔗 [Layer 0 → Layer 1 Mapping](LAYER_0_LAYER_1_MAPPING.md)** — Complete traceability matrix
+  - Every Layer 1 tool choice traced back to Layer 0 requirements
+  - Dependency chains: Business → Technical → Platform → Tooling
+  - Trade-off analysis for conflicting requirements
+  - Decision logic for interactive filtering and AI agents
+
+- **❓ [Open Questions](OPEN_QUESTIONS.md)** — Categorized by priority (Critical/Important/Can Later)
+  - 🔴 Critical questions blocking implementation (9 questions, week 1)
+  - 🟠 Important questions for first month (8 questions)
+  - 🟢 Can be decided later iteratively (10+ questions)
+  - Impact analysis and decision timeline per question
+
+- **🎯 [Decision Rules](DECISION_RULES.md)** — "Choose X unless Y" per tool/function
+  - CNI Plugin: Use Cilium unless (Calico expertise OR BGP requirements)
+  - GitOps: Use Argo CD unless (GitOps-pure without UI)
+  - Observability: Use Prometheus+Grafana unless (enterprise SaaS budget)
+  - Database: Use Managed PostgreSQL unless (DBA expertise AND vendor independence absolute)
+  - Complete decision trees with JavaScript-like pseudocode for automation
+
+- **🔍 [Improvement Points](IMPROVEMENT_POINTS.md)** — Inconsistencies, gaps & risks
+  - 4 critical inconsistencies requiring resolution
+  - 5 missing assumptions that need validation
+  - 3 conflicting requirements with resolution options
+  - 5 documentation gaps (missing runbooks, procedures)
+  - 5 insufficiently mitigated risks
+
+**Use Cases:**
+- **Architecture Review**: Validate decision traceability and consistency
+- **Project Planning**: Prioritize questions and decisions (critical first)
+- **AI Decision Agents**: Structured input for automated recommendations
+- **Interactive Site**: Foundation for user-guided architecture decisions
+- **Compliance/Audit**: Proof that all decisions are traceable to requirements
+
+#### Implementation Reference
 - **[Complete Layer 1 Implementation](IMPLEMENTATION_README.md)**: Production-ready implementation reference
   - **52 files** with 7,800+ lines of Terraform, Kubernetes manifests, CI/CD pipelines
   - **Terraform modules** for infrastructure (cluster, networking, storage)
@@ -215,6 +261,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
    - **[Layer 0: Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
    - **[Layer 1: Tool Selection](LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
    - **[Layer 2: Enhancement Decisions](LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
+   - **🆕 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
 9. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
 10. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
 11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
