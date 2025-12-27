@@ -1,0 +1,224 @@
+# Velero Backup and Disaster Recovery
+# Cluster-level backup and restore for Kubernetes
+
+---
+# Install via Helm:
+# helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+# helm repo update
+# 
+# helm install velero vmware-tanzu/velero \
+#   --namespace velero \
+#   --create-namespace \
+#   --set configuration.backupStorageLocation[0].name=default \
+#   --set configuration.backupStorageLocation[0].provider=aws \
+#   --set configuration.backupStorageLocation[0].bucket=webshop-velero-backups \
+#   --set configuration.backupStorageLocation[0].config.region=eu-west-1 \
+#   --set configuration.backupStorageLocation[0].config.s3ForcePathStyle=true \
+#   --set configuration.backupStorageLocation[0].config.s3Url=https://s3.eu-west-1.amazonaws.com \
+#   --set configuration.volumeSnapshotLocation[0].name=default \
+#   --set configuration.volumeSnapshotLocation[0].provider=aws \
+#   --set configuration.volumeSnapshotLocation[0].config.region=eu-west-1 \
+#   --set initContainers[0].name=velero-plugin-for-aws \
+#   --set initContainers[0].image=velero/velero-plugin-for-aws:v1.8.0 \
+#   --set initContainers[0].volumeMounts[0].mountPath=/target \
+#   --set initContainers[0].volumeMounts[0].name=plugins
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: velero
+  labels:
+    name: velero
+
+---
+# BackupStorageLocation for S3-compatible storage
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: default
+  namespace: velero
+spec:
+  provider: aws
+  objectStorage:
+    bucket: webshop-velero-backups
+    prefix: cluster-backups
+  config:
+    region: eu-west-1
+    s3ForcePathStyle: "true"
+    s3Url: https://s3.eu-west-1.amazonaws.com
+    # For DigitalOcean Spaces:
+    # s3Url: https://ams3.digitaloceanspaces.com
+
+---
+# VolumeSnapshotLocation
+apiVersion: velero.io/v1
+kind: VolumeSnapshotLocation
+metadata:
+  name: default
+  namespace: velero
+spec:
+  provider: aws
+  config:
+    region: eu-west-1
+
+---
+# Schedule: Daily full cluster backup
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: daily-full-backup
+  namespace: velero
+spec:
+  schedule: "0 2 * * *"  # 2 AM UTC daily
+  template:
+    includedNamespaces:
+    - "*"
+    excludedNamespaces:
+    - kube-system
+    - kube-public
+    - kube-node-lease
+    includedResources:
+    - "*"
+    excludedResources:
+    - events
+    - events.events.k8s.io
+    includeClusterResources: true
+    snapshotVolumes: true
+    ttl: 720h  # 30 days retention
+    storageLocation: default
+    volumeSnapshotLocations:
+    - default
+
+---
+# Schedule: Hourly backup of webshop namespace
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: hourly-webshop-backup
+  namespace: velero
+spec:
+  schedule: "0 * * * *"  # Every hour
+  template:
+    includedNamespaces:
+    - webshop
+    includedResources:
+    - "*"
+    includeClusterResources: false
+    snapshotVolumes: true
+    ttl: 168h  # 7 days retention
+    storageLocation: default
+    volumeSnapshotLocations:
+    - default
+
+---
+# Schedule: Database backup (via annotations)
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: database-backup
+  namespace: velero
+spec:
+  schedule: "0 */6 * * *"  # Every 6 hours
+  template:
+    includedNamespaces:
+    - webshop
+    labelSelector:
+      matchLabels:
+        app: postgresql
+    includeClusterResources: false
+    snapshotVolumes: true
+    ttl: 720h  # 30 days retention
+    storageLocation: default
+    volumeSnapshotLocations:
+    - default
+
+---
+# Backup credentials (use External Secrets Operator)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: velero-credentials
+  namespace: velero
+type: Opaque
+stringData:
+  cloud: |
+    [default]
+    aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+    aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+---
+# ServiceMonitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: velero
+  namespace: velero
+  labels:
+    app: velero
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: velero
+  endpoints:
+  - port: http-monitoring
+    interval: 30s
+    path: /metrics
+
+---
+# Alert: Backup failure
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: velero-alerts
+  namespace: velero
+spec:
+  groups:
+  - name: velero.rules
+    interval: 5m
+    rules:
+    - alert: VeleroBackupFailure
+      expr: velero_backup_failure_total > 0
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Velero backup has failed"
+        description: "Backup {{ $labels.schedule }} has failed."
+        action: "Check Velero logs and backup status"
+    
+    - alert: VeleroBackupPartialFailure
+      expr: velero_backup_partial_failure_total > 0
+      for: 5m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "Velero backup partially failed"
+        description: "Backup {{ $labels.schedule }} partially failed."
+    
+    - alert: VeleroBackupTooOld
+      expr: time() - velero_backup_last_successful_timestamp > 86400
+      for: 1h
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "Velero backup is too old"
+        description: "Last successful backup was more than 24 hours ago."
+
+---
+# Restore example (manual, not automated)
+# apiVersion: velero.io/v1
+# kind: Restore
+# metadata:
+#   name: restore-webshop-20240101
+#   namespace: velero
+# spec:
+#   backupName: daily-full-backup-20240101020000
+#   includedNamespaces:
+#   - webshop
+#   excludedResources:
+#   - nodes
+#   - events
+#   restorePVs: true

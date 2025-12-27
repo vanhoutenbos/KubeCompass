@@ -1,0 +1,205 @@
+# Prometheus Installation
+# Metrics collection and alerting for the platform
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
+  labels:
+    name: observability
+
+---
+# Install via Helm (kube-prometheus-stack):
+# helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+# helm repo update
+# 
+# helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+#   --namespace observability \
+#   --create-namespace \
+#   --set prometheus.prometheusSpec.retention=30d \
+#   --set prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage=50Gi \
+#   --set grafana.enabled=true \
+#   --set alertmanager.enabled=true
+
+---
+# PrometheusRule for Webshop Alerts
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: webshop-alerts
+  namespace: observability
+  labels:
+    prometheus: kube-prometheus
+spec:
+  groups:
+  - name: webshop.rules
+    interval: 30s
+    rules:
+    
+    # Critical: Application Down
+    - alert: WebshopDown
+      expr: up{job="webshop-app"} == 0
+      for: 2m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Webshop application is down"
+        description: "Webshop app in namespace {{ $labels.namespace }} has been down for more than 2 minutes."
+        action: "Check pod status, logs, and recent deployments"
+    
+    # Critical: High Error Rate
+    - alert: HighErrorRate
+      expr: |
+        rate(http_requests_total{job="webshop-app",status=~"5.."}[5m]) 
+        / rate(http_requests_total{job="webshop-app"}[5m]) > 0.05
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "High 5xx error rate detected"
+        description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes."
+    
+    # Critical: Checkout Failure
+    - alert: CheckoutFailureHigh
+      expr: |
+        rate(checkout_attempts_total{status="failed"}[10m])
+        / rate(checkout_attempts_total[10m]) > 0.10
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Checkout failure rate is high"
+        description: "{{ $value | humanizePercentage }} of checkouts are failing."
+        action: "Check payment gateway, database connectivity, and application logs"
+    
+    # Warning: Slow Response Time
+    - alert: SlowResponseTime
+      expr: |
+        histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="webshop-app"}[5m])) > 2
+      for: 10m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "95th percentile response time is slow"
+        description: "P95 response time is {{ $value }}s, threshold is 2s."
+    
+    # Warning: Database Connection Pool Exhaustion
+    - alert: DatabaseConnectionPoolHigh
+      expr: |
+        (database_connections_active / database_connections_max) > 0.8
+      for: 5m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "Database connection pool usage is high"
+        description: "Connection pool is {{ $value | humanizePercentage }} full."
+    
+    # Info: High Traffic
+    - alert: HighTraffic
+      expr: |
+        rate(http_requests_total{job="webshop-app"}[5m]) > 1000
+      for: 10m
+      labels:
+        severity: info
+        team: platform
+      annotations:
+        summary: "High traffic detected"
+        description: "Request rate is {{ $value }} req/s."
+
+---
+# PrometheusRule for Infrastructure Alerts
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: infrastructure-alerts
+  namespace: observability
+  labels:
+    prometheus: kube-prometheus
+spec:
+  groups:
+  - name: infrastructure.rules
+    interval: 30s
+    rules:
+    
+    # Critical: Node Down
+    - alert: NodeDown
+      expr: up{job="kubernetes-nodes"} == 0
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Kubernetes node is down"
+        description: "Node {{ $labels.instance }} has been down for more than 5 minutes."
+    
+    # Critical: High CPU Usage
+    - alert: HighCPUUsage
+      expr: |
+        (1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 0.9
+      for: 10m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "High CPU usage on node"
+        description: "CPU usage on {{ $labels.instance }} is {{ $value | humanizePercentage }}."
+    
+    # Critical: High Memory Usage
+    - alert: HighMemoryUsage
+      expr: |
+        (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.9
+      for: 10m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "High memory usage on node"
+        description: "Memory usage on {{ $labels.instance }} is {{ $value | humanizePercentage }}."
+    
+    # Warning: Disk Space Low
+    - alert: DiskSpaceLow
+      expr: |
+        (1 - (node_filesystem_avail_bytes{fstype!~"tmpfs|nfs"} / node_filesystem_size_bytes)) > 0.8
+      for: 5m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "Disk space is running low"
+        description: "Disk usage on {{ $labels.instance }} mount {{ $labels.mountpoint }} is {{ $value | humanizePercentage }}."
+    
+    # Critical: Pod Crash Loop
+    - alert: PodCrashLooping
+      expr: |
+        rate(kube_pod_container_status_restarts_total[15m]) > 0
+      for: 5m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "Pod is crash looping"
+        description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is crash looping."
+
+---
+# ServiceMonitor for Webshop Application
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: webshop-app
+  namespace: webshop
+  labels:
+    app: webshop
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: webshop
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics

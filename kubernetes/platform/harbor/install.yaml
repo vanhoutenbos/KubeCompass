@@ -1,0 +1,182 @@
+# Harbor Container Registry Installation
+# Self-hosted container registry with vulnerability scanning
+
+---
+# Install via Helm:
+# helm repo add harbor https://helm.goharbor.io
+# helm repo update
+# 
+# helm install harbor harbor/harbor \
+#   --namespace harbor \
+#   --create-namespace \
+#   --set expose.type=ingress \
+#   --set expose.ingress.hosts.core=harbor.webshop.example.com \
+#   --set expose.tls.enabled=true \
+#   --set expose.tls.certSource=secret \
+#   --set expose.tls.secret.secretName=harbor-tls \
+#   --set persistence.enabled=true \
+#   --set persistence.persistentVolumeClaim.registry.storageClass=fast \
+#   --set persistence.persistentVolumeClaim.registry.size=100Gi \
+#   --set trivy.enabled=true \
+#   --set notary.enabled=true
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harbor
+  labels:
+    name: harbor
+
+---
+# Certificate for Harbor
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-tls
+  namespace: harbor
+spec:
+  secretName: harbor-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - harbor.webshop.example.com
+  - notary.harbor.webshop.example.com
+  renewBefore: 720h
+
+---
+# Harbor Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-config
+  namespace: harbor
+data:
+  config.yaml: |
+    # Harbor configuration
+    hostname: harbor.webshop.example.com
+    
+    # Admin password (change after first login)
+    harbor_admin_password: Harbor12345
+    
+    # Database configuration
+    database:
+      type: internal
+      internal:
+        password: changeit
+    
+    # Redis configuration
+    redis:
+      type: internal
+    
+    # Storage configuration
+    storage_service:
+      filesystem:
+        rootdirectory: /storage
+    
+    # Trivy scanner
+    trivy:
+      enabled: true
+      skip_update: false
+      insecure: false
+    
+    # Image retention policy
+    retention:
+      enabled: true
+      policy:
+        - action: retain
+          scope: "**"
+          pattern: "latest,v*"
+        - action: delete
+          scope: "**"
+          days_since_last_pull: 30
+
+---
+# Harbor Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: harbor-ingress
+  namespace: harbor
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - harbor.webshop.example.com
+    secretName: harbor-tls
+  rules:
+  - host: harbor.webshop.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: harbor
+            port:
+              number: 80
+
+---
+# Robot Account for CI/CD
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-robot-account
+  namespace: harbor
+type: Opaque
+stringData:
+  username: robot$cicd
+  # Password generated via Harbor UI or API
+  password: ""
+
+---
+# ServiceMonitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: harbor
+  namespace: harbor
+  labels:
+    app: harbor
+spec:
+  selector:
+    matchLabels:
+      app: harbor
+      component: core
+  endpoints:
+  - port: http-metrics
+    interval: 30s
+    path: /metrics
+
+---
+# NetworkPolicy for Harbor
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: harbor-ingress
+  namespace: harbor
+spec:
+  podSelector:
+    matchLabels:
+      app: harbor
+  policyTypes:
+  - Ingress
+  ingress:
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 80
+  # Allow from Kubernetes nodes (for image pulls)
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 5000

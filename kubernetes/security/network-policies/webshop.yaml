@@ -1,0 +1,228 @@
+# Network Policies for Webshop Platform
+# Default deny with explicit allow rules
+
+---
+# Default Deny All Ingress and Egress (webshop namespace)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: webshop
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+# Allow DNS queries (all namespaces need this)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: webshop
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+# Allow webshop frontend to backend
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: webshop
+spec:
+  podSelector:
+    matchLabels:
+      app: webshop-backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: webshop-frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+
+---
+# Allow ingress controller to webshop frontend
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-frontend
+  namespace: webshop
+spec:
+  podSelector:
+    matchLabels:
+      app: webshop-frontend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8080
+
+---
+# Allow webshop backend to database (PostgreSQL)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-to-database
+  namespace: webshop
+spec:
+  podSelector:
+    matchLabels:
+      app: postgresql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: webshop-backend
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# Allow webshop backend to Valkey (Redis)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-to-valkey
+  namespace: webshop
+spec:
+  podSelector:
+    matchLabels:
+      app: valkey
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: webshop-backend
+    - podSelector:
+        matchLabels:
+          app: webshop-frontend
+    ports:
+    - protocol: TCP
+      port: 6379
+
+---
+# Egress: Allow payment API (external)
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-payment-api
+  namespace: webshop
+spec:
+  endpointSelector:
+    matchLabels:
+      app: payment-service
+  egress:
+  - toFQDNs:
+    - matchName: "api.payment-provider.com"
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+
+---
+# Egress: Allow shipping API (external)
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-shipping-api
+  namespace: webshop
+spec:
+  endpointSelector:
+    matchLabels:
+      app: shipping-service
+  egress:
+  - toFQDNs:
+    - matchName: "api.shipping-provider.com"
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+
+---
+# Egress: Allow email API (external)
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-email-api
+  namespace: webshop
+spec:
+  endpointSelector:
+    matchLabels:
+      app: email-service
+  egress:
+  - toFQDNs:
+    - matchName: "smtp.email-provider.com"
+    toPorts:
+    - ports:
+      - port: "587"
+        protocol: TCP
+
+---
+# Allow Prometheus to scrape metrics
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-prometheus-scrape
+  namespace: webshop
+spec:
+  podSelector:
+    matchLabels:
+      prometheus: "true"
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: observability
+    ports:
+    - protocol: TCP
+      port: 9090
+
+---
+# Allow Loki/Promtail to collect logs
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-loki-promtail
+  namespace: webshop
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: observability
+    - podSelector:
+        matchLabels:
+          app: loki
+    ports:
+    - protocol: TCP
+      port: 3100

@@ -1,0 +1,255 @@
+# RBAC Configuration for Webshop Platform
+# Role-Based Access Control policies
+
+---
+# Namespace for security configurations
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security
+
+---
+# ClusterRole: Developer (Read-only in production)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: developer
+rules:
+# Read-only access to most resources
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "watch"]
+# Read logs
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get", "list"]
+# No access to secrets
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: []
+
+---
+# ClusterRole: Platform Engineer (Full access)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: platform-engineer
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+# ClusterRole: Operations (Production deployment)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: operations
+rules:
+# Full access to deployments
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets"]
+  verbs: ["*"]
+# Manage services
+- apiGroups: [""]
+  resources: ["services", "endpoints"]
+  verbs: ["*"]
+# Read pods and logs
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+# Execute in pods (for debugging)
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+# Manage ingress
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["*"]
+# Read secrets (but not modify)
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+
+---
+# RoleBinding: Developers in dev namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-dev
+  namespace: dev
+subjects:
+- kind: Group
+  name: dev-team
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# RoleBinding: Developers in staging namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-staging
+  namespace: staging
+subjects:
+- kind: Group
+  name: dev-team
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# RoleBinding: Developers in production (read-only)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-production
+  namespace: webshop
+subjects:
+- kind: Group
+  name: dev-team
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ClusterRoleBinding: Platform Engineers
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: platform-engineers
+subjects:
+- kind: Group
+  name: platform-team
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: platform-engineer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# RoleBinding: Operations in production
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: operations-production
+  namespace: webshop
+subjects:
+- kind: Group
+  name: ops-team
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: operations
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ServiceAccount for ArgoCD
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-application-controller
+  namespace: argocd
+
+---
+# ClusterRoleBinding for ArgoCD
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-application-controller
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: argocd
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ServiceAccount for Velero (backup)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: velero
+  namespace: velero
+
+---
+# ClusterRoleBinding for Velero
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: velero
+subjects:
+- kind: ServiceAccount
+  name: velero
+  namespace: velero
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Break-glass: Emergency access role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: break-glass-admin
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+# ConfigMap for audit policy
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audit-policy
+  namespace: security
+data:
+  policy.yaml: |
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+    # Log all requests at metadata level
+    - level: Metadata
+      omitStages:
+      - RequestReceived
+    
+    # Log secret access at Request level (includes who accessed)
+    - level: Request
+      resources:
+      - group: ""
+        resources: ["secrets"]
+    
+    # Log RBAC changes at RequestResponse level
+    - level: RequestResponse
+      verbs: ["create", "update", "patch", "delete"]
+      resources:
+      - group: "rbac.authorization.k8s.io"
+        resources: ["roles", "rolebindings", "clusterroles", "clusterrolebindings"]
+    
+    # Log break-glass usage
+    - level: RequestResponse
+      userGroups: ["system:masters", "break-glass-admin"]
+    
+    # Don't log read-only requests to reduce noise
+    - level: None
+      verbs: ["get", "list", "watch"]
+      resources:
+      - group: ""
+        resources: ["pods", "services", "configmaps"]
