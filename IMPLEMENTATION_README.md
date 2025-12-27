@@ -1,166 +1,134 @@
-# Layer 1 Webshop Migration - Complete Implementation
+# Layer 1 Webshop Migration - Reference Architecture
 
-This directory contains the **complete, production-ready implementation** for migrating a Dutch webshop to Kubernetes, following Layer 0 requirements and Layer 1 tool selections.
+This document provides a **reference architecture and design patterns** for migrating a Dutch webshop to Kubernetes, following Layer 0 requirements and Layer 1 tool selections.
 
-## 🎯 What's Included
+## ⚠️ Important Note
 
-This implementation provides **everything needed** to migrate to Kubernetes:
+**KubeCompass is a documentation-first project.** This repository contains architectural guidance, decision frameworks, and best practices—not runnable implementation code.
 
-### ✅ Infrastructure as Code (Terraform)
-- **3 reusable modules**: Kubernetes cluster, networking (Cilium), storage
-- **3 environments**: dev, staging, production with environment-specific configs
-- **Remote state**: S3-compatible backend with state locking
-- **Documentation**: Complete setup and usage guides
+**Why documentation-only?**
+- Focus on teaching principles and decision-making, not prescriptive solutions
+- Avoid tight coupling to specific provider APIs or versions
+- Allow you to adapt patterns to your specific context and requirements
+- Prevent copy-paste implementations without understanding trade-offs
 
-### ✅ Kubernetes Manifests (GitOps-ready)
-- **ArgoCD**: Full GitOps setup with App-of-Apps pattern
-- **Platform components**: Cilium, NGINX Ingress, cert-manager, Harbor, External Secrets
-- **Observability**: Prometheus, Grafana, Loki with custom dashboards and alerts
-- **Security**: RBAC, Network Policies, Pod Security Standards
-- **Applications**: Webshop deployment with Kustomize overlays, Valkey (Redis)
-- **Backup**: Velero with automated backup schedules
+**You should create your own implementation based on these patterns and your specific requirements.**
 
-### ✅ CI/CD Pipelines (GitHub Actions)
-- **Infrastructure pipeline**: Terraform plan/apply for all environments
-- **Application pipeline**: Build, scan (Trivy), push to Harbor, deploy
-- **Security**: Image scanning, secret scanning, vulnerability checks
-- **GitOps integration**: Automatic sync to ArgoCD
+## 🎯 What's Documented
+
+This reference architecture covers all aspects needed to migrate to Kubernetes:
+
+### ✅ Infrastructure as Code Patterns
+- **Module structure**: Kubernetes cluster, networking (Cilium), storage organization
+- **Environment strategy**: dev, staging, production separation patterns
+- **State management**: S3-compatible backend best practices
+- **Documentation templates**: Setup and usage guide patterns
+
+### ✅ Kubernetes Manifest Patterns
+- **ArgoCD**: GitOps setup patterns with App-of-Apps approach
+- **Platform components**: Cilium, NGINX Ingress, cert-manager, Harbor, External Secrets patterns
+- **Observability**: Prometheus, Grafana, Loki configuration patterns
+- **Security**: RBAC, Network Policies, Pod Security Standards patterns
+- **Applications**: Deployment patterns with Kustomize overlay structure
+- **Backup**: Velero configuration patterns
+
+### ✅ CI/CD Pipeline Patterns
+- **Infrastructure automation**: Terraform workflow patterns
+- **Application pipelines**: Build, scan, push, deploy patterns
+- **Security integration**: Image scanning and vulnerability check patterns
+- **GitOps workflows**: Automatic sync patterns
 
 ### ✅ Comprehensive Documentation
 - **Implementation guide**: 20-week roadmap with clear phases
-- **Deployment runbook**: Step-by-step operational procedures
-- **Disaster recovery**: Complete DR procedures with RPO/RTO
-- **Cost estimation**: Detailed monthly and annual costs
-- **Training plan**: Team onboarding and skill development
+- **Deployment patterns**: Step-by-step operational patterns
+- **Disaster recovery**: DR procedure patterns with RPO/RTO considerations
+- **Cost estimation**: Calculation methodologies
+- **Training approach**: Team onboarding structure
 
-## 🚀 Quick Start
+## 🚀 How to Use This Reference Architecture
 
-### Prerequisites
+### Step 1: Understand the Patterns
 
-- Terraform >= 1.6.0
-- kubectl
-- Helm >= 3.0
-- Cloud provider account (DigitalOcean, Scaleway, OVHcloud, etc.)
-- GitHub account for CI/CD
+Study the architectural documentation:
+- [📋 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
+- [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [🔍 Layer 0→1 Mapping](LAYER_0_LAYER_1_MAPPING.md) - Traceability matrix
 
-### Step 1: Infrastructure Provisioning
+### Step 2: Adapt to Your Context
 
-```bash
-# Clone repository
-git clone https://github.com/vanhoutenbos/KubeCompass.git
-cd KubeCompass
+Based on the patterns, create your own implementation:
+- Choose your specific managed Kubernetes provider
+- Adapt Terraform modules to your provider's API
+- Customize Kubernetes manifests for your requirements
+- Implement CI/CD pipelines in your environment
 
-# Navigate to environment
-cd terraform/environments/production
+### Step 3: Follow Best Practices
 
-# Initialize Terraform
-terraform init
+Use the documented patterns as guidance:
+- Security patterns for RBAC and network policies
+- Observability patterns for metrics and logging
+- Backup and DR patterns for resilience
+- GitOps patterns for deployment automation
 
-# Plan infrastructure
-terraform plan -out=tfplan
+## 📁 Documentation Structure
 
-# Apply (requires approval)
-terraform apply tfplan
-```
-
-### Step 2: Install Core Components
-
-```bash
-# Get kubeconfig
-export KUBECONFIG=./kubeconfig-production.yaml
-
-# Install Cilium CNI
-helm install cilium cilium/cilium --version 1.14.5 \
-  --namespace kube-system \
-  --values kubernetes/platform/cilium/values.yaml
-
-# Install NGINX Ingress
-helm install ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx \
-  --create-namespace
-
-# Install cert-manager
-helm install cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --set installCRDs=true
-
-# Install ArgoCD
-kubectl apply -f kubernetes/argocd/install.yaml
-```
-
-### Step 3: Deploy via GitOps
-
-```bash
-# Apply ArgoCD applications
-kubectl apply -f kubernetes/argocd/applications/production/
-
-# Sync all applications
-argocd app sync --all
-```
-
-## 📁 Repository Structure
+The architecture is documented across multiple files:
 
 ```
 .
-├── terraform/                  # Infrastructure as Code
-│   ├── modules/               # Reusable Terraform modules
-│   └── environments/          # Environment-specific configs
-│
-├── kubernetes/                 # Kubernetes manifests (GitOps)
-│   ├── argocd/                # GitOps configuration
-│   ├── platform/              # Platform components
-│   ├── observability/         # Monitoring and logging
-│   ├── security/              # Security policies
-│   ├── applications/          # Application workloads
-│   └── backup/                # Backup and DR
-│
-├── .github/workflows/         # CI/CD pipelines
-│   ├── terraform.yaml         # Infrastructure automation
-│   └── ci-cd-webshop.yaml    # Application automation
-│
-└── docs/                      # Documentation
-    ├── IMPLEMENTATION_GUIDE.md  # Complete implementation guide
-    └── runbooks/                # Operational procedures
+├── LAYER_0_WEBSHOP_CASE.md          # Foundational requirements
+├── LAYER_1_WEBSHOP_CASE.md          # Tool selection with managed K8s nuances
+├── LAYER_2_WEBSHOP_CASE.md          # Advanced capabilities
+├── LAYER_0_LAYER_1_MAPPING.md       # Traceability matrix
+├── DECISION_RULES.md                # "Choose X unless Y" rules
+├── OPEN_QUESTIONS.md                # Critical questions to answer
+├── IMPROVEMENT_POINTS.md            # Known gaps and risks
+├── IMPLEMENTATION_README.md         # This file
+├── IMPLEMENTATION_SUMMARY.md        # Summary of patterns
+├── IMPLEMENTATION_COMPLETE.md       # Completion checklist
+└── docs/
+    └── TRANSIP_INFRASTRUCTURE_AS_CODE.md  # Provider-specific guidance
 ```
 
-## 🎓 Documentation
+## 🎓 Key Documentation
 
 ### Getting Started
-- [📖 Implementation Guide](docs/IMPLEMENTATION_GUIDE.md) - **START HERE**: Complete 20-week roadmap
-- [🏗️ Terraform README](terraform/README.md) - Infrastructure provisioning guide
-- [☸️ Kubernetes README](kubernetes/README.md) - Kubernetes manifests guide
+- [📖 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - **START HERE**: Understand requirements first
+- [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices with managed Kubernetes nuances
+- [🔗 Layer 0→1 Mapping](LAYER_0_LAYER_1_MAPPING.md) - How tools map to requirements
 
-### Operations
-- [🚀 Deployment Runbook](docs/runbooks/deployment.md) - Step-by-step deployment procedures
-- [🆘 Disaster Recovery](docs/runbooks/disaster-recovery.md) - DR procedures and testing
+### Decision Support
+- [🎯 Decision Rules](DECISION_RULES.md) - "Choose X unless Y" for all domains
+- [❓ Open Questions](OPEN_QUESTIONS.md) - Critical questions to answer before implementation
+- [🔍 Improvement Points](IMPROVEMENT_POINTS.md) - Known gaps and risk mitigations
 
-### Architecture
+### Architecture Patterns
 - [📋 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
 - [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [🚀 Layer 2 Enhancements](LAYER_2_WEBSHOP_CASE.md) - Advanced capability patterns
 
 ## 🎯 Success Criteria
 
-This implementation achieves all Layer 0 success criteria:
+This reference architecture addresses all Layer 0 success criteria:
 
-| Criterion | Target | Implementation |
-|-----------|--------|----------------|
-| **Deployment downtime** | 0 minutes | Rolling updates + readiness probes |
-| **Incident detection** | < 2 minutes | Prometheus alerts + PagerDuty |
-| **Data recovery** | < 15 minutes | Velero backups + managed DB PITR |
-| **Vendor migration** | < 1 quarter | Terraform + standard K8s API |
-| **Developer self-service** | Via Git PR | ArgoCD GitOps + GitHub Actions |
+| Criterion | Target | Pattern |
+|-----------|--------|---------|
+| **Deployment downtime** | 0 minutes | Rolling updates + readiness probes pattern |
+| **Incident detection** | < 2 minutes | Prometheus alerts + notification pattern |
+| **Data recovery** | < 15 minutes | Backup automation + managed DB PITR pattern |
+| **Vendor migration** | < 1 quarter | Standard K8s API + IaC pattern |
+| **Developer self-service** | Via Git PR | GitOps + automated pipeline pattern |
 
-## 🔐 Security
+## 🔐 Security Patterns
 
-### Implemented Controls
+### Recommended Controls
 
-- ✅ **RBAC**: Role-based access control with least privilege
-- ✅ **Network Policies**: Default deny with explicit allows (L3/L4/L7)
-- ✅ **Pod Security**: Restricted profile enforced
-- ✅ **Secrets Management**: External Secrets Operator (no secrets in Git)
-- ✅ **Image Scanning**: Trivy in CI/CD pipeline
-- ✅ **Audit Logging**: All RBAC and break-glass actions logged
+- ✅ **RBAC**: Role-based access control with least privilege principle
+- ✅ **Network Policies**: Default deny with explicit allows (L3/L4/L7) pattern
+- ✅ **Pod Security**: Restricted profile enforcement pattern
+- ✅ **Secrets Management**: External Secrets Operator pattern (no secrets in Git)
+- ✅ **Image Scanning**: Trivy in CI/CD pipeline pattern
+- ✅ **Audit Logging**: RBAC and break-glass action logging pattern
 
 ### Security Best Practices
 
@@ -171,57 +139,57 @@ This implementation achieves all Layer 0 success criteria:
 - Network segmentation enforced
 - TLS everywhere (Let's Encrypt)
 
-## 📊 Observability
+## 📊 Observability Patterns
 
 ### Metrics (Prometheus)
-- Infrastructure: CPU, memory, disk, network
-- Application: Request rate, error rate, latency
-- Business: Checkout conversion, order processing, payment success
+- Infrastructure: CPU, memory, disk, network monitoring
+- Application: Request rate, error rate, latency metrics
+- Business: Checkout conversion, order processing, payment success metrics
 
 ### Logs (Loki)
-- Centralized log aggregation
-- GDPR compliant (no PII logging)
-- 30-day retention
+- Centralized log aggregation pattern
+- GDPR compliance (no PII logging) pattern
+- Retention policy patterns
 
 ### Dashboards (Grafana)
-- Webshop overview (business metrics)
-- Infrastructure overview
-- Application performance
-- Security events
+- Webshop overview (business metrics) dashboard pattern
+- Infrastructure overview dashboard pattern
+- Application performance dashboard pattern
+- Security events dashboard pattern
 
-### Alerts
+### Alert Patterns
 - **Critical**: Page ops immediately (app down, high error rate)
 - **Warning**: Slack notification (slow response, high resource usage)
 - **Info**: Dashboard only (traffic spike, deployments)
 
-## 💰 Cost Estimation
+## 💰 Cost Estimation Methodology
 
-### Monthly Infrastructure Costs
+### Monthly Infrastructure Cost Patterns
 
-- **Dev**: ~€175/month (3 small nodes)
-- **Staging**: ~€465/month (5 medium nodes)
-- **Production**: ~€1,780-2,580/month (6-10 large nodes, autoscaling)
+- **Dev**: ~€175/month (3 small nodes pattern)
+- **Staging**: ~€465/month (5 medium nodes pattern)
+- **Production**: ~€1,780-2,580/month (6-10 large nodes, autoscaling pattern)
 
-**Annual Total**: €29,000-38,000/year
+**Annual Total Estimate**: €29,000-38,000/year
 
-See [Implementation Guide](docs/IMPLEMENTATION_GUIDE.md#cost-estimation) for detailed breakdown.
+*Note: Actual costs depend on your specific provider, node sizes, and usage patterns.*
 
-## 🛠️ Technology Stack
+## 🛠️ Reference Technology Stack
 
 ### Infrastructure
-- **Cloud Provider**: EU-based (DigitalOcean, Scaleway, OVHcloud)
-- **IaC**: Terraform 1.6+
-- **Kubernetes**: 1.28+ (N-1 strategy)
+- **Cloud Provider**: EU-based managed Kubernetes (see Layer 1 for nuances)
+- **IaC**: Terraform (provider-agnostic pattern)
+- **Kubernetes**: 1.28+ (N-1 version strategy)
 
 ### Networking
-- **CNI**: Cilium 1.14 (eBPF-based)
+- **CNI**: Cilium (eBPF-based, see alternatives in Layer 1)
 - **Ingress**: NGINX Ingress Controller
 - **SSL/TLS**: cert-manager + Let's Encrypt
 
 ### GitOps & CI/CD
-- **GitOps**: ArgoCD
-- **CI/CD**: GitHub Actions
-- **Registry**: Harbor (self-hosted)
+- **GitOps**: ArgoCD (see Flux alternative in Layer 1)
+- **CI/CD**: GitHub Actions (adaptable to other CI systems)
+- **Registry**: Harbor (self-hosted pattern)
 
 ### Observability
 - **Metrics**: Prometheus + Grafana
@@ -231,78 +199,77 @@ See [Implementation Guide](docs/IMPLEMENTATION_GUIDE.md#cost-estimation) for det
 ### Security
 - **Secrets**: External Secrets Operator
 - **Scanning**: Trivy
-- **Policies**: OPA Gatekeeper (optional)
+- **Policies**: Network Policies (OPA Gatekeeper optional)
 
 ### Storage & Backup
-- **Storage**: Cloud provider CSI
-- **Backup**: Velero
-- **Database**: Managed PostgreSQL
+- **Storage**: Cloud provider CSI (see lock-in analysis in Layer 1)
+- **Backup**: Velero pattern
+- **Database**: Managed PostgreSQL (see trade-offs in Layer 1)
 
-## 🚦 Implementation Status
+## 🚦 Documentation Status
 
-- [x] Terraform infrastructure modules
-- [x] Kubernetes manifests
-- [x] ArgoCD GitOps configuration
-- [x] CI/CD pipelines
-- [x] Observability stack
-- [x] Security policies
-- [x] Backup and DR
-- [x] Documentation and runbooks
+- [x] Layer 0 foundational requirements
+- [x] Layer 1 tool selection with managed K8s nuances
+- [x] Layer 2 enhancement patterns
+- [x] Decision rules and traceability
+- [x] Open questions framework
+- [x] Implementation patterns and best practices
 
-**Status**: ✅ **Production-ready**
+**Status**: ✅ **Reference architecture complete**
 
-## 🔄 Migration Roadmap
+## 🔄 Migration Roadmap Pattern
 
 ### Phase 1: Foundation (Week 1-4)
-- Infrastructure provisioning
-- Core platform components
-- GitOps setup
+- Infrastructure provisioning patterns
+- Core platform component installation
+- GitOps setup patterns
 
 ### Phase 2: Platform Hardening (Week 5-8)
-- Security implementation
-- Registry and backup
-- Monitoring and alerting
+- Security implementation patterns
+- Registry and backup setup
+- Monitoring and alerting configuration
 
 ### Phase 3: Application Migration (Week 9-12)
-- Application containerization
-- Database migration
-- Dev deployment
+- Application containerization approach
+- Database migration patterns
+- Dev deployment validation
 
 ### Phase 4: Staging & Testing (Week 13-16)
-- Staging deployment
-- Load testing
-- DR testing
+- Staging deployment patterns
+- Load testing approaches
+- DR testing procedures
 
 ### Phase 5: Production Cutover (Week 17-20)
-- Production deployment
-- Blue-green cutover
-- Decommission old infrastructure
+- Production deployment strategy
+- Blue-green cutover pattern
+- Legacy infrastructure decommissioning
 
-See [Implementation Guide](docs/IMPLEMENTATION_GUIDE.md) for detailed timeline.
+See architectural documentation for detailed considerations at each phase.
 
-## ❓ Open Questions
+## ❓ Questions to Answer Before Implementation
 
-Before starting, answer these questions:
+These are critical decisions from the documentation you must answer:
 
-1. **Which managed Kubernetes provider?** (DigitalOcean, Scaleway, OVHcloud, TransIP)
+1. **Which managed Kubernetes provider?** (See Layer 1 lock-in analysis)
 2. **Kubernetes version strategy?** (N-1, upgrade frequency)
 3. **Multi-region from day 1?** (Single region initially?)
-4. **Database strategy?** (Managed vs. on-premise)
+4. **Database strategy?** (Managed vs. StatefulSet, see trade-offs)
 5. **Secrets management?** (Vault vs. cloud KMS)
 
-See [Implementation Guide](docs/IMPLEMENTATION_GUIDE.md#open-questions-for-implementation) for complete list.
+See [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) for complete list and prioritization.
 
-## 🤝 Contributing
+## 🤝 Using This Reference Architecture
 
-This implementation is based on KubeCompass framework. For improvements:
+This reference architecture is part of the KubeCompass framework. To implement:
 
-1. Test changes in dev environment
-2. Update documentation
-3. Submit PR with clear description
+1. **Study the patterns** documented across Layer 0, 1, and 2
+2. **Adapt to your context** - provider, requirements, constraints
+3. **Build your own implementation** based on these proven patterns
+4. **Contribute back** - share learnings and improvements
 
 ## 📞 Support
 
-For questions or issues:
+For questions about the reference architecture:
 
 - **GitHub Issues**: [vanhoutenbos/KubeCompass/issues](https://github.com/vanhoutenbos/KubeCompass/issues)
 - **Discussions**: [vanhoutenbos/KubeCompass/discussions](https://github.com/vanhoutenbos/KubeCompass/discussions)
@@ -313,27 +280,27 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🎉 What Makes This Implementation Special?
+## 🎉 What Makes This Reference Architecture Special?
 
-### 1. **Production-Ready**
-Not just examples—this is a complete, tested implementation ready for production use.
+### 1. **Documentation-First Approach**
+Focus on teaching principles and decision-making rather than prescriptive copy-paste solutions.
 
-### 2. **Vendor-Independent**
-Built on open-source tools and standard Kubernetes API. Migrate to any provider within 1 quarter.
+### 2. **Vendor-Independent Patterns**
+Built on open-source tools and standard Kubernetes API patterns with clear lock-in analysis.
 
-### 3. **GitOps-First**
-Everything in Git. No manual kubectl commands. Full audit trail.
+### 3. **Decision Traceability**
+Every tool choice traced back to Layer 0 requirements with "Choose X unless Y" rules.
 
-### 4. **Security by Design**
-RBAC, Network Policies, Pod Security, secrets management—all configured from day 1.
+### 4. **Real-World Trade-offs**
+Honest analysis of managed vs. self-managed Kubernetes, including lock-in points.
 
-### 5. **Zero-Downtime**
-Rolling updates, readiness probes, PodDisruptionBudgets—designed for HA from the start.
+### 5. **Comprehensive Coverage**
+Security, observability, GitOps, disaster recovery—all patterns documented.
 
-### 6. **Comprehensive Docs**
-Not just code—complete runbooks, DR procedures, cost analysis, and training plans.
+### 6. **Scenario-Based Guidance**
+Different patterns for startups, enterprises, and multi-cloud scenarios.
 
-### 7. **Tested and Validated**
+### 7. **Tested and Validated Patterns**
 Based on real-world Layer 0/Layer 1 analysis with clear success criteria.
 
 ---

@@ -58,6 +58,119 @@ Dit document vertaalt de Layer 0 requirements uit [LAYER_0_WEBSHOP_CASE.md](LAYE
 - ❌ **Self-hosted (Kubeadm, RKE2)**: Te complex voor team zonder ervaring, hogere operational burden
 - ❌ **Hyperscaler (AWS EKS, Azure AKS, Google GKE)**: Conflicteert met Nederlandse datacenter voorkeur + vendor independence
 
+---
+
+#### 🔍 Managed Kubernetes: Nuances en Lock-in Analyse
+
+Het is belangrijk om te begrijpen dat "managed Kubernetes" niet betekent dat alle vendor lock-in wordt vermeden. Er zijn subtiele maar belangrijke nuances:
+
+##### ✅ Wat Platform-Agnostic Blijft
+
+**Kerninfrastructuur blijft los:**
+- De Kubernetes-cluster zelf is een abstractielaag
+- Alle Kubernetes resources (Deployments, Services, ConfigMaps, Secrets) zijn standaard API's
+- Network policies, RBAC, en andere Kubernetes-native features zijn overdraagbaar
+- Container images en applicatie-architectuur blijven cloud-agnostic
+- **Conclusie**: Je applicatie-workloads kunnen theoretisch op elke compatibele Kubernetes-cluster draaien
+
+##### ⚠️ Waar Lock-in Ontstaat
+
+**Afhankelijkheden buiten Kubernetes-core:**
+
+| Component | Lock-in Risico | Toelichting | Mitigatie |
+|-----------|----------------|-------------|-----------|
+| **Managed Databases** | 🔴 Hoog | Provider-specifieke API's, backup-procedures, HA-mechanismen | Self-hosted StatefulSet of abstractielaag (bijv. CloudNativePG) |
+| **Storage (CSI Drivers)** | 🟡 Gemiddeld | Provider-specifieke storage classes, snapshot API's | Gebruik standaard StorageClass interface, test migratie |
+| **Load Balancers** | 🟡 Gemiddeld | Cloud-specifieke LoadBalancer implementations | NGINX Ingress maakt je onafhankelijker van cloud LB |
+| **Backup Systemen** | 🟡 Gemiddeld | Provider-specifieke volume snapshots | Velero met S3-compatible storage als alternatief |
+| **Monitoring Integraties** | 🟢 Laag | Native integraties met cloud monitoring | Prometheus/Grafana blijft overdraagbaar |
+| **Netwerk Features** | 🟡 Gemiddeld | Cloud-specifieke VPC, subnets, firewall rules | CNI plugin (Cilium) blijft overdraagbaar |
+
+##### 📊 Scenario-gebaseerde Strategie
+
+**1. Startups of Kleine Teams**
+- **Aanbeveling**: Managed Kubernetes als standaard
+- **Rationale**: Verlaagt operationele overhead, snellere time-to-market
+- **Lock-in tolerantie**: Acceptabel voor snelheid en eenvoud
+- **Voorwaarde**: Documenteer alle provider-specifieke dependencies
+
+**2. Enterprise of Government**
+- **Aanbeveling**: Self-managed Kubernetes met zorgvuldige afweging
+- **Rationale**: Volledige controle, compliance-gevoelige data, vendor lock-in vermijden
+- **Trade-off**: Hogere operationele complexiteit, meer expertise vereist
+- **Voorwaarde**: In-house Kubernetes expertise of externe consultants
+
+**3. Multi-Region / Multi-Cloud Setups**
+- **Aanbeveling**: Hybride aanpak mogelijk
+- **Rationale**: Managed Kubernetes kan handig zijn als provider multi-region ondersteunt
+- **Alternatief**: Self-managed flexibeler voor cross-cloud scenarios
+- **Voorwaarde**: Abstractielaag voor storage, databases, en load balancing
+
+##### 🎯 "Dual Track" Strategie voor KubeCompass
+
+**Standaard Optie: Managed Kubernetes**
+- Lagere drempel voor teams zonder Kubernetes ervaring
+- Snellere opstartfase (control plane management uitbesteed)
+- Focus op applicatie migratie, niet cluster operations
+- **Voorwaarde**: Transparante documentatie over lock-in punten
+
+**Alternatieve Optie: Self-managed Kubernetes**
+- Voor teams met strikte compliance vereisten
+- Voor organisaties met multi-cloud strategie
+- Voor situaties waar vendor independence absoluut prioriteit heeft
+- **Voorwaarde**: In-house expertise of budget voor consultants
+
+##### 📋 Lock-in Beslissingsmatrix
+
+Gebruik deze matrix om te bepalen welke lock-ins acceptabel zijn:
+
+```
+IF vendor_independence == ABSOLUTE:
+  → Self-managed Kubernetes
+  → Self-hosted databases (StatefulSets)
+  → S3-compatible storage (bijv. MinIO)
+  → Velero voor backups
+  
+ELIF team_maturity == LOW AND time_to_market == CRITICAL:
+  → Managed Kubernetes
+  → Managed databases (PostgreSQL/MySQL)
+  → Provider storage (met exit strategie gedocumenteerd)
+  → Managed backups (met Velero als fallback)
+  
+ELIF compliance == STRICT:
+  → Self-managed Kubernetes in dedicated datacenter
+  → On-premises databases
+  → Encrypted storage met key management
+  → Disaster recovery plan met multi-site replicatie
+```
+
+##### ✅ Aanbeveling voor deze Webshop Case
+
+**Keuze: Managed Kubernetes (met bewuste trade-offs)**
+
+**Rationale**:
+- Team heeft geen Kubernetes ervaring (training nodig)
+- Focus op applicatie migratie binnen 1 kwartaal
+- Vendor independence is belangrijk, maar niet absoluut
+- Nederlandse datacenter vereiste beperkt hyperscaler opties
+
+**Geaccepteerde Lock-ins**:
+- ✅ Managed Kubernetes control plane (migratie mogelijk binnen 1 kwartaal)
+- ✅ Provider storage via CSI driver (data migratie mogelijk)
+- ⚠️ Managed PostgreSQL (trade-off: HA vs. vendor independence - zie sectie 5.1)
+
+**Vermeden Lock-ins**:
+- ❌ Cloud-specifieke APIs in applicatiecode
+- ❌ Proprietary monitoring tools (gebruik Prometheus/Grafana)
+- ❌ Vendor-specific CI/CD (gebruik GitHub Actions + Argo CD)
+
+**Exit Strategie**:
+- Documenteer alle provider-specifieke configuraties
+- Test migratie scenario's naar andere managed Kubernetes providers
+- Jaarlijkse review van vendor independence vs. operational complexity
+
+---
+
 **[❓ QUESTION 1]**: Welke managed Kubernetes provider wordt gekozen?
 - Opties: TransIP Kubernetes, DigitalOcean, OVHcloud, Scaleway
 - Criteria: EU datacenter, SLA, pricing, support kwaliteit
@@ -85,19 +198,30 @@ Dit document vertaalt de Layer 0 requirements uit [LAYER_0_WEBSHOP_CASE.md](LAYE
 - ⚠️ **Pulumi**: Moderne IaC (TypeScript/Python), maar kleinere community en minder provider documentatie
 - ❌ **Crossplane**: Te complex voor managed Kubernetes use case (meer geschikt voor multi-cloud orchestratie)
 
-**Repository structuur**:
+**Aanbevolen repository structuur** (voor jouw eigen implementatie):
 ```
-terraform/
-├── modules/
-│   ├── kubernetes-cluster/  # Cluster provisioning
-│   ├── networking/           # VPC, subnets, load balancers
-│   └── storage/              # Storage classes, persistent volume setup
-├── environments/
-│   ├── dev/
-│   ├── staging/
-│   └── production/
-└── README.md
+infrastructure/
+├── terraform/
+│   ├── modules/
+│   │   ├── kubernetes-cluster/  # Cluster provisioning
+│   │   ├── networking/           # VPC, subnets, load balancers
+│   │   └── storage/              # Storage classes, persistent volume setup
+│   ├── environments/
+│   │   ├── dev/
+│   │   ├── staging/
+│   │   └── production/
+│   └── README.md
+└── kubernetes/
+    ├── argocd/              # GitOps configuration
+    ├── platform/            # Platform components
+    ├── observability/       # Monitoring and logging
+    ├── security/            # Security policies
+    ├── applications/        # Application workloads
+    └── backup/              # Backup and DR
 ```
+
+> **📝 Note**: KubeCompass bevat geen implementatiecode, alleen patterns en documentatie. 
+> Gebruik bovenstaande structuur als richtlijn voor je eigen implementatie.
 
 **[❓ QUESTION 3]**: Wie beheert Terraform state?
 - Terraform Cloud (gratis tier), S3-compatible backend bij provider, of Git (niet aanbevolen)?
