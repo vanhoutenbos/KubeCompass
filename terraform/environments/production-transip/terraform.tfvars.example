@@ -1,0 +1,90 @@
+# Example terraform.tfvars for Production TransIP Environment
+# Copy this file to terraform.tfvars and fill in your actual values
+# DO NOT commit terraform.tfvars to Git (add to .gitignore)
+
+# ============================================================================
+# CLUSTER CONFIGURATION
+# ============================================================================
+
+# Path to kubeconfig file retrieved from TransIP cluster
+# Store this in a secrets manager (Vault, 1Password, etc.) and retrieve dynamically
+kubeconfig_path = "~/.kube/transip-webshop-prod.yaml"
+
+# ============================================================================
+# TRANSIP PROVIDER CONFIGURATION
+# ============================================================================
+
+# TransIP account name
+transip_account = "your-transip-account-name"
+
+# TransIP API private key (PEM format)
+# Generate via TransIP Control Panel → API
+# Store in secrets manager and retrieve via environment variable:
+# export TF_VAR_transip_private_key=$(cat transip-api-key.pem)
+transip_private_key = <<-EOT
+-----BEGIN PRIVATE KEY-----
+Your TransIP API private key here
+-----END PRIVATE KEY-----
+EOT
+
+# ============================================================================
+# DNS CONFIGURATION
+# ============================================================================
+
+domain = "webshop.example.nl"
+
+# ============================================================================
+# APPLICATION SECRETS
+# ============================================================================
+
+# ArgoCD admin password (bcrypt hash)
+# Generate with: htpasswd -nbBC 10 admin YourSecurePassword | cut -d: -f2
+# Or use online tool: https://bcrypt-generator.com/
+argocd_admin_password_bcrypt = "$2y$10$..." # Replace with actual bcrypt hash
+
+# Grafana admin password (plaintext - will be stored in Kubernetes secret)
+grafana_admin_password = "YourSecureGrafanaPassword123!"
+
+# ============================================================================
+# MONITORING CONFIGURATION (Optional)
+# ============================================================================
+
+# Prometheus metrics retention (days)
+# prometheus_retention_days = 30
+
+# Storage sizes
+# prometheus_storage_size = "50Gi"
+# grafana_storage_size = "10Gi"
+
+# ============================================================================
+# HIGH AVAILABILITY CONFIGURATION (Optional)
+# ============================================================================
+
+# Number of replicas for critical components
+# ingress_nginx_replicas = 2
+# argocd_server_replicas = 2
+
+# ============================================================================
+# FEATURE FLAGS (Optional)
+# ============================================================================
+
+# Enable/disable features
+# enable_network_policies = true
+# enable_pod_security_policies = true
+# enable_cert_manager = true
+# enable_external_secrets = true
+
+# ============================================================================
+# TAGS & LABELS (Optional)
+# ============================================================================
+
+# Additional custom tags
+# additional_tags = {
+#   "cost-center" = "engineering"
+#   "owner"       = "platform-team"
+# }
+
+# Additional custom labels
+# additional_labels = {
+#   "monitoring" = "prometheus"
+# }
