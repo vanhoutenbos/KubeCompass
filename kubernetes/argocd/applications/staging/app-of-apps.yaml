@@ -1,0 +1,122 @@
+# ArgoCD App-of-Apps Pattern
+# Platform infrastructure applications for staging environment
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-infrastructure
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/platform
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  
+  syncPolicy:
+    automated:
+      prune: true  # Auto-prune for staging
+      selfHeal: true  # Auto-heal for staging
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/observability
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: security
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/security
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: security
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webshop-application
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/applications/webshop
+    
+    kustomize:
+      namePrefix: staging-
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: webshop
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+  
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas

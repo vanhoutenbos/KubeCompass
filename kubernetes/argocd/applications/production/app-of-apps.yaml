@@ -1,0 +1,159 @@
+# ArgoCD App-of-Apps Pattern
+# Platform infrastructure applications for production environment
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-infrastructure
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/platform
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  
+  syncPolicy:
+    automated:
+      prune: false  # Don't auto-delete for safety
+      selfHeal: false  # Require manual intervention for production
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/observability
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: security
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/security
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: security
+  
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true  # Security policies should auto-heal
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webshop-application
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/vanhoutenbos/KubeCompass.git
+    targetRevision: main
+    path: kubernetes/applications/webshop
+    
+    # Kustomize overlay for production
+    kustomize:
+      namePrefix: prod-
+      nameSuffix: ""
+      images:
+      - name: webshop-app
+        newTag: latest  # Override with specific tag in production
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: webshop
+  
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false  # Never auto-heal production application
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m
+  
+  # Health checks
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas  # Allow HPA to manage replicas
