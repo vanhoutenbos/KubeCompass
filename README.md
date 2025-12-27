@@ -194,6 +194,13 @@ Structured decision support documentation for audit-proof, interactive architect
   - 5 documentation gaps (missing runbooks, procedures)
   - 5 insufficiently mitigated risks
 
+- **🏗️ [TransIP Infrastructure as Code Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Practical IaC approach for TransIP Kubernetes
+  - Hybrid IaC strategy (manual cluster + Terraform for in-cluster resources)
+  - Node scaling solutions without native autoscaler
+  - Provider comparison with Terraform support status
+  - Migration paths and vendor independence strategies
+  - Complete implementation examples and decision rules
+
 **Use Cases:**
 - **Architecture Review**: Validate decision traceability and consistency
 - **Project Planning**: Prioritize questions and decisions (critical first)
@@ -280,6 +287,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
    - **[Layer 1: Tool Selection](LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
    - **[Layer 2: Enhancement Decisions](LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
    - **🆕 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
+   - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP (NEW!)
 9. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
 10. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
 11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach

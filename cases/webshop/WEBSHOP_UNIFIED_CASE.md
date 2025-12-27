@@ -113,10 +113,16 @@
 
 **Recommended Providers for Webshop Case**:
 1. **TransIP Kubernetes** ⭐⭐⭐⭐⭐ (Dutch support, EU datacenter, GDPR-friendly)
+   - ⚠️ **No Terraform for cluster lifecycle** - uses hybrid IaC approach
+   - ✅ Full Terraform support for in-cluster resources
+   - 📖 **See**: [TransIP Infrastructure as Code Guide](../../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)
 2. **OVHcloud Kubernetes** ⭐⭐⭐⭐ (Competitive pricing, Amsterdam/Gravelines)
+   - ✅ Full Terraform support including cluster lifecycle
 3. **Scaleway Kubernetes** ⭐⭐⭐⭐ (Budget option, EU-native)
+   - ✅ Full Terraform support including cluster lifecycle
 
 **Critical Question**: **Q1** - Which provider? (Blocks cluster provisioning)
+**Important Trade-off**: TransIP offers best Dutch support/GDPR but requires manual cluster provisioning. Scaleway/OVHcloud offer full Terraform automation but non-Dutch support.
 
 #### Infrastructure as Code
 **Decision**: Terraform
