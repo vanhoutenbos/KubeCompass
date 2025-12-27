@@ -59,6 +59,94 @@ if (team_k8s_experience === "none" || ops_team_size < 3) {
 
 ---
 
+### 1.2 Managed Kubernetes Provider Selection
+
+#### Use TransIP unless
+**Conditions**: Terraform cluster lifecycle automation is **kritisch** (not "nice to have")
+
+**Primary Choice**: TransIP Kubernetes (voor Nederlandse SME organisaties)
+
+**Layer 0 Rationale**:
+- **GDPR Compliance**: Nederlandse datacenter, Nederlandse support
+- **Vendor Trust**: Gevestigde, betrouwbare Nederlandse provider
+- **Team Maturity**: Nederlandse support kritiek voor team zonder K8s ervaring
+- **Pricing**: Transparant, euro-based pricing zonder verrassingen
+- **Kubernetes API**: Standaard → applicaties blijven fully portable
+
+**IaC Trade-off** ⚠️:
+- ✅ **In-cluster IaC**: Volledig ondersteund (Terraform Kubernetes provider)
+- ⚠️ **Cluster lifecycle**: Documented manual process (reproducible via runbooks)
+- ⚠️ **Node scaling**: Manual of API scripts (geen native cluster autoscaler)
+
+**Zie**: [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) voor volledige implementatie details.
+
+**Alternative A**: Scaleway Kubernetes
+**When**:
+- Terraform cluster lifecycle automation is must-have
+- Team heeft capaciteit voor Engels/Franse support
+- EU datacenter (Paris, Amsterdam) acceptabel
+- Budget voor Terraform automation > operational manual work
+
+**Alternative B**: OVHcloud Managed Kubernetes
+**When**:
+- Terraform + EU datacenter both required
+- Larger scale (enterprise features nodig)
+- Budget allows voor iets hogere kosten
+- Engels/Franse support acceptabel
+
+**Alternative C**: DigitalOcean Kubernetes
+**When**:
+- Terraform automation is kritisch
+- US-based provider acceptabel (datacenter blijft Amsterdam)
+- Prefer English documentation/support
+- Simpele, transparante pricing belangrijk
+
+**Trade-offs**:
+| Aspect | TransIP | Scaleway | OVHcloud | DigitalOcean |
+|--------|---------|----------|----------|--------------|
+| **Terraform Cluster Lifecycle** | ❌ Nee | ✅ Ja | ✅ Ja | ✅ Ja |
+| **Terraform In-cluster** | ✅ Ja | ✅ Ja | ✅ Ja | ✅ Ja |
+| **Node Autoscaling** | ❌ Manual/API | ✅ Native | ✅ Native | ✅ Native |
+| **EU Datacenter** | ✅ NL | ✅ FR/NL | ✅ Meerdere | ⚠️ Amsterdam only |
+| **Nederlandse Support** | ✅ Ja | ❌ Nee | ⚠️ Beperkt | ❌ Nee |
+| **Provider Origin** | 🇳🇱 NL | 🇫🇷 FR | 🇫🇷 FR | 🇺🇸 US |
+| **GDPR Compliance** | ✅✅ Excellent | ✅ Good | ✅ Good | ✅ Good |
+| **Pricing Transparency** | ✅ Excellent | ✅ Good | ⚠️ Complex | ✅ Excellent |
+| **Documentation Quality** | ⚠️ NL focus | ✅ Good | ✅ Good | ✅✅ Excellent |
+
+**Decision Logic**:
+```javascript
+if (gdpr_strict && dutch_support_required && budget_conscious) {
+  if (terraform_lifecycle_critical && team_has_terraform_expertise) {
+    return "Scaleway (Terraform + EU, accept non-Dutch support)";
+  } else {
+    return "TransIP (accept hybrid IaC approach)";
+  }
+} else if (terraform_automation_priority === "high" && terraform_lifecycle_required) {
+  if (budget_allows && enterprise_features_needed) {
+    return "OVHcloud";
+  } else {
+    return "Scaleway or DigitalOcean";
+  }
+} else if (documentation_quality_critical && english_preferred) {
+  return "DigitalOcean";
+} else {
+  return "TransIP (best fit for Dutch SMEs)";
+}
+```
+
+**Critical Considerations**:
+1. **IaC Philosophy**: If "everything in Terraform" is absolute requirement → Scaleway/OVHcloud/DigitalOcean
+2. **Operational Maturity**: Manual node scaling acceptable? → TransIP viable
+3. **Support Language**: Nederlandse support critical for team success? → TransIP strong advantage
+4. **Portability**: All options provide standard K8s API → applications remain portable
+
+---
+
+### 1.3 Node Configuration
+
+---
+
 ### 1.2 Node Configuration
 
 #### Use Dedicated Node Pools unless

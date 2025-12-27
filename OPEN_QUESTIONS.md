@@ -37,19 +37,21 @@
 |-----------|-------------|-----------|
 | **Datacenter Locatie** | EU (bij voorkeur Nederland) | Compliance check |
 | **SLA** | > 99.5% uptime | Contract review |
-| **Terraform Support** | Native provider beschikbaar | Technical validation |
+| **Terraform Support** | Native provider beschikbaar (⚠️ of acceptabel zonder) | Technical validation |
 | **Load Balancer Support** | Layer 4/7 LB beschikbaar | Feature check |
 | **Storage Options** | Block storage + object storage | Feature check |
 | **Pricing** | Transparant, voorspelbaar | Budget fit |
 
 **Opties om te Evalueren**:
-- TransIP Managed Kubernetes (NL datacenter, duidelijke pricing)
-- OVHcloud Managed Kubernetes (EU, goede pricing)
-- DigitalOcean Kubernetes (globale aanwezigheid, simpele pricing)
-- Scaleway Kubernetes (FR datacenter, developer-friendly)
+- TransIP Managed Kubernetes (NL datacenter, duidelijke pricing) ⚠️ **Geen Terraform voor cluster lifecycle**
+- OVHcloud Managed Kubernetes (EU, goede pricing) ✅ **Terraform support**
+- DigitalOcean Kubernetes (globale aanwezigheid, simpele pricing) ✅ **Terraform support**
+- Scaleway Kubernetes (FR datacenter, developer-friendly) ✅ **Terraform support**
+
+**BELANGRIJKE NOTITIE**: TransIP heeft **geen native Terraform provider** voor Kubernetes cluster lifecycle management (create/delete cluster, node pools). Hybrid IaC approach nodig: manual cluster provisioning + Terraform voor in-cluster resources. Zie [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) voor details.
 
 **Blokkerende Afhankelijkheden**:
-- Infrastructure provisioning (Terraform code)
+- Infrastructure provisioning (Terraform code of documented manual process)
 - Cost estimation (budget approval)
 - Network design (load balancer type)
 - Storage class selection
