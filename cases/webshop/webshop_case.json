@@ -1,0 +1,600 @@
+{
+  "case_metadata": {
+    "name": "Webshop Migration Case",
+    "version": "1.0",
+    "type": "SME E-commerce Migration",
+    "organization": "Dutch webshop with Essential SAFe methodology",
+    "last_updated": "2024-12",
+    "status": "foundational_analysis_complete"
+  },
+  "organization_profile": {
+    "type": "SME",
+    "size": "~10 people",
+    "teams": ["Dev", "Ops", "Functional Management", "Support"],
+    "industry": "E-commerce",
+    "geography": "Netherlands",
+    "methodology": "Essential SAFe",
+    "kubernetes_maturity": "none"
+  },
+  "hard_constraints": [
+    {
+      "id": "vendor_independence",
+      "name": "Vendor Independence",
+      "description": "Must be able to migrate to another provider within 1 quarter",
+      "implication": "No cloud-specific services, use standard K8s API, Terraform IaC"
+    },
+    {
+      "id": "gdpr_compliance",
+      "name": "GDPR Compliance",
+      "description": "Customer data must remain within EU",
+      "implication": "Datacenter choice limited to EU regions"
+    },
+    {
+      "id": "business_continuity",
+      "name": "Business Continuity",
+      "description": "99.9% uptime target, 15 min RPO, 30 min RTO",
+      "implication": "HA for database and application required"
+    },
+    {
+      "id": "security_baseline",
+      "name": "Security Baseline",
+      "description": "No production kubectl access for developers",
+      "implication": "GitOps is only deployment method"
+    },
+    {
+      "id": "budget_realism",
+      "name": "Budget Realism",
+      "description": "No enterprise SaaS budgets",
+      "implication": "Open-source tooling preference"
+    },
+    {
+      "id": "team_maturity",
+      "name": "Team Maturity",
+      "description": "Team has no Kubernetes experience",
+      "implication": "Start simple, consultant + training mandatory"
+    }
+  ],
+  "goals": {
+    "primary": [
+      {
+        "name": "Eliminate Deployment Downtime",
+        "description": "Zero-downtime releases via rolling updates",
+        "success_criteria": "Deploy during business hours without customer impact"
+      },
+      {
+        "name": "Proactive Operations",
+        "description": "Detect issues before customers notice",
+        "success_criteria": "< 2 minute incident detection time"
+      },
+      {
+        "name": "Data Protection & Recovery",
+        "description": "Point-in-time recovery for critical data",
+        "success_criteria": "Max 15 minutes data loss (RPO)"
+      },
+      {
+        "name": "Vendor Independence",
+        "description": "Migration to another provider within 1 quarter",
+        "success_criteria": "Can reproduce entire stack on different provider"
+      },
+      {
+        "name": "Clear Team Ownership",
+        "description": "Developers deploy via GitOps, Ops facilitates platform",
+        "success_criteria": "Developers deploy without Ops involvement"
+      }
+    ],
+    "secondary": [
+      "Systematic patching and updates",
+      "Audit trail for compliance",
+      "Foundation for future multi-region",
+      "Developer productivity improvement"
+    ]
+  },
+  "non_goals": [
+    {
+      "name": "Microservices Refactoring",
+      "rationale": "MVC monolith stays intact, focus on lift & shift",
+      "when_relevant": "After 6-12 months of Kubernetes stability"
+    },
+    {
+      "name": "Multi-Region Deployment",
+      "rationale": "Too complex for team without K8s experience",
+      "when_relevant": "When international expansion confirmed"
+    },
+    {
+      "name": "Advanced Observability (Distributed Tracing)",
+      "rationale": "Metrics and logs first, tracing is Layer 2",
+      "when_relevant": "When debugging cross-service issues takes > 1 hour"
+    },
+    {
+      "name": "Service Mesh",
+      "rationale": "Not needed for monolith",
+      "when_relevant": "When > 5 microservices with complex communication"
+    },
+    {
+      "name": "100% Uptime Guarantee",
+      "rationale": "Realistic target is 99.9%, accept maintenance impact",
+      "when_relevant": "Never - 100% is unrealistic"
+    },
+    {
+      "name": "Developer kubectl Access",
+      "rationale": "Security requirement, GitOps only",
+      "when_relevant": "Break-glass procedures for emergencies only"
+    }
+  ],
+  "decision_rules": {
+    "infrastructure": {
+      "kubernetes_distribution": {
+        "default": "Managed Kubernetes at Dutch/EU provider",
+        "unless": [
+          "Team has strong K8s expertise → Self-managed viable",
+          "Vendor independence overrides operational simplicity → Self-managed required",
+          "Compliance requires on-premises → Self-managed required"
+        ],
+        "layer0_links": ["vendor_independence", "gdpr_compliance", "team_maturity"]
+      },
+      "infrastructure_as_code": {
+        "default": "Terraform",
+        "unless": [
+          "Team prefers programming languages → Pulumi (TypeScript/Python)",
+          "Multi-cloud orchestration critical → Crossplane"
+        ],
+        "layer0_links": ["vendor_independence"]
+      }
+    },
+    "networking": {
+      "cni": {
+        "default": "Cilium",
+        "unless": [
+          "Team has deep Calico expertise → Leverage existing knowledge",
+          "BGP routing critical → Calico stronger",
+          "Maximum simplicity needed → Flannel sufficient"
+        ],
+        "layer0_links": ["security_baseline"]
+      },
+      "ingress": {
+        "default": "NGINX Ingress Controller",
+        "unless": [
+          "Advanced routing needed → Traefik",
+          "API gateway features → Kong, Ambassador"
+        ],
+        "layer0_links": ["vendor_independence"]
+      }
+    },
+    "gitops": {
+      "gitops_tool": {
+        "default": "Argo CD",
+        "unless": [
+          "Pure Git workflow (no UI) → Flux",
+          "Helm + image automation critical → Flux",
+          "Multi-tenancy not needed → Flux simpler"
+        ],
+        "layer0_links": ["security_baseline", "clear_team_ownership"]
+      },
+      "ci_cd": {
+        "default": "GitHub Actions",
+        "unless": [
+          "Self-hosted Git → GitLab CI",
+          "Complex enterprise workflows → Tekton, Jenkins"
+        ],
+        "layer0_links": ["budget_realism"]
+      }
+    },
+    "observability": {
+      "metrics": {
+        "default": "Prometheus + Grafana",
+        "unless": [
+          "Budget allows SaaS AND team < 5 → Datadog/New Relic",
+          "Compliance prohibits SaaS → Prometheus required"
+        ],
+        "layer0_links": ["budget_realism", "vendor_independence"]
+      },
+      "logging": {
+        "default": "Loki + Promtail",
+        "unless": [
+          "Advanced log analysis needed → ELK stack",
+          "Team has ELK expertise → Leverage existing"
+        ],
+        "layer0_links": ["budget_realism"]
+      }
+    },
+    "security": {
+      "secrets": {
+        "default": "External Secrets Operator + Vault",
+        "unless": [
+          "Cloud KMS acceptable → Cloud provider secrets (simpler)",
+          "Very few secrets → Sealed Secrets"
+        ],
+        "layer0_links": ["vendor_independence", "security_baseline"]
+      }
+    },
+    "data": {
+      "database": {
+        "default": "Managed cloud database (PostgreSQL or MySQL)",
+        "unless": [
+          "Vendor independence > operational complexity → StatefulSet + replication",
+          "Compliance requires on-premises → Self-hosted required"
+        ],
+        "layer0_links": ["business_continuity", "team_maturity"],
+        "trade_off": "Managed DB = HA/backups/PITR out of box, but vendor dependency"
+      },
+      "backup": {
+        "default": "Velero (cluster) + Managed DB PITR",
+        "unless": [
+          "CSI snapshots sufficient → Cloud-native snapshots",
+          "Enterprise features needed → Kasten K10"
+        ],
+        "layer0_links": ["data_protection"]
+      }
+    }
+  },
+  "provider_recommendations": {
+    "sme_startup": {
+      "scenario": "SME/Startup with limited budget, need operational simplicity",
+      "primary": [
+        {
+          "name": "TransIP Kubernetes",
+          "region": "Netherlands",
+          "cost": "€€ (moderate)",
+          "pros": ["Dutch support", "EU datacenter", "GDPR-friendly", "Good reputation"],
+          "cons": ["Smaller ecosystem than hyperscalers"],
+          "best_for": "Dutch SMEs prioritizing GDPR and local support",
+          "rating": 5
+        },
+        {
+          "name": "OVHcloud Kubernetes",
+          "region": "France/Netherlands",
+          "cost": "€€ (competitive)",
+          "pros": ["Gravelines/Amsterdam", "Good pricing", "EU-native"],
+          "cons": ["French company (support may be in French)"],
+          "best_for": "Budget-conscious EU companies",
+          "rating": 4
+        },
+        {
+          "name": "Scaleway Kubernetes",
+          "region": "France/Netherlands",
+          "cost": "€€ (lowest)",
+          "pros": ["Very competitive pricing", "EU-native", "Modern platform"],
+          "cons": ["Smaller company", "Less mature"],
+          "best_for": "Startups optimizing for cost",
+          "rating": 4
+        }
+      ],
+      "avoid": [
+        {
+          "name": "AWS EKS, Azure AKS, Google GKE",
+          "reason": "Conflicts with vendor independence goal (though technically viable)"
+        },
+        {
+          "name": "Self-managed Kubernetes",
+          "reason": "Team lacks expertise (reconsider with consultant + 6 months experience)"
+        }
+      ]
+    },
+    "enterprise_government": {
+      "scenario": "Large organization, compliance-heavy, risk-averse, budget available",
+      "options": [
+        {
+          "type": "Self-Managed Kubernetes",
+          "tools": ["Kubeadm", "Talos", "Rancher"],
+          "pros": ["Full control", "No vendor lock-in", "Audit trail", "Compliance-friendly"],
+          "cons": ["High operational burden", "Requires expertise"],
+          "best_for": ["Government (data sovereignty)", "Finance (compliance)", "Large enterprises"]
+        },
+        {
+          "type": "Managed Kubernetes (Hyperscaler)",
+          "providers": ["AWS EKS", "Azure AKS", "Google GKE"],
+          "pros": ["Enterprise support", "Advanced features", "Managed control plane"],
+          "cons": ["Vendor lock-in risk", "Higher cost"],
+          "best_for": ["Enterprises with cloud-first strategy"]
+        }
+      ]
+    }
+  },
+  "critical_questions": [
+    {
+      "id": "Q1",
+      "question": "Which managed Kubernetes provider?",
+      "impact": "Blocks cluster provisioning",
+      "affects": ["Infrastructure", "Cost", "Compliance"],
+      "default_assumption": "TransIP (Dutch, EU, managed)",
+      "priority": "critical"
+    },
+    {
+      "id": "Q5",
+      "question": "CPU/memory requirements per application instance?",
+      "impact": "Blocks node sizing",
+      "affects": ["Cost estimation", "Performance"],
+      "default_assumption": "Medium nodes (8 CPU, 16GB RAM)",
+      "priority": "critical"
+    },
+    {
+      "id": "Q26",
+      "question": "Current database? (MySQL/PostgreSQL/SQL Server?)",
+      "impact": "Blocks migration planning",
+      "affects": ["Migration complexity", "HA strategy"],
+      "default_assumption": "PostgreSQL (assume modern)",
+      "priority": "critical"
+    },
+    {
+      "id": "Q31",
+      "question": "Is application stateless? (Sessions in Redis/DB, not in-memory?)",
+      "impact": "Blocks containerization",
+      "affects": ["Deployment strategy", "Scalability"],
+      "default_assumption": "Assume yes, must verify",
+      "priority": "critical"
+    },
+    {
+      "id": "Q32",
+      "question": "Can application scale horizontally?",
+      "impact": "Blocks HA design",
+      "affects": ["Rolling updates", "Replicas"],
+      "default_assumption": "Assume yes, must verify",
+      "priority": "critical"
+    },
+    {
+      "id": "Q33",
+      "question": "Hardcoded localhost/IP dependencies?",
+      "impact": "Blocks containerization",
+      "affects": ["Code refactoring needed"],
+      "default_assumption": "Assume no, must verify",
+      "priority": "critical"
+    },
+    {
+      "id": "Q34",
+      "question": "Health check endpoints exist?",
+      "impact": "Blocks readiness probes",
+      "affects": ["Zero-downtime deployments"],
+      "default_assumption": "Must be implemented",
+      "priority": "critical"
+    },
+    {
+      "id": "Q43",
+      "question": "Current monthly infrastructure costs?",
+      "impact": "Blocks budget planning",
+      "affects": ["Provider selection", "Sizing"],
+      "default_assumption": "€500-2000/month (estimate)",
+      "priority": "critical"
+    },
+    {
+      "id": "Q44",
+      "question": "Budget approval obtained?",
+      "impact": "Blocks entire project",
+      "affects": ["Go/no-go decision"],
+      "default_assumption": "Assume yes (or project wouldn't exist)",
+      "priority": "critical"
+    }
+  ],
+  "important_questions": [
+    {
+      "id": "Q10",
+      "question": "Git branching strategy? (Trunk-based? GitFlow?)",
+      "impact": "Affects GitOps workflow",
+      "deadline": "Week 1",
+      "priority": "important"
+    },
+    {
+      "id": "Q14",
+      "question": "Which business metrics are critical?",
+      "impact": "Affects dashboard design",
+      "deadline": "Week 2",
+      "priority": "important"
+    },
+    {
+      "id": "Q18",
+      "question": "Identity provider integration? (Keycloak? Azure AD?)",
+      "impact": "Affects authentication setup",
+      "deadline": "Week 2",
+      "priority": "important"
+    }
+  ],
+  "risks": {
+    "high": [
+      {
+        "name": "Team Has No Kubernetes Experience",
+        "impact": "Wrong architecture choices, operational errors, long learning curve",
+        "mitigation": [
+          "External consultant (3-6 months)",
+          "Training (official courses + workshops)",
+          "POC in non-production first",
+          "Extensive documentation and runbooks"
+        ]
+      },
+      {
+        "name": "Database Migration is Complex",
+        "impact": "Downtime during migration, potential data loss",
+        "mitigation": [
+          "Start with read-replicas",
+          "Test restore procedures extensively",
+          "Consider managed database for HA",
+          "Schema migrations backward compatible"
+        ]
+      },
+      {
+        "name": "Vendor Lock-in By Accident",
+        "impact": "Cannot migrate within 1 quarter (constraint breach)",
+        "mitigation": [
+          "Architecture review board",
+          "Portability checklist for every tool",
+          "IaC from day 1",
+          "Quarterly migration readiness review"
+        ]
+      }
+    ],
+    "medium": [
+      {
+        "name": "Observability Overwhelm",
+        "impact": "Alert fatigue, real problems missed",
+        "mitigation": [
+          "Start with basics: uptime, error rate, response time",
+          "Iteratively add alerts",
+          "Alert review each sprint"
+        ]
+      },
+      {
+        "name": "Costs Escalate",
+        "impact": "Budget overrun, management dissatisfaction",
+        "mitigation": [
+          "Cost monitoring from day 1 (Kubecost)",
+          "Resource limits per namespace",
+          "Monthly cost review with management"
+        ]
+      }
+    ]
+  },
+  "layer2_triggers": {
+    "service_mesh": {
+      "implement_when": [
+        "> 5 microservices",
+        "Per-service security required (mTLS)",
+        "Advanced traffic management needed"
+      ],
+      "skip_when": [
+        "Monolith or < 3 services",
+        "Team lacks capacity",
+        "Network policies sufficient"
+      ],
+      "timing": "After microservices refactoring (6-12 months)"
+    },
+    "distributed_tracing": {
+      "implement_when": [
+        "Cross-service debugging takes > 1 hour",
+        "> 5 microservices",
+        "Performance optimization needed"
+      ],
+      "skip_when": [
+        "Monolith (single trace)",
+        "Logs and metrics sufficient"
+      ],
+      "timing": "When > 5 services"
+    },
+    "chaos_engineering": {
+      "implement_when": [
+        "Need to validate HA strategy",
+        "Production incidents occurred",
+        "Team mature enough"
+      ],
+      "skip_when": [
+        "Platform not stable",
+        "Team inexperienced"
+      ],
+      "timing": "After platform stability (6 months)"
+    },
+    "policy_enforcement": {
+      "implement_when": [
+        "Compliance requirement",
+        "> 10 developers",
+        "Manual review doesn't scale"
+      ],
+      "skip_when": [
+        "Small team (manual review works)",
+        "No compliance requirement"
+      ],
+      "timing": "When team size > 10"
+    },
+    "cost_visibility": {
+      "implement_when": ["Day 1"],
+      "rationale": "Easier to track from start than retrofit",
+      "skip_when": ["Single team, no chargeback needed"]
+    },
+    "multi_region": {
+      "implement_when": [
+        "Latency requirements for international customers",
+        "DR strategy requires active-active",
+        "Compliance requires data residency in multiple regions"
+      ],
+      "skip_when": ["Single region sufficient"],
+      "timing": "When international expansion confirmed"
+    }
+  },
+  "implementation_phases": [
+    {
+      "phase": "1: Foundation",
+      "weeks": "1-4",
+      "activities": [
+        "Answer critical questions",
+        "Engage external consultant",
+        "Kubernetes cluster provisioning (Terraform)",
+        "CNI deployment (Cilium)",
+        "Ingress controller (NGINX)",
+        "GitOps setup (Argo CD)",
+        "Observability stack (Prometheus, Grafana, Loki)",
+        "Secrets management (Vault + ESO)"
+      ]
+    },
+    {
+      "phase": "2: Hardening",
+      "weeks": "5-8",
+      "activities": [
+        "RBAC configuration",
+        "Network policies",
+        "Pod Security Standards",
+        "Container registry (Harbor or cloud)",
+        "Backup setup (Velero)",
+        "CI/CD pipeline (GitHub Actions)"
+      ]
+    },
+    {
+      "phase": "3: Migration",
+      "weeks": "9-12",
+      "activities": [
+        "Application containerization",
+        "Kubernetes manifests",
+        "Database migration",
+        "Caching layer (Valkey)",
+        "Health checks implementation",
+        "Dev environment deployment"
+      ]
+    },
+    {
+      "phase": "4: Testing",
+      "weeks": "13-16",
+      "activities": [
+        "Staging environment deployment",
+        "Load testing",
+        "Disaster recovery testing",
+        "Security testing",
+        "Runbook creation",
+        "Team training"
+      ]
+    },
+    {
+      "phase": "5: Cutover",
+      "weeks": "17-20",
+      "activities": [
+        "Production environment deployment",
+        "Blue-green cutover",
+        "DNS switch",
+        "Monitoring validation",
+        "Post-cutover monitoring",
+        "Old infrastructure decommissioning"
+      ]
+    }
+  ],
+  "success_metrics": {
+    "deployment_downtime": {
+      "current": "1-4 hours per release",
+      "target": "0 minutes (rolling updates)",
+      "validation": "Deploy during business hours"
+    },
+    "incident_detection": {
+      "current": "10-60 minutes (customers report)",
+      "target": "< 2 minutes (automated alerts)",
+      "validation": "Simulate failures, measure alert time"
+    },
+    "data_recovery": {
+      "current": "Last nightly backup",
+      "target": "Point-in-time (max 15 min loss)",
+      "validation": "Quarterly DR drill, restore test"
+    },
+    "vendor_migration": {
+      "current": "Unknown/untested",
+      "target": "< 1 quarter",
+      "validation": "Annual portability review, test IaC"
+    },
+    "developer_self_service": {
+      "current": "Ops does manual deploys",
+      "target": "Deploy via Git PR",
+      "validation": "Developers deploy without Ops"
+    }
+  }
+}
