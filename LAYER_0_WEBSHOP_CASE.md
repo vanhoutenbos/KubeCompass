@@ -1,72 +1,72 @@
-# Layer 0: Fundament & Context — Webshop Migratiecase
+# Layer 0: Foundation & Context — Webshop Migration Case
 
-**Doelgroep**: Engineers, Architecten, Management  
-**Status**: Foundational — moet vastgelegd zijn vóórdat technische implementatie begint  
-**Organisatie**: Nederlandse webshop / online warenhuis met Essential SAFe werkwijze  
+**Target Audience**: Engineers, Architects, Management  
+**Status**: Foundational — must be established before technical implementation begins  
+**Organization**: Dutch webshop / online store with Essential SAFe methodology  
 
 ---
 
-## Wat is Layer 0?
+## What is Layer 0?
 
-Layer 0 definieert **het fundament waarop alle technische beslissingen worden gebouwd**. Het gaat niet om concrete tools, YAML-configuraties of pipelines, maar om:
+Layer 0 defines **the foundation on which all technical decisions are built**. It's not about concrete tools, YAML configurations, or pipelines, but about:
 
-- **Niet-functionele eisen** die de platformarchitectuur bepalen
-- **Randvoorwaarden** die niet meer te veranderen zijn zonder grote impact
-- **Principes** die richtinggevend zijn voor alle latere keuzes
-- **Grenzen** van wat acceptabel is en wat niet
+- **Non-functional requirements** that determine the platform architecture
+- **Constraints** that cannot be changed without major impact
+- **Principles** that guide all subsequent choices
+- **Boundaries** of what is acceptable and what is not
 
-### Waarom Layer 0 eerst?
+### Why Layer 0 First?
 
-Zonder duidelijk Layer 0 fundament:
-- Worden fundamentele keuzes later als "detail" afgedaan, terwijl ze de architectuur bepalen
-- Ontstaan implicite aannames die leiden tot verkeerde toolkeuzes
-- Is er geen duidelijk kader om beslissingen te toetsen
-- Wordt vendor lock-in per ongeluk geaccepteerd
+Without a clear Layer 0 foundation:
+- Fundamental choices are later dismissed as "details" while they determine the architecture
+- Implicit assumptions lead to wrong tool choices
+- There is no clear framework to evaluate decisions
+- Vendor lock-in is accidentally accepted
 
-**Layer 0 moet beantwoord zijn voordat je überhaupt begint met Kubernetes-implementatie.**
+**Layer 0 must be answered before you even begin with Kubernetes implementation.**
 
 ---
 
 ## Executive Summary
 
-### Situatie
-Nederlandse webshop met Essential SAFe organisatie (meerdere teams: Dev, Ops, Functioneel Beheer, Support) migreert van handmatige VM-deployments naar Kubernetes. Bedrijf verkoopt fysieke producten met eigen verzending door Europa. Downtime tijdens checkout = direct omzetverlies.
+### Situation
+Dutch webshop with Essential SAFe organization (multiple teams: Dev, Ops, Functional Management, Support) migrating from manual VM deployments to Kubernetes. Company sells physical products with own shipping throughout Europe. Downtime during checkout = direct revenue loss.
 
-### Huidige Pijnpunten
-- ✋ Handmatige releases (alleen maandagnacht, met downtime)
-- 🚨 Reactieve incident detectie (klanten bellen, toevallige ontdekking)
-- 💾 Nachtelijke backups zonder point-in-time recovery
-- 🗄️ SQL database als single point of failure
-- 🔧 Inconsistente VM-configuratie zonder systematische patching
+### Current Pain Points
+- ✋ Manual releases (only Monday nights, with downtime)
+- 🚨 Reactive incident detection (customers call, accidental discovery)
+- 💾 Nightly backups without point-in-time recovery
+- 🗄️ SQL database as single point of failure
+- 🔧 Inconsistent VM configuration without systematic patching
 
-### Strategische Doelen (Layer 0)
-1. **Zero-downtime deployments** — deployen wanneer klaar is, niet wanneer "mag"
-2. **Proactieve monitoring** — problemen detecteren voordat klanten bellen
-3. **Data resilience** — point-in-time recovery, geen transactieverlies
-4. **Vendor independence** — migratie naar andere provider binnen 1 kwartaal mogelijk
-5. **Clear ownership** — Dev, Ops en Support weten wie waarvoor verantwoordelijk is
+### Strategic Goals (Layer 0)
+1. **Zero-downtime deployments** — deploy when ready, not when "allowed"
+2. **Proactive monitoring** — detect problems before customers call
+3. **Data resilience** — point-in-time recovery, no transaction loss
+4. **Vendor independence** — migration to another provider within 1 quarter possible
+5. **Clear ownership** — Dev, Ops, and Support know who is responsible for what
 
-### Fundamentele Principes (Niet-Onderhandelbaar)
+### Fundamental Principles (Non-Negotiable)
 - 🔐 **Security by design** — Least privilege, defense in depth, encryption
-- 🔓 **Open-source voorkeur** — Geen vendor lock-in, reproduceerbare architectuur
-- 📝 **GitOps vanaf dag 1** — Alle deployments via Git, geen handmatig kubectl
-- 👥 **Shared responsibility** — Dev + Ops samenwerking, niet "alles naar Ops"
-- 🎯 **Business impact driven** — Beslissingen gebaseerd op omzetrisico, niet tech hype
+- 🔓 **Open-source preference** — No vendor lock-in, reproducible architecture
+- 📝 **GitOps from day 1** — All deployments via Git, no manual kubectl
+- 👥 **Shared responsibility** — Dev + Ops collaboration, not "everything to Ops"
+- 🎯 **Business impact driven** — Decisions based on revenue risk, not tech hype
 
-### Kritieke Succes Criteria
-| Criterium | Doel | Huidige Situatie |
-|-----------|------|-----------------|
-| **Deployment downtime** | 0 minuten (rolling updates) | 1-4 uur per release |
-| **Incident detectie** | < 2 minuten (alerts) | 10-60 minuten (klanten bellen) |
-| **Data recovery** | Point-in-time (max 15 min verlies) | Laatste nachtelijke backup |
-| **Vendor migration tijd** | < 1 kwartaal | Onbekend / niet getest |
-| **Developer self-service** | Deploy via Git PR | Ops doet handmatig |
+### Critical Success Criteria
+| Criterion | Target | Current Situation |
+|-----------|--------|------------------|
+| **Deployment downtime** | 0 minutes (rolling updates) | 1-4 hours per release |
+| **Incident detection** | < 2 minutes (alerts) | 10-60 minutes (customers call) |
+| **Data recovery** | Point-in-time (max 15 min loss) | Last nightly backup |
+| **Vendor migration time** | < 1 quarter | Unknown / not tested |
+| **Developer self-service** | Deploy via Git PR | Ops does manually |
 
 ---
 
-## Expliciete Doelen (Goals)
+## Explicit Goals
 
-### Primaire Doelen
+### Primary Goals
 1. **Eliminate Deployment Downtime**
    - Zero-downtime releases via rolling updates
    - Deploy when features are ready, not when "downtime is allowed"
@@ -78,1078 +78,1078 @@ Nederlandse webshop met Essential SAFe organisatie (meerdere teams: Dev, Ops, Fu
    - Clear dashboards for all teams (Dev, Ops, Support)
 
 3. **Data Protection & Recovery**
-   - Point-in-time recovery voor kritieke data (orders, klantgegevens)
-   - Geografisch gespreide backups
-   - Tested restore procedures (backups zijn waardeloos als restore niet werkt)
+   - Point-in-time recovery for critical data (orders, customer information)
+   - Geographically distributed backups
+   - Tested restore procedures (backups are worthless if restore doesn't work)
 
 4. **Vendor Independence**
-   - Migratie naar andere cloud provider binnen 1 kwartaal
-   - Open-source tooling voorkeur
-   - Infrastructure as Code voor reproduceerbare omgevingen
+   - Migration to another cloud provider within 1 quarter
+   - Open-source tooling preference
+   - Infrastructure as Code for reproducible environments
 
 5. **Clear Team Ownership**
-   - Developers kunnen zelf deployen (via GitOps)
-   - Operations faciliteert platform (geen bottleneck)
-   - Support heeft inzicht zonder systeem access
+   - Developers can deploy themselves (via GitOps)
+   - Operations facilitates platform (not a bottleneck)
+   - Support has insight without system access
 
-### Secundaire Doelen
-- Systematische patching en updates (niet ad-hoc)
-- Audit trail voor compliance (wie deed wat wanneer)
-- Foundation voor toekomstige multi-region (niet dag 1, maar architectuur blokkeert het niet)
-- Developer productivity (sneller itereren, minder wachten op Ops)
+### Secondary Goals
+- Systematic patching and updates (not ad-hoc)
+- Audit trail for compliance (who did what when)
+- Foundation for future multi-region (not day 1, but architecture doesn't block it)
+- Developer productivity (faster iteration, less waiting for Ops)
 
 ---
 
-## Expliciete Non-Goals (Buiten Scope Layer 0)
+## Explicit Non-Goals (Out of Scope for Layer 0)
 
-### Wat We NIET Doen (Nu)
+### What We Are NOT Doing (Now)
 1. **Microservices Refactoring** ❌
-   - Huidige MVC monoliet blijft intact
-   - Focus: lift & shift naar Kubernetes
-   - Microservices zijn toekomstige optie, geen Layer 0 requirement
+   - Current MVC monolith remains intact
+   - Focus: lift & shift to Kubernetes
+   - Microservices are future option, not Layer 0 requirement
 
 2. **Multi-Region Deployment** ❌
-   - Te complex voor organisatie zonder Kubernetes ervaring
-   - Single region met optie voor latere expansie
-   - CDN voor static assets is voldoende voor latency verbetering
+   - Too complex for organization without Kubernetes experience
+   - Single region with option for later expansion
+   - CDN for static assets is sufficient for latency improvement
 
 3. **Advanced Observability** ❌
-   - Distributed tracing is nice-to-have, niet foundational
-   - Focus op metrics en logs eerst
-   - Tracing kan later (Layer 2)
+   - Distributed tracing is nice-to-have, not foundational
+   - Focus on metrics and logs first
+   - Tracing can come later (Layer 2)
 
 4. **Service Mesh** ❌
-   - Niet nodig voor monolithische applicatie
-   - Kan later bij microservices transitie
-   - Architectuur moet service mesh toestaan, maar niet implementeren
+   - Not needed for monolithic application
+   - Can come later with microservices transition
+   - Architecture must allow service mesh, but not implement it
 
-5. **100% Uptime Garantie** ❌
-   - Realistisch: incidenten kunnen gebeuren
-   - Focus: minimize downtime, niet eliminate
-   - Accepteer dat maintenance en incidents impact hebben
+5. **100% Uptime Guarantee** ❌
+   - Realistic: incidents can happen
+   - Focus: minimize downtime, not eliminate it
+   - Accept that maintenance and incidents have impact
 
 6. **Immediate Developer Kubernetes Access** ❌
-   - Developers krijgen GEEN kubectl access (security)
-   - GitOps is enige deployment methode
-   - Read-only dashboards wel beschikbaar
+   - Developers get NO kubectl access (security)
+   - GitOps is only deployment method
+   - Read-only dashboards are available
 
-### Waarom Dit Belangrijk Is
-Non-goals voorkomen **scope creep** en **analysis paralysis**. Teams hebben neiging om "alvast" voor de toekomst te bouwen, wat leidt tot over-engineering en vertraging. Layer 0 is pragmatisch: doe wat nodig is, niet wat leuk is.
+### Why This Is Important
+Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to build "for the future", which leads to over-engineering and delays. Layer 0 is pragmatic: do what's needed, not what's nice.
 
 ---
 
-## Harde Randvoorwaarden (Hard Constraints)
+## Hard Constraints
 
-### Niet-Onderhandelbare Eisen
+### Non-Negotiable Requirements
 
 #### 1. Vendor Independence
-- **Constraint**: Migratie naar andere infrastructuur leverancier moet binnen **1 kwartaal** mogelijk zijn
-- **Implicatie**: Geen afhankelijkheid van cloud-specific services (AWS ECS, Azure Container Apps, etc.)
-- **Validatie**: Infrastructure as Code moet reproduceerbaar zijn op andere cloud
+- **Constraint**: Migration to another infrastructure provider must be possible within **1 quarter**
+- **Implication**: No dependency on cloud-specific services (AWS ECS, Azure Container Apps, etc.)
+- **Validation**: Infrastructure as Code must be reproducible on other clouds
 
 #### 2. Data Sovereignty & GDPR
-- **Constraint**: Klantgegevens moeten binnen EU blijven
-- **Implicatie**: Datacenter keuze beperkt tot EU regio's
-- **Validatie**: Backup storage moet ook EU-compliant zijn
+- **Constraint**: Customer data must remain within EU
+- **Implication**: Datacenter choice limited to EU regions
+- **Validation**: Backup storage must also be EU-compliant
 
 #### 3. Business Continuity
-- **Constraint**: Checkout functionaliteit is **business-kritisch**
-  - Max acceptable downtime: **30 minuten per maand** (99.9% uptime target)
-  - Max acceptable data loss (RPO): **15 minuten** voor transacties
-  - Max recovery time (RTO): **30 minuten** voor kritieke systemen
-- **Implicatie**: High availability voor database en applicatie verplicht
+- **Constraint**: Checkout functionality is **business-critical**
+  - Max acceptable downtime: **30 minutes per month** (99.9% uptime target)
+  - Max acceptable data loss (RPO): **15 minutes** for transactions
+  - Max recovery time (RTO): **30 minutes** for critical systems
+- **Implication**: High availability for database and application required
 
 #### 4. Security Baseline
-- **Constraint**: Geen productie toegang voor developers (compliance requirement)
-- **Implicatie**: GitOps is enige deployment methode (no kubectl apply)
-- **Validatie**: RBAC policies moeten dit afdwingen
+- **Constraint**: No production access for developers (compliance requirement)
+- **Implication**: GitOps is only deployment method (no kubectl apply)
+- **Validation**: RBAC policies must enforce this
 
 #### 5. Operational Ownership
-- **Constraint**: Operations blijft eigenaar van productie omgeving
-- **Implicatie**: Developers kunnen zelf deployen, maar Ops bepaalt guardrails (resource limits, security policies)
-- **Validatie**: Platform team heeft final say over cluster configuratie
+- **Constraint**: Operations remains owner of production environment
+- **Implication**: Developers can deploy themselves, but Ops determines guardrails (resource limits, security policies)
+- **Validation**: Platform team has final say over cluster configuration
 
-#### 6. Budget Realisme
-- **Constraint**: Geen enterprise SaaS budgets (Datadog, New Relic, etc.)
-- **Implicatie**: Open-source tooling voorkeur
-- **Validatie**: Keuzes moeten verantwoord zijn zonder vendor support contracts
+#### 6. Budget Realism
+- **Constraint**: No enterprise SaaS budgets (Datadog, New Relic, etc.)
+- **Implication**: Open-source tooling preference
+- **Validation**: Choices must be justified without vendor support contracts
 
 #### 7. Team Maturity
-- **Constraint**: Team heeft **geen Kubernetes ervaring** (training nodig)
-- **Implicatie**: Start simpel, geen complexe multi-cluster setups
-- **Validatie**: Operationeel model moet haalbaar zijn voor team van ~10 mensen
+- **Constraint**: Team has **no Kubernetes experience** (training needed)
+- **Implication**: Start simple, no complex multi-cluster setups
+- **Validation**: Operational model must be feasible for team of ~10 people
 
-### Trade-offs die We Accepteren
+### Trade-offs We Accept
 
-| Trade-off | Keuze | Rationale |
-|-----------|-------|-----------|
-| **Managed Kubernetes vs. Self-hosted** | Managed (bij Nederlandse provider) | Team heeft geen ervaring; managed reduceert operationele last |
-| **Managed Database vs. Kubernetes StatefulSet** | TBD in Layer 1 | Afweging tussen vendor independence en operational complexity |
+| Trade-off | Choice | Rationale |
+|-----------|--------|-----------|
+| **Managed Kubernetes vs. Self-hosted** | Managed (at Dutch provider) | Team has no experience; managed reduces operational burden |
+| **Managed Database vs. Kubernetes StatefulSet** | TBD in Layer 1 | Balance between vendor independence and operational complexity |
 | **Open-source vs. SaaS observability** | Open-source (Prometheus/Grafana) | Budget + vendor independence |
-| **GitOps complexity vs. Control** | Accepteer learning curve | Security en audit trail rechtvaardigen investering |
+| **GitOps complexity vs. Control** | Accept learning curve | Security and audit trail justify investment |
 
 ---
 
-## Expliciete Risico's & Mitigaties
+## Explicit Risks & Mitigations
 
-### Hoog Risico (Moet Gemitigeerd Worden)
+### High Risk (Must Be Mitigated)
 
-#### 1. Team Heeft Geen Kubernetes Ervaring
-- **Risico**: Verkeerde architectuur keuzes, operationele blunders, lange learning curve
-- **Impact**: Downtime, security incidents, frustratie
-- **Mitigatie**:
-  - [ ] Externe Kubernetes consultant voor initiële setup (3-6 maanden)
-  - [ ] Training voor team (officiële cursussen + hands-on workshops)
-  - [ ] Proof of Concept in non-productie omgeving eerst
-  - [ ] Uitgebreide documentatie en runbooks
+#### 1. Team Has No Kubernetes Experience
+- **Risk**: Wrong architecture choices, operational blunders, long learning curve
+- **Impact**: Downtime, security incidents, frustration
+- **Mitigation**:
+  - [ ] External Kubernetes consultant for initial setup (3-6 months)
+  - [ ] Training for team (official courses + hands-on workshops)
+  - [ ] Proof of Concept in non-production environment first
+  - [ ] Extensive documentation and runbooks
 
-#### 2. Database Migratie is Complex
-- **Risico**: SQL database is single point of failure; migratie naar HA setup is complex
-- **Impact**: Downtime tijdens migratie, potentieel dataverlies
-- **Mitigatie**:
-  - [ ] Start met lees-replicas (geen failover) voor query load spreiding
-  - [ ] Test restore procedures extensief in non-prod
-  - [ ] Overweeg managed database (cloud provider) voor HA capabilities
-  - [ ] Schema migrations moeten backward compatible zijn (blue-green capable)
+#### 2. Database Migration is Complex
+- **Risk**: SQL database is single point of failure; migration to HA setup is complex
+- **Impact**: Downtime during migration, potential data loss
+- **Mitigation**:
+  - [ ] Start with read-replicas (no failover) for query load distribution
+  - [ ] Test restore procedures extensively in non-prod
+  - [ ] Consider managed database (cloud provider) for HA capabilities
+  - [ ] Schema migrations must be backward compatible (blue-green capable)
 
-#### 3. Vendor Lock-in Per Ongeluk
-- **Risico**: Gebruik van vendor-specific features "omdat het makkelijk is"
-- **Impact**: Kan niet migreren binnen 1 kwartaal (hard constraint breach)
-- **Mitigatie**:
-  - [ ] Architectuur review board (Ops + externe consultant)
-  - [ ] Expliciet "portability checklist" bij elke tool keuze
-  - [ ] Infrastructure as Code vanaf dag 1 (geen handmatige configuratie)
-  - [ ] Quarterly review: "Kunnen we nog steeds migreren?"
+#### 3. Vendor Lock-in By Accident
+- **Risk**: Use of vendor-specific features "because it's easy"
+- **Impact**: Cannot migrate within 1 quarter (hard constraint breach)
+- **Mitigation**:
+  - [ ] Architecture review board (Ops + external consultant)
+  - [ ] Explicit "portability checklist" for every tool choice
+  - [ ] Infrastructure as Code from day 1 (no manual configuration)
+  - [ ] Quarterly review: "Can we still migrate?"
 
-#### 4. GitOps Workflow Breekt Bestaand Proces
-- **Risico**: Essential SAFe proces past niet bij GitOps branching strategy
-- **Impact**: Confusion, workarounds, handmatig kubectl gebruik (security risk)
-- **Mitigatie**:
-  - [ ] Map SAFe sprints naar Git workflow (trunk-based vs. GitFlow)
-  - [ ] Duidelijke escalatie pad voor hotfixes (bypass normale PR flow?)
-  - [ ] Training voor PO's en functioneel beheer (niet alleen engineers)
-  - [ ] Pilot met 1 team eerst, dan roll-out naar andere teams
+#### 4. GitOps Workflow Breaks Existing Process
+- **Risk**: Essential SAFe process doesn't fit GitOps branching strategy
+- **Impact**: Confusion, workarounds, manual kubectl usage (security risk)
+- **Mitigation**:
+  - [ ] Map SAFe sprints to Git workflow (trunk-based vs. GitFlow)
+  - [ ] Clear escalation path for hotfixes (bypass normal PR flow?)
+  - [ ] Training for POs and functional management (not just engineers)
+  - [ ] Pilot with 1 team first, then roll-out to other teams
 
-### Medium Risico (Monitor & Plan)
+### Medium Risk (Monitor & Plan)
 
 #### 5. Observability Overwhelm
-- **Risico**: Te veel metrics, alerts, dashboards → alert fatigue
-- **Impact**: Echte problemen worden gemist in de noise
-- **Mitigatie**:
-  - [ ] Start met basics: uptime, error rate, response time
-  - [ ] Iteratief alerts toevoegen (niet alles dag 1)
-  - [ ] Alert review elke sprint (disable irrelevante alerts)
+- **Risk**: Too many metrics, alerts, dashboards → alert fatigue
+- **Impact**: Real problems are missed in the noise
+- **Mitigation**:
+  - [ ] Start with basics: uptime, error rate, response time
+  - [ ] Iteratively add alerts (not everything day 1)
+  - [ ] Alert review each sprint (disable irrelevant alerts)
 
-#### 6. Costs Escaleren
-- **Risico**: Cloud kosten hoger dan verwacht (storage, egress, compute)
-- **Impact**: Budget overschrijding, management ontevreden
-- **Mitigatie**:
-  - [ ] Cost monitoring vanaf dag 1 (OpenCost / Kubecost)
-  - [ ] Resource limits per namespace (geen unbounded growth)
-  - [ ] Monthly cost review met management
+#### 6. Costs Escalate
+- **Risk**: Cloud costs higher than expected (storage, egress, compute)
+- **Impact**: Budget overrun, management dissatisfaction
+- **Mitigation**:
+  - [ ] Cost monitoring from day 1 (OpenCost / Kubecost)
+  - [ ] Resource limits per namespace (no unbounded growth)
+  - [ ] Monthly cost review with management
 
-#### 7. Security Gaps in Migratie
-- **Risico**: VM security model != Kubernetes security model
-- **Impact**: Onbedoelde attack surface, compliance issues
-- **Mitigatie**:
-  - [ ] Security assessment van huidige VM setup (baseline)
-  - [ ] Network policies vanaf dag 1 (deny-all default)
-  - [ ] Image scanning in CI/CD (geen known CVEs in prod)
+#### 7. Security Gaps in Migration
+- **Risk**: VM security model != Kubernetes security model
+- **Impact**: Unintended attack surface, compliance issues
+- **Mitigation**:
+  - [ ] Security assessment of current VM setup (baseline)
+  - [ ] Network policies from day 1 (deny-all default)
+  - [ ] Image scanning in CI/CD (no known CVEs in prod)
 
-### Laag Risico (Acceptabel)
+### Low Risk (Acceptable)
 
-#### 8. Multi-Region Latency (Zuid-Europa)
-- **Risico**: Klanten in Spanje/Italië hebben langzamere ervaring
-- **Impact**: Lagere conversie, klachten
-- **Acceptatie**: Single region is bewuste keuze (complexiteit vs. business impact)
-- **Future Plan**: CDN eerst, multi-region later (na 6-12 maanden Kubernetes ervaring)
+#### 8. Multi-Region Latency (Southern Europe)
+- **Risk**: Customers in Spain/Italy have slower experience
+- **Impact**: Lower conversion, complaints
+- **Acceptance**: Single region is conscious choice (complexity vs. business impact)
+- **Future Plan**: CDN first, multi-region later (after 6-12 months Kubernetes experience)
 
 ---
 
 ## 1. Business Context & Impact
 
 ### 1.1 Business Model
-- **Product**: Fysieke producten verkocht via webshop
-- **Distributie**: Eigen verzending door heel Europa
-- **Omzet**: Direct afhankelijk van webshopbeschikbaarheid
-- **Kritieke functionaliteit**:
-  - Producten kunnen zoeken (vervelend als het niet werkt)
-  - Bestellen en betalen (**business-kritisch** — direct omzetverlies bij downtime)
+- **Product**: Physical products sold via webshop
+- **Distribution**: Own shipping throughout Europe
+- **Revenue**: Directly dependent on webshop availability
+- **Critical functionality**:
+  - Product search (annoying if it doesn't work)
+  - Order and payment (**business-critical** — direct revenue loss during downtime)
 
-### 1.2 Business Impact van Downtime
-- **Direct**: Omzetverlies gedurende downtime periode
-- **Indirect**: Klantvertrouwen beschadigd
-- **Cumulatief**: Herhaald falen = klanten keren niet terug
-- **Reputatie**: Negatieve reviews, sociale media impact
+### 1.2 Business Impact of Downtime
+- **Direct**: Revenue loss during downtime period
+- **Indirect**: Customer trust damaged
+- **Cumulative**: Repeated failures = customers don't return
+- **Reputation**: Negative reviews, social media impact
 
-**Conclusie**: Beschikbaarheid is **business-kritisch**, niet alleen een technische metric.
-
----
-
-## 2. Beschikbaarheid & Downtime Verwachtingen
-
-### 2.1 Huidige Situatie (AS-IS)
-- Releases alleen maandagnacht
-- Downtime wordt **verwacht** bij releases
-- Problemen worden reactief ontdekt (via klanten of toeval)
-- Geen onderscheid tussen geplande en ongeplande downtime
-
-### 2.2 Doelstelling (TO-BE)
-**Kwalitatieve doelen** (SLA's komen in Layer 1):
-
-1. **Releases zonder downtime**
-   - Deploy wanneer features klaar zijn, niet wanneer "downtime mag"
-   - Rolling updates als standaard
-   - Rollback-mogelijkheid binnen minuten
-
-2. **Ongeplande downtime geminimaliseerd**
-   - High availability (HA) voor kritieke componenten
-   - Geen single points of failure
-   - Automatische failover waar mogelijk
-
-3. **Planned maintenance zonder impact**
-   - Updates en patches toepassen zonder klantimpact
-   - Node drain en pod migration als standaard
-
-### 2.3 Realistische Verwachtingen
-
-**Wat wél haalbaar is** (met Kubernetes):
-- Zero-downtime deployments voor applicatielagen
-- Automatische herstart van gefaalde pods
-- Rolling updates met health checks
-- Graduele traffic shift (canary/blue-green mogelijk in latere fase)
-
-**Wat NIET haalbaar is** (zonder extra investeringen):
-- 100% uptime — accepteer dat incidenten kunnen voorkomen
-- Zero-downtime voor database schema migrations — vereist applicatiearchitectuur aanpassingen
-- Instant failover bij datacenter failure — multi-region vereist (zie sectie 8)
-
-### 2.4 Acceptatiecriteria
-
-- [ ] Applicatie kan deployen zonder downtime (rolling update)
-- [ ] Gefaalde pods worden binnen 30 seconden automatisch herstart
-- [ ] Database downtime is **niet geëlimineerd**, maar **wel geïsoleerd** (applicatie blijft lopen met fallback-gedrag)
-- [ ] Maintenance windows zijn **niet meer nodig** voor applicatie updates
+**Conclusion**: Availability is **business-critical**, not just a technical metric.
 
 ---
 
-## 3. Data-Kritikaliteit & Continuïteit
+## 2. Availability & Downtime Expectations
 
-### 3.1 Grootste Angsten (Klant Input)
-1. **Downtime**: Webshop is niet bereikbaar → direct omzetverlies
-2. **Dataverlies**: Orders, klantgegevens, transacties kwijt → onherstelbaar
+### 2.1 Current Situation (AS-IS)
+- Releases only Monday nights
+- Downtime is **expected** during releases
+- Problems discovered reactively (via customers or chance)
+- No distinction between planned and unplanned downtime
 
-### 3.2 Huidige Backup Strategie
-- Nachtelijke SQL backups
-- **Beperking**: Point-in-time recovery is niet mogelijk
-- **Risico**: Verlies van alle transacties sinds laatste backup
+### 2.2 Target (TO-BE)
+**Qualitative goals** (SLAs come in Layer 1):
 
-### 3.3 Layer 0 Eisen
+1. **Releases without downtime**
+   - Deploy when features are ready, not when "downtime is allowed"
+   - Rolling updates as standard
+   - Rollback capability within minutes
 
-**Data Classificatie**:
-| Data Type | Kritikaliteit | RPO (Recovery Point Objective) | RTO (Recovery Time Objective) |
-|-----------|---------------|-------------------------------|-------------------------------|
-| **Orders & Transacties** | Business-kritisch | Max 15 minuten | Max 30 minuten |
-| **Klantgegevens** | Hoog (GDPR) | Max 1 uur | Max 1 uur |
-| **Product Catalogus** | Medium | Max 24 uur | Max 2 uur |
-| **Sessie Data** | Laag (acceptabel verlies) | N/A | N/A |
+2. **Unplanned downtime minimized**
+   - High availability (HA) for critical components
+   - No single points of failure
+   - Automatic failover where possible
 
-**Backup Principes**:
-- **Point-in-time recovery** is een harde eis
-- **Geografische spreiding** van backups (niet in zelfde datacenter)
-- **Getest restore proces** — backups zijn waardeloos als restore niet werkt
-- **Encryption at rest** voor alle backups (GDPR compliance)
+3. **Planned maintenance without impact**
+   - Apply updates and patches without customer impact
+   - Node drain and pod migration as standard
 
-**Database Continuïteit**:
-- **Single point of failure elimineren**:
-  - SQL database moet HA zijn (replicatie, failover)
-  - Read-replicas voor query load spreiding
-- **Applicatiearchitectuur aanpassingen**:
-  - Retry logica voor tijdelijke database failures
-  - Circuit breaker pattern om cascading failures te voorkomen
-  - Caching layer (Redis/Valkey) om database load te verlagen
+### 2.3 Realistic Expectations
 
-**Wat NIET in Layer 0**:
-- Specifieke backup tool keuze (Velero, Kasten, etc.) → Layer 1
-- Exacte backup frequentie (elk uur, elke 4 uur) → Layer 1
-- Database technology keuze (PostgreSQL HA, MySQL Cluster) → Layer 1
+**What IS achievable** (with Kubernetes):
+- Zero-downtime deployments for application layers
+- Automatic restart of failed pods
+- Rolling updates with health checks
+- Gradual traffic shift (canary/blue-green possible in later phase)
+
+**What is NOT achievable** (without extra investments):
+- 100% uptime — accept that incidents can occur
+- Zero-downtime for database schema migrations — requires application architecture changes
+- Instant failover during datacenter failure — multi-region required (see section 8)
+
+### 2.4 Acceptance Criteria
+
+- [ ] Application can deploy without downtime (rolling update)
+- [ ] Failed pods automatically restart within 30 seconds
+- [ ] Database downtime is **not eliminated**, but **isolated** (application keeps running with fallback behavior)
+- [ ] Maintenance windows are **no longer needed** for application updates
 
 ---
 
-## 4. Security Baseline (Conceptueel)
+## 3. Data Criticality & Continuity
 
-### 4.1 Huidige Situatie
-- Handmatige VM-configuratie → inconsistent security posture
-- Geen systematische patching
-- Toegangsbeheer onduidelijk gedocumenteerd
+### 3.1 Biggest Fears (Customer Input)
+1. **Downtime**: Webshop is not reachable → direct revenue loss
+2. **Data loss**: Orders, customer information, transactions lost → irreparable
 
-### 4.2 Layer 0 Security Principes
+### 3.2 Current Backup Strategy
+- Nightly SQL backups
+- **Limitation**: Point-in-time recovery is not possible
+- **Risk**: Loss of all transactions since last backup
+
+### 3.3 Layer 0 Requirements
+
+**Data Classification**:
+| Data Type | Criticality | RPO (Recovery Point Objective) | RTO (Recovery Time Objective) |
+|-----------|-------------|-------------------------------|-------------------------------|
+| **Orders & Transactions** | Business-critical | Max 15 minutes | Max 30 minutes |
+| **Customer Information** | High (GDPR) | Max 1 hour | Max 1 hour |
+| **Product Catalog** | Medium | Max 24 hours | Max 2 hours |
+| **Session Data** | Low (acceptable loss) | N/A | N/A |
+
+**Backup Principles**:
+- **Point-in-time recovery** is a hard requirement
+- **Geographic distribution** of backups (not in same datacenter)
+- **Tested restore process** — backups are worthless if restore doesn't work
+- **Encryption at rest** for all backups (GDPR compliance)
+
+**Database Continuity**:
+- **Eliminate single point of failure**:
+  - SQL database must be HA (replication, failover)
+  - Read-replicas for query load distribution
+- **Application architecture changes**:
+  - Retry logic for temporary database failures
+  - Circuit breaker pattern to prevent cascading failures
+  - Caching layer (Redis/Valkey) to reduce database load
+
+**What is NOT in Layer 0**:
+- Specific backup tool choice (Velero, Kasten, etc.) → Layer 1
+- Exact backup frequency (hourly, every 4 hours) → Layer 1
+- Database technology choice (PostgreSQL HA, MySQL Cluster) → Layer 1
+
+---
+
+## 4. Security Baseline (Conceptual)
+
+### 4.1 Current Situation
+- Manual VM configuration → inconsistent security posture
+- No systematic patching
+- Access management poorly documented
+
+### 4.2 Layer 0 Security Principles
 
 **1. Least Privilege**
-- Developers hebben **geen** productie toegang (tenzij expliciet nodig)
-- Operations heeft **namespace-scoped** toegang (niet cluster-admin voor alles)
-- Service accounts hebben **minimal permissions** (niet `cluster-admin` voor applicaties)
+- Developers have **no** production access (unless explicitly needed)
+- Operations has **namespace-scoped** access (not cluster-admin for everything)
+- Service accounts have **minimal permissions** (not `cluster-admin` for applications)
 
 **2. Defense in Depth**
-- Security is **gelaagd** (niet afhankelijk van één control)
-- Network policies (pod-to-pod communicatie beperken)
-- Pod Security Standards (geen privileged containers zonder goede reden)
-- Image scanning (kwetsbaarheden detecteren vóór deployment)
+- Security is **layered** (not dependent on one control)
+- Network policies (limit pod-to-pod communication)
+- Pod Security Standards (no privileged containers without good reason)
+- Image scanning (detect vulnerabilities before deployment)
 
 **3. Encryption**
-- **In Transit**: TLS verplicht voor alle externe communicatie
-- **At Rest**: Gevoelige data encrypted in database en backups
-- **Secrets Management**: Geen credentials in Git, environment variables of plaintext ConfigMaps
+- **In Transit**: TLS required for all external communication
+- **At Rest**: Sensitive data encrypted in database and backups
+- **Secrets Management**: No credentials in Git, environment variables, or plaintext ConfigMaps
 
 **4. Audit & Compliance**
-- **Wie deed wat wanneer**: Alle wijzigingen traceable (GitOps!)
+- **Who did what when**: All changes traceable (GitOps!)
 - **GDPR compliance**: Data residency, right to be forgotten, data encryption
-- **Audit logs**: Bewaard voor minimaal 1 jaar
+- **Audit logs**: Retained for at least 1 year
 
 **5. Supply Chain Security**
-- **Image provenance**: Weten waar container images vandaan komen
-- **Vulnerability scanning**: Blokker known CVEs
-- **Image signing**: Verifieer authenticity (optioneel in eerste fase, maar architectuur moet het toestaan)
+- **Image provenance**: Know where container images come from
+- **Vulnerability scanning**: Block known CVEs
+- **Image signing**: Verify authenticity (optional in first phase, but architecture must allow it)
 
 ### 4.3 Security Ownership
 
-| Verantwoordelijkheid | Eigenaar | Ondersteuning door |
-|---------------------|----------|-------------------|
+| Responsibility | Owner | Support from |
+|----------------|-------|--------------|
 | **Platform security** (cluster hardening, RBAC, network policies) | Ops/Platform team | Security Officer |
 | **Application security** (secure coding, dependency updates) | Development teams | Security Officer |
-| **Incident response** | Ops team (first response) | Security Officer (escalatie) |
-| **Compliance audits** | Security Officer | Ops + Dev (documentatie) |
+| **Incident response** | Ops team (first response) | Security Officer (escalation) |
+| **Compliance audits** | Security Officer | Ops + Dev (documentation) |
 
 ---
 
-## 5. Observability Verwachtingen
+## 5. Observability Expectations
 
-### 5.1 Huidige Situatie (Reactief)
-- Problemen ontdekt via:
-  - Klanten die bellen naar support
-  - Medewerkers die "toevallig" iets merken
-- Geen proactieve monitoring
-- Geen duidelijk "single pane of glass"
+### 5.1 Current Situation (Reactive)
+- Problems discovered via:
+  - Customers calling support
+  - Employees "accidentally" noticing something
+- No proactive monitoring
+- No clear "single pane of glass"
 
-### 5.2 Layer 0 Observability Eisen
+### 5.2 Layer 0 Observability Requirements
 
-**Proactieve Detectie**:
-- **Voordat klanten het merken**: Alerts op kritieke metrics (response time, error rate, pod crashes)
-- **Root cause analysis**: Kunnen achterhalen waarom iets fout ging
-- **Trend analysis**: Langzame degradatie detecteren voordat het een incident wordt
+**Proactive Detection**:
+- **Before customers notice**: Alerts on critical metrics (response time, error rate, pod crashes)
+- **Root cause analysis**: Be able to trace why something went wrong
+- **Trend analysis**: Detect slow degradation before it becomes an incident
 
-**Drie Pilaren**:
-1. **Metrics**: "Is het systeem gezond?" (CPU, memory, request latency, error rates)
-2. **Logs**: "Wat gebeurde er precies?" (application logs, audit logs)
-3. **Traces**: "Waar zit de bottleneck?" (request flow door microservices — niet nu, maar architectuur moet het toestaan)
+**Three Pillars**:
+1. **Metrics**: "Is the system healthy?" (CPU, memory, request latency, error rates)
+2. **Logs**: "What exactly happened?" (application logs, audit logs)
+3. **Traces**: "Where is the bottleneck?" (request flow through microservices — not now, but architecture must allow it)
 
-**Self-Service voor Teams**:
-- Developers kunnen **eigen dashboards** bekijken (geen afhankelijkheid van Ops)
-- Support team kan **basis troubleshooting** doen zonder ops te betrekken
+**Self-Service for Teams**:
+- Developers can view **their own dashboards** (no dependency on Ops)
+- Support team can do **basic troubleshooting** without involving ops
 
 **Alerting Principles**:
-- **Actionable**: Elke alert moet een duidelijke actie hebben (geen alert fatigue)
-- **Context**: Alert bevat relevante info (welke pod, welke namespace, welke customer impact)
-- **Routing**: Kritieke alerts → PagerDuty/ops on-call, warnings → Slack/Teams
+- **Actionable**: Every alert must have a clear action (no alert fatigue)
+- **Context**: Alert contains relevant info (which pod, which namespace, which customer impact)
+- **Routing**: Critical alerts → PagerDuty/ops on-call, warnings → Slack/Teams
 
-### 5.3 Realistische Scope
+### 5.3 Realistic Scope
 
-**Wat WEL in Layer 0**:
-- ✅ Observability is **niet-optioneel** — moet vanaf dag 1 aanwezig zijn
-- ✅ Metrics, logs, en dashboards voor **alle workloads**
-- ✅ Alerts voor **business-kritieke scenario's** (betaling faalt, webshop down)
+**What IS in Layer 0**:
+- ✅ Observability is **non-optional** — must be present from day 1
+- ✅ Metrics, logs, and dashboards for **all workloads**
+- ✅ Alerts for **business-critical scenarios** (payment fails, webshop down)
 
-**Wat NIET in Layer 0**:
-- ❌ Tool keuze (Prometheus, Datadog, etc.) → Layer 1
-- ❌ Exacte metrics en alert thresholds → Layer 1
-- ❌ Distributed tracing (nice to have, kan later) → Layer 2
+**What is NOT in Layer 0**:
+- ❌ Tool choice (Prometheus, Datadog, etc.) → Layer 1
+- ❌ Exact metrics and alert thresholds → Layer 1
+- ❌ Distributed tracing (nice to have, can come later) → Layer 2
 
 ---
 
 ## 6. Ownership Model: Dev / Ops / Support
 
-### 6.1 Huidige Situatie
-- **Ops**: Eigenaar van productie, detecteert en lost incidenten op
-- **Dev**: Levert code, beperkt betrokken bij productiegedrag
-- **Support**: Eerste lijn contact met klanten, escaleert naar Ops
+### 6.1 Current Situation
+- **Ops**: Owner of production, detects and resolves incidents
+- **Dev**: Delivers code, limited involvement in production behavior
+- **Support**: First line contact with customers, escalates to Ops
 
-### 6.2 Layer 0 Ownership Principes
+### 6.2 Layer 0 Ownership Principles
 
 **Shared Responsibility Model**:
 
-| Verantwoordelijkheid | Dev | Ops | Support |
-|---------------------|-----|-----|---------|
-| **Code kwaliteit** | ✅ Eigenaar | 🤝 Reviewt (code review, security scan) | ❌ |
-| **Deployment** | ✅ Triggert (via GitOps) | 🤝 Faciliteert (platform beschikbaar) | ❌ |
-| **Monitoring & Alerts** | ✅ Definieert application metrics | ✅ Definieert platform metrics | 🤝 Bekijkt dashboards |
+| Responsibility | Dev | Ops | Support |
+|----------------|-----|-----|---------|
+| **Code quality** | ✅ Owner | 🤝 Reviews (code review, security scan) | ❌ |
+| **Deployment** | ✅ Triggers (via GitOps) | 🤝 Facilitates (platform available) | ❌ |
+| **Monitoring & Alerts** | ✅ Defines application metrics | ✅ Defines platform metrics | 🤝 Views dashboards |
 | **Incident Detection** | 🤝 Application alerts | ✅ Platform alerts | 🤝 Customer reports |
 | **Incident Response** | 🤝 Application issues | ✅ Platform issues | ✅ First line triage |
 | **Post-Mortem** | ✅ Application root cause | ✅ Platform root cause | 🤝 Customer impact analysis |
 
-**Operationeel Model**:
-1. **Self-service voor Dev**:
-   - Developers kunnen zelf deployen (via GitOps)
-   - Developers kunnen logs en metrics bekijken
-   - Developers hebben **geen** kubectl access tot productie (GitOps only)
+**Operational Model**:
+1. **Self-service for Dev**:
+   - Developers can deploy themselves (via GitOps)
+   - Developers can view logs and metrics
+   - Developers have **no** kubectl access to production (GitOps only)
 
-2. **Ops als Platform Team**:
-   - Ops bouwt en onderhoudt het Kubernetes platform
-   - Ops definieert **guardrails** (resource limits, security policies)
-   - Ops escaleert **niet** alle application issues terug naar Dev (clear ownership)
+2. **Ops as Platform Team**:
+   - Ops builds and maintains the Kubernetes platform
+   - Ops defines **guardrails** (resource limits, security policies)
+   - Ops does **not** escalate all application issues back to Dev (clear ownership)
 
-3. **Support als First Line**:
-   - Support heeft **read-only** dashboards (is webshop bereikbaar, zijn er errors)
-   - Support escaleert naar Ops (platform issue) of Dev (application issue)
-   - Support heeft **geen** toegang tot systemen (alleen observability dashboards)
+3. **Support as First Line**:
+   - Support has **read-only** dashboards (is webshop reachable, are there errors)
+   - Support escalates to Ops (platform issue) or Dev (application issue)
+   - Support has **no** access to systems (only observability dashboards)
 
-### 6.3 On-Call & Escalatie
+### 6.3 On-Call & Escalation
 
-**Layer 0 Principe**: Duidelijke escalatie paden, geen "alles naar Ops"
+**Layer 0 Principle**: Clear escalation paths, not "everything to Ops"
 
-| Scenario | First Responder | Escalatie |
-|---------|----------------|-----------|
-| **Webshop onbereikbaar** | Ops (platform issue) | Dev (als applicatie de oorzaak is) |
-| **Betaling faalt** | Dev (application logic) | Ops (als database down is) |
-| **Slow performance** | Dev (query optimization) | Ops (als resource exhaustion) |
-| **Security incident** | Ops (isoleer threat) | Security Officer + Dev |
+| Scenario | First Responder | Escalation |
+|---------|----------------|------------|
+| **Webshop unreachable** | Ops (platform issue) | Dev (if application is the cause) |
+| **Payment fails** | Dev (application logic) | Ops (if database is down) |
+| **Slow performance** | Dev (query optimization) | Ops (if resource exhaustion) |
+| **Security incident** | Ops (isolate threat) | Security Officer + Dev |
 
-**On-Call Rotatie** (buiten Layer 0 scope, maar principe vaststellen):
-- Ops on-call voor **platform** (cluster down, node failures)
-- Dev on-call voor **application** (bug in code, payment service down) — overweeg dit in latere fase
+**On-Call Rotation** (outside Layer 0 scope, but establish principle):
+- Ops on-call for **platform** (cluster down, node failures)
+- Dev on-call for **application** (bug in code, payment service down) — consider this in later phase
 
 ---
 
-## 7. Strategische Eisen: Portability & Vendor Lock-in
+## 7. Strategic Requirements: Portability & Vendor Lock-in
 
-### 7.1 Expliciete Klanteis
-> "Vendor lock-in is een expliciete zorg. We willen binnen één kwartaal kunnen migreren naar een andere infrastructuurleverancier zonder functioneel verlies."
+### 7.1 Explicit Customer Requirement
+> "Vendor lock-in is an explicit concern. We want to be able to migrate to another infrastructure provider within one quarter without functional loss."
 
-### 7.2 Layer 0 Portability Principes
+### 7.2 Layer 0 Portability Principles
 
 **1. Cloud-Agnostic Architecture**
-- **Geen afhankelijkheid van cloud-specific services** (AWS ECS, Azure Container Apps, GCP Cloud Run)
-- **Kubernetes als portability layer**: Workloads draaien op standaard Kubernetes API's
-- **Open-source tooling voorkeur**: Geen vendor SaaS waar mogelijk
+- **No dependency on cloud-specific services** (AWS ECS, Azure Container Apps, GCP Cloud Run)
+- **Kubernetes as portability layer**: Workloads run on standard Kubernetes APIs
+- **Open-source tooling preference**: No vendor SaaS where possible
 
 **2. Infrastructure as Code**
-- Volledige cluster + tooling **reproduceerbaar** via IaC (Terraform, Pulumi, etc.)
-- **Geen handmatige configuratie** — alles in Git
-- **Datacenter swap** is een `terraform apply` in andere omgeving (in theorie)
+- Complete cluster + tooling **reproducible** via IaC (Terraform, Pulumi, etc.)
+- **No manual configuration** — everything in Git
+- **Datacenter swap** is a `terraform apply` in another environment (in theory)
 
 **3. Data Portability**
-- **Backups cloud-agnostic**: S3-compatible API (niet AWS S3 API's die alleen op AWS werken)
-- **Database**: Open-source (PostgreSQL, MySQL) → geen vendor-managed DB waar migratie moeilijk is
-- **Object storage**: MinIO (self-hosted) of S3-compatible → geen Azure Blob/GCS lock-in
+- **Backups cloud-agnostic**: S3-compatible API (not AWS S3 APIs that only work on AWS)
+- **Database**: Open-source (PostgreSQL, MySQL) → no vendor-managed DB where migration is difficult
+- **Object storage**: MinIO (self-hosted) or S3-compatible → no Azure Blob/GCS lock-in
 
 **4. Network & Identity Portability**
-- **CNI keuze**: Open-source (Cilium, Calico) → geen cloud-native only solutions
-- **Identity provider**: Self-hosted (Keycloak) of cloud-agnostic → geen AWS IAM / Azure AD exclusieve integraties
-- **Load balancing**: Kubernetes Ingress (niet cloud-specific ALB/NLB configuraties)
+- **CNI choice**: Open-source (Cilium, Calico) → no cloud-native only solutions
+- **Identity provider**: Self-hosted (Keycloak) or cloud-agnostic → no AWS IAM / Azure AD exclusive integrations
+- **Load balancing**: Kubernetes Ingress (not cloud-specific ALB/NLB configurations)
 
-### 7.3 Realistische Beperkingen en Concessies
+### 7.3 Realistic Limitations and Concessions
 
-**Wat WEL haalbaar is**:
-- ✅ Workloads draaien op elke Kubernetes distributie (AKS, GKE, EKS, on-prem)
-- ✅ IaC kan cluster reproduceren op andere cloud binnen 1 week
-- ✅ Backups zijn portable (S3-compatible API)
+**What IS achievable**:
+- ✅ Workloads run on any Kubernetes distribution (AKS, GKE, EKS, on-prem)
+- ✅ IaC can reproduce cluster on another cloud within 1 week
+- ✅ Backups are portable (S3-compatible API)
 
-**Wat NIET haalbaar is** (zonder concessies):
-- ❌ Instant migration zonder enige aanpassing (DNS, IP's, load balancers veranderen altijd)
-- ❌ Zero cloud-native features gebruiken (managed databases zijn soms wél de beste keuze voor HA — afweging maken)
+**What is NOT achievable** (without concessions):
+- ❌ Instant migration without any adjustment (DNS, IPs, load balancers always change)
+- ❌ Using zero cloud-native features (managed databases are sometimes the best choice for HA — make trade-off)
 
-### 7.4 Tooling Lock-in Risico Matrix
+### 7.4 Tooling Lock-in Risk Matrix
 
-| Tool Category | Hoog Risico (Vermijd) | Laag Risico (Acceptabel) |
-|---------------|----------------------|-------------------------|
-| **Compute** | AWS ECS, Azure Container Apps | Kubernetes (overal beschikbaar) |
+| Tool Category | High Risk (Avoid) | Low Risk (Acceptable) |
+|---------------|-------------------|-----------------------|
+| **Compute** | AWS ECS, Azure Container Apps | Kubernetes (available everywhere) |
 | **Database** | AWS Aurora (proprietary), Azure Cosmos | PostgreSQL HA, MySQL Cluster |
-| **Object Storage** | AWS S3 API's (zonder S3-compatible fallback) | MinIO, S3-compatible cloud storage |
+| **Object Storage** | AWS S3 APIs (without S3-compatible fallback) | MinIO, S3-compatible cloud storage |
 | **Identity** | AWS IAM only, Azure AD only | Keycloak (self-hosted), OIDC providers |
 | **Networking** | AWS VPC CNI (EKS-only) | Cilium, Calico (cloud-agnostic) |
-| **GitOps** | Vendor SaaS (zonder export) | Argo CD, Flux (self-hosted) |
+| **GitOps** | Vendor SaaS (without export) | Argo CD, Flux (self-hosted) |
 
-**Layer 0 Beslissing**: **Open-source en self-hosted voorkeur**, tenzij managed service duidelijk voordeel heeft (en migration path bestaat).
+**Layer 0 Decision**: **Open-source and self-hosted preference**, unless managed service has clear advantage (and migration path exists).
 
 ---
 
-## 8. Fundamentele Architectuurbeslissingen (Multi-Region, Networking, Identity)
+## 8. Fundamental Architecture Decisions (Multi-Region, Networking, Identity)
 
 ### 8.1 Multi-Region / Multi-Cluster
 
-**Huidige eis**: Klanten door heel Europa, website traag vanuit Zuid-Europa.
+**Current requirement**: Customers throughout Europe, website slow from Southern Europe.
 
-**Layer 0 Vraag**: Willen we multi-region vanaf dag 1?
+**Layer 0 Question**: Do we want multi-region from day 1?
 
-**Analyse**:
-- **Voordeel**: Lagere latency, disaster recovery
-- **Nadeel**: Complexiteit (data replicatie, cross-region networking, kosten)
+**Analysis**:
+- **Advantage**: Lower latency, disaster recovery
+- **Disadvantage**: Complexity (data replication, cross-region networking, costs)
 
-**Layer 0 Beslissing**:
-- ❌ **NIET multi-region vanaf dag 1** (te complex voor organisatie zonder Kubernetes ervaring)
-- ✅ **Wel architectuur die multi-region toestaat** (geen design decisions die multi-region blokkeren)
-- ✅ **CDN voor static assets** (eerste stap voor latency verbetering) → Layer 1 beslissing
+**Layer 0 Decision**:
+- ❌ **NOT multi-region from day 1** (too complex for organization without Kubernetes experience)
+- ✅ **Architecture that allows multi-region** (no design decisions that block multi-region)
+- ✅ **CDN for static assets** (first step for latency improvement) → Layer 1 decision
 
-**Criteria voor multi-region in toekomst**:
-- [ ] Single-region setup is stabiel (> 3 maanden zonder major incidents)
-- [ ] Team heeft ervaring met Kubernetes operations
-- [ ] Business case is helder (hoeveel omzet winnen we met lagere latency?)
+**Criteria for multi-region in future**:
+- [ ] Single-region setup is stable (> 3 months without major incidents)
+- [ ] Team has experience with Kubernetes operations
+- [ ] Business case is clear (how much revenue do we gain with lower latency?)
 
-### 8.2 Networking & CNI Overwegingen
+### 8.2 Networking & CNI Considerations
 
-**Layer 0 Vraag**: Welke CNI fundamenten zijn niet te veranderen?
+**Layer 0 Question**: Which CNI fundamentals are unchangeable?
 
-**Analyse**:
-| CNI Keuze | Veranderbaarheid | Impact |
-|-----------|------------------|--------|
-| **CNI plugin** (Cilium, Calico, Flannel) | Zeer moeilijk (vereist cluster rebuild of downtime) | ❗ Layer 0 beslissing |
-| **Service Mesh** (Istio, Linkerd) | Moeilijk maar mogelijk (additive) | ⚠️ Layer 0/1 grens — niet nodig vanaf dag 1 |
-| **Network Policies** (enabled/disabled) | Makkelijk achteraf in te schakelen | ✅ Layer 1 beslissing |
+**Analysis**:
+| CNI Choice | Changeability | Impact |
+|-----------|--------------|--------|
+| **CNI plugin** (Cilium, Calico, Flannel) | Very difficult (requires cluster rebuild or downtime) | ❗ Layer 0 decision |
+| **Service Mesh** (Istio, Linkerd) | Difficult but possible (additive) | ⚠️ Layer 0/1 boundary — not needed from day 1 |
+| **Network Policies** (enabled/disabled) | Easy to enable later | ✅ Layer 1 decision |
 
-**Layer 0 Beslissingen**:
-- ✅ **CNI moet multi-region capabel zijn** (geen single-zone only solutions)
-- ✅ **CNI moet Network Policies ondersteunen** (security requirement)
-- ✅ **Performance is belangrijk** (webshop moet snel zijn)
-- ❌ **Service mesh is NIET een Layer 0 requirement** (kan later, als microservices architectuur)
+**Layer 0 Decisions**:
+- ✅ **CNI must be multi-region capable** (no single-zone only solutions)
+- ✅ **CNI must support Network Policies** (security requirement)
+- ✅ **Performance is important** (webshop must be fast)
+- ❌ **Service mesh is NOT a Layer 0 requirement** (can come later, with microservices architecture)
 
-**Criteria voor CNI keuze** (tooling in Layer 1):
-- Ondersteunt Network Policies (security)
+**Criteria for CNI choice** (tooling in Layer 1):
+- Supports Network Policies (security)
 - Cloud-agnostic (portability)
-- Performance (eBPF voorkeur boven iptables)
-- Community support (niet single-vendor)
+- Performance (eBPF preference over iptables)
+- Community support (not single-vendor)
 
 ### 8.3 Identity & Access Management
 
-**Layer 0 Vraag**: Hoe authenticeren we mensen en machines?
+**Layer 0 Question**: How do we authenticate people and machines?
 
-**Fundamentele Keuzes**:
-1. **User Authentication**: Hoe loggen developers/ops in op cluster?
-   - **Optie A**: kubeconfig files (simpel, maar niet schaalbaar)
-   - **Optie B**: OIDC provider (Keycloak, cloud IdP) — schaalbaar, audit trails
-   - **Layer 0 Beslissing**: **OIDC is eindstaat**, maar kubeconfig files zijn acceptabel voor eerste maanden (team is klein)
+**Fundamental Choices**:
+1. **User Authentication**: How do developers/ops log in to cluster?
+   - **Option A**: kubeconfig files (simple, but not scalable)
+   - **Option B**: OIDC provider (Keycloak, cloud IdP) — scalable, audit trails
+   - **Layer 0 Decision**: **OIDC is end state**, but kubeconfig files are acceptable for first months (team is small)
 
-2. **Service Account Management**: Hoe authenticeren applicaties?
-   - **Principe**: Elke applicatie krijgt **eigen service account** (geen gedeelde secrets)
-   - **Principe**: Service accounts hebben **minimal permissions** (namespace-scoped)
-   - **Layer 0 Beslissing**: **RBAC is mandatory** vanaf dag 1
+2. **Service Account Management**: How do applications authenticate?
+   - **Principle**: Each application gets **its own service account** (no shared secrets)
+   - **Principle**: Service accounts have **minimal permissions** (namespace-scoped)
+   - **Layer 0 Decision**: **RBAC is mandatory** from day 1
 
-3. **Secrets Management**: Waar slaan we credentials op?
-   - **Principe**: **Nooit in Git** (ook niet encrypted — rotatie is te moeilijk)
-   - **Principe**: **External secrets** voorkeur (Vault, cloud secret managers)
-   - **Layer 0 Beslissing**: **Secrets management is Layer 0** — moet vanaf dag 1 goed zijn (moeilijk te fixen later)
+3. **Secrets Management**: Where do we store credentials?
+   - **Principle**: **Never in Git** (not even encrypted — rotation is too difficult)
+   - **Principle**: **External secrets** preference (Vault, cloud secret managers)
+   - **Layer 0 Decision**: **Secrets management is Layer 0** — must be right from day 1 (difficult to fix later)
 
-**Identity Provider Beslissing**:
-- ✅ **Self-hosted voorkeur** (Keycloak) voor vendor independence
-- ⚠️ **Cloud IdP acceptabel** als self-hosted te complex is (pragmatisme)
-- ❌ **Geen kubeconfig files langetermijn** (niet schaalbaar, geen audit trail)
+**Identity Provider Decision**:
+- ✅ **Self-hosted preference** (Keycloak) for vendor independence
+- ⚠️ **Cloud IdP acceptable** if self-hosted is too complex (pragmatism)
+- ❌ **No kubeconfig files long-term** (not scalable, no audit trail)
 
 ### 8.4 GitOps: Yes or No?
 
-**Layer 0 Vraag**: Is GitOps een fundamenteel principe, of "nice to have"?
+**Layer 0 Question**: Is GitOps a fundamental principle, or "nice to have"?
 
-**Argumenten voor GitOps**:
-- ✅ **Audit trail**: Alle wijzigingen in Git (compliance)
+**Arguments for GitOps**:
+- ✅ **Audit trail**: All changes in Git (compliance)
 - ✅ **Rollback**: Git revert = rollback deployment
-- ✅ **Declarative**: Gewenste staat in Git, Kubernetes convergeert ernaar
-- ✅ **Self-service**: Developers deployen via PR (geen kubectl access nodig)
+- ✅ **Declarative**: Desired state in Git, Kubernetes converges to it
+- ✅ **Self-service**: Developers deploy via PR (no kubectl access needed)
 
-**Argumenten tegen GitOps**:
-- ⚠️ **Learning curve**: Team moet Git, PR workflows, en GitOps tool leren
-- ⚠️ **Initial complexity**: Repo structuur, branching strategy, environments
+**Arguments against GitOps**:
+- ⚠️ **Learning curve**: Team must learn Git, PR workflows, and GitOps tool
+- ⚠️ **Initial complexity**: Repo structure, branching strategy, environments
 
-**Layer 0 Beslissing**: 
-- ✅ **GitOps is Layer 0 principe** — te fundamenteel voor workflow om later toe te voegen
-- ✅ **Alle deployments via Git** (geen kubectl apply handmatig)
-- ✅ **Architectuur moet GitOps ondersteunen** vanaf dag 1
+**Layer 0 Decision**: 
+- ✅ **GitOps is Layer 0 principle** — too fundamental for workflow to add later
+- ✅ **All deployments via Git** (no manual kubectl apply)
+- ✅ **Architecture must support GitOps** from day 1
 
-**Rationale**: Zonder GitOps is er geen audit trail, geen reproduceerbare deployments, en te veel kubectl toegang nodig (security risk).
-
----
-
-## 9. Wat NIET in Layer 0 Thuishoort
-
-Layer 0 is **fundamenteel en strategisch**, niet tactisch. De volgende zaken horen **niet** in Layer 0:
-
-### 9.1 Concrete Tool Keuzes
-- ❌ "We gebruiken Cilium" → Dit is Layer 1 (na analyse van CNI requirements)
-- ❌ "We gebruiken Argo CD" → Dit is Layer 1 (na analyse van GitOps requirements)
-- ✅ "We hebben een CNI nodig die Network Policies ondersteunt" → Dit is Layer 0
-
-### 9.2 Operationele Details
-- ❌ Backup frequentie (elk uur, elke 4 uur) → Layer 1
-- ❌ Prometheus retention (15 dagen, 30 dagen) → Layer 1
-- ✅ "Backups moeten point-in-time recovery ondersteunen" → Layer 0
-
-### 9.3 Implementatie Specificaties
-- ❌ Hoeveel nodes, welke instance types → Layer 1 (sizing)
-- ❌ Welke namespaces, welke resource quotas → Layer 1 (multi-tenancy design)
-- ✅ "Resources moeten beperkt zijn om resource exhaustion te voorkomen" → Layer 0
-
-### 9.4 Features die Later Kunnen
-- ❌ Service mesh (Istio, Linkerd) → Layer 2 (kan later, als microservices architectuur)
-- ❌ Chaos engineering (Chaos Mesh) → Layer 2 (waardevol, maar niet foundational)
-- ❌ Advanced observability (distributed tracing) → Layer 2 (metrics en logs eerst)
-- ✅ "Observability moet proactief zijn" → Layer 0
+**Rationale**: Without GitOps there is no audit trail, no reproducible deployments, and too much kubectl access needed (security risk).
 
 ---
 
-## 10. Aannames die Gevalideerd Moeten Worden (in Volgende Lagen)
+## 9. What Does NOT Belong in Layer 0
 
-Layer 0 maakt **strategische keuzes**, maar niet alles is nu bekend. De volgende aannames moeten gevalideerd worden in Layer 1 en verder:
+Layer 0 is **fundamental and strategic**, not tactical. The following do **not** belong in Layer 0:
 
-### 10.1 Applicatie Architectuur Aannames
+### 9.1 Concrete Tool Choices
+- ❌ "We use Cilium" → This is Layer 1 (after analysis of CNI requirements)
+- ❌ "We use Argo CD" → This is Layer 1 (after analysis of GitOps requirements)
+- ✅ "We need a CNI that supports Network Policies" → This is Layer 0
 
-**Aanname**: Huidige MVC monoliet kan **zonder refactor** naar Kubernetes.
-- **Validatie nodig**: 
-  - [ ] Is de applicatie **stateless** (sessies in database/Redis, niet in geheugen)?
-  - [ ] Kan de applicatie **horizontaal schalen** (meerdere replica's zonder problemen)?
-  - [ ] Zijn er **hardcoded localhost/IP afhankelijkheden** (database connectiestrings, etc.)?
+### 9.2 Operational Details
+- ❌ Backup frequency (hourly, every 4 hours) → Layer 1
+- ❌ Prometheus retention (15 days, 30 days) → Layer 1
+- ✅ "Backups must support point-in-time recovery" → Layer 0
 
-**Aanname**: Database migratie naar Kubernetes is gewenst.
-- **Validatie nodig**:
-  - [ ] Is het beter om database **buiten Kubernetes** te houden (beheerde cloud database)?
-  - [ ] Wat is de inspanning van database HA-configuratie (replicatie, failover)?
-  - [ ] Is StatefulSet voldoende, of hebben we een Kubernetes Operator nodig?
+### 9.3 Implementation Specifications
+- ❌ How many nodes, which instance types → Layer 1 (sizing)
+- ❌ Which namespaces, which resource quotas → Layer 1 (multi-tenancy design)
+- ✅ "Resources must be limited to prevent resource exhaustion" → Layer 0
 
-**Aanname**: Geen microservices architectuur **nu**, maar moet mogelijk zijn **later**.
-- **Validatie nodig**:
-  - [ ] Welke delen van de monoliet kunnen als eerste uitgesplitst worden (bijv. search, payment)?
-  - [ ] Is async messaging nodig (NATS, Kafka) of blijft alles synchroon?
-
-### 10.2 Datacenter & Infrastructuur Aannames
-
-**Aanname**: Nederlandse datacenter leverancier biedt **Kubernetes-compatibele infrastructuur**.
-- **Validatie nodig**:
-  - [ ] Is er beheerde Kubernetes beschikbaar, of zelf-gehost (Kubeadm, RKE)?
-  - [ ] Welke storage opties zijn beschikbaar (block storage, NFS, object storage)?
-  - [ ] Welke netwerk features zijn beschikbaar (load balancers, VPC, etc.)?
-
-**Aanname**: Multi-cloud is **niet nodig**, maar vendor switch moet mogelijk zijn.
-- **Validatie nodig**:
-  - [ ] Hoe makkelijk is het om cluster te reproduceren bij andere leverancier?
-  - [ ] Welke datacenter-specifieke features gebruiken we (en accepteren we dat lock-in)?
-
-### 10.3 Team & Organisatie Aannames
-
-**Aanname**: Team heeft **geen Kubernetes ervaring**, maar wil leren.
-- **Validatie nodig**:
-  - [ ] Hoeveel training is nodig (1 week, 1 maand)?
-  - [ ] Kunnen we externe consultants inzetten voor initiële setup?
-  - [ ] Wat is de ramp-up tijd voor self-sufficiency?
-
-**Aanname**: Essential SAFe proces past bij GitOps workflow.
-- **Validatie nodig**:
-  - [ ] Hoe mappen we sprints naar Git branching strategy?
-  - [ ] Wie approved productie deployments (PO, tech lead, ops)?
-  - [ ] Hoe gaan we om met hotfixes (direct naar prod of via staging)?
-
-### 10.4 Security & Compliance Aannames
-
-**Aanname**: GDPR compliance is voldoende, geen extra compliance regimes (PCI-DSS, ISO 27001).
-- **Validatie nodig**:
-  - [ ] Zijn er betaalgegevens die PCI-DSS vereisen (of is payment extern — Stripe/Mollie)?
-  - [ ] Zijn er industriespecifieke compliance eisen (medical devices, financial services)?
-
-**Aanname**: Huidige security posture is "goed genoeg" voor migratie naar Kubernetes.
-- **Validatie nodig**:
-  - [ ] Zijn er bekende vulnerabilities in huidige stack (OS patches, library updates)?
-  - [ ] Moeten we security audit doen **voor** migratie (baseline vaststellen)?
+### 9.4 Features That Can Come Later
+- ❌ Service mesh (Istio, Linkerd) → Layer 2 (can come later, with microservices architecture)
+- ❌ Chaos engineering (Chaos Mesh) → Layer 2 (valuable, but not foundational)
+- ❌ Advanced observability (distributed tracing) → Layer 2 (metrics and logs first)
+- ✅ "Observability must be proactive" → Layer 0
 
 ---
 
-## 11. Samenvattend: Layer 0 Beslisboom
+## 10. Assumptions That Must Be Validated (in Subsequent Layers)
 
-Voordat je verder gaat naar Layer 1 (tool selectie), moeten deze vragen **duidelijk beantwoord** zijn:
+Layer 0 makes **strategic choices**, but not everything is known now. The following assumptions must be validated in Layer 1 and beyond:
 
-### ✅ Beschikbaarheid
-- [ ] **Zero-downtime deployments zijn een eis** (rolling updates, health checks)
-- [ ] **High availability voor kritieke componenten** (database, load balancer)
-- [ ] **Accepteer dat 100% uptime niet haalbaar is** (realistisch)
+### 10.1 Application Architecture Assumptions
+
+**Assumption**: Current MVC monolith can move to Kubernetes **without refactoring**.
+- **Validation needed**: 
+  - [ ] Is the application **stateless** (sessions in database/Redis, not in memory)?
+  - [ ] Can the application **scale horizontally** (multiple replicas without problems)?
+  - [ ] Are there **hardcoded localhost/IP dependencies** (database connection strings, etc.)?
+
+**Assumption**: Database migration to Kubernetes is desired.
+- **Validation needed**:
+  - [ ] Is it better to keep database **outside Kubernetes** (managed cloud database)?
+  - [ ] What is the effort of database HA configuration (replication, failover)?
+  - [ ] Is StatefulSet sufficient, or do we need a Kubernetes Operator?
+
+**Assumption**: No microservices architecture **now**, but must be possible **later**.
+- **Validation needed**:
+  - [ ] Which parts of the monolith can be extracted first (e.g., search, payment)?
+  - [ ] Is async messaging needed (NATS, Kafka) or does everything stay synchronous?
+
+### 10.2 Datacenter & Infrastructure Assumptions
+
+**Assumption**: Dutch datacenter provider offers **Kubernetes-compatible infrastructure**.
+- **Validation needed**:
+  - [ ] Is managed Kubernetes available, or self-hosted (Kubeadm, RKE)?
+  - [ ] Which storage options are available (block storage, NFS, object storage)?
+  - [ ] Which network features are available (load balancers, VPC, etc.)?
+
+**Assumption**: Multi-cloud is **not needed**, but vendor switch must be possible.
+- **Validation needed**:
+  - [ ] How easy is it to reproduce cluster with another provider?
+  - [ ] Which datacenter-specific features do we use (and do we accept that lock-in)?
+
+### 10.3 Team & Organization Assumptions
+
+**Assumption**: Team has **no Kubernetes experience**, but wants to learn.
+- **Validation needed**:
+  - [ ] How much training is needed (1 week, 1 month)?
+  - [ ] Can we engage external consultants for initial setup?
+  - [ ] What is the ramp-up time for self-sufficiency?
+
+**Assumption**: Essential SAFe process fits GitOps workflow.
+- **Validation needed**:
+  - [ ] How do we map sprints to Git branching strategy?
+  - [ ] Who approves production deployments (PO, tech lead, ops)?
+  - [ ] How do we handle hotfixes (direct to prod or via staging)?
+
+### 10.4 Security & Compliance Assumptions
+
+**Assumption**: GDPR compliance is sufficient, no additional compliance regimes (PCI-DSS, ISO 27001).
+- **Validation needed**:
+  - [ ] Are there payment details requiring PCI-DSS (or is payment external — Stripe/Mollie)?
+  - [ ] Are there industry-specific compliance requirements (medical devices, financial services)?
+
+**Assumption**: Current security posture is "good enough" for migration to Kubernetes.
+- **Validation needed**:
+  - [ ] Are there known vulnerabilities in current stack (OS patches, library updates)?
+  - [ ] Should we do security audit **before** migration (establish baseline)?
+
+---
+
+## 11. Summary: Layer 0 Decision Tree
+
+Before moving to Layer 1 (tool selection), these questions must be **clearly answered**:
+
+### ✅ Availability
+- [ ] **Zero-downtime deployments are a requirement** (rolling updates, health checks)
+- [ ] **High availability for critical components** (database, load balancer)
+- [ ] **Accept that 100% uptime is not achievable** (realistic)
 
 ### ✅ Data
-- [ ] **Point-in-time recovery is mandatory** (niet alleen nachtelijke backups)
-- [ ] **Geografische backup spreiding** (niet in zelfde datacenter als productie)
-- [ ] **Tested restore proces** (backups zijn waardeloos als restore niet werkt)
+- [ ] **Point-in-time recovery is mandatory** (not just nightly backups)
+- [ ] **Geographic backup distribution** (not in same datacenter as production)
+- [ ] **Tested restore process** (backups are worthless if restore doesn't work)
 
 ### ✅ Security
-- [ ] **Least privilege principe** (developers geen productie toegang, service accounts minimal permissions)
-- [ ] **Defense in depth** (security is gelaagd, niet single control)
-- [ ] **Encryption in transit en at rest** (TLS, database encryption, backup encryption)
-- [ ] **Secrets management vanaf dag 1** (niet in Git, niet in plaintext)
+- [ ] **Least privilege principle** (developers no production access, service accounts minimal permissions)
+- [ ] **Defense in depth** (security is layered, not single control)
+- [ ] **Encryption in transit and at rest** (TLS, database encryption, backup encryption)
+- [ ] **Secrets management from day 1** (not in Git, not in plaintext)
 
 ### ✅ Observability
-- [ ] **Proactieve monitoring** (niet reactief via klanten)
-- [ ] **Metrics, logs, dashboards voor alle workloads** (geen blind spots)
-- [ ] **Self-service voor teams** (developers kunnen eigen dashboards bekijken)
+- [ ] **Proactive monitoring** (not reactive via customers)
+- [ ] **Metrics, logs, dashboards for all workloads** (no blind spots)
+- [ ] **Self-service for teams** (developers can view own dashboards)
 
 ### ✅ Ownership
-- [ ] **Shared responsibility model** (dev + ops, niet "alles naar ops")
-- [ ] **Self-service deployment** (GitOps, geen kubectl access)
-- [ ] **Clear escalatie paden** (niet "alles naar ops")
+- [ ] **Shared responsibility model** (dev + ops, not "everything to ops")
+- [ ] **Self-service deployment** (GitOps, no kubectl access)
+- [ ] **Clear escalation paths** (not "everything to ops")
 
 ### ✅ Portability
-- [ ] **Cloud-agnostic architectuur** (geen vendor lock-in)
-- [ ] **Infrastructure as Code** (reproduceerbaar)
-- [ ] **Open-source tooling voorkeur** (tenzij managed service duidelijk voordeel heeft)
+- [ ] **Cloud-agnostic architecture** (no vendor lock-in)
+- [ ] **Infrastructure as Code** (reproducible)
+- [ ] **Open-source tooling preference** (unless managed service has clear advantage)
 
-### ✅ Fundamentele Architectuur
-- [ ] **GitOps is een principe** (alle deployments via Git)
-- [ ] **CNI moet Network Policies ondersteunen** (security)
-- [ ] **RBAC is mandatory** (geen cluster-admin voor iedereen)
-- [ ] **Multi-region is toekomstige mogelijkheid** (niet dag 1, maar architectuur blokkeert het niet)
+### ✅ Fundamental Architecture
+- [ ] **GitOps is a principle** (all deployments via Git)
+- [ ] **CNI must support Network Policies** (security)
+- [ ] **RBAC is mandatory** (not cluster-admin for everyone)
+- [ ] **Multi-region is future possibility** (not day 1, but architecture doesn't block it)
 
 ---
 
-## 12. Gerichte Vervolgvragen voor Layer 1 Transitie
+## 12. Targeted Follow-up Questions for Layer 1 Transition
 
-Voordat je Layer 1 (concrete tool selectie en platform capabilities) kan beginnen, moeten de volgende vragen beantwoord worden. Deze vragen zijn **specifiek genoeg** om technische beslissingen te informeren, maar **abstract genoeg** om nog geen tools te kiezen.
+Before you can start Layer 1 (concrete tool selection and platform capabilities), the following questions must be answered. These questions are **specific enough** to inform technical decisions, but **abstract enough** to not yet choose tools.
 
-### 12.1 Applicatie Architectuur & Readiness
+### 12.1 Application Architecture & Readiness
 
 #### Database & Stateful Workloads
-- **Q1**: Is de huidige MVC applicatie **stateless**?
-  - Worden sessies opgeslagen in database/Redis, of in applicatie geheugen?
-  - Impact: Bepaalt of horizontale scaling mogelijk is zonder code wijzigingen
+- **Q1**: Is the current MVC application **stateless**?
+  - Are sessions stored in database/Redis, or in application memory?
+  - Impact: Determines if horizontal scaling is possible without code changes
 
-- **Q2**: Waar draait de SQL database?
-  - In dezelfde VM als applicatie, of dedicated database server?
-  - Impact: Bepaalt migratie strategie (StatefulSet vs. externe managed database)
+- **Q2**: Where does the SQL database run?
+  - In the same VM as application, or dedicated database server?
+  - Impact: Determines migration strategy (StatefulSet vs. external managed database)
 
-- **Q3**: Wat is de huidige database size en load?
-  - Hoeveel GB data, hoeveel queries per seconde?
-  - Impact: Storage sizing, HA strategie (lees-replicas, sharding)
+- **Q3**: What is the current database size and load?
+  - How many GB data, how many queries per second?
+  - Impact: Storage sizing, HA strategy (read-replicas, sharding)
 
-- **Q4**: Zijn database schema migrations backward compatible?
-  - Kan oude applicatie versie werken met nieuwe database schema?
-  - Impact: Bepaalt of blue-green deployments mogelijk zijn
+- **Q4**: Are database schema migrations backward compatible?
+  - Can old application version work with new database schema?
+  - Impact: Determines if blue-green deployments are possible
 
-#### Applicatie Dependencies
-- **Q5**: Gebruikt de applicatie **hardcoded localhost references**?
-  - Database connectiestrings, cache URLs, externe API endpoints?
-  - Impact: Moet code aangepast worden voor Kubernetes service discovery?
+#### Application Dependencies
+- **Q5**: Does the application use **hardcoded localhost references**?
+  - Database connection strings, cache URLs, external API endpoints?
+  - Impact: Must code be adapted for Kubernetes service discovery?
 
-- **Q6**: Wat zijn de externe dependencies?
+- **Q6**: What are the external dependencies?
   - Payment providers (Stripe, Mollie), shipping APIs, email services?
   - Impact: Network policies, egress filtering, secret management
 
-- **Q7**: Hoeveel resources gebruikt de applicatie?
-  - CPU, memory, disk I/O (metrics van huidige VM)?
+- **Q7**: How many resources does the application use?
+  - CPU, memory, disk I/O (metrics from current VM)?
   - Impact: Pod resource requests/limits, node sizing
 
-### 12.2 Infrastructuur & Datacenter Mogelijkheden
+### 12.2 Infrastructure & Datacenter Capabilities
 
-#### Nederlandse Cloud Provider Capabilities
-- **Q8**: Welke Kubernetes distributie biedt de provider?
-  - Managed Kubernetes (bijv. OpenShift, Rancher), of IaaS VMs (zelf Kubeadm)?
-  - Impact: Operationele complexiteit, upgrade strategie
+#### Dutch Cloud Provider Capabilities
+- **Q8**: Which Kubernetes distribution does the provider offer?
+  - Managed Kubernetes (e.g., OpenShift, Rancher), or IaaS VMs (self Kubeadm)?
+  - Impact: Operational complexity, upgrade strategy
 
-- **Q9**: Welke storage opties zijn beschikbaar?
+- **Q9**: Which storage options are available?
   - Block storage (persistent volumes), NFS, object storage (S3-compatible)?
-  - Impact: StorageClass keuzes, backup strategie
+  - Impact: StorageClass choices, backup strategy
 
-- **Q10**: Welke netwerk features zijn beschikbaar?
+- **Q10**: Which network features are available?
   - Load balancers (Layer 4, Layer 7), floating IPs, private VPC?
-  - Impact: Ingress controller keuze, external-dns mogelijkheden
+  - Impact: Ingress controller choice, external-dns possibilities
 
-- **Q11**: Is er geografische replicatie mogelijk?
-  - Meerdere datacenters binnen NL, of ook andere EU landen?
-  - Impact: Multi-region strategie, backup georedundancy
+- **Q11**: Is geographic replication possible?
+  - Multiple datacenters within NL, or also other EU countries?
+  - Impact: Multi-region strategy, backup georedundancy
 
-- **Q12**: Wat is het SLA van de infrastructuur provider?
-  - Uptime garanties, support response times?
-  - Impact: Realistische availability targets voor applicatie
+- **Q12**: What is the infrastructure provider's SLA?
+  - Uptime guarantees, support response times?
+  - Impact: Realistic availability targets for application
 
-#### Kosten & Budgetten
-- **Q13**: Wat is het huidige maandelijkse infrastructuur budget?
-  - VM kosten, storage, bandwidth?
+#### Costs & Budgets
+- **Q13**: What is the current monthly infrastructure budget?
+  - VM costs, storage, bandwidth?
   - Impact: Cluster sizing, managed vs. self-hosted trade-offs
 
-- **Q14**: Wat is het budget voor tooling en SaaS?
-  - Kunnen we managed services betalen (bijv. managed Prometheus, managed Vault)?
-  - Impact: Open-source self-hosted vs. managed service keuzes
+- **Q14**: What is the budget for tooling and SaaS?
+  - Can we afford managed services (e.g., managed Prometheus, managed Vault)?
+  - Impact: Open-source self-hosted vs. managed service choices
 
-### 12.3 Team & Organisatie
+### 12.3 Team & Organization
 
-#### Team Skills & Capaciteit
-- **Q15**: Hoeveel FTE heeft het Ops team?
-  - Kunnen ze platform maintenance doen naast BAU werk?
+#### Team Skills & Capacity
+- **Q15**: How many FTE does the Ops team have?
+  - Can they do platform maintenance alongside BAU work?
   - Impact: Managed Kubernetes vs. self-hosted, automation priorities
 
-- **Q16**: Wat is de huidige Git workflow?
+- **Q16**: What is the current Git workflow?
   - Trunk-based, GitFlow, feature branches?
   - Impact: GitOps branching strategy, environment promotions
 
-- **Q17**: Zijn er dedicated security engineers?
-  - Of is security onderdeel van Ops team?
-  - Impact: Security tooling complexity (self-managed OPA vs. simpelere alternatieven)
+- **Q17**: Are there dedicated security engineers?
+  - Or is security part of Ops team?
+  - Impact: Security tooling complexity (self-managed OPA vs. simpler alternatives)
 
-#### Deployment & Release Proces
-- **Q18**: Hoe vaak wil de business releases doen?
-  - Dagelijks, wekelijks, per sprint?
+#### Deployment & Release Process
+- **Q18**: How often does the business want releases?
+  - Daily, weekly, per sprint?
   - Impact: CI/CD pipeline design, deployment frequency targets
 
-- **Q19**: Wie approved productie deployments?
-  - PO, tech lead, ops team, of geautomatiseerd (na tests)?
+- **Q19**: Who approves production deployments?
+  - PO, tech lead, ops team, or automated (after tests)?
   - Impact: GitOps approval workflows, manual gates
 
-- **Q20**: Hoe gaan we om met hotfixes?
-  - Direct naar prod, of via normale staging flow?
+- **Q20**: How do we handle hotfixes?
+  - Direct to prod, or via normal staging flow?
   - Impact: Emergency deployment procedures, GitOps bypass policies
 
 ### 12.4 Security & Compliance
 
 #### Security Posture Baseline
-- **Q21**: Welke security controls zijn er nu?
+- **Q21**: What security controls exist now?
   - Firewalls, IDS/IPS, antivirus, patching schedule?
   - Impact: Equivalent controls in Kubernetes (network policies, runtime security)
 
-- **Q22**: Is er PCI-DSS compliance nodig?
-  - Worden credit card gegevens opgeslagen, of is payment extern (Stripe/Mollie)?
-  - Impact: Strengere security controls, audit logging, encryption requirements
+- **Q22**: Is PCI-DSS compliance needed?
+  - Are credit card details stored, or is payment external (Stripe/Mollie)?
+  - Impact: Stricter security controls, audit logging, encryption requirements
 
-- **Q23**: Wie heeft nu toegang tot productie?
-  - Welke teams, welke personen, welke access level?
+- **Q23**: Who has production access now?
+  - Which teams, which people, what access level?
   - Impact: RBAC design, audit logging, break-glass procedures
 
 #### Secrets & Credentials
-- **Q24**: Waar worden secrets nu opgeslagen?
+- **Q24**: Where are secrets currently stored?
   - Environment variables, config files, dedicated secret store?
-  - Impact: Kubernetes secrets management strategie
+  - Impact: Kubernetes secrets management strategy
 
-- **Q25**: Hoe vaak moeten credentials geroteerd worden?
-  - Maandelijks, per kwartaal, ad-hoc?
-  - Impact: Secret rotation automation, external secret store keuze
+- **Q25**: How often must credentials be rotated?
+  - Monthly, quarterly, ad-hoc?
+  - Impact: Secret rotation automation, external secret store choice
 
 ### 12.5 Observability & Alerting
 
-#### Huidige Monitoring
-- **Q26**: Wat wordt er nu gemonitor'd (als iets)?
+#### Current Monitoring
+- **Q26**: What is currently monitored (if anything)?
   - Uptime checks, resource utilization, application metrics?
-  - Impact: Baseline voor nieuwe observability stack
+  - Impact: Baseline for new observability stack
 
-- **Q27**: Welke metrics zijn business-kritisch?
-  - Checkout conversie rate, order processing time, payment success rate?
+- **Q27**: Which metrics are business-critical?
+  - Checkout conversion rate, order processing time, payment success rate?
   - Impact: Custom application metrics, business dashboards
 
-- **Q28**: Wie moet alerts ontvangen?
-  - Ops on-call, dev team, support team (voor verschillende alert types)?
+- **Q28**: Who should receive alerts?
+  - Ops on-call, dev team, support team (for different alert types)?
   - Impact: Alerting routing rules, escalation policies
 
 #### Incident Management
-- **Q29**: Wat is de huidige incident response procedure?
-  - Runbooks, escalatie matrix, postmortem proces?
-  - Impact: Observability tool keuzes (moet integreren met bestaand proces)
+- **Q29**: What is the current incident response procedure?
+  - Runbooks, escalation matrix, postmortem process?
+  - Impact: Observability tool choices (must integrate with existing process)
 
-- **Q30**: Hoe wordt customer impact nu gecommuniceerd?
-  - Status page, email, support team belt klanten?
-  - Impact: Status page integratie, automated incident detection
+- **Q30**: How is customer impact currently communicated?
+  - Status page, email, support team calls customers?
+  - Impact: Status page integration, automated incident detection
 
 ### 12.6 Data Protection & Backup
 
 #### Backup Requirements
-- **Q31**: Wat is de huidige backup retention policy?
-  - Dagelijks voor 7 dagen, wekelijks voor 1 maand, etc.?
+- **Q31**: What is the current backup retention policy?
+  - Daily for 7 days, weekly for 1 month, etc.?
   - Impact: Backup storage sizing, retention automation
 
-- **Q32**: Zijn backups encrypted?
-  - At rest encryption, encryption keys management?
-  - Impact: Backup tool keuze, KMS integration
+- **Q32**: Are backups encrypted?
+  - At rest encryption, encryption key management?
+  - Impact: Backup tool choice, KMS integration
 
-- **Q33**: Hoe vaak worden restores getest?
-  - Maandelijks, per kwartaal, nooit?
+- **Q33**: How often are restores tested?
+  - Monthly, quarterly, never?
   - Impact: Disaster recovery testing procedures
 
 #### Disaster Recovery
-- **Q34**: Wat is acceptable data loss voor verschillende data types?
-  - Orders (15 min), product catalog (24 uur), sessies (acceptabel verlies)?
+- **Q34**: What is acceptable data loss for different data types?
+  - Orders (15 min), product catalog (24 hours), sessions (acceptable loss)?
   - Impact: Backup frequency, replication strategy
 
-- **Q35**: Wat is de acceptable recovery time?
-  - Hoeveel uren/dagen mag het duren om van disaster te recoveren?
+- **Q35**: What is the acceptable recovery time?
+  - How many hours/days may it take to recover from disaster?
   - Impact: DR automation, documented recovery procedures
 
 ### 12.7 Migration & Cutover
 
 #### Migration Strategy
-- **Q36**: Is er een staging omgeving beschikbaar?
-  - Kunnen we eerst non-prod migreren om te leren?
+- **Q36**: Is a staging environment available?
+  - Can we migrate non-prod first to learn?
   - Impact: Phased migration vs. big bang
 
-- **Q37**: Kunnen we blue-green deployment doen tijdens cutover?
-  - Oude en nieuwe systeem parallel draaien, traffic switch?
+- **Q37**: Can we do blue-green deployment during cutover?
+  - Old and new system run in parallel, traffic switch?
   - Impact: DNS strategy, rollback plan
 
-- **Q38**: Wat is acceptable downtime tijdens migratie?
-  - Zero downtime (complex), of geplande maintenance window (simpeler)?
-  - Impact: Migration strategie complexity
+- **Q38**: What is acceptable downtime during migration?
+  - Zero downtime (complex), or planned maintenance window (simpler)?
+  - Impact: Migration strategy complexity
 
 #### Rollback Planning
-- **Q39**: Wat is het rollback scenario als Kubernetes migratie faalt?
-  - Terug naar oude VMs (zijn die nog beschikbaar?)
+- **Q39**: What is the rollback scenario if Kubernetes migration fails?
+  - Back to old VMs (are they still available?)
   - Impact: Keep old infrastructure alive for X months
 
-- **Q40**: Hoe snel moeten we kunnen rollback?
-  - Binnen 1 uur, binnen 1 dag?
-  - Impact: Automation level van rollback procedures
+- **Q40**: How quickly must we be able to rollback?
+  - Within 1 hour, within 1 day?
+  - Impact: Automation level of rollback procedures
 
 ---
 
-### Samenvatting: Layer 0 → Layer 1 Readiness Checklist
+### Summary: Layer 0 → Layer 1 Readiness Checklist
 
-✅ **Klaar voor Layer 1** als:
-- [ ] Alle 40 bovenstaande vragen zijn beantwoord (of expliciet gemarkeerd als "TBD in Layer 1")
-- [ ] Business context is helder (wie zijn de stakeholders, wat zijn hun pijnpunten)
-- [ ] Hard constraints zijn gedocumenteerd (vendor independence, GDPR, budget)
-- [ ] Risico's zijn geïdentificeerd met mitigatie plannen
-- [ ] Team capabilities zijn realistisch ingeschat (niet over-optimistisch)
+✅ **Ready for Layer 1** if:
+- [ ] All 40 questions above are answered (or explicitly marked as "TBD in Layer 1")
+- [ ] Business context is clear (who are stakeholders, what are their pain points)
+- [ ] Hard constraints are documented (vendor independence, GDPR, budget)
+- [ ] Risks are identified with mitigation plans
+- [ ] Team capabilities are realistically assessed (not over-optimistic)
 
-❌ **Nog NIET klaar voor Layer 1** als:
-- [ ] Er zijn conflicterende requirements (bijv. "zero downtime" vs. "geen budget voor HA")
-- [ ] Team heeft geen tijd voor training (Kubernetes kennis is essentieel)
-- [ ] Infrastructuur provider capabilities zijn onbekend (kan blokkeren bij implementatie)
-- [ ] Security baseline is onduidelijk (risico op compliance issues later)
+❌ **NOT yet ready for Layer 1** if:
+- [ ] There are conflicting requirements (e.g., "zero downtime" vs. "no budget for HA")
+- [ ] Team has no time for training (Kubernetes knowledge is essential)
+- [ ] Infrastructure provider capabilities are unknown (can block during implementation)
+- [ ] Security baseline is unclear (risk of compliance issues later)
 
 ---
 
-## 13. Volgende Stappen: Van Layer 0 naar Layer 1
+## 13. Next Steps: From Layer 0 to Layer 1
 
-Nu Layer 0 is vastgelegd, kan Layer 1 beginnen:
+Now that Layer 0 is established, Layer 1 can begin:
 
-### Layer 1 Scope (Binnen 1-2 Weken)
-- **Tool selectie**: Welke concrete tools (Cilium vs Calico, Argo CD vs Flux, etc.)
-- **Cluster sizing**: Hoeveel nodes, welke instance types
+### Layer 1 Scope (Within 1-2 Weeks)
+- **Tool selection**: Which concrete tools (Cilium vs Calico, Argo CD vs Flux, etc.)
+- **Cluster sizing**: How many nodes, which instance types
 - **Network design**: Subnets, load balancers, DNS
-- **Storage design**: Welke StorageClasses, backup strategie
-- **Security design**: RBAC rollen, network policies, pod security standards
+- **Storage design**: Which StorageClasses, backup strategy
+- **Security design**: RBAC roles, network policies, pod security standards
 
 ### Layer 1 Deliverables
-- Architectuur diagram (netwerk, storage, observability)
-- Tool selection matrix (met rationale per keuze)
-- Proof of Concept planning (welke features testen we eerst)
+- Architecture diagram (network, storage, observability)
+- Tool selection matrix (with rationale per choice)
+- Proof of Concept planning (which features do we test first)
 
-### Layer 2 Scope (Maand 2-3)
-- Implementatie van platform (cluster setup, tooling installatie)
-- Migratie van eerste applicatie (test workload)
+### Layer 2 Scope (Month 2-3)
+- Implementation of platform (cluster setup, tooling installation)
+- Migration of first application (test workload)
 - Team training (Kubernetes basics, GitOps workflow)
 - Production cutover planning
 
 ---
 
-## 14. Bijlage: Referenties naar KubeCompass Framework
+## 14. Appendix: References to KubeCompass Framework
 
-Dit Layer 0 document is gebaseerd op de KubeCompass methodologie:
+This Layer 0 document is based on the KubeCompass methodology:
 
-- **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers uitleg (Layer 0, 1, 2)
-- **[METHODOLOGY.md](METHODOLOGY.md)**: Objectiviteit en scoring rubric
-- **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tenant scenario (vergelijkbaar met deze case)
-- **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance en maturity progression
+- **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers explanation (Layer 0, 1, 2)
+- **[METHODOLOGY.md](METHODOLOGY.md)**: Objectivity and scoring rubric
+- **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tenant scenario (comparable to this case)
+- **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance and maturity progression
 
-**Belangrijkste verschil met Enterprise Scenario**:
-- Enterprise scenario: 200-500 medewerkers, compliance (ISO 27001, SOC 2), 10-20 teams
-- Deze case: Kleiner team, geen strikte compliance, maar wel business-kritisch
+**Key difference with Enterprise Scenario**:
+- Enterprise scenario: 200-500 employees, compliance (ISO 27001, SOC 2), 10-20 teams
+- This case: Smaller team, no strict compliance, but business-critical
 
-**Relevante KubeCompass Principes**:
-- ✅ **Layer 0 first**: Fundamenten vastleggen voordat tools kiezen
-- ✅ **Vendor neutraliteit**: Open-source voorkeur, geen lock-in
-- ✅ **Pragmatisme**: Niet alle enterprise features zijn nodig (KISS)
-- ✅ **Business impact**: Beslissingen gebaseerd op business waarde, niet tech hype
-
----
-
-**Document Status**: ✅ Gereed voor review met engineers, architecten, en management  
-**Volgende Stap**: Layer 1 tool selectie en architectuur design  
-**Eigenaar**: Platform Team / Lead Architect  
-**Review Cyclus**: Na elke 3 maanden (Layer 0 evolueert met business behoeften)
+**Relevant KubeCompass Principles**:
+- ✅ **Layer 0 first**: Establish fundamentals before choosing tools
+- ✅ **Vendor neutrality**: Open-source preference, no lock-in
+- ✅ **Pragmatism**: Not all enterprise features are needed (KISS)
+- ✅ **Business impact**: Decisions based on business value, not tech hype
 
 ---
 
-## 15. Auto-Copilot Instructies & Validatie
+**Document Status**: ✅ Ready for review with engineers, architects, and management  
+**Next Step**: Layer 1 tool selection and architecture design  
+**Owner**: Platform Team / Lead Architect  
+**Review Cycle**: After every 3 months (Layer 0 evolves with business needs)
 
-### Voor Engineers die Dit Document Gebruiken
+---
 
-Dit Layer 0 document is specifiek ontworpen om als input te dienen voor AI auto-copilots (ChatGPT, Claude, Gemini) bij het uitwerken van Layer 1 en verder. 
+## 15. Auto-Copilot Instructions & Validation
 
-#### Hoe te Gebruiken met Auto-Copilot
+### For Engineers Using This Document
 
-**Stap 1: Layer 0 Validatie**
-Geef de copilot dit volledige document en vraag:
+This Layer 0 document is specifically designed to serve as input for AI auto-copilots (ChatGPT, Claude, Gemini) when elaborating Layer 1 and beyond.
+
+#### How to Use with Auto-Copilot
+
+**Step 1: Layer 0 Validation**
+Give the copilot this complete document and ask:
 ```
-Ik heb een Layer 0 analyse gedaan voor een Kubernetes migratie. 
-Analyseer dit document en identificeer:
-1. Welke aannames zijn niet gevalideerd en risico's vormen
-2. Welke hard constraints kunnen conflicteren
-3. Welke vragen uit sectie 12 zijn kritisch voor Layer 1
-4. Welke risico's uit sectie "Expliciete Risico's" hebben onvoldoende mitigatie
+I have done a Layer 0 analysis for a Kubernetes migration.
+Analyze this document and identify:
+1. Which assumptions are not validated and pose risks
+2. Which hard constraints can conflict
+3. Which questions from section 12 are critical for Layer 1
+4. Which risks from "Explicit Risks" section have insufficient mitigation
 ```
 
-**Stap 2: Layer 1 Tool Selectie**
-Na validatie van Layer 0:
+**Step 2: Layer 1 Tool Selection**
+After validating Layer 0:
 ```
-Gebaseerd op deze Layer 0 analyse, help me met Layer 1 tool selectie.
-Geef "Use X unless Y" recommendations voor:
+Based on this Layer 0 analysis, help me with Layer 1 tool selection.
+Give "Use X unless Y" recommendations for:
 1. CNI plugin (Cilium vs Calico vs Flannel)
 2. GitOps tool (Argo CD vs Flux)
 3. Observability stack (Prometheus/Grafana vs alternatives)
 4. Backup solution (Velero vs alternatives)
 5. Secrets management (External Secrets Operator vs Sealed Secrets vs Vault)
 
-Gebruik de KubeCompass decision matrix principes (zie MATRIX.md).
-Respecteer de hard constraints: vendor independence, budget, team maturity.
+Use KubeCompass decision matrix principles (see MATRIX.md).
+Respect the hard constraints: vendor independence, budget, team maturity.
 ```
 
-**Stap 3: Iteratieve Refinement**
-Voor elke tool categorie:
+**Step 3: Iterative Refinement**
+For each tool category:
 ```
-Voor [CNI plugin] keuze:
-- Wat zijn de trade-offs tussen Cilium en Calico?
-- Hoe meet ik deze trade-offs tegen de Layer 0 requirements?
-  - Performance (webshop moet snel zijn)
+For [CNI plugin] choice:
+- What are the trade-offs between Cilium and Calico?
+- How do I measure these trade-offs against Layer 0 requirements?
+  - Performance (webshop must be fast)
   - Network policies support (security requirement)
-  - Multi-region capability (toekomstige eis)
-  - Operational complexity (team heeft geen Kubernetes ervaring)
-- Wat is de migration cost als we later willen switchen?
+  - Multi-region capability (future requirement)
+  - Operational complexity (team has no Kubernetes experience)
+- What is the migration cost if we want to switch later?
 ```
 
-### Validatie Checklist voor Layer 0 Compleetheid
+### Validation Checklist for Layer 0 Completeness
 
-Dit document is **compleet** als:
-- [x] **Expliciete Goals** zijn gedocumenteerd (wat willen we bereiken)
-- [x] **Expliciete Non-Goals** zijn gedocumenteerd (wat doen we NIET)
-- [x] **Harde Randvoorwaarden** zijn duidelijk (niet-onderhandelbaar)
-- [x] **Risico's met mitigaties** zijn geïdentificeerd (hoog/medium/laag)
-- [x] **Business context** is helder (wie, wat, waarom)
-- [x] **Ownership model** is gedefinieerd (Dev/Ops/Support rollen)
-- [x] **Aannames zijn expliciet** en gemarkeerd voor validatie in Layer 1
-- [x] **Vervolgvragen voor Layer 1** zijn gestructureerd en specifiek
-- [x] **Geen tool namen** in requirements (tenzij als voorbeeld van wat NIET te doen)
-- [x] **Geen vendor-specific** oplossingen als requirement
+This document is **complete** if:
+- [x] **Explicit Goals** are documented (what we want to achieve)
+- [x] **Explicit Non-Goals** are documented (what we are NOT doing)
+- [x] **Hard Constraints** are clear (non-negotiable)
+- [x] **Risks with mitigations** are identified (high/medium/low)
+- [x] **Business context** is clear (who, what, why)
+- [x] **Ownership model** is defined (Dev/Ops/Support roles)
+- [x] **Assumptions are explicit** and marked for validation in Layer 1
+- [x] **Follow-up questions for Layer 1** are structured and specific
+- [x] **No tool names** in requirements (unless as example of what NOT to do)
+- [x] **No vendor-specific** solutions as requirement
 
-Dit document is **NIET compleet** als:
-- [ ] Er zijn tool keuzes gemaakt zonder alternatieven te overwegen
-- [ ] Er zijn conflicterende requirements zonder resolutie
-- [ ] Team capabilities zijn niet realistisch ingeschat
-- [ ] Budget en time constraints zijn niet gedocumenteerd
-- [ ] Rollback scenario's zijn niet gedefinieerd
+This document is **NOT complete** if:
+- [ ] Tool choices are made without considering alternatives
+- [ ] There are conflicting requirements without resolution
+- [ ] Team capabilities are not realistically assessed
+- [ ] Budget and time constraints are not documented
+- [ ] Rollback scenarios are not defined
 
-### Principes die Gevolgd Zijn (Layer 0 Discipline)
+### Principles That Were Followed (Layer 0 Discipline)
 
-✅ **Geen premature tool keuzes**: Document noemt Cilium/Calico/Flannel als *voorbeelden*, niet als beslissingen  
-✅ **Vendor neutraliteit**: Open-source voorkeur is *principe*, niet "we gebruiken tool X"  
-✅ **Business driven**: Elk requirement is gekoppeld aan business impact (omzetverlies, klantvertrouwen)  
-✅ **Pragmatisme**: Non-goals sectie voorkomt over-engineering (geen microservices dag 1, geen multi-region dag 1)  
-✅ **Expliciet over onwetendheid**: Sectie 10 "Aannames" erkent wat we NIET weten  
-✅ **Iteratief refinement**: Sectie 12 "Vervolgvragen" maakt duidelijk wat Layer 1 moet beantwoorden  
+✅ **No premature tool choices**: Document mentions Cilium/Calico/Flannel as *examples*, not as decisions  
+✅ **Vendor neutrality**: Open-source preference is *principle*, not "we use tool X"  
+✅ **Business driven**: Every requirement is linked to business impact (revenue loss, customer trust)  
+✅ **Pragmatism**: Non-goals section prevents over-engineering (no microservices day 1, no multi-region day 1)  
+✅ **Explicit about ignorance**: Section 10 "Assumptions" acknowledges what we DON'T know  
+✅ **Iterative refinement**: Section 12 "Follow-up Questions" makes clear what Layer 1 must answer  
 
-### Anti-Patterns die Vermeden Zijn
+### Anti-Patterns That Were Avoided
 
-❌ **Vermeden: "We gaan Cilium gebruiken"** → In plaats: "CNI moet Network Policies ondersteunen"  
-❌ **Vermeden: "We nemen Prometheus"** → In plaats: "Observability moet proactief zijn, niet reactief"  
-❌ **Vermeden: "Multi-region vanaf dag 1"** → In plaats: "Single region, maar architectuur blokkeert multi-region niet"  
-❌ **Vermeden: "100% uptime garantie"** → In plaats: "Realistisch: minimaliseer downtime, accepteer dat incidenten gebeuren"  
-❌ **Vermeden: "Team leert Kubernetes wel"** → In plaats: "Team heeft geen ervaring, externe consultant + training nodig"  
+❌ **Avoided: "We will use Cilium"** → Instead: "CNI must support Network Policies"  
+❌ **Avoided: "We'll take Prometheus"** → Instead: "Observability must be proactive, not reactive"  
+❌ **Avoided: "Multi-region from day 1"** → Instead: "Single region, but architecture doesn't block multi-region"  
+❌ **Avoided: "100% uptime guarantee"** → Instead: "Realistic: minimize downtime, accept that incidents happen"  
+❌ **Avoided: "Team will learn Kubernetes"** → Instead: "Team has no experience, external consultant + training needed"  
 
 ---
 
-**Layer 0 Document Versie**: 2.0  
-**Laatste Update**: December 2024  
-**Auteur**: KubeCompass Framework + Community Feedback  
-**Licentie**: MIT — vrij te gebruiken en aan te passen voor eigen situaties
+**Layer 0 Document Version**: 2.0  
+**Last Update**: December 2024  
+**Author**: KubeCompass Framework + Community Feedback  
+**License**: MIT — free to use and adapt for your own situations
