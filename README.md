@@ -209,13 +209,13 @@ Structured decision support documentation for audit-proof, interactive architect
 - **Compliance/Audit**: Proof that all decisions are traceable to requirements
 
 #### Implementation Reference
-- **[Complete Layer 1 Implementation](IMPLEMENTATION_README.md)**: Production-ready implementation reference
-  - **52 files** with 7,800+ lines of Terraform, Kubernetes manifests, CI/CD pipelines
-  - **Terraform modules** for infrastructure (cluster, networking, storage)
-  - **Kubernetes manifests** for platform and applications (ArgoCD, Cilium, NGINX, Prometheus, Harbor)
-  - **GitHub Actions workflows** for automation
-  - **Comprehensive documentation** with runbooks and DR procedures
-  - **Reference architecture**: Complete roadmap, not copy-paste deployment
+- **[Reference Architecture and Patterns](IMPLEMENTATION_README.md)**: Documentation-first implementation guide
+  - **Architecture patterns** for infrastructure, platform, and application layers
+  - **Decision frameworks** with "Choose X unless Y" rules
+  - **Best practices** for security, observability, GitOps, and disaster recovery
+  - **Reference architecture**: Complete patterns and guidance, adaptable to your context
+  - **Managed Kubernetes nuances**: Clear lock-in analysis and mitigation strategies
+  - **Note**: KubeCompass is documentation-first. Create your own implementation based on these patterns.
 
 ---
 
