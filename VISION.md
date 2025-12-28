@@ -101,6 +101,41 @@ We won't pretend to be neutral. Instead:
 - We **show the data** (maturity, community activity, lock-in risk)
 - We **welcome disagreement** (via issues, PRs, and discussions)
 
+### 5. The Golden Rule: Architecture vs. Implementation
+
+**Installation is an implementation detail. Architecture is a design decision.**
+
+KubeCompass documents **decisions**, not button clicks.
+
+We focus on:
+- **What to choose** and why
+- **When to decide** (timing and dependencies)
+- **Trade-offs** between alternatives
+- **Architecture implications** of each choice
+
+We intentionally **do not** provide:
+- Step-by-step installation guides
+- Specific configuration commands
+- Version-specific setup instructions
+
+**Why?** Because:
+- Installation steps change frequently (tool updates, new features)
+- Official documentation is the authoritative source for "how to install"
+- Architecture decisions change slowly and have long-term impact
+- Your time is better spent understanding trade-offs than memorizing commands
+
+**What we do instead:**
+- Link to official installation documentation
+- Highlight architecture considerations during setup (e.g., "CNI choice is foundational")
+- Document critical configuration decisions (e.g., "RBAC model must be decided early")
+- Provide decision frameworks: "Choose X unless Y"
+
+**Example:**
+- ❌ **We don't**: "Run `helm install argo-cd ...` with these 47 parameters"
+- ✅ **We do**: "Choose Argo CD for GitOps if you want a UI; choose Flux if you prefer GitOps-pure. Both are CNCF Graduated and production-ready. [See official installation docs]"
+
+This keeps KubeCompass focused on **lasting architectural knowledge** rather than ephemeral implementation details.
+
 ---
 
 ## 4. Long-Term Vision
