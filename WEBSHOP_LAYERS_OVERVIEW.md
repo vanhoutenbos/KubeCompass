@@ -6,135 +6,135 @@
 
 ---
 
-## Leeswijzer: De Drie Lagen
+## Reading Guide: The Three Layers
 
-Dit overzicht toont hoe **Layer 0**, **Layer 1** en **Layer 2** op elkaar voortbouwen bij het nemen van Kubernetes platform beslissingen.
+This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon each other when making Kubernetes platform decisions.
 
-### Layer 0: Fundament & Requirements
+### Layer 0: Foundation & Requirements
 📄 **[LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md)**
 
-**Kernvraag**: "**Waarom** gaan we dit doen en **wat** zijn de constraints?"
+**Core Question**: "**Why** are we doing this and **what** are the constraints?"
 
-**Wat je leert:**
+**What you learn:**
 - Business requirements (zero-downtime, 99.9% uptime)
 - Technical constraints (team size, experience)
 - Non-functional requirements (security, compliance, cost)
 - Architecture principles (vendor independence, GitOps-first)
 
-**Beslissingen:**
-- Managed K8s (niet self-hosted)
+**Decisions:**
+- Managed K8s (not self-hosted)
 - EU datacenter (data residency)
-- Klein team → lage operationele overhead
-- GitOps vanaf dag 1 (audit trail)
+- Small team → low operational overhead
+- GitOps from day 1 (audit trail)
 
-**Analogie**: Dit is het fundament van een huis - als dit niet klopt, stort alles in.
+**Analogy**: This is the foundation of a house - if this isn't right, everything collapses.
 
 ---
 
-### Layer 1: Tool Selectie & Platform Capabilities
+### Layer 1: Tool Selection & Platform Capabilities
 📄 **[LAYER_1_WEBSHOP_CASE.md](LAYER_1_WEBSHOP_CASE.md)**
 
-**Kernvraag**: "**Welke** tools implementeren we en **hoe** bouwen we het platform?"
+**Core Question**: "**Which** tools do we implement and **how** do we build the platform?"
 
-**Wat je leert:**
-- Concrete tool keuzes met rationale (Cilium, ArgoCD, Prometheus)
-- "Use X unless Y" beslisregels
+**What you learn:**
+- Concrete tool choices with rationale (Cilium, ArgoCD, Prometheus)
+- "Use X unless Y" decision rules
 - Basic platform capabilities (networking, observability, security)
-- Implementation roadmap (20 weken)
+- Implementation roadmap (20 weeks)
 
-**Beslissingen:**
+**Decisions:**
 - Cilium (CNI) - eBPF, multi-region ready
 - ArgoCD (GitOps) - UI, audit trail, SSO
 - Prometheus + Grafana (observability)
 - Vault + External Secrets (secrets management)
 - Harbor (container registry)
 
-**Analogie**: Dit is het huis bouwen - muren, dak, loodgieterswerk, elektra.
+**Analogy**: This is building the house - walls, roof, plumbing, electrical.
 
 ---
 
 ### Layer 2: Platform Enhancements & Maturity
 📄 **[LAYER_2_WEBSHOP_CASE.md](LAYER_2_WEBSHOP_CASE.md)**
 
-**Kernvraag**: "**Wanneer** is extra complexity de investering waard?"
+**Core Question**: "**When** is extra complexity worth the investment?"
 
-**Wat je leert:**
-- Decision framework voor geavanceerde capabilities
-- Triggers voor wanneer iets relevant wordt
-- Trade-offs tussen tools en approaches
-- Timing considerations (nu vs later)
+**What you learn:**
+- Decision framework for advanced capabilities
+- Triggers for when something becomes relevant
+- Trade-offs between tools and approaches
+- Timing considerations (now vs later)
 
 **Capabilities:**
-- Service Mesh (Linkerd) - wanneer > 5 services, mTLS needs
-- Distributed Tracing (Jaeger) - wanneer debugging > 1h
-- Chaos Engineering (Chaos Mesh) - wanneer HA validation
-- Policy Enforcement (Kyverno) - wanneer > 10 developers
-- Cost Visibility (Kubecost) - wanneer budget concerns
-- Multi-Region - wanneer latency requirements
-- Enhanced Auditing - wanneer compliance
+- Service Mesh (Linkerd) - when > 5 services, mTLS needs
+- Distributed Tracing (Jaeger) - when debugging > 1h
+- Chaos Engineering (Chaos Mesh) - when HA validation
+- Policy Enforcement (Kyverno) - when > 10 developers
+- Cost Visibility (Kubecost) - when budget concerns
+- Multi-Region - when latency requirements
+- Enhanced Auditing - when compliance
 
-**Analogie**: Dit is het huis inrichten - smart home, security systeem, energie management. Nice to have, niet essentieel.
+**Analogy**: This is furnishing the house - smart home, security system, energy management. Nice to have, not essential.
 
 ---
 
-## De Progressie: Layer 0 → 1 → 2
+## The Progression: Layer 0 → 1 → 2
 
 ### Example: Service Mesh Journey
 
 **Layer 0** (Requirement):
-> "Microservices moeten veilig met elkaar kunnen communiceren"
+> "Microservices must communicate securely with each other"
 
 **Layer 1** (Implementation):
-> "We implementeren Cilium Network Policies (L3/L4) voor basis security"
+> "We implement Cilium Network Policies (L3/L4) for basic security"
 
 **Layer 2** (Enhancement Decision):
-> "Wanneer we > 5 services hebben EN per-service metrics willen AND mTLS automatisch willen, THEN overwegen we Linkerd"
+> "When we have > 5 services AND want per-service metrics AND want automatic mTLS, THEN we consider Linkerd"
 
 ### Example: Observability Journey
 
 **Layer 0** (Requirement):
-> "We moeten proactief problemen detecteren voordat klanten het merken"
+> "We must detect problems proactively before customers notice"
 
 **Layer 1** (Implementation):
-> "We implementeren Prometheus voor metrics, Grafana voor dashboards, Loki voor logs"
+> "We implement Prometheus for metrics, Grafana for dashboards, Loki for logs"
 
 **Layer 2** (Enhancement Decision):
-> "Wanneer debugging cross-service issues > 1h kost, THEN voegen we distributed tracing toe (Jaeger)"
+> "When debugging cross-service issues takes > 1h, THEN we add distributed tracing (Jaeger)"
 
 ### Example: Security Journey
 
 **Layer 0** (Requirement):
-> "Security by design - geen secrets in Git, least privilege, audit logging"
+> "Security by design - no secrets in Git, least privilege, audit logging"
 
 **Layer 1** (Implementation):
-> "We implementeren Vault + External Secrets, RBAC, Network Policies, basic K8s audit logs"
+> "We implement Vault + External Secrets, RBAC, Network Policies, basic K8s audit logs"
 
 **Layer 2** (Enhancement Decision):
-> "Wanneer we > 10 developers hebben OF compliance requirements (GDPR/DORA), THEN automatiseren we policy enforcement (Kyverno)"
+> "When we have > 10 developers OR compliance requirements (GDPR/DORA), THEN we automate policy enforcement (Kyverno)"
 
 ---
 
-## Decision Flow: Wanneer Naar Volgende Layer?
+## Decision Flow: When To Move To Next Layer?
 
-### ❌ NIET naar Layer 2 gaan wanneer:
+### ❌ DO NOT move to Layer 2 when:
 
-- Layer 1 is **niet stabiel** (deployments falen, monitoring werkt niet)
-- Layer 1 is **niet volledig** (basis observability ontbreekt)
-- Team heeft **geen capaciteit** (al overbelast met Layer 1)
-- **Geen duidelijke trigger** (geen probleem dat Layer 2 oplost)
+- Layer 1 is **not stable** (deployments fail, monitoring doesn't work)
+- Layer 1 is **not complete** (basic observability is missing)
+- Team has **no capacity** (already overloaded with Layer 1)
+- **No clear trigger** (no problem that Layer 2 solves)
 
-### ✅ WEL naar Layer 2 gaan wanneer:
+### ✅ DO move to Layer 2 when:
 
-- Layer 1 **draait stabiel** (> 1 maand zonder grote issues)
-- Je **specifiek probleem** hebt dat Layer 2 capability oplost
-- Team heeft **capacity** voor extra operationele overhead
-- **Business case** is duidelijk (ROI van complexity)
+- Layer 1 **runs stably** (> 1 month without major issues)
+- You have **specific problem** that Layer 2 capability solves
+- Team has **capacity** for additional operational overhead
+- **Business case** is clear (ROI of complexity)
 
 ---
 
 ## Capability Maturity Model
 
-| Capability | Layer 1 (Basis) | Layer 2 (Enhanced) | Layer 3 (Advanced) |
+| Capability | Layer 1 (Basic) | Layer 2 (Enhanced) | Layer 3 (Advanced) |
 |-----------|----------------|--------------------|--------------------|
 | **Networking** | Cilium CNI, Network Policies | Service Mesh (Linkerd) | Cilium Cluster Mesh (multi-region) |
 | **Observability** | Prometheus, Grafana, Loki | Distributed Tracing (Jaeger), SLO monitoring | Error budget automation, AIOps |
@@ -145,120 +145,120 @@ Dit overzicht toont hoe **Layer 0**, **Layer 1** en **Layer 2** op elkaar voortb
 
 ---
 
-## Voor Wie is Welke Layer?
+## Which Layer Is For Whom?
 
-### Layer 0: Iedereen
-**Doel**: Alignment krijgen over requirements en constraints
+### Layer 0: Everyone
+**Goal**: Get alignment on requirements and constraints
 
-**Doelgroep**:
+**Target Audience**:
 - Management (business requirements)
 - Architects (technical constraints)
 - Security (compliance, risk)
 - Finance (budget)
 
-**Deliverable**: Helder antwoord op "waarom Kubernetes?" en "wat zijn onze principes?"
+**Deliverable**: Clear answer to "why Kubernetes?" and "what are our principles?"
 
 ---
 
 ### Layer 1: Platform Team
-**Doel**: Platform bouwen dat aan Layer 0 requirements voldoet
+**Goal**: Build platform that meets Layer 0 requirements
 
-**Doelgroep**:
-- Platform Engineers (implementatie)
+**Target Audience**:
+- Platform Engineers (implementation)
 - DevOps Engineers (automation)
 - SREs (reliability)
 
-**Deliverable**: Werkend platform waar teams apps op kunnen draaien
+**Deliverable**: Working platform where teams can run apps
 
 ---
 
 ### Layer 2: Mature Platform Team
-**Doel**: Platform optimaliseren en maturity verhogen
+**Goal**: Optimize platform and increase maturity
 
-**Doelgroep**:
+**Target Audience**:
 - Senior Platform Engineers (architectural decisions)
 - SREs (resilience, observability)
 - Security Engineers (policy, audit)
 - FinOps (cost optimization)
 
-**Deliverable**: Production-grade platform met advanced capabilities
+**Deliverable**: Production-grade platform with advanced capabilities
 
 ---
 
-## Veelgemaakte Fouten
+## Common Mistakes
 
-### ❌ "We doen alles in één keer"
-**Probleem**: Overwhelming complexity, team overload, niets werkt goed
+### ❌ "We do everything at once"
+**Problem**: Overwhelming complexity, team overload, nothing works well
 
-**Oplossing**: Start met Layer 1, voeg Layer 2 capabilities één voor één toe
+**Solution**: Start with Layer 1, add Layer 2 capabilities one by one
 
-### ❌ "We hebben geen Layer 0 gedaan"
-**Probleem**: Tool keuzes zijn niet aligned met business requirements
+### ❌ "We didn't do Layer 0"
+**Problem**: Tool choices are not aligned with business requirements
 
-**Oplossing**: Ga terug naar Layer 0, valideer requirements
+**Solution**: Go back to Layer 0, validate requirements
 
-### ❌ "Layer 2 is de volgende stap na Layer 1"
-**Probleem**: Je implementeert capabilities die je niet nodig hebt
+### ❌ "Layer 2 is the next step after Layer 1"
+**Problem**: You implement capabilities you don't need
 
-**Oplossing**: Layer 2 is optioneel - alleen implementeren met duidelijke trigger
+**Solution**: Layer 2 is optional - only implement with clear trigger
 
-### ❌ "We volgen gewoon de KubeCompass beslissingen"
-**Probleem**: Elke organisatie is anders, context matters
+### ❌ "We just follow the KubeCompass decisions"
+**Problem**: Every organization is different, context matters
 
-**Oplossing**: Gebruik KubeCompass als decision framework, niet als blueprint
+**Solution**: Use KubeCompass as decision framework, not as blueprint
 
 ---
 
-## Conclusie: Layers als Decision Support
+## Conclusion: Layers as Decision Support
 
-**Layer 0, 1 en 2 zijn geen checklist.**  
-**Het zijn decision frameworks om betere keuzes te maken.**
+**Layer 0, 1, and 2 are not a checklist.**  
+**They are decision frameworks for making better choices.**
 
 ### Key Takeaways:
 
-1. **Layer 0 first**: Weet waarom je iets doet voordat je het doet
-2. **Layer 1 next**: Implementeer basis capabilities die aan requirements voldoen
-3. **Layer 2 when triggered**: Voeg complexity toe alleen wanneer het een daadwerkelijk probleem oplost
-4. **One at a time**: Niet alles tegelijk (team overload)
-5. **Measure impact**: Elke capability moet meetbaar probleem oplossen
+1. **Layer 0 first**: Know why you're doing something before you do it
+2. **Layer 1 next**: Implement basic capabilities that meet requirements
+3. **Layer 2 when triggered**: Add complexity only when it solves an actual problem
+4. **One at a time**: Not everything simultaneously (team overload)
+5. **Measure impact**: Every capability must solve measurable problem
 
-### Voor de Webshop Case:
+### For the Webshop Case:
 
-**Layer 0**: ✅ Complete (requirements helder)  
-**Layer 1**: ✅ Complete (tool keuzes gemaakt)  
-**Layer 2**: 📋 Decision framework compleet - **implementatie alleen indien triggered**
+**Layer 0**: ✅ Complete (requirements clear)  
+**Layer 1**: ✅ Complete (tool choices made)  
+**Layer 2**: 📋 Decision framework complete - **implementation only if triggered**
 
-**Waarschijnlijk WEL nodig (triggers aanwezig):**
+**Likely NEEDED (triggers present):**
 - Distributed tracing (> 5 services, debugging issues)
 - Cost visibility (multi-tenant, budget concerns)
-- Policy enforcement (groeiend team, compliance)
+- Policy enforcement (growing team, compliance)
 
-**Waarschijnlijk NIET nodig (nu):**
-- Service mesh (< 10 services, network policies voldoen)
-- Multi-region (single region voldoet)
-- Chaos engineering (eerst HA stabiliseren)
+**Likely NOT needed (now):**
+- Service mesh (< 10 services, network policies sufficient)
+- Multi-region (single region sufficient)
+- Chaos engineering (first stabilize HA)
 
-**Dit is de kracht van decision frameworks: bewuste, onderbouwde keuzes.**
+**This is the power of decision frameworks: conscious, justified choices.**
 
 ---
 
-## Volgende Stappen
+## Next Steps
 
-### Voor dit Project (KubeCompass):
-1. ✅ Layer 0, 1, 2 decision frameworks compleet
+### For this Project (KubeCompass):
+1. ✅ Layer 0, 1, 2 decision frameworks complete
 2. 🔜 Layer 3 decision framework (expert-level capabilities)
 3. 🔜 Decision tree tool (interactive wizard)
-4. 🔜 Real-world case studies van teams
+4. �� Real-world case studies from teams
 
-### Voor Jouw Organisatie:
-1. **Start met Layer 0** - alignment op requirements
-2. **Werk door Layer 1** - implementeer basis platform
-3. **Evalueer Layer 2** - welke triggers zijn bij jou aanwezig?
-4. **Eén capability tegelijk** - meet impact voordat je verder gaat
+### For Your Organization:
+1. **Start with Layer 0** - alignment on requirements
+2. **Work through Layer 1** - implement basic platform
+3. **Evaluate Layer 2** - which triggers are present for you?
+4. **One capability at a time** - measure impact before continuing
 
 ---
 
-**Auteur**: [@vanhoutenbos](https://github.com/vanhoutenbos)  
-**Versie**: 1.0  
-**Datum**: December 2024  
-**Licentie**: MIT
+**Author**: [@vanhoutenbos](https://github.com/vanhoutenbos)  
+**Version**: 1.0  
+**Date**: December 2024  
+**License**: MIT
