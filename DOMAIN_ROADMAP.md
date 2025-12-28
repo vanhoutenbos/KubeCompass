@@ -69,6 +69,55 @@
 
 ---
 
+## Tools / Examples by Layer
+
+Based on the problem statement, here are the primary tool examples for each domain:
+
+```
+┌───────────────────────────────┐
+│        TOOLS / EXAMPLES        │
+├─────────────┬─────────┬───────┤
+│ Layer 0     │ Layer 1 │ Layer2│
+├─────────────┼─────────┼───────┤
+│ Cilium      │ Prom+Loki│Trivy │
+│ ArgoCD      │ NGINX   │Kyverno│
+│ Vault+ESO   │ Harbor  │Falco │
+│ Keycloak    │ Velero  │       │
+│ Cloud CSI   │ Valkey  │       │
+│             │ NATS    │       │
+│             │ MinIO   │       │
+└─────────────┴─────────┴───────┘
+```
+
+These are the **primary recommendations** from KubeCompass, but each domain includes 2+ alternatives for testing and comparison.
+
+---
+
+## Use Cases / Scenarios
+
+As specified in the problem statement, this roadmap supports the following scenarios:
+
+```
+┌───────────────────────────────┐
+│       SCENARIOS / USE CASES    │
+├───────────────┬───────────────┤
+│ Enterprise MT │ Startup MVP   │
+│ Multi-region  │ Edge Computing│
+└───────────────┴───────────────┘
+```
+
+Each tool option is evaluated against these scenarios with specific criteria:
+
+- **Enterprise Multi-Tenant (MT)**: Finance, government sectors requiring compliance (ISO 27001, SOC 2), multi-tenancy, audit logs, SSO integration
+- **Startup MVP**: Cost-optimized, fast iteration, minimal operational overhead, focus on business value
+- **Multi-region**: High availability, disaster recovery, data replication, latency optimization
+- **Edge Computing**: Resource-constrained environments, offline capability, intermittent connectivity
+
+Additional scenario covered:
+- **SME Migration**: Small-to-medium enterprise (like Dutch webshop case), balancing vendor independence with managed services
+
+---
+
 ## Layer 0: Foundational Domains (Week 1-2)
 
 These decisions are **architecturally significant** and expensive to change later. Decide before deploying workloads.
