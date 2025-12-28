@@ -166,4 +166,127 @@ KubeCompass won't make all your decisions for you, but it will:
 
 ---
 
+## 7. Complete Use Case Scenarios
+
+### Use Case 1: The Overwhelmed DevOps Engineer
+**Context**: Small team (3-5 engineers) tasked with migrating a monolithic application to Kubernetes.
+
+**Pain Points**:
+- "Which CNI should I use?" → 10 options, no clear winner
+- "Do I need a service mesh?" → Marketing says yes, but is it necessary?
+- "GitOps or traditional CI/CD?" → Don't understand the trade-offs
+
+**KubeCompass Solution**:
+- **Decision Matrix**: Shows CNI options with transparent scoring (maturity, complexity, lock-in)
+- **Layer Model**: "Service mesh is Layer 2 — skip it for now, focus on Layer 0/1"
+- **"Choose X unless Y" Rules**: "Use Cilium unless you have Calico expertise OR BGP requirements"
+- **Testing Validation**: Real installation on local kind cluster, documented failure scenarios
+
+**Outcome**: Team makes informed decisions in days, not weeks. Clear rationale for stakeholders.
+
+---
+
+### Use Case 2: The Startup CTO Planning Infrastructure
+**Context**: Startup with limited budget, need to move fast, can't afford to choose wrong tools.
+
+**Pain Points**:
+- "If I pick the wrong database strategy, can I change it later?"
+- "What decisions are irreversible?"
+- "How do I balance cost vs. operational complexity?"
+
+**KubeCompass Solution**:
+- **Decision Timing Framework**: Shows which choices are foundational (CNI, GitOps) vs. additive (image scanning)
+- **Cost Analysis**: Comparison of managed vs. self-hosted solutions with real numbers
+- **Exit Strategy Documentation**: "How hard is it to migrate away from this tool?"
+- **Startup Scenario Template**: Complete stack for fast iteration with low cost
+
+**Outcome**: CTO knows what to decide Day 1 vs. what can wait. Clear budget expectations.
+
+---
+
+### Use Case 3: The Enterprise Architect Seeking Compliance
+**Context**: Financial services company, needs ISO 27001/SOC 2 compliance, multiple teams.
+
+**Pain Points**:
+- "Which tools meet compliance requirements?"
+- "How do I prove audit trails exist?"
+- "What about vendor lock-in for regulated data?"
+
+**KubeCompass Solution**:
+- **Production-Ready Definition**: Explicit compliance criteria (RBAC, secrets management, audit logging)
+- **Enterprise Multi-Tenant Scenario**: Complete architecture with security posture
+- **Vendor Independence Scoring**: Clear analysis of lock-in risks
+- **Traceability**: Layer 0 requirements mapped to tool choices (OPEN_QUESTIONS.md, DECISION_RULES.md)
+
+**Outcome**: Architecture decisions are audit-proof with documented rationale.
+
+---
+
+### Use Case 4: The Open Source Contributor
+**Context**: Developer wants to contribute tool reviews, improve documentation, share expertise.
+
+**Pain Points**:
+- "How do I contribute?"
+- "What's the testing methodology?"
+- "Will my input be valued?"
+
+**KubeCompass Solution**:
+- **Clear Contribution Guidelines**: CONTRIBUTING.md with review templates
+- **Testing Methodology**: Documented, reproducible testing approach
+- **Recognition System**: Contributors acknowledged in tool reviews and CONTRIBUTORS.md
+- **Domain Ownership**: Option to become maintainer of specific domain (e.g., "Observability Lead")
+
+**Outcome**: Contributors have clear path to meaningful impact. Community grows sustainably.
+
+---
+
+### Use Case 5: The Team Learning Kubernetes
+**Context**: Traditional operations team transitioning from VMs to Kubernetes, steep learning curve.
+
+**Pain Points**:
+- "What's the minimum we need to learn Day 1?"
+- "Which concepts are foundational vs. advanced?"
+- "How do we avoid common mistakes?"
+
+**KubeCompass Solution**:
+- **Layer-Based Learning**: Focus on Layer 0 first (CNI, RBAC, secrets), defer Layer 2 (chaos engineering, service mesh)
+- **Real-World Case Studies**: Dutch webshop migration with step-by-step decisions
+- **Anti-Patterns Documentation**: "Don't run databases in Kubernetes unless you have DBA expertise"
+- **Interactive Diagrams**: Visual navigation of domains and dependencies
+
+**Outcome**: Team learns progressively, avoiding overwhelm. Clear learning path.
+
+---
+
+### Use Case 6: The AI-Assisted Decision Maker
+**Context**: User wants personalized recommendations without reading all documentation.
+
+**Pain Points**:
+- "Too much information, need specific answers for my situation"
+- "Want to explore options interactively"
+- "Need JSON output for automation"
+
+**KubeCompass Solution**:
+- **AI Case Advisor**: Interactive Q&A generates tailored architecture
+- **Tool Selector Wizard**: Filter by scale, priorities, preferences → instant recommendations
+- **Decision Rules as Code**: JavaScript-like pseudocode in DECISION_RULES.md
+- **Structured Output**: JSON format for machine consumption
+
+**Outcome**: Personalized recommendations in minutes with rationale and alternatives.
+
+---
+
+## 8. Target Outcomes by User Type
+
+| User Type | Primary Need | KubeCompass Delivers |
+|-----------|--------------|---------------------|
+| **DevOps Engineer** | Clear tool recommendations | Decision Matrix + "Choose X unless Y" rules |
+| **Startup CTO** | Cost-effective, low-risk choices | Startup scenario + exit strategy analysis |
+| **Enterprise Architect** | Compliance-ready, audit-proof | Production-ready definition + traceability |
+| **Open Source Contributor** | Clear contribution path | CONTRIBUTING.md + domain ownership |
+| **Learning Team** | Progressive learning path | Layer-based framework + case studies |
+| **AI/Automation User** | Machine-readable guidance | JSON output + decision logic pseudocode |
+
+---
+
 *This vision will evolve as the project matures, but the core principles will remain.*

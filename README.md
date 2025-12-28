@@ -260,6 +260,18 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [ ] Additional scenarios (startup MVP, edge computing)
 - [ ] Community-contributed AI chat patterns
 
+**Project planning & strategy:**
+- 🚀 **[Launch Plan](LAUNCH_PLAN.md)** — month 1 launch roadmap with weekly execution plan
+  - Domain-by-domain tool evaluation strategy
+  - AI transparency and validation policy
+  - Dataset creation and maintenance approach
+  - Step-by-step implementation guide
+- 📋 **[Documentation Status](DOCUMENTATION_STATUS.md)** — what exists, what's missing, what's next
+  - Complete documentation inventory
+  - Gap analysis and priorities
+  - Week-by-week progress tracking
+  - Launch requirements checklist
+
 **Project challenges & opportunities:**
 - 📋 **[Project Challenges](CHALLENGES.md)** — see what we're struggling with and how you can help
   - Keeping up with rapidly changing tools
@@ -267,9 +279,21 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
   - Finding contributors and building community
 
 **How to contribute:**
+- 📖 **[Contributing Guide](CONTRIBUTING.md)** — comprehensive contributor onboarding
+  - Quick contributions (typos, links, examples)
+  - Tool reviews with testing methodology
+  - Real-world scenarios from your experience
+  - Domain ownership opportunities
 - 🐛 Found a gap or error? [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues)
 - 💡 Have a tool recommendation or review? [Submit a PR](https://github.com/vanhoutenbos/KubeCompass/pulls)
 - 💬 Want to discuss? [Start a discussion](https://github.com/vanhoutenbos/KubeCompass/discussions)
+
+**Seeking sponsors:**
+- 💰 **[Sponsor Benefits](SPONSORS.md)** — help us test at production scale
+  - Cloud infrastructure credits for managed Kubernetes testing
+  - CI/CD infrastructure for automated validation
+  - Website hosting and global CDN
+  - Complete editorial independence guarantee
 
 ---
 
