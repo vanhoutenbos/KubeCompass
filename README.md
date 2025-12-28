@@ -267,6 +267,12 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
   - AI transparency and validation policy
   - Dataset creation and maintenance approach
   - Step-by-step implementation guide
+- 🗺️ **[Domain Roadmap](DOMAIN_ROADMAP.md)** — comprehensive domain-by-domain implementation roadmap **NEW!**
+  - All 15 domains with tool options and selection criteria
+  - Testing plans for 2+ options per domain (kind/minikube)
+  - Week-by-week implementation schedule
+  - Decision rules ("Choose X unless Y") for each domain
+  - Progress tracking and success criteria
 - 📋 **[Documentation Status](DOCUMENTATION_STATUS.md)** — what exists, what's missing, what's next
   - Complete documentation inventory
   - Gap analysis and priorities
@@ -307,16 +313,21 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 5. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
 6. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
 7. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-8. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
+8. **🗺️ Check the [Domain Roadmap](DOMAIN_ROADMAP.md)** for step-by-step implementation guidance **NEW!**
+   - Complete tool options for all 15 domains (Layer 0, 1, 2)
+   - Testing plans with 2+ options per domain
+   - Week-by-week schedule for hands-on testing
+   - Decision rules to guide tool selection
+9. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
    - **[Layer 0: Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
    - **[Layer 1: Tool Selection](LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
    - **[Layer 2: Enhancement Decisions](LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
    - **🆕 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
    - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP (NEW!)
-9. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
-10. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-12. **Explore the [Vision](VISION.md)** to see where we're headed
+10. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+11. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
+12. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
+13. **Explore the [Vision](VISION.md)** to see where we're headed
 13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 14. **Read [Related Initiatives](RELATED_INITIATIVES.md)** to understand how KubeCompass differs from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
 15. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
