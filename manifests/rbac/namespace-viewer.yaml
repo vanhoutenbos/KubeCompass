@@ -1,0 +1,77 @@
+# Namespace Viewer Role
+# Read-only access (QA, support, junior developers)
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-viewer
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: viewer
+  annotations:
+    description: "Read-only access for QA and support teams"
+rules:
+# Read all resources
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources:
+    - pods
+    - pods/log
+    - pods/status
+    - services
+    - endpoints
+    - configmaps
+    - persistentvolumeclaims
+    - deployments
+    - replicasets
+    - statefulsets
+    - daemonsets
+    - jobs
+    - cronjobs
+  verbs: ["get", "list", "watch"]
+
+# Read secrets (names only, not values - requires get)
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["list"]  # Can see secret exists, but not read content
+
+# Networking
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses", "networkpolicies"]
+  verbs: ["get", "list", "watch"]
+
+# Autoscaling
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch"]
+
+# Policy
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["get", "list", "watch"]
+
+# Port-forward for debugging (but no exec)
+- apiGroups: [""]
+  resources: ["pods/portforward"]
+  verbs: ["create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespace-viewer-binding
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: viewer
+subjects:
+- kind: Group
+  name: "team-platform-qa"
+  apiGroup: rbac.authorization.k8s.io
+
+- kind: Group
+  name: "team-platform-support"
+  apiGroup: rbac.authorization.k8s.io
+
+roleRef:
+  kind: Role
+  name: namespace-viewer
+  apiGroup: rbac.authorization.k8s.io

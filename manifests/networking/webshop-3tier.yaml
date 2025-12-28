@@ -1,0 +1,135 @@
+# Three-Tier Architecture Network Policies
+# Frontend → Backend → Database
+---
+# Frontend Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-policy
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: 3-tier
+  annotations:
+    description: "Frontend: ingress from nginx, egress to backend"
+spec:
+  podSelector:
+    matchLabels:
+      tier: web
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow to backend
+  - to:
+    - podSelector:
+        matchLabels:
+          tier: api
+    ports:
+    - protocol: TCP
+      port: 8080
+
+---
+# Backend Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-policy
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: 3-tier
+  annotations:
+    description: "Backend: ingress from frontend, egress to database + external APIs"
+spec:
+  podSelector:
+    matchLabels:
+      tier: api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from frontend
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: web
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow to database
+  - to:
+    - podSelector:
+        matchLabels:
+          tier: database
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow HTTPS to external APIs (payment gateways, etc.)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# Database Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-policy
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: 3-tier
+  annotations:
+    description: "Database: ingress from backend only, no egress except DNS"
+spec:
+  podSelector:
+    matchLabels:
+      tier: database
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow from backend only
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: api
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  # Allow DNS only
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Database should NOT initiate external connections

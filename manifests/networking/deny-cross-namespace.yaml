@@ -1,0 +1,64 @@
+# Deny Cross-Namespace Traffic (Multi-Tenancy)
+# Prevent tenant-a from accessing tenant-b
+---
+# Tenant A isolation
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: tenant-a
+  labels:
+    policy.kubecompass.io/type: multi-tenant
+  annotations:
+    description: "Prevent cross-namespace traffic for tenant isolation"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Only from same namespace
+  - from:
+    - podSelector: {}
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Only to same namespace
+  - to:
+    - podSelector: {}
+
+---
+# Tenant B isolation
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-cross-namespace
+  namespace: tenant-b
+  labels:
+    policy.kubecompass.io/type: multi-tenant
+  annotations:
+    description: "Prevent cross-namespace traffic for tenant isolation"
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  - to:
+    - podSelector: {}

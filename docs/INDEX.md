@@ -60,6 +60,10 @@
 | Document | Purpose | Audience |
 |----------|---------|----------|
 | [CNI Comparison](planning/CNI_COMPARISON.md) | Cilium vs Calico vs others | Network Engineers |
+| [GitOps Comparison](planning/GITOPS_COMPARISON.md) | ArgoCD vs Flux vs GitLab | Platform Engineers |
+| [Secrets Management](planning/SECRETS_MANAGEMENT.md) | ESO vs Sealed Secrets vs SOPS | Platform Engineers |
+| [ArgoCD Guide](planning/ARGOCD_GUIDE.md) | Hands-on ArgoCD walkthrough | Platform Engineers |
+| [Flux Guide](planning/FLUX_GUIDE.md) | Hands-on Flux walkthrough | Platform Engineers |
 | [GitOps with GitLab](planning/GITOPS_GITLAB.md) | GitLab Agent guide | Platform Engineers |
 | [Scenarios](planning/SCENARIOS.md) | Enterprise, startup, edge use cases | All |
 | [Domain Roadmap](planning/DOMAIN_ROADMAP.md) | Implementation roadmap | Contributors |
@@ -254,8 +258,10 @@
 → [CNI Comparison](planning/CNI_COMPARISON.md)
 
 ### "I need to choose a GitOps tool"
-→ [GitOps with GitLab](planning/GITOPS_GITLAB.md)  
-→ *(ArgoCD and Flux guides coming soon)*
+→ [GitOps Comparison](planning/GITOPS_COMPARISON.md) - ArgoCD vs Flux vs GitLab  
+→ [ArgoCD Guide](planning/ARGOCD_GUIDE.md) - Hands-on walkthrough  
+→ [Flux Guide](planning/FLUX_GUIDE.md) - Bootstrap to production  
+→ [GitOps with GitLab](planning/GITOPS_GITLAB.md) - GitLab Agent specific
 
 ### "I need to set up a local test cluster"
 → [Getting Started Guide](GETTING_STARTED.md)  
@@ -277,9 +283,13 @@
 → [Manifests Guide](../manifests/README.md)  
 → [Deployment Runbook](runbooks/deployment.md)
 
-### "I need to test something"
-→ [Testing Guide](../tests/README.md)  
-→ [Smoke Tests](../tests/smoke/README.md)
+### "I need to manage secrets securely"
+→ [Secrets Management Guide](planning/SECRETS_MANAGEMENT.md) - Complete ESO vs Sealed Secrets vs SOPS comparison
+
+### "I need to test security policies"
+→ [RBAC Examples](../manifests/rbac/README.md) - 8 production-ready patterns  
+→ [Network Policy Examples](../manifests/networking/README.md) - Zero-trust networking  
+→ [Security Tests](../tests/security/README.md) - Automated RBAC & NetworkPolicy validation
 
 ### "I need production criteria"
 → [Production Ready](implementation/PRODUCTION_READY.md)  
@@ -299,16 +309,21 @@
 
 ### Networking
 - [CNI Comparison](planning/CNI_COMPARISON.md) - Cilium, Calico, Flannel
-- [Network Policies](../manifests/networking/) - Examples
+- [Network Policy Examples](../manifests/networking/README.md) - Zero-trust patterns
 - Framework: Domain 0.1 (CNI), 0.2 (Ingress)
 
 ### GitOps
-- [GitOps with GitLab](planning/GITOPS_GITLAB.md) - GitLab Agent
+- [GitOps Comparison](planning/GITOPS_COMPARISON.md) - ArgoCD vs Flux vs GitLab
+- [ArgoCD Guide](planning/ARGOCD_GUIDE.md) - Complete implementation walkthrough
+- [Flux Guide](planning/FLUX_GUIDE.md) - Bootstrap to production
+- [GitOps with GitLab](planning/GITOPS_GITLAB.md) - GitLab Agent specific
 - Framework: Domain 0.3 (GitOps)
-- *(ArgoCD and Flux guides coming soon)*
 
 ### Security
-- [RBAC Examples](../manifests/rbac/) - Role-based access
+- [Secrets Management Guide](planning/SECRETS_MANAGEMENT.md) - ESO vs Sealed Secrets vs SOPS
+- [RBAC Examples](../manifests/rbac/README.md) - 8 production-ready patterns
+- [Network Policy Examples](../manifests/networking/README.md) - Zero-trust networking
+- [Security Tests](../tests/security/README.md) - Automated validation
 - [Decision Rules](DECISION_RULES.md) - Security tool choices
 - Framework: Domain 1.4 (Runtime Security)
 

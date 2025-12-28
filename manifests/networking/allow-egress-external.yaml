@@ -1,0 +1,45 @@
+# Allow Egress to External APIs
+# Backend needs to call payment gateway, email service, etc.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-external-apis
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: external-egress
+  annotations:
+    description: "Allow backend to call external APIs (payment, email, etc.)"
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+      tier: api
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow HTTPS to any external service
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+  
+  # If you need to restrict by IP (example: AWS API Gateway)
+  - to:
+    - ipBlock:
+        cidr: 52.0.0.0/8  # Example AWS range
+        except:
+        - 52.95.0.0/16  # Exclude specific range if needed
+    ports:
+    - protocol: TCP
+      port: 443

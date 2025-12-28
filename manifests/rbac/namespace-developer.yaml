@@ -1,0 +1,85 @@
+# Namespace Developer Role
+# Deploy and view, but cannot delete critical resources
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-developer
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: developer
+  annotations:
+    description: "Deploy and manage apps, restricted delete permissions"
+rules:
+# Read access to most resources
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources:
+    - pods
+    - pods/log
+    - pods/status
+    - services
+    - endpoints
+    - configmaps
+    - persistentvolumeclaims
+    - deployments
+    - replicasets
+    - statefulsets
+    - daemonsets
+    - jobs
+    - cronjobs
+  verbs: ["get", "list", "watch"]
+
+# Create/Update deployments and services
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets"]
+  verbs: ["create", "update", "patch"]
+
+- apiGroups: [""]
+  resources: ["services", "configmaps"]
+  verbs: ["create", "update", "patch"]
+
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["create", "update", "patch"]
+
+# Delete non-critical resources only
+- apiGroups: [""]
+  resources: ["pods"]  # Can delete pods (they'll be recreated)
+  verbs: ["delete"]
+
+- apiGroups: ["batch"]
+  resources: ["jobs"]  # Can delete completed jobs
+  verbs: ["delete"]
+
+# Port-forward and exec for debugging
+- apiGroups: [""]
+  resources: ["pods/portforward", "pods/exec"]
+  verbs: ["create"]
+
+# Read secrets (but not create/delete)
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+
+# Networking
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespace-developer-binding
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: developer
+subjects:
+- kind: Group
+  name: "team-platform-developers"
+  apiGroup: rbac.authorization.k8s.io
+
+roleRef:
+  kind: Role
+  name: namespace-developer
+  apiGroup: rbac.authorization.k8s.io

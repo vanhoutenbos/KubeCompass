@@ -1,0 +1,92 @@
+# CI/CD Deployer Service Account
+# For GitLab CI, GitHub Actions, ArgoCD
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ci-cd-deployer
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: ci-cd
+  annotations:
+    description: "Service account for GitLab CI and GitHub Actions"
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ci-cd-deployer
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: ci-cd
+rules:
+# Deploy applications
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+  verbs: ["get", "list", "create", "update", "patch"]
+
+# Manage services
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "create", "update", "patch"]
+
+# Manage ConfigMaps (but not Secrets for security)
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "create", "update", "patch"]
+
+# Read Secrets (assume secrets created manually or via external-secrets)
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+
+# Manage Ingresses
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "create", "update", "patch"]
+
+# Check deployment status
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+
+# Batch jobs
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["get", "list", "create", "update", "patch", "delete"]
+
+# Autoscaling
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "create", "update", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ci-cd-deployer-binding
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: ci-cd
+subjects:
+- kind: ServiceAccount
+  name: ci-cd-deployer
+  namespace: webshop
+
+roleRef:
+  kind: Role
+  name: ci-cd-deployer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Secret for GitLab/GitHub to authenticate
+# Generate token: kubectl create token ci-cd-deployer -n webshop --duration=8760h
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ci-cd-deployer-token
+  namespace: webshop
+  annotations:
+    kubernetes.io/service-account.name: ci-cd-deployer
+    description: "Long-lived token for CI/CD - rotate annually"
+type: kubernetes.io/service-account-token

@@ -1,0 +1,31 @@
+# Default Deny All Traffic (Zero-Trust Baseline)
+# Apply this FIRST, then explicitly allow required traffic
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-ingress
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: baseline
+  annotations:
+    description: "Zero-trust baseline - deny all ingress traffic"
+spec:
+  podSelector: {}  # Applies to all pods in namespace
+  policyTypes:
+  - Ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-egress
+  namespace: webshop
+  labels:
+    policy.kubecompass.io/type: baseline
+  annotations:
+    description: "Zero-trust baseline - deny all egress traffic"
+spec:
+  podSelector: {}  # Applies to all pods in namespace
+  policyTypes:
+  - Egress

@@ -1,0 +1,70 @@
+# Namespace Admin Role
+# Full control within namespace (team leads, senior developers)
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: webshop
+  labels:
+    team: platform
+    env: production
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespace-admin
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: admin
+  annotations:
+    description: "Full control within namespace - for team leads"
+rules:
+# Full access to most resources
+- apiGroups: ["", "apps", "batch", "extensions"]
+  resources: ["*"]
+  verbs: ["*"]
+
+# ConfigMaps and Secrets (full access)
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["*"]
+
+# Networking
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses", "networkpolicies"]
+  verbs: ["*"]
+
+# Autoscaling
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["*"]
+
+# Policy
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespace-admin-binding
+  namespace: webshop
+  labels:
+    rbac.kubecompass.io/role-type: admin
+subjects:
+# Bind to AD/OIDC group
+- kind: Group
+  name: "team-platform-leads"
+  apiGroup: rbac.authorization.k8s.io
+
+# Or bind to specific users
+# - kind: User
+#   name: "john.doe@company.com"
+#   apiGroup: rbac.authorization.k8s.io
+
+roleRef:
+  kind: Role
+  name: namespace-admin
+  apiGroup: rbac.authorization.k8s.io

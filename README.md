@@ -352,6 +352,23 @@ cilium install
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
 ```
 
+**Testing security policies (NEW!):**
+```bash
+# Apply RBAC examples (8 patterns)
+kubectl apply -f manifests/rbac/
+
+# Apply Network Policies (8 patterns)
+kubectl apply -f manifests/networking/
+
+# Run automated security tests
+./tests/security/test-rbac.sh
+./tests/security/test-network-policies.sh
+```
+
+📖 **[RBAC Examples Guide](manifests/rbac/README.md)** — 8 production-ready RBAC patterns  
+📖 **[Network Policy Examples Guide](manifests/networking/README.md)** — Zero-trust networking with Cilium/Calico  
+🧪 **[Security Testing Guide](tests/security/README.md)** — Automated RBAC and NetworkPolicy validation
+
 **Why local testing?**
 - ✅ Validate platform concepts **before** cloud deployment
 - ✅ Test tool combinations in **isolated environments**
