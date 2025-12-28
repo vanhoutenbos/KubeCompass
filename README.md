@@ -233,7 +233,8 @@ Some decisions (CNI, GitOps) are foundational and hard to change. Others (image 
 ### No Vendor Agenda
 We're not here to sell you SaaS licenses or enterprise support contracts. If a tool sucks, we'll say so.
 
-📖 **[Read the Full Vision](VISION.md)**
+📖 **[Read the Full Vision](VISION.md)**  
+🔍 **[See How We Compare to Other Initiatives](RELATED_INITIATIVES.md)** — Why KubeCompass is different from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
 
 ---
 
@@ -317,7 +318,8 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 11. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
 12. **Explore the [Vision](VISION.md)** to see where we're headed
 13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
-14. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
+14. **Read [Related Initiatives](RELATED_INITIATIVES.md)** to understand how KubeCompass differs from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
+15. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
 
 ---
 

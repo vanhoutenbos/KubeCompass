@@ -4,6 +4,18 @@ This document outlines the complete decision-making framework for building and o
 
 ---
 
+## The Golden Rule
+
+**Installation is an implementation detail. Architecture is a design decision.**
+
+This framework focuses on **what to decide** and **why**, not on **how to install** tools. We document architecture decisions and trade-offs, then link to official documentation for implementation details.
+
+Why? Because installation commands change frequently, but architecture principles endure. Your time is better spent understanding trade-offs than memorizing configuration syntax.
+
+📖 **[See full philosophy in VISION.md](VISION.md#5-the-golden-rule-architecture-vs-implementation)**
+
+---
+
 ## Visual Overview
 
 🎨 **Looking for visual diagrams?** See **[DIAGRAMS.md](DIAGRAMS.md)** for:

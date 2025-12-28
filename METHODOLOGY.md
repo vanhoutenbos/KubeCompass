@@ -155,4 +155,71 @@ Common licenses and implications:
 
 ---
 
+## External References & Sources
+
+KubeCompass is built on a foundation of hands-on testing, but we also learn from and reference the broader community's knowledge.
+
+### What We Reference
+
+We actively cite and link to:
+- **Official documentation**: Primary source for tool capabilities and installation
+- **Blog posts**: Real-world experiences and lessons learned from practitioners
+- **Conference talks**: Architecture patterns and case studies (e.g., KubeCon, Cloud Native Rejekts)
+- **YouTube videos**: Technical deep-dives and tutorials
+- **GitHub discussions**: Community debates and issue threads
+- **Comparative analyses**: Existing tool comparisons and benchmarks
+
+### Quality Criteria for External Sources
+
+We evaluate external references based on:
+- **Recency**: Is the information current? (Tools evolve quickly)
+- **Hands-on nature**: Does it show real usage, not just theory?
+- **Technical depth**: Does it explain *why*, not just *what*?
+- **Author credibility**: Is the author a practitioner with real experience?
+- **Bias transparency**: Does the author disclose affiliations/conflicts?
+
+### How We Cite Sources
+
+**Format**:
+- **Inline links**: Embedded in text where relevant
+- **Reference sections**: Collected at end of documents for further reading
+- **Attribution**: Clear author/organization credit with publish date
+- **Archive links**: For critical references, we may archive to prevent link rot
+
+**Example**:
+```markdown
+> "Cilium provides eBPF-based networking with built-in observability"  
+> — [Cilium Documentation](https://docs.cilium.io), 2024
+
+**Further Reading**:
+- [Life of a Packet in Cilium](https://cilium.io/blog/...) — Blog post explaining Cilium's packet flow
+- [KubeCon Talk: Scaling Cilium to 10,000 Nodes](https://youtube.com/...) — Production experience from Datadog
+```
+
+### What We Don't Do
+
+- ❌ **Uncited opinions**: Every claim should be testable or referenced
+- ❌ **Vendor whitepapers without disclosure**: Marketing materials clearly labeled
+- ❌ **Outdated content without warning**: If referencing old content, we note it
+- ❌ **Anonymous sources**: We attribute knowledge to identifiable authors/orgs
+
+### Contributing External References
+
+When contributing to KubeCompass, please:
+1. **Include source links**: Cite where you learned something
+2. **Check publication dates**: Prefer recent content (< 2 years for tools)
+3. **Verify hands-on testing**: Ensure referenced content is practical, not theoretical
+4. **Disclose affiliations**: If you're citing your own work or your employer's
+
+### Relationship with Related Initiatives
+
+KubeCompass learns from and complements other initiatives. See **[RELATED_INITIATIVES.md](RELATED_INITIATIVES.md)** for our position relative to:
+- CNCF Landscape
+- OpenSSF Scorecard
+- SLSA Framework
+- ThoughtWorks Technology Radar
+- And more
+
+---
+
 This rubric ensures that even when we inject **opinion**, it's always backed by **transparent, measurable criteria**.
