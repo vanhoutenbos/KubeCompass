@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KubeCompass - Navigate the Kubernetes Ecosystem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        section p {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #2d3748;
+        }
+
+        .feature-card p {
+            color: #718096;
+        }
+
+        /* Landscape CTA */
+        .landscape-cta {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .landscape-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .landscape-cta p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #4a5568;
+        }
+
+        .landscape-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .domain-preview {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .domain-preview:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .domain-preview h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .domain-preview p {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #718096;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5568;
+            color: #cbd5e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                display: none; /* Mobile menu would need JS */
+            }
+
+            .features-grid,
+            .landscape-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🧭 KubeCompass</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="landscape.html">Landscape</a></li>
+                <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
+                <li><a href="README.md">Docs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Navigate the Kubernetes Ecosystem</h1>
+            <p>Opinionated, hands-on guidance for building production-ready Kubernetes platforms — without the vendor fluff.</p>
+            <div class="hero-buttons">
+                <a href="landscape.html" class="btn btn-primary">Explore the Landscape</a>
+                <a href="tool-selector-wizard.html" class="btn btn-secondary">Find Your Tools</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- What is KubeCompass -->
+        <section>
+            <h2>What is KubeCompass?</h2>
+            <p>Kubernetes is powerful, but the ecosystem is overwhelming. Every domain (networking, security, CI/CD, observability) has dozens of tools competing for attention. Most are marketed with buzzwords and vendor pitches.</p>
+            <p><strong>KubeCompass cuts through the noise</strong> with opinionated recommendations based on real-world experience, hands-on testing, and transparent decision-making frameworks.</p>
+        </section>
+
+        <!-- Key Features -->
+        <section>
+            <h2>Why Choose KubeCompass?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Opinionated</h3>
+                    <p>Clear recommendations based on real-world experience and hands-on testing — no "it depends" cop-outs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Tested</h3>
+                    <p>Every tool is actually used and tested, not just researched. We know what works and what doesn't.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Decision Timing</h3>
+                    <p>Know what to decide Day 1 vs. what can wait. We help you prioritize critical decisions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Transparent Scoring</h3>
+                    <p>Clear criteria: maturity, lock-in risk, operational complexity, and more — no hidden agendas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>No Vendor Bias</h3>
+                    <p>Built by practitioners, for practitioners. No paid promotions or vendor-influenced recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Community-Driven</h3>
+                    <p>Honest reviews from real users. Contribute your experiences and help others make better decisions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Landscape CTA -->
+        <div class="landscape-cta">
+            <h2>Explore the Kubernetes Landscape</h2>
+            <p>Browse all operational domains and discover the right tools for your use case</p>
+            
+            <div class="landscape-preview">
+                <div class="domain-preview" onclick="window.location.href='landscape.html#networking'">
+                    <h4>🌐 Networking</h4>
+                    <p>CNI, Service Mesh, Ingress</p>
+                </div>
+                <div class="domain-preview" onclick="window.location.href='landscape.html#security'">
+                    <h4>🔒 Security</h4>
+                    <p>RBAC, Secrets, Policies</p>
+                </div>
+                <div class="domain-preview" onclick="window.location.href='landscape.html#observability'">
+                    <h4>👁️ Observability</h4>
+                    <p>Metrics, Logs, Traces</p>
+                </div>
+                <div class="domain-preview" onclick="window.location.href='landscape.html#cicd'">
+                    <h4>🔄 CI/CD</h4>
+                    <p>GitOps, Pipelines, Deployment</p>
+                </div>
+                <div class="domain-preview" onclick="window.location.href='landscape.html#storage'">
+                    <h4>💾 Storage</h4>
+                    <p>CSI, Backup, Disaster Recovery</p>
+                </div>
+                <div class="domain-preview" onclick="window.location.href='landscape.html#infrastructure'">
+                    <h4>🏗️ Infrastructure</h4>
+                    <p>Provisioning, IaC, Clusters</p>
+                </div>
+            </div>
+
+            <a href="landscape.html" class="btn btn-primary" style="margin-top: 1rem;">View Full Landscape →</a>
+        </div>
+
+        <!-- Stats -->
+        <section>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Domains Covered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Tools Evaluated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Decision Layers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Bias-Free</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who is this for -->
+        <section>
+            <h2>Who Is This For?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>👨‍💻 DevOps Engineers</h3>
+                    <p>Building and maintaining Kubernetes clusters? Get practical guidance for real-world production environments.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🛠️ Platform Teams</h3>
+                    <p>Setting up infrastructure for multiple teams? Learn the right decisions for multi-tenant platforms.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚀 Startups & Scale-ups</h3>
+                    <p>Need to move fast without enterprise overhead? Get focused recommendations for your scale.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section>
+            <h2>Get Started</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>1️⃣ Explore Domains</h3>
+                    <p>Browse the <a href="landscape.html">Kubernetes Landscape</a> to understand all operational areas you need to consider.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>2️⃣ Find Your Tools</h3>
+                    <p>Use the <a href="tool-selector-wizard.html">Tool Selector Wizard</a> to get personalized recommendations based on your needs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>3️⃣ Contribute</h3>
+                    <p>Share your experience and help build a <a href="contribute.html">community-driven knowledge base</a>.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>KubeCompass</h3>
+                <p>Opinionated guidance for Kubernetes platforms, built by practitioners for practitioners.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="landscape.html">Landscape</a></li>
+                    <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
+                    <li><a href="interactive-diagram.html">Interactive Diagrams</a></li>
+                    <li><a href="FRAMEWORK.md">Framework</a></li>
+                    <li><a href="MATRIX.md">Decision Matrix</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="contribute.html">Contribute</a></li>
+                    <li><a href="CONTRIBUTING.md">Contributing Guide</a></li>
+                    <li><a href="https://github.com/vanhoutenbos/KubeCompass">GitHub</a></li>
+                    <li><a href="https://github.com/vanhoutenbos/KubeCompass/discussions">Discussions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="README.md">Documentation</a></li>
+                    <li><a href="VISION.md">Vision</a></li>
+                    <li><a href="SCENARIOS.md">Scenarios</a></li>
+                    <li><a href="TESTING_METHODOLOGY.md">Testing Methodology</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 KubeCompass. Built by <a href="https://github.com/vanhoutenbos" style="color: #667eea;">@vanhoutenbos</a> and contributors. MIT License.</p>
+        </div>
+    </footer>
+</body>
+</html>

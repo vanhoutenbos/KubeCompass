@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Networking (CNI) - KubeCompass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: #718096;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Quick Summary */
+        .quick-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .quick-summary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .summary-item h3 {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .summary-item p {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        /* Q&A Section */
+        .qa-section {
+            margin-bottom: 3rem;
+        }
+
+        .qa-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+
+        .qa-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .question-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .answer {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        .answer ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .answer li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Recommendation Section */
+        .recommendation {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .recommendation h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .tool-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .badge-recommended {
+            background: #48bb78;
+            color: white;
+        }
+
+        .badge-alternative {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        .tool-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tool-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .feature-icon {
+            color: #48bb78;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pros, .cons {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .pros h4, .cons h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .pros h4 {
+            color: #48bb78;
+        }
+
+        .cons h4 {
+            color: #f56565;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pros li::before {
+            content: "✓ ";
+            color: #48bb78;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .cons li::before {
+            content: "✗ ";
+            color: #f56565;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .use-case {
+            background: #ebf4ff;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .use-case h4 {
+            color: #2d3748;
+            margin-bottom: 0.75rem;
+        }
+
+        .use-case p {
+            color: #4a5568;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .comparison-table h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        /* Decision Helper */
+        .decision-helper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .decision-helper h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .decision-rule {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .decision-rule h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Resources */
+        .resources {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .resources h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .resource-link {
+            display: block;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            transition: all 0.3s;
+            border-left: 3px solid #667eea;
+        }
+
+        .resource-link:hover {
+            background: #edf2f7;
+            transform: translateX(4px);
+        }
+
+        .resource-link strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-features {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🧭 KubeCompass</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="landscape.html">Landscape</a></li>
+                <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
+                <li><a href="README.md">Docs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Home</a> / <a href="landscape.html">Landscape</a> / Container Networking (CNI)
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-container">
+            <h1>🌐 Container Networking (CNI)</h1>
+            <p>Network plugin choice for pod-to-pod communication, network policies, and service mesh decisions</p>
+            <div class="header-meta">
+                <span class="meta-badge">Layer 0: Foundational</span>
+                <span class="meta-badge">Hard to change later</span>
+                <span class="meta-badge">All company sizes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Quick Summary -->
+        <div class="quick-summary">
+            <h2>📋 Quick Summary</h2>
+            <p>CNI (Container Network Interface) is the plugin that handles all networking for your Kubernetes cluster. This is a foundational decision that affects performance, security, and observability. It's difficult to change after deployment, so choose carefully.</p>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h3>Decision Timing</h3>
+                    <p>Day 1 - Before cluster creation</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Change Difficulty</h3>
+                    <p>Very Hard - Requires cluster rebuild</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Impact</h3>
+                    <p>High - Affects all networking</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Recommended</h3>
+                    <p>Cilium or Flannel</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q&A Section -->
+        <div class="qa-section">
+            <h2>❓ Key Questions to Consider</h2>
+            
+            <div class="qa-item">
+                <div class="question">
+                    <span class="question-icon">Q:</span>
+                    <span>Do I need advanced network policies (Layer 7)?</span>
+                </div>
+                <div class="answer">
+                    <p><strong>Answer:</strong> If you're building a multi-tenant platform or have strict security requirements, Layer 7 network policies are essential. They allow you to control traffic based on HTTP methods, paths, and headers.</p>
+                    <ul>
+                        <li><strong>Yes?</strong> Choose <strong>Cilium</strong> - it provides native L7 policies with eBPF</li>
+                        <li><strong>No?</strong> <strong>Flannel</strong> or <strong>Calico</strong> will work fine</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">
+                    <span class="question-icon">Q:</span>
+                    <span>How important is network observability?</span>
+                </div>
+                <div class="answer">
+                    <p><strong>Answer:</strong> Network observability helps you understand traffic flows, debug connectivity issues, and detect security threats. For production environments, it's highly valuable.</p>
+                    <ul>
+                        <li><strong>Critical:</strong> <strong>Cilium with Hubble</strong> - provides visual network maps and flow logs</li>
+                        <li><strong>Nice to have:</strong> <strong>Calico</strong> with Calico Enterprise (paid)</li>
+                        <li><strong>Not important:</strong> <strong>Flannel</strong> - simple and lightweight</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">
+                    <span class="question-icon">Q:</span>
+                    <span>What is your team's expertise level?</span>
+                </div>
+                <div class="answer">
+                    <p><strong>Answer:</strong> CNI complexity varies significantly. Consider your team's ability to troubleshoot networking issues.</p>
+                    <ul>
+                        <li><strong>New to Kubernetes:</strong> <strong>Flannel</strong> - simplest option, easy to understand</li>
+                        <li><strong>Intermediate:</strong> <strong>Cilium</strong> or <strong>Calico</strong> - more features, manageable complexity</li>
+                        <li><strong>Networking experts:</strong> Any option, can optimize for specific needs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">
+                    <span class="question-icon">Q:</span>
+                    <span>Do you have existing BGP routing infrastructure?</span>
+                </div>
+                <div class="answer">
+                    <p><strong>Answer:</strong> If you're integrating with existing enterprise network infrastructure using BGP, this influences your CNI choice.</p>
+                    <ul>
+                        <li><strong>Yes:</strong> <strong>Calico</strong> - excellent BGP integration</li>
+                        <li><strong>No:</strong> <strong>Cilium</strong> - modern eBPF approach without BGP dependency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">
+                    <span class="question-icon">Q:</span>
+                    <span>What's your company size and scale?</span>
+                </div>
+                <div class="answer">
+                    <p><strong>Answer:</strong> Scale affects performance requirements and operational complexity tolerance.</p>
+                    <ul>
+                        <li><strong>Startup (1-10 people):</strong> <strong>Flannel</strong> - get started fast</li>
+                        <li><strong>SME (10-100 people):</strong> <strong>Cilium</strong> - balance of features and complexity</li>
+                        <li><strong>Enterprise (100+ people):</strong> <strong>Cilium</strong> or <strong>Calico</strong> - depends on requirements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation -->
+        <div class="recommendation">
+            <h2>✅ Our Recommendation</h2>
+            
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-name">Cilium</div>
+                    <div class="tool-badge badge-recommended">Recommended for Most</div>
+                </div>
+                <div class="tool-description">
+                    Cilium is a modern, eBPF-based CNI that provides excellent performance, advanced network policies, and built-in observability through Hubble.
+                </div>
+
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>eBPF-based for high performance</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Layer 7 network policies</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Hubble for network observability</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Native encryption support</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>CNCF Graduated project</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Active community and development</span>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Why Choose Cilium</h4>
+                        <ul>
+                            <li>Modern eBPF technology provides superior performance</li>
+                            <li>L7 policies essential for multi-tenant environments</li>
+                            <li>Hubble gives excellent network visibility</li>
+                            <li>Supports service mesh features without full mesh overhead</li>
+                            <li>Strong security features including encryption</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Why You Wouldn't Choose Cilium</h4>
+                        <ul>
+                            <li>Requires Linux kernel 4.9+ (might be an issue on older systems)</li>
+                            <li>More complex to troubleshoot than simpler CNIs</li>
+                            <li>eBPF can be harder to debug for networking novices</li>
+                            <li>Overkill if you don't need advanced features</li>
+                            <li>Your team already has deep Calico/BGP expertise</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h4>💡 Best For:</h4>
+                    <p>SME and Enterprise organizations that need advanced network policies, security, and observability. Perfect for multi-tenant platforms and security-conscious environments.</p>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-name">Flannel</div>
+                    <div class="tool-badge badge-alternative">Alternative: Simple Setups</div>
+                </div>
+                <div class="tool-description">
+                    Flannel is a simple, reliable CNI focused on basic pod-to-pod networking. Perfect for getting started quickly.
+                </div>
+
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Simple and easy to understand</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Minimal configuration required</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Lightweight and fast</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Well-documented and stable</span>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Why Choose Flannel</h4>
+                        <ul>
+                            <li>Simplest CNI to set up and operate</li>
+                            <li>Very stable and battle-tested</li>
+                            <li>Minimal resource overhead</li>
+                            <li>Great for learning and development</li>
+                            <li>Works on any kernel version</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Why You Wouldn't Choose Flannel</h4>
+                        <ul>
+                            <li>No built-in network policies</li>
+                            <li>Limited observability features</li>
+                            <li>No L7 traffic management</li>
+                            <li>Basic feature set may limit future growth</li>
+                            <li>Need to add tools for encryption</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h4>💡 Best For:</h4>
+                    <p>Startups and small teams that want to get Kubernetes running quickly without networking complexity. Good for development environments and simple production workloads.</p>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-name">Calico</div>
+                    <div class="tool-badge badge-alternative">Alternative: BGP Integration</div>
+                </div>
+                <div class="tool-description">
+                    Calico is a mature CNI with excellent BGP support and iptables-based network policies. Great for enterprises with existing routing infrastructure.
+                </div>
+
+                <div class="tool-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Mature and widely adopted</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Excellent BGP integration</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Layer 3/4 network policies</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Strong enterprise support</span>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h4>💡 Best For:</h4>
+                    <p>Enterprises with existing BGP routing infrastructure or teams with strong Calico expertise. Good choice if you need traditional iptables-based networking.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decision Helper -->
+        <div class="decision-helper">
+            <h2>🎯 Decision Rules: "Choose X Unless Y"</h2>
+            
+            <div class="decision-rule">
+                <h4>Choose Cilium unless:</h4>
+                <p>• You have existing Calico expertise and BGP infrastructure (choose Calico)<br>
+                • You're building a simple dev/test cluster (choose Flannel)<br>
+                • Your kernel version is < 4.9 and can't be upgraded (choose Calico or Flannel)<br>
+                • You need only basic networking with zero complexity (choose Flannel)</p>
+            </div>
+
+            <div class="decision-rule">
+                <h4>Choose Flannel unless:</h4>
+                <p>• You need network policies for security (choose Cilium or Calico)<br>
+                • You plan to scale beyond a single team (choose Cilium)<br>
+                • Network observability is important (choose Cilium with Hubble)<br>
+                • You anticipate needing advanced features later (choose Cilium for future-proofing)</p>
+            </div>
+
+            <div class="decision-rule">
+                <h4>Choose Calico unless:</h4>
+                <p>• You want modern eBPF-based networking (choose Cilium)<br>
+                • You need Layer 7 policies (choose Cilium)<br>
+                • You don't have existing BGP infrastructure (consider Cilium)<br>
+                • You prefer vendor-neutral CNCF projects (both Cilium and Calico are CNCF, but Cilium is graduated)</p>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="comparison-table">
+            <h2>📊 Feature Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Cilium</th>
+                        <th>Flannel</th>
+                        <th>Calico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Setup Complexity</strong></td>
+                        <td>Moderate</td>
+                        <td>Low</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Network Policies (L3/L4)</strong></td>
+                        <td>✓ Yes</td>
+                        <td>✗ No</td>
+                        <td>✓ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Network Policies (L7)</strong></td>
+                        <td>✓ Yes</td>
+                        <td>✗ No</td>
+                        <td>✗ No (Enterprise only)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Observability</strong></td>
+                        <td>✓ Hubble (excellent)</td>
+                        <td>✗ Basic logs only</td>
+                        <td>~ Limited (Enterprise)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Excellent (eBPF)</td>
+                        <td>Good</td>
+                        <td>Good (iptables)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BGP Support</strong></td>
+                        <td>~ Limited</td>
+                        <td>✗ No</td>
+                        <td>✓ Excellent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Encryption</strong></td>
+                        <td>✓ Native (WireGuard/IPSec)</td>
+                        <td>✗ Manual setup</td>
+                        <td>✓ Yes (WireGuard)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CNCF Status</strong></td>
+                        <td>✓ Graduated</td>
+                        <td>~ Sandbox</td>
+                        <td>✗ Not in CNCF</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service Mesh Features</strong></td>
+                        <td>✓ Built-in</td>
+                        <td>✗ No</td>
+                        <td>✗ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>SME, Enterprise</td>
+                        <td>Startup, Simple</td>
+                        <td>Enterprise w/ BGP</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Resources -->
+        <div class="resources">
+            <h2>📚 Learn More</h2>
+            <div class="resource-grid">
+                <a href="https://cilium.io" class="resource-link" target="_blank">
+                    <strong>Cilium Documentation</strong>
+                    <span>Official docs, getting started guides, and tutorials</span>
+                </a>
+                <a href="https://github.com/flannel-io/flannel" class="resource-link" target="_blank">
+                    <strong>Flannel GitHub</strong>
+                    <span>Source code, installation instructions, and troubleshooting</span>
+                </a>
+                <a href="https://www.tigera.io/project-calico/" class="resource-link" target="_blank">
+                    <strong>Calico Documentation</strong>
+                    <span>Official docs and enterprise features</span>
+                </a>
+                <a href="FRAMEWORK.md#networking" class="resource-link">
+                    <strong>KubeCompass Framework</strong>
+                    <span>Deeper dive into networking decisions</span>
+                </a>
+                <a href="tool-selector-wizard.html" class="resource-link">
+                    <strong>Tool Selector Wizard</strong>
+                    <span>Get personalized recommendations for your stack</span>
+                </a>
+                <a href="contribute.html" class="resource-link">
+                    <strong>Share Your Experience</strong>
+                    <span>Help others by contributing your real-world insights</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
