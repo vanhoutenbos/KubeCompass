@@ -217,9 +217,9 @@ Build custom Kubernetes operator to call TransIP API
 
 ### Related Documentation
 
-- **[Decision Rules](../DECISION_RULES.md)** - Provider selection criteria
-- **[Open Questions](../OPEN_QUESTIONS.md)** - TransIP considerations
-- **[Layer 1 Webshop Case](../LAYER_1_WEBSHOP_CASE.md)** - Architecture decisions
+- **[Decision Rules](DECISION_RULES.md)** - Provider selection criteria
+- **[Open Questions](OPEN_QUESTIONS.md)** - TransIP considerations
+- **[Layer 1 Webshop Case](cases/LAYER_1_WEBSHOP_CASE.md)** - Architecture decisions
 - **[Webshop Unified Case](../cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete case study
 
 ---

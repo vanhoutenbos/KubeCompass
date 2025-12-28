@@ -477,7 +477,7 @@ kubectl describe certificate webshop-tls -n webshop
 
 ## References
 
-- [Layer 0 Foundation](../LAYER_0_WEBSHOP_CASE.md)
-- [Layer 1 Tool Selection](../LAYER_1_WEBSHOP_CASE.md)
+- [Layer 0 Foundation](../cases/LAYER_0_WEBSHOP_CASE.md)
+- [Layer 1 Tool Selection](../cases/LAYER_1_WEBSHOP_CASE.md)
 - [Disaster Recovery Runbook](disaster-recovery.md)
 - [Break-glass Procedures](break-glass.md)

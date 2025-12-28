@@ -107,7 +107,7 @@ Explore our visual diagrams showing domains, subdomains, and decision layers acr
 ### 5. The Framework
 We map the entire Kubernetes operational landscape into **domains** (CI/CD, security, networking, observability, etc.), then identify the key **decision points** within each.
 
-📖 **[Read the Framework](FRAMEWORK.md)**
+📖 **[Read the Framework](docs/architecture/FRAMEWORK.md)**
 
 ### 6. The Decision Matrix
 An interactive guide that maps domains to tools, with filters for:
@@ -116,7 +116,7 @@ An interactive guide that maps domains to tools, with filters for:
 - Operational complexity
 - License type
 
-🔧 **[Explore the Matrix](MATRIX.md)**
+🔧 **[Explore the Matrix](docs/MATRIX.md)**
 
 ### 6. Testing Methodology
 Every tool recommendation is backed by **hands-on testing** using a consistent methodology:
@@ -126,7 +126,7 @@ Every tool recommendation is backed by **hands-on testing** using a consistent m
 - Upgrade path
 - Exit strategy
 
-📋 **[See the Testing Methodology](TESTING_METHODOLOGY.md)**
+📋 **[See the Testing Methodology](docs/implementation/TESTING_METHODOLOGY.md)**
 
 ### 7. Real-World Scenarios
 Example architectures for common use cases:
@@ -134,25 +134,25 @@ Example architectures for common use cases:
 - Enterprise multi-tenant (compliance, governance, scale)
 - Edge computing (resource-constrained, intermittent connectivity)
 
-📚 **[Browse Scenarios](SCENARIOS.md)**
+📚 **[Browse Scenarios](docs/planning/SCENARIOS.md)**
 
 ### 8. Layer 0, 1 & 2 Case Studies
 Deep-dive analysis for real-world Kubernetes adoption scenarios:
 
 #### Original Case Study Documents
-- **Layer 0: [Dutch Webshop Migration - Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
+- **Layer 0: [Dutch Webshop Migration - Foundational Requirements](docs/cases/LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
   - Availability requirements and downtime expectations
   - Data criticality with RPO/RTO definitions
   - Security baseline and ownership models
   - Vendor independence principles
   - Foundational architecture decisions
-- **Layer 1: [Dutch Webshop Migration - Tool Selection](LAYER_1_WEBSHOP_CASE.md)** (in Dutch): Concrete tool choices and platform capabilities
+- **Layer 1: [Dutch Webshop Migration - Tool Selection](docs/cases/LAYER_1_WEBSHOP_CASE.md)** (in Dutch): Concrete tool choices and platform capabilities
   - Managed Kubernetes selection criteria
   - CNI, GitOps, and CI/CD tool decisions
   - Observability stack (Prometheus, Grafana, Loki)
   - Security implementation (RBAC, secrets management, network policies)
   - Migration roadmap and open questions for implementation
-- **Layer 2: [Platform Enhancements & Resilience - Decision Framework](LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
+- **Layer 2: [Platform Enhancements & Resilience - Decision Framework](docs/cases/LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
   - **NOT an implementation guide** - this is a decision framework
   - When to add service mesh, distributed tracing, chaos engineering
   - Trade-offs and timing considerations for each capability
@@ -162,32 +162,32 @@ Deep-dive analysis for real-world Kubernetes adoption scenarios:
 #### 🆕 Architecture Review Documents (NEW!)
 Structured decision support documentation for audit-proof, interactive architecture decisions:
 
-- **📊 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Start here! Executive summary + navigation guide
+- **📊 [Architecture Review Summary](docs/architecture/ARCHITECTURE_REVIEW_SUMMARY.md)** — Start here! Executive summary + navigation guide
   - Overview of restructured documentation
   - Stakeholder-specific reading paths (Management, Architects, Engineers, AI Agents)
   - Decision flow from week 1 to implementation
   - Validation checklist for audit-proof documentation
 
-- **🔗 [Layer 0 → Layer 1 Mapping](LAYER_0_LAYER_1_MAPPING.md)** — Complete traceability matrix
+- **🔗 [Layer 0 → Layer 1 Mapping](docs/cases/LAYER_0_LAYER_1_MAPPING.md)** — Complete traceability matrix
   - Every Layer 1 tool choice traced back to Layer 0 requirements
   - Dependency chains: Business → Technical → Platform → Tooling
   - Trade-off analysis for conflicting requirements
   - Decision logic for interactive filtering and AI agents
 
-- **❓ [Open Questions](OPEN_QUESTIONS.md)** — Categorized by priority (Critical/Important/Can Later)
+- **❓ [Open Questions](docs/OPEN_QUESTIONS.md)** — Categorized by priority (Critical/Important/Can Later)
   - 🔴 Critical questions blocking implementation (9 questions, week 1)
   - 🟠 Important questions for first month (8 questions)
   - 🟢 Can be decided later iteratively (10+ questions)
   - Impact analysis and decision timeline per question
 
-- **🎯 [Decision Rules](DECISION_RULES.md)** — "Choose X unless Y" per tool/function
+- **🎯 [Decision Rules](docs/DECISION_RULES.md)** — "Choose X unless Y" per tool/function
   - CNI Plugin: Use Cilium unless (Calico expertise OR BGP requirements)
   - GitOps: Use Argo CD unless (GitOps-pure without UI)
   - Observability: Use Prometheus+Grafana unless (enterprise SaaS budget)
   - Database: Use Managed PostgreSQL unless (DBA expertise AND vendor independence absolute)
   - Complete decision trees with JavaScript-like pseudocode for automation
 
-- **🔍 [Improvement Points](IMPROVEMENT_POINTS.md)** — Inconsistencies, gaps & risks
+- **🔍 [Improvement Points](docs/IMPROVEMENT_POINTS.md)** — Inconsistencies, gaps & risks
   - 4 critical inconsistencies requiring resolution
   - 5 missing assumptions that need validation
   - 3 conflicting requirements with resolution options
@@ -209,7 +209,7 @@ Structured decision support documentation for audit-proof, interactive architect
 - **Compliance/Audit**: Proof that all decisions are traceable to requirements
 
 #### Implementation Reference
-- **[Reference Architecture and Patterns](IMPLEMENTATION_README.md)**: Documentation-first implementation guide
+- **[Reference Architecture and Patterns](docs/IMPLEMENTATION_README.md)**: Documentation-first implementation guide
   - **Architecture patterns** for infrastructure, platform, and application layers
   - **Decision frameworks** with "Choose X unless Y" rules
   - **Best practices** for security, observability, GitOps, and disaster recovery
@@ -233,8 +233,8 @@ Some decisions (CNI, GitOps) are foundational and hard to change. Others (image 
 ### No Vendor Agenda
 We're not here to sell you SaaS licenses or enterprise support contracts. If a tool sucks, we'll say so.
 
-📖 **[Read the Full Vision](VISION.md)**  
-🔍 **[See How We Compare to Other Initiatives](RELATED_INITIATIVES.md)** — Why KubeCompass is different from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
+📖 **[Read the Full Vision](docs/architecture/VISION.md)**  
+🔍 **[See How We Compare to Other Initiatives](docs/planning/RELATED_INITIATIVES.md)** — Why KubeCompass is different from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
 
 ---
 
@@ -262,25 +262,25 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - [ ] Community-contributed AI chat patterns
 
 **Project planning & strategy:**
-- 🚀 **[Launch Plan](LAUNCH_PLAN.md)** — month 1 launch roadmap with weekly execution plan
+- 🚀 **[Launch Plan](docs/implementation/LAUNCH_PLAN.md)** — month 1 launch roadmap with weekly execution plan
   - Domain-by-domain tool evaluation strategy
   - AI transparency and validation policy
   - Dataset creation and maintenance approach
   - Step-by-step implementation guide
-- 🗺️ **[Domain Roadmap](DOMAIN_ROADMAP.md)** — comprehensive domain-by-domain implementation roadmap **NEW!**
+- 🗺️ **[Domain Roadmap](docs/planning/DOMAIN_ROADMAP.md)** — comprehensive domain-by-domain implementation roadmap **NEW!**
   - All 15 domains with tool options and selection criteria
   - Testing plans for 2+ options per domain (kind/minikube)
   - Week-by-week implementation schedule
   - Decision rules ("Choose X unless Y") for each domain
   - Progress tracking and success criteria
-- 📋 **[Documentation Status](DOCUMENTATION_STATUS.md)** — what exists, what's missing, what's next
+- 📋 **[Documentation Status](docs/DOCUMENTATION_STATUS.md)** — what exists, what's missing, what's next
   - Complete documentation inventory
   - Gap analysis and priorities
   - Week-by-week progress tracking
   - Launch requirements checklist
 
 **Project challenges & opportunities:**
-- 📋 **[Project Challenges](CHALLENGES.md)** — see what we're struggling with and how you can help
+- 📋 **[Project Challenges](docs/planning/CHALLENGES.md)** — see what we're struggling with and how you can help
   - Keeping up with rapidly changing tools
   - Testing across all environments and variants
   - Finding contributors and building community
@@ -296,7 +296,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 - 💬 Want to discuss? [Start a discussion](https://github.com/vanhoutenbos/KubeCompass/discussions)
 
 **Seeking sponsors:**
-- 💰 **[Sponsor Benefits](SPONSORS.md)** — help us test at production scale
+- 💰 **[Sponsor Benefits](docs/SPONSORS.md)** — help us test at production scale
   - Cloud infrastructure credits for managed Kubernetes testing
   - CI/CD infrastructure for automated validation
   - Website hosting and global CDN
@@ -363,32 +363,38 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/
 
 ## Quick Start
 
-1. **🧪 Set up [Local Testing Environment](docs/GETTING_STARTED.md)** — validate concepts with Kind clusters **NEW!**
+📖 **[Complete Documentation Index](docs/INDEX.md)** — Navigate all documentation by role, task, or topic **NEW!**
+
+### Getting Started Paths
+
+**New to KubeCompass?**
+1. **🧪 Set up [Local Testing Environment](docs/GETTING_STARTED.md)** — validate concepts with Kind clusters
 2. **🛒 Try the [Interactive Tool Selector](tool-selector-wizard.html)** — webshop-style tool selection
 3. **🤖 Use the [AI Chat Guide](docs/AI_CHAT_GUIDE.md)** — get "Use X unless Y" recommendations from AI
 4. **🎨 Explore the [Visual Diagrams](docs/DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
+
+**Ready to dive deep?**
 5. **Start with the [Framework](docs/architecture/FRAMEWORK.md)** to understand the decision landscape
-5. **Read the [Production-Ready Definition](docs/implementation/PRODUCTION_READY.md)** for enterprise compliance requirements
-6. **Check the [Decision Matrix](docs/MATRIX.md)** for tool recommendations across all layers
-7. **Review the [Scenarios](docs/planning/SCENARIOS.md)** for architecture examples
-8. **🗺️ Check the [Domain Roadmap](docs/planning/DOMAIN_ROADMAP.md)** for step-by-step implementation guidance **NEW!**
+6. **Read the [Production-Ready Definition](docs/implementation/PRODUCTION_READY.md)** for enterprise compliance requirements
+7. **Check the [Decision Matrix](docs/MATRIX.md)** for tool recommendations across all layers
+8. **Review the [Scenarios](docs/planning/SCENARIOS.md)** for architecture examples
+9. **🗺️ Check the [Domain Roadmap](docs/planning/DOMAIN_ROADMAP.md)** for step-by-step implementation guidance
    - Complete tool options for all 15 domains (Layer 0, 1, 2)
    - Testing plans with 2+ options per domain
    - Week-by-week schedule for hands-on testing
    - Decision rules to guide tool selection
-9. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
+10. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
    - **[Layer 0: Foundational Requirements](docs/cases/LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
    - **[Layer 1: Tool Selection](docs/cases/LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
    - **[Layer 2: Enhancement Decisions](docs/cases/LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
-   - **🆕 [Architecture Review Summary](docs/architecture/ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
-   - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP (NEW!)
-10. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
-11. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
-12. **Review the [Testing Methodology](TESTING_METHODOLOGY.md)** to understand our approach
-13. **Explore the [Vision](VISION.md)** to see where we're headed
-13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
-14. **Read [Related Initiatives](RELATED_INITIATIVES.md)** to understand how KubeCompass differs from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
-15. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
+   - **🆕 [Architecture Review Summary](docs/architecture/ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support
+   - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP
+11. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
+
+**Need to find specific documentation?**
+- 📖 **[Documentation Index](docs/INDEX.md)** — Complete navigation by role, task, and topic
+- 📋 **[Documentation Status](docs/DOCUMENTATION_STATUS.md)** — What exists, what's missing
+- 🔍 **[Gap Analysis](docs/GAPS_ANALYSIS.md)** — Prioritized documentation work
 
 ---
 

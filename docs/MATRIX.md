@@ -573,9 +573,9 @@ These tools are **plug-and-play** and can be added or removed without disrupting
 
 ## Next Steps
 
-- 📖 **[See Production-Ready Definition](PRODUCTION_READY.md)** for compliance and uptime targets
-- 📚 **[Browse Real-World Scenarios](SCENARIOS.md)** for architecture examples
-- 🔍 **[Read Tool Reviews](reviews/)** for detailed hands-on testing results
+- 📖 **[See Production-Ready Definition](implementation/PRODUCTION_READY.md)** for compliance and uptime targets
+- 📚 **[Browse Real-World Scenarios](planning/SCENARIOS.md)** for architecture examples
+- 🔍 **[Read Tool Reviews](../reviews/)** for detailed hands-on testing results
 
 ---
 

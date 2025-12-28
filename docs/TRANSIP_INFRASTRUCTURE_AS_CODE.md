@@ -757,10 +757,10 @@ Voor webshop case (SME, eerste K8s ervaring): manual scaling is **pragmatisch**,
 - [Best Practices](https://www.arthurkoziel.com/managing-kubernetes-resources-in-terraform-kubernetes-provider/)
 
 ### Related KubeCompass Docs
-- [Layer 0: Foundation](../LAYER_0_WEBSHOP_CASE.md)
-- [Layer 1: Tool Selection](../LAYER_1_WEBSHOP_CASE.md)
-- [Decision Rules](../DECISION_RULES.md)
-- [Open Questions](../OPEN_QUESTIONS.md)
+- [Layer 0: Foundation](cases/LAYER_0_WEBSHOP_CASE.md)
+- [Layer 1: Tool Selection](cases/LAYER_1_WEBSHOP_CASE.md)
+- [Decision Rules](DECISION_RULES.md)
+- [Open Questions](OPEN_QUESTIONS.md)
 
 ---
 

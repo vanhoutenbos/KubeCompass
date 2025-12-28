@@ -295,7 +295,7 @@ Not as a tool list, but as a capability with maturity levels:
 - **Layer 1**: Network policies, image scanning
 - **Layer 2**: Runtime threat detection (Falco, Tetragon), anomaly detection
 
-This is already reflected in KubeCompass's **Domain 1.4: Runtime Security** in the [Framework](FRAMEWORK.md).
+This is already reflected in KubeCompass's **Domain 1.4: Runtime Security** in the [Framework](../architecture/FRAMEWORK.md).
 
 ---
 
@@ -329,10 +329,10 @@ This is already reflected in KubeCompass's **Domain 1.4: Runtime Security** in t
 
 This comparative analysis informs several KubeCompass components:
 
-1. **[Methodology](METHODOLOGY.md)**: Incorporates OpenSSF Scorecard and SLSA as scoring dimensions
-2. **[Framework](FRAMEWORK.md)**: CNCF Landscape alignment for domain taxonomy
-3. **[Vision](VISION.md)**: Philosophical distinction from analyst firms and vendor architectures
-4. **[Decision Matrix](MATRIX.md)**: Maturity indicators from CNCF, Apache, OpenSSF
+1. **[Methodology](../architecture/METHODOLOGY.md)**: Incorporates OpenSSF Scorecard and SLSA as scoring dimensions
+2. **[Framework](../architecture/FRAMEWORK.md)**: CNCF Landscape alignment for domain taxonomy
+3. **[Vision](../architecture/VISION.md)**: Philosophical distinction from analyst firms and vendor architectures
+4. **[Decision Matrix](../MATRIX.md)**: Maturity indicators from CNCF, Apache, OpenSSF
 
 ---
 

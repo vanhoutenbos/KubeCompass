@@ -453,4 +453,4 @@ doctl databases backups list <database-id>
 - [Deployment Runbook](deployment.md)
 - [Break-glass Procedures](break-glass.md)
 - [Velero Documentation](https://velero.io/docs/)
-- [Layer 0 Foundation](../../LAYER_0_WEBSHOP_CASE.md)
+- [Layer 0 Foundation](../cases/LAYER_0_WEBSHOP_CASE.md)

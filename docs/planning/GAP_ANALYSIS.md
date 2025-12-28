@@ -169,13 +169,13 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ## Next Steps
 
-1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](PRODUCTION_READY.md)
-2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
-3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](TESTING_METHODOLOGY.md)
-4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
-5. ✅ Clarify target audience in README and VISION — [README.md](README.md) and [VISION.md](VISION.md)
-6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](reviews/cilium.md) (first example)
-7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](MATRIX.md) with Layer 0/1/2 structure
+1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](../implementation/PRODUCTION_READY.md)
+2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](../architecture/FRAMEWORK.md) and [MATRIX.md](../MATRIX.md)
+3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](../implementation/TESTING_METHODOLOGY.md)
+4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](../architecture/METHODOLOGY.md) and [MATRIX.md](../MATRIX.md)
+5. ✅ Clarify target audience in README and VISION — [README.md](../../README.md) and [VISION.md](../architecture/VISION.md)
+6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](../../reviews/cilium.md) (first example)
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Layer 0/1/2 structure
 8. ⏳ Expand tool reviews (GitOps, secrets management, observability)
 9. ⏳ Add more scenarios (startup MVP, edge computing)
 
@@ -183,7 +183,7 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ## Gap 6: Tool Selection Criteria Too Restrictive ✅
 
-**Status**: RESOLVED — See updated [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
+**Status**: RESOLVED — See updated [METHODOLOGY.md](../architecture/METHODOLOGY.md) and [MATRIX.md](../MATRIX.md)
 
 **Issue**: The combination of 1000+ GitHub stars AND CNCF Graduated status was too restrictive, potentially excluding mature and production-ready tools.
 
@@ -216,7 +216,7 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ## Gap 7: Missing Platform Infrastructure Domains ✅
 
-**Status**: RESOLVED — See updated [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+**Status**: RESOLVED — See updated [FRAMEWORK.md](../architecture/FRAMEWORK.md) and [MATRIX.md](../MATRIX.md)
 
 **Issue**: Framework lacked coverage for critical platform engineering and solution architecture components like container registries, message brokers, caching, and object storage.
 
@@ -373,21 +373,21 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 ## Next Steps
 
-1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](PRODUCTION_READY.md)
-2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
-3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](TESTING_METHODOLOGY.md)
-4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](METHODOLOGY.md) and [MATRIX.md](MATRIX.md)
-5. ✅ Clarify target audience in README and VISION — [README.md](README.md) and [VISION.md](VISION.md)
-6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](reviews/cilium.md) (first example)
-7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](MATRIX.md) with Layer 0/1/2 structure
-8. ✅ Expand tool selection criteria — [METHODOLOGY.md](METHODOLOGY.md)
-9. ✅ Add missing platform infrastructure domains — [FRAMEWORK.md](FRAMEWORK.md) and [MATRIX.md](MATRIX.md)
+1. ✅ Define "production-ready" with measurable criteria — [PRODUCTION_READY.md](../implementation/PRODUCTION_READY.md)
+2. ✅ Document decision layers (foundational vs. additive) — [FRAMEWORK.md](../architecture/FRAMEWORK.md) and [MATRIX.md](../MATRIX.md)
+3. ✅ Create testing methodology document — [TESTING_METHODOLOGY.md](../implementation/TESTING_METHODOLOGY.md)
+4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](../architecture/METHODOLOGY.md) and [MATRIX.md](../MATRIX.md)
+5. ✅ Clarify target audience in README and VISION — [README.md](../../README.md) and [VISION.md](../architecture/VISION.md)
+6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](../../reviews/cilium.md) (first example)
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Layer 0/1/2 structure
+8. ✅ Expand tool selection criteria — [METHODOLOGY.md](../architecture/METHODOLOGY.md)
+9. ✅ Add missing platform infrastructure domains — [FRAMEWORK.md](../architecture/FRAMEWORK.md) and [MATRIX.md](../MATRIX.md)
 10. ✅ Validate CNCF Cloud Native Landscape alignment — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md)
 11. ✅ Enhance Chaos Engineering coverage — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.2
 12. ✅ Add Container Runtime guidance — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.3
 13. ✅ Add RPC framework positioning — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.4
 14. ✅ Add RPC framework positioning — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md) Section 3.4
-15. ✅ Implement interactive tool selector wizard — [tool-selector-wizard.html](tool-selector-wizard.html)
+15. ✅ Implement interactive tool selector wizard — [tool-selector-wizard.html](../../tool-selector-wizard.html)
 16. ✅ Create AI chat integration guide — [AI_CHAT_GUIDE.md](AI_CHAT_GUIDE.md)
 17. ✅ Document project maintenance challenges — [CHALLENGES.md](CHALLENGES.md)
 18. ⏳ Expand tool reviews (GitOps, secrets management, observability, new domains)

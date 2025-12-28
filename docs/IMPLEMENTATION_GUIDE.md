@@ -480,8 +480,8 @@ To begin implementation:
 
 ## References
 
-- [Layer 0 Foundation](../LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
-- [Layer 1 Tool Selection](../LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [Layer 0 Foundation](cases/LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
+- [Layer 1 Tool Selection](cases/LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
 - [Deployment Runbook](runbooks/deployment.md) - Step-by-step deployment guide
 - [Disaster Recovery Runbook](runbooks/disaster-recovery.md) - DR procedures
 - [Terraform README](../terraform/README.md) - Infrastructure documentation

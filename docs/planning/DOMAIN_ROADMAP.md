@@ -1035,12 +1035,12 @@ Follow consistent approach:
 
 ## Related Documentation
 
-- 📖 **[FRAMEWORK.md](FRAMEWORK.md)** — Complete domain and decision layer model
-- 📊 **[MATRIX.md](MATRIX.md)** — Tool comparison matrix with scoring
+- 📖 **[FRAMEWORK.md](../architecture/FRAMEWORK.md)** — Complete domain and decision layer model
+- 📊 **[MATRIX.md](../MATRIX.md)** — Tool comparison matrix with scoring
 - 📚 **[SCENARIOS.md](SCENARIOS.md)** — Real-world architecture examples
-- 🚀 **[LAUNCH_PLAN.md](LAUNCH_PLAN.md)** — Overall project launch timeline
-- 🤝 **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute to KubeCompass
-- 📋 **[TESTING_METHODOLOGY.md](TESTING_METHODOLOGY.md)** — Detailed testing approach
+- 🚀 **[LAUNCH_PLAN.md](../implementation/LAUNCH_PLAN.md)** — Overall project launch timeline
+- 🤝 **[CONTRIBUTING.md](../../CONTRIBUTING.md)** — How to contribute to KubeCompass
+- 📋 **[TESTING_METHODOLOGY.md](../implementation/TESTING_METHODOLOGY.md)** — Detailed testing approach
 - 🔍 **[GAP_ANALYSIS.md](GAP_ANALYSIS.md)** — Current gaps and next steps
 
 ---
