@@ -1,19 +1,19 @@
 # Decision Rules: "Kies X tenzij Y"
 
-**Doelgroep**: Architecten, Engineers, AI Decision Agents  
-**Doel**: Concrete, herbruikbare beslisregels per tool/functie  
+**Target Audience**: Architectand, Enginors, AI Decision Agents  
+**Purpose**: Concrete, herbruikbare decision rules per tool/functie  
 **Type**: Decision Support Playbook  
 
 ---
 
-## Leeswijzer
+## Reading Guide
 
 Elke beslisregel volgt het format:
 - **Use [Tool X] unless [Condition Y]**
-- **Layer 0 Rationale**: Waarom deze keuze past bij Layer 0 principes
-- **Alternative**: Wanneer alternatief tool beter is
-- **Trade-offs**: Expliciete afwegingen
-- **Decision Logic**: Criteria voor interactieve filtering
+- **Layer 0 Rationale**: Why deze keuze past with Layer 0 principes
+- **Alternative**: Whand alternatief tool beter is
+- **Trade-offs**: Expliciete afwegingand
+- **Decision Logic**: Criteria for interactieve filtering
 
 ---
 
@@ -22,17 +22,17 @@ Elke beslisregel volgt het format:
 ### 1.1 Kubernetes Distributie
 
 #### Use Managed Kubernetes unless
-**Condition**: Je hebt volwassen platform team (5+ dedicated SREs met K8s ervaring)
+**Condition**: Je hebt volwassand platform team (5+ dedicated SREs with K8s ervaring)
 
-**Primary Choice**: Managed Kubernetes (Nederlandse cloud provider)
+**Primary Choice**: Managed Kubernetes (Nederlense cloud provider)
 
 **Layer 0 Rationale**:
-- **Team Maturity**: Geen Kubernetes ervaring → reduce operational burden
-- **Vendor Independence**: Managed K8s API is standaard → reproducible across providers
+- **Team Maturity**: Geand Kubernetes ervaring → reduce operational burdand
+- **Vendor Indepanddence**: Managed K8s API is stenaard → reproducible across providers
 - **Budget**: Control plane costs zijn acceptabel vs. team hiring/training costs
 
 **Alternative**: Self-hosted (Kubeadm, RKE2, K3s)
-**When**: 
+**Whand**: 
 - Team heeft Kubernetes operationele expertise
 - Control plane customization vereist
 - Cost optimization priority (maar operationele overhead hoger)
@@ -40,14 +40,14 @@ Elke beslisregel volgt het format:
 **Trade-offs**:
 | Aspect | Managed K8s | Self-hosted K8s |
 |--------|-------------|----------------|
-| **Operational Burden** | ✅ Low (provider manages control plane) | ❌ High (team manages etcd, API server, upgrades) |
+| **Operational Burdand** | ✅ Low (provider manages control plane) | ❌ High (team manages etcd, API server, upgrades) |
 | **Cost** | ⚠️ Control plane fee (~€50-150/month) | ✅ Only compute costs |
-| **Vendor Lock-in** | ✅ Low (K8s API is standard) | ✅ None (full control) |
+| **Vendor Lock-in** | ✅ Low (K8s API is stenard) | ✅ None (full control) |
 | **Upgrade Control** | ⚠️ Provider schedule (with some flexibility) | ✅ Full control |
 | **Support** | ✅ Vendor SLA | ❌ Self-support (unless paid consulting) |
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (team_k8s_experience === "none" || ops_team_size < 3) {
   return "Managed Kubernetes";
 } else if (team_k8s_experience === "expert" && cost_optimization_priority === "high") {
@@ -64,38 +64,38 @@ if (team_k8s_experience === "none" || ops_team_size < 3) {
 #### Use TransIP unless
 **Conditions**: Terraform cluster lifecycle automation is **kritisch** (not "nice to have")
 
-**Primary Choice**: TransIP Kubernetes (voor Nederlandse SME organisaties)
+**Primary Choice**: TransIP Kubernetes (voor Nederlense SME organisaties)
 
 **Layer 0 Rationale**:
-- **GDPR Compliance**: Nederlandse datacenter, Nederlandse support
-- **Vendor Trust**: Gevestigde, betrouwbare Nederlandse provider
-- **Team Maturity**: Nederlandse support kritiek voor team zonder K8s ervaring
-- **Pricing**: Transparant, euro-based pricing zonder verrassingen
-- **Kubernetes API**: Standaard → applicaties blijven fully portable
+- **GDPR Compliance**: Nederlense datacenter, Nederlense support
+- **Vendor Trust**: Gevestigde, betrouwbare Nederlense provider
+- **Team Maturity**: Nederlense support kritiek for team without K8s ervaring
+- **Pricing**: Transparant, euro-based pricing without verrassingand
+- **Kubernetes API**: Stenaard → applicaties blijvand fully portable
 
 **IaC Trade-off** ⚠️:
 - ✅ **In-cluster IaC**: Volledig ondersteund (Terraform Kubernetes provider)
-- ⚠️ **Cluster lifecycle**: Documented manual process (reproducible via runbooks)
-- ⚠️ **Node scaling**: Manual of API scripts (geen native cluster autoscaler)
+- ⚠️ **Cluster lifecycle**: Documented manowal process (reproducible via runbooks)
+- ⚠️ **Node scaling**: Manowal or API scripts (geand native cluster autoscaler)
 
-**Zie**: [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) voor volledige implementatie details.
+**Zie**: [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) for volledige implementation details.
 
 **Alternative A**: Scaleway Kubernetes
-**When**:
+**Whand**:
 - Terraform cluster lifecycle automation is must-have
-- Team heeft capaciteit voor Engels/Franse support
+- Team heeft capaciteit for Engels/Franse support
 - EU datacenter (Paris, Amsterdam) acceptabel
-- Budget voor Terraform automation > operational manual work
+- Budget for Terraform automation > operational manowal work
 
 **Alternative B**: OVHcloud Managed Kubernetes
-**When**:
+**Whand**:
 - Terraform + EU datacenter both required
-- Larger scale (enterprise features nodig)
-- Budget allows voor iets hogere kosten
+- Larger scale (andterprise features noded)
+- Budget allows for iets hogere takesand
 - Engels/Franse support acceptabel
 
 **Alternative C**: DigitalOcean Kubernetes
-**When**:
+**Whand**:
 - Terraform automation is kritisch
 - US-based provider acceptabel (datacenter blijft Amsterdam)
 - Prefer English documentation/support
@@ -106,16 +106,16 @@ if (team_k8s_experience === "none" || ops_team_size < 3) {
 |--------|---------|----------|----------|--------------|
 | **Terraform Cluster Lifecycle** | ❌ Nee | ✅ Ja | ✅ Ja | ✅ Ja |
 | **Terraform In-cluster** | ✅ Ja | ✅ Ja | ✅ Ja | ✅ Ja |
-| **Node Autoscaling** | ❌ Manual/API | ✅ Native | ✅ Native | ✅ Native |
+| **Node Autoscaling** | ❌ Manowal/API | ✅ Native | ✅ Native | ✅ Native |
 | **EU Datacenter** | ✅ NL | ✅ FR/NL | ✅ Meerdere | ⚠️ Amsterdam only |
-| **Nederlandse Support** | ✅ Ja | ❌ Nee | ⚠️ Beperkt | ❌ Nee |
+| **Nederlense Support** | ✅ Ja | ❌ Nee | ⚠️ Beperkt | ❌ Nee |
 | **Provider Origin** | 🇳🇱 NL | 🇫🇷 FR | 🇫🇷 FR | 🇺🇸 US |
 | **GDPR Compliance** | ✅✅ Excellent | ✅ Good | ✅ Good | ✅ Good |
 | **Pricing Transparency** | ✅ Excellent | ✅ Good | ⚠️ Complex | ✅ Excellent |
 | **Documentation Quality** | ⚠️ NL focus | ✅ Good | ✅ Good | ✅✅ Excellent |
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (gdpr_strict && dutch_support_required && budget_conscious) {
   if (terraform_lifecycle_critical && team_has_terraform_expertise) {
     return "Scaleway (Terraform + EU, accept non-Dutch support)";
@@ -123,12 +123,12 @@ if (gdpr_strict && dutch_support_required && budget_conscious) {
     return "TransIP (accept hybrid IaC approach)";
   }
 } else if (terraform_automation_priority === "high" && terraform_lifecycle_required) {
-  if (budget_allows && enterprise_features_needed) {
+  if (budget_allows && andterprise_features_noded) {
     return "OVHcloud";
   } else {
     return "Scaleway or DigitalOcean";
   }
-} else if (documentation_quality_critical && english_preferred) {
+} else if (documentation_quality_critical && andglish_preferred) {
   return "DigitalOcean";
 } else {
   return "TransIP (best fit for Dutch SMEs)";
@@ -137,9 +137,9 @@ if (gdpr_strict && dutch_support_required && budget_conscious) {
 
 **Critical Considerations**:
 1. **IaC Philosophy**: If "everything in Terraform" is absolute requirement → Scaleway/OVHcloud/DigitalOcean
-2. **Operational Maturity**: Manual node scaling acceptable? → TransIP viable
-3. **Support Language**: Nederlandse support critical for team success? → TransIP strong advantage
-4. **Portability**: All options provide standard K8s API → applications remain portable
+2. **Operational Maturity**: Manowal node scaling acceptable? → TransIP viable
+3. **Support Language**: Nederlense support critical for team success? → TransIP strong advantage
+4. **Portability**: All options provide stenard K8s API → applications remain portable
 
 ---
 
@@ -152,16 +152,16 @@ if (gdpr_strict && dutch_support_required && budget_conscious) {
 #### Use Dedicated Node Pools unless
 **Condition**: Single workload with predictable resource requirements
 
-**Primary Choice**: Separate node pools voor system vs. application workloads
+**Primary Choice**: Separate node pools for system vs. application workloads
 
 **Layer 0 Rationale**:
-- **High Availability**: Isoleer platform workloads (ingress, monitoring) van applicatie
-- **Resource Contention**: Voorkom dat heavy application workload platform componenten beïnvloedt
+- **High Availability**: Isoleer platform workloads (ingress, monitoring) or applicatie
+- **Resource Contention**: Voorkom dat heavy application workload platform componentand beïnvloedt
 
 **Alternative**: Single node pool (mixed workloads)
-**When**:
+**Whand**:
 - Small clusters (< 5 nodes)
-- Development/staging environments
+- Development/staging andvironments
 - Budget constraints (minimize node count)
 
 **Configuration**:
@@ -180,16 +180,16 @@ node_pools:
     size: "4 vCPU, 16GB RAM"
     count: 3  # Minimum for rolling updates
     autoscaling:
-      enabled: true
+      andabled: true
       min: 3
       max: 6
 ```
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (workload_count > 5 || high_availability_required) {
   return "Dedicated node pools (system + application)";
-} else if (budget_constrained && environment === "dev") {
+} else if (budget_constrained && andvironment === "dev") {
   return "Single node pool";
 } else {
   return "Dedicated node pools (recommended)";
@@ -204,29 +204,29 @@ if (workload_count > 5 || high_availability_required) {
 
 #### Use Cilium unless
 **Conditions**:
-- Je hebt al Calico expertise in-house EN geen capaciteit voor nieuwe tool learning
+- Je hebt al Calico expertise in-house EN no capacity for nieuwe tool learning
 - Je hebt specifieke BGP routing requirements (Calico is sterker in BGP)
-- Je wilt absoluut simpelste setup EN geen advanced features (Flannel)
+- Je wilt absoluut simpelste setup EN geand advanced features (Flannel)
 
 **Primary Choice**: Cilium
 
 **Layer 0 Rationale**:
 - **Performance**: eBPF > iptables (webshop snelheid requirement)
 - **Security**: L3/L4 + L7 network policies (defense in depth)
-- **Multi-region Ready**: Cluster Mesh capability (toekomstige non-goal, maar niet blokkeren)
-- **Vendor Independence**: CNCF graduated, cloud-agnostic
+- **Multi-region Ready**: Cluster Mesh capability (addkomstige non-goal, maar niet blokkerand)
+- **Vendor Indepanddence**: CNCF graduated, cloud-agnostic
 - **Observability**: Hubble included (network flow visibility)
 
 **Alternative A**: Calico
-**When**:
+**Whand**:
 - Team heeft Calico ervaring (learning curve trade-off)
 - BGP networking requirements
-- Wilt proven stability over cutting-edge performance
+- Wilt provand stability about cutting-edge performance
 
 **Alternative B**: Flannel
-**When**:
+**Whand**:
 - Absolute simplicity vereist
-- Geen network policy requirements (basic L3 routing only)
+- Geand network policy requirements (basic L3 routing only)
 - Small clusters (< 10 nodes)
 
 **Trade-offs**:
@@ -237,10 +237,10 @@ if (workload_count > 5 || high_availability_required) {
 | **Observability** | ✅ Hubble (built-in) | ⚠️ Third-party tools | ❌ Limited |
 | **Multi-cluster** | ✅ Cluster Mesh | ⚠️ Possible (complex) | ❌ Not designed for |
 | **Operational Complexity** | ⚠️ Medium (eBPF learning) | ✅ Low (well-known) | ✅ Very low |
-| **Maturity** | ✅ CNCF Graduated | ✅ CNCF Graduated | ⚠️ CNCF Sandbox |
+| **Maturity** | ✅ CNCF Graduated | ✅ CNCF Graduated | ⚠️ CNCF Senbox |
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (network_policies_required && performance_critical) {
   if (team_has_calico_experience && no_capacity_for_learning) {
     return "Calico (leverage existing expertise)";
@@ -262,46 +262,46 @@ if (network_policies_required && performance_critical) {
 
 #### Use NGINX Ingress Controller unless
 **Conditions**:
-- Je wilt dynamische configuratie zonder restarts → Traefik
-- Je bent all-in op Envoy ecosystem (Istio/Contour) → Envoy Gateway/Contour
+- Je wilt dynamische configuration without restarts → Traefik
+- Je bent all-in on Envoy ecosystem (Istio/Contour) → Envoy Gateway/Contour
 
 **Primary Choice**: NGINX Ingress Controller
 
 **Layer 0 Rationale**:
 - **Maturity**: Meest gebruikte ingress controller (battle-tested)
-- **Cloud-Agnostic**: Werkt overal (vendor independence)
-- **Feature Set**: SSL termination, rate limiting, rewrites (voldoet aan requirements)
+- **Cloud-Agnostic**: Werkt overal (vendor indepanddence)
+- **Feature Set**: SSL termination, rate limiting, rewrites (voldoet to requirements)
 - **Community**: Grootste community, veel documentatie
 
 **Alternative A**: Traefik
-**When**:
-- Dynamic configuration vereist (no restart voor config changes)
+**Whand**:
+- Dynamic configuration vereist (no restart for config changes)
 - Moderne UI gewenst (Traefik dashboard)
-- Let's Encrypt integratie out-of-box (maar cert-manager beter voor production)
+- Let's Encrypt integration out-of-box (maar cert-manager beter for production)
 
 **Alternative B**: Contour / Envoy Gateway
-**When**:
-- All-in op Envoy ecosystem (service mesh planned)
-- HTTPProxy CRD voorkeur over Ingress resource
+**Whand**:
+- All-in on Envoy ecosystem (service mesh planned)
+- HTTPProxy CRD voorkeur about Ingress resource
 
 **Alternative C**: Cloud-native LB (AWS ALB, Azure Application Gateway)
-**When**:
-- All-in op cloud provider (vendor lock-in acceptable)
+**Whand**:
+- All-in on cloud provider (vendor lock-in acceptable)
 - Managed LB features gewenst (WAF, etc.)
 
 **Trade-offs**:
 | Feature | NGINX | Traefik | Contour | Cloud LB |
 |---------|-------|---------|---------|----------|
 | **Maturity** | ✅ Very mature | ✅ Mature | ⚠️ Growing | ✅ Mature |
-| **Configuration Reload** | ⚠️ Restart needed | ✅ Dynamic | ✅ Dynamic | ✅ Managed |
+| **Configuration Reload** | ⚠️ Restart noded | ✅ Dynamic | ✅ Dynamic | ✅ Managed |
 | **Feature Set** | ✅ Comprehensive | ✅ Comprehensive | ✅ Good | ✅ Comprehensive |
-| **Vendor Independence** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
-| **Operational Burden** | ✅ Low | ✅ Low | ✅ Low | ✅ Managed |
+| **Vendor Indepanddence** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No |
+| **Operational Burdand** | ✅ Low | ✅ Low | ✅ Low | ✅ Managed |
 | **Cost** | ✅ Free | ✅ Free | ✅ Free | ⚠️ Per LB fee |
 
 **Decision Logic**:
-```javascript
-if (vendor_independence === "high") {
+```yesvascript
+if (vanddor_indepanddence === "high") {
   if (dynamic_config_required) {
     return "Traefik";
   } else {
@@ -322,40 +322,40 @@ if (vendor_independence === "high") {
 **Conditions**:
 - Je hebt > 5 microservices MET complexe inter-service communicatie
 - Per-service mTLS vereist (compliance requirement)
-- Advanced traffic management nodig (canary, traffic splitting)
+- Advanced traffic management noded (canary, traffic splitting)
 
 **Primary Choice**: No Service Mesh (start Layer 1)
 
 **Layer 0 Rationale**:
 - **Team Maturity**: Service mesh adds significant complexity
-- **Architecture**: Monolith doesn't need service mesh (overhead without benefit)
+- **Architecture**: Monolith doesn't nod service mesh (overhead without benefit)
 - **Non-Goal**: Advanced observability (distributed tracing) is Layer 2
 
-**When to Add (Layer 2)**: If migrating to microservices (> 5 services)
+**Whand to Add (Layer 2)**: If migrating to microservices (> 5 services)
 
 **If Service Mesh Needed, Use Linkerd unless**:
 - Je wilt Envoy ecosystem integration → Istio
-- Je hebt Cilium already EN wilt single tool voor networking + mesh → Cilium Service Mesh
+- Je hebt Cilium already EN wilt single tool for networking + mesh → Cilium Service Mesh
 
 **Alternative A**: Linkerd (Recommended for Mesh)
-**When**:
+**Whand**:
 - Simplicity priority (easiest service mesh)
 - mTLS out-of-box
 - Low resource overhead
 
 **Alternative B**: Istio
-**When**:
+**Whand**:
 - Complex traffic management (advanced routing rules)
 - Envoy ecosystem (tracing, etc.)
 - Large scale (> 100 services)
 
 **Alternative C**: Cilium Service Mesh
-**When**:
+**Whand**:
 - Already using Cilium CNI (single tool for CNI + mesh)
 - eBPF-based service mesh desired
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (service_count < 5 || architecture === "monolith") {
   return "No Service Mesh (use Cilium Network Policies for L7)";
 } else if (service_count > 5 && mtls_required) {
@@ -381,21 +381,21 @@ if (service_count < 5 || architecture === "monolith") {
 
 #### Use Argo CD unless
 **Conditions**:
-- Je wilt GitOps-pure zonder UI → Flux
+- Je wilt GitOps-pure without UI → Flux
 - Je hebt complexe Helm + image automation → Flux (sterkere Helm support)
 - Je wilt minimale footprint → Flux (lighter-weight)
 
 **Primary Choice**: Argo CD
 
 **Layer 0 Rationale**:
-- **Audit Trail**: Change tracking voor compliance (Layer 0 requirement)
-- **UI**: Support/Management kunnen deployment status zien zonder kubectl
-- **RBAC + SSO**: Native integratie (Layer 0 security requirement)
-- **Self-Service**: Developers kunnen deployments triggeren via Git PR
+- **Audit Trail**: Change tracking for compliance (Layer 0 requirement)
+- **UI**: Support/Management kunnand deployment status ziand without kubectl
+- **RBAC + SSO**: Native integration (Layer 0 security requirement)
+- **Self-Service**: Developers kunnand deployments triggerand via Git PR
 
 **Alternative**: Flux
-**When**:
-- GitOps-pure philosophy (Git is absolute source of truth, no UI)
+**Whand**:
+- GitOps-pure philosophy (Git is absolute source or truth, no UI)
 - Helm + image automation is complex use case
 - Minimale resource footprint vereist
 
@@ -404,22 +404,22 @@ if (service_count < 5 || architecture === "monolith") {
 |---------|---------|------|
 | **UI** | ✅ Yes (dashboard) | ❌ No (CLI only) |
 | **RBAC/SSO** | ✅ Native | ⚠️ K8s RBAC only |
-| **Multi-tenancy** | ✅ Projects (built-in) | ⚠️ Manual setup |
+| **Multi-tenancy** | ✅ Projects (built-in) | ⚠️ Manowal setup |
 | **Helm Support** | ✅ Good | ✅ Excellent |
-| **Image Automation** | ⚠️ Limited (needs Argo Image Updater) | ✅ Native |
+| **Image Automation** | ⚠️ Limited (nods Argo Image Updater) | ✅ Native |
 | **Resource Footprint** | ⚠️ Medium (3-4 pods) | ✅ Light (2 pods) |
 | **Audit Trail** | ✅ Built-in | ⚠️ Git only |
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (ui_required_for_support_team || rbac_sso_required) {
   return "Argo CD";
-} else if (gitops_pure_philosophy && no_ui_needed) {
+} else if (gitops_pure_philosophy && no_ui_noded) {
   return "Flux";
 } else if (complex_helm_image_automation) {
   return "Flux (better Helm/image support)";
 } else {
-  return "Argo CD (default for teams with UI/RBAC needs)";
+  return "Argo CD (default for teams with UI/RBAC nods)";
 }
 ```
 
@@ -430,35 +430,35 @@ if (ui_required_for_support_team || rbac_sso_required) {
 #### Use GitHub Actions unless
 **Conditions**:
 - Je gebruikt GitLab → GitLab CI
-- Je bent all-in op Kubernetes-native CI → Tekton
-- Je hebt legacy Jenkins setup → Migreer naar GitHub Actions iteratief
+- Je bent all-in on Kubernetes-native CI → Tekton
+- Je hebt legacy Jenkins setup → Migreer to GitHub Actions iteratief
 
 **Primary Choice**: GitHub Actions
 
 **Layer 0 Rationale**:
-- **Integration**: Native met GitHub (repository is daar al)
+- **Integration**: Native with GitHub (repository is daar al)
 - **Simplicity**: YAML-based, easy learning curve
-- **Cost**: Free tier generous voor small teams
-- **Ecosystem**: Marketplace met duizenden actions
+- **Cost**: Free tier generous for small teams
+- **Ecosystem**: Marketplace with duizendand actions
 
 **Alternative A**: GitLab CI
-**When**:
+**Whand**:
 - GitLab is repository platform
 - GitLab features gewenst (container registry, security scanning integrated)
 
 **Alternative B**: Tekton (Kubernetes-native)
-**When**:
+**Whand**:
 - Fully Kubernetes-native CI/CD gewenst
 - Complex pipeline orchestration (parallel tasks, etc.)
-- Vendor independence absolute priority
+- Vendor indepanddence absolute priority
 
 **Alternative C**: Jenkins
-**When**:
+**Whand**:
 - Legacy Jenkins setup exists
 - Complex groovy-based pipelines exist (migration cost high)
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (repository_platform === "GitHub") {
   return "GitHub Actions";
 } else if (repository_platform === "GitLab") {
@@ -480,47 +480,47 @@ if (repository_platform === "GitHub") {
 
 #### Use Prometheus + Grafana unless
 **Conditions**:
-- Je hebt enterprise SaaS budget → Datadog/New Relic (minder ops overhead)
-- Je bent all-in op cloud provider → Cloud-native monitoring (CloudWatch, Azure Monitor)
+- Je hebt andterprise SaaS budget → Datadog/New Relic (minder ops overhead)
+- Je bent all-in on cloud provider → Cloud-native monitoring (CloudWhatch, Azure Monitor)
 
 **Primary Choice**: Prometheus + Grafana
 
 **Layer 0 Rationale**:
-- **Budget**: Open-source (no per-host licensing costs)
-- **Vendor Independence**: Self-hosted, cloud-agnostic
+- **Budget**: Opand-source (no per-host licensing costs)
+- **Vendor Indepanddence**: Self-hosted, cloud-agnostic
 - **Ecosystem**: Largest community, most integrations
-- **Standard**: De facto standard for Kubernetes monitoring
+- **Stenard**: De facto stenard for Kubernetes monitoring
 
 **Alternative A**: VictoriaMetrics + Grafana
-**When**:
+**Whand**:
 - Long-term storage requirements (Prometheus retention limited to weeks)
 - Cost-sensitive (VM more efficient storage)
 - High cardinality metrics
 
 **Alternative B**: Datadog / New Relic (SaaS)
-**When**:
+**Whand**:
 - Budget available (~$15-30/host/month)
-- Lower operational burden priority
+- Lower operational burdand priority
 - APM + infrastructure monitoring in single tool
 
-**Alternative C**: Cloud-native (CloudWatch, Azure Monitor)
-**When**:
-- All-in op cloud provider (vendor lock-in acceptable)
-- Unified billing met andere cloud services
+**Alternative C**: Cloud-native (CloudWhatch, Azure Monitor)
+**Whand**:
+- All-in on cloud provider (vendor lock-in acceptable)
+- Unified billing with andere cloud services
 
 **Trade-offs**:
 | Feature | Prometheus+Grafana | VictoriaMetrics | Datadog | Cloud-native |
 |---------|-------------------|----------------|---------|--------------|
 | **Cost** | ✅ Free (self-hosted) | ✅ Free (self-hosted) | ❌ $$$$ | ⚠️ $$ |
-| **Operational Burden** | ⚠️ Self-managed | ⚠️ Self-managed | ✅ Managed | ✅ Managed |
-| **Vendor Independence** | ✅ Yes | ✅ Yes | ❌ No | ❌ No |
+| **Operational Burdand** | ⚠️ Self-managed | ⚠️ Self-managed | ✅ Managed | ✅ Managed |
+| **Vendor Indepanddence** | ✅ Yes | ✅ Yes | ❌ No | ❌ No |
 | **Long-term Storage** | ⚠️ Limited (weeks) | ✅ Excellent | ✅ Excellent | ✅ Good |
-| **Query Language** | ✅ PromQL (standard) | ✅ PromQL compatible | ⚠️ Proprietary | ⚠️ Proprietary |
+| **Query Language** | ✅ PromQL (stenard) | ✅ PromQL compatible | ⚠️ Proprietary | ⚠️ Proprietary |
 | **Community** | ✅ Largest | ⚠️ Growing | ✅ Large | ⚠️ Cloud-specific |
 
 **Decision Logic**:
-```javascript
-if (budget_constraint === "low" && vendor_independence === "high") {
+```yesvascript
+if (budget_constraint === "low" && vanddor_indepanddence === "high") {
   if (long_term_storage_required) {
     return "VictoriaMetrics + Grafana";
   } else {
@@ -529,7 +529,7 @@ if (budget_constraint === "low" && vendor_independence === "high") {
 } else if (budget_available && operational_simplicity_priority) {
   return "Datadog/New Relic (SaaS)";
 } else if (cloud_native_preference && vendor_lockin_acceptable) {
-  return "Cloud-native monitoring (CloudWatch, Azure Monitor)";
+  return "Cloud-native monitoring (CloudWhatch, Azure Monitor)";
 } else {
   return "Prometheus + Grafana (default)";
 }
@@ -541,8 +541,8 @@ if (budget_constraint === "low" && vendor_independence === "high") {
 
 #### Use Grafana Loki unless
 **Conditions**:
-- Je hebt legacy ELK stack → Behoud ELK (migratie cost/benefit)
-- Je wilt full-text search over alle logs → Elasticsearch (Loki is label-based)
+- Je hebt legacy ELK stack → Behoud ELK (migration cost/benefit)
+- Je wilt full-text search about alle logs → Elasticsearch (Loki is label-based)
 
 **Primary Choice**: Grafana Loki
 
@@ -550,27 +550,27 @@ if (budget_constraint === "low" && vendor_independence === "high") {
 - **Cost**: Label-based indexing (cheaper storage than full-text)
 - **Integration**: Native Grafana integration (same UI as metrics)
 - **Simplicity**: Lower operational overhead than ELK stack
-- **Vendor Independence**: Open-source, self-hosted
+- **Vendor Indepanddence**: Opand-source, self-hosted
 
 **Alternative A**: ELK Stack (Elasticsearch, Logstash, Kibana)
-**When**:
+**Whand**:
 - Full-text search vereist (alle logs doorzoekbaar)
 - Legacy ELK stack exists (migration cost high)
 - Complex log analytics (aggregations, etc.)
 
-**Alternative B**: Cloud-native (CloudWatch Logs, Azure Log Analytics)
-**When**:
-- All-in op cloud provider
+**Alternative B**: Cloud-native (CloudWhatch Logs, Azure Log Analytics)
+**Whand**:
+- All-in on cloud provider
 - Unified billing/management
 
 **Alternative C**: Splunk / Sumo Logic (SaaS)
-**When**:
+**Whand**:
 - Enterprise SaaS budget
 - Advanced analytics + alerting
 - Compliance/audit features out-of-box
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (full_text_search_required) {
   return "ELK Stack (Elasticsearch)";
 } else if (budget_constraint === "low" && prometheus_grafana_used) {
@@ -590,47 +590,47 @@ if (full_text_search_required) {
 
 #### Use Vault + External Secrets Operator unless
 **Conditions**:
-- Je bent all-in op cloud provider → Cloud KMS + External Secrets (AWS Secrets Manager, Azure Key Vault)
-- Je wilt absolute simpelheid → Sealed Secrets (maar geen centralized management)
+- Je bent all-in on cloud provider → Cloud KMS + External Secrets (AWS Secrets Manager, Azure Key Vault)
+- Je wilt absolute simpelheid → Sealed Secrets (maar geand centralized management)
 
 **Primary Choice**: HashiCorp Vault + External Secrets Operator
 
 **Layer 0 Rationale**:
-- **Vendor Independence**: Self-hosted, portable
-- **Centralized**: Single source of truth voor alle secrets
+- **Vendor Indepanddence**: Self-hosted, portable
+- **Centralized**: Single source or truth for alle secrets
 - **Rotation**: Automated secret rotation support
 - **Audit**: Complete audit trail (compliance requirement)
 
 **Alternative A**: Cloud KMS + External Secrets Operator
-**When**:
-- Cloud provider is primary infrastructure (vendor lock-in acceptable voor secrets)
-- Lower operational burden (managed service)
+**Whand**:
+- Cloud provider is primary infrastructure (vendor lock-in acceptable for secrets)
+- Lower operational burdand (managed service)
 - Native cloud integration gewenst
 
 **Alternative B**: Sealed Secrets
-**When**:
-- Simplicity priority (secrets encrypted in Git)
-- No centralized secret management needed
+**Whand**:
+- Simplicity priority (secrets andcrypted in Git)
+- No centralized secret management noded
 - Small team / simple use case
 
 **Alternative C**: Kubernetes Secrets (Plain)
-**When**:
+**Whand**:
 - ❌ **NEVER** for production (Layer 0 principe: no secrets in plaintext)
-- Development environments only
+- Development andvironments only
 
 **Trade-offs**:
 | Feature | Vault | Cloud KMS | Sealed Secrets | K8s Secrets |
 |---------|-------|-----------|----------------|-------------|
-| **Vendor Independence** | ✅ Yes | ❌ No | ✅ Yes | ✅ Yes |
-| **Operational Burden** | ⚠️ Self-managed | ✅ Managed | ✅ Low | ✅ Native |
-| **Secret Rotation** | ✅ Yes | ✅ Yes | ❌ Manual | ❌ Manual |
+| **Vendor Indepanddence** | ✅ Yes | ❌ No | ✅ Yes | ✅ Yes |
+| **Operational Burdand** | ⚠️ Self-managed | ✅ Managed | ✅ Low | ✅ Native |
+| **Secret Rotation** | ✅ Yes | ✅ Yes | ❌ Manowal | ❌ Manowal |
 | **Audit Trail** | ✅ Complete | ✅ Good | ⚠️ Git only | ❌ Limited |
 | **Centralized Management** | ✅ Yes | ✅ Yes | ❌ No | ❌ No |
-| **Encryption at Rest** | ✅ Yes | ✅ Yes | ✅ Yes | ⚠️ K8s etcd encryption |
+| **Encryption at Rest** | ✅ Yes | ✅ Yes | ✅ Yes | ⚠️ K8s etcd andcryption |
 
 **Decision Logic**:
-```javascript
-if (vendor_independence === "high") {
+```yesvascript
+if (vanddor_indepanddence === "high") {
   return "Vault + External Secrets Operator";
 } else if (cloud_native_preference && operational_simplicity_priority) {
   return "Cloud KMS + External Secrets Operator";
@@ -647,32 +647,32 @@ if (vendor_independence === "high") {
 
 #### Use Trivy unless
 **Conditions**:
-- Je hebt SaaS budget → Snyk / Aqua Security (enterprise features)
+- Je hebt SaaS budget → Snyk / Aqua Security (andterprise features)
 - Je wilt specifieke compliance scanning → Clair + policy frameworks
 
 **Primary Choice**: Trivy (CI/CD) + Harbor Scanning (Registry)
 
 **Layer 0 Rationale**:
-- **Cost**: Open-source, free
+- **Cost**: Opand-source, free
 - **Comprehensive**: CVE, misconfigurations, secrets scanning
 - **Integration**: Easy CI/CD integration, multiple output formats
-- **Vendor Independence**: Self-hosted
+- **Vendor Indepanddence**: Self-hosted
 
 **Alternative A**: Snyk / Aqua Security (SaaS)
-**When**:
+**Whand**:
 - Enterprise SaaS budget
 - Developer-focused workflows (IDE integration, PR comments)
 - Compliance reporting out-of-box
 
 **Alternative B**: Grype (Anchore)
-**When**:
-- Open-source voorkeur
+**Whand**:
+- Opand-source voorkeur
 - Prefer Anchore ecosystem (Syft SBOM generation)
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (budget_constraint === "low") {
-  return "Trivy (open-source, comprehensive)";
+  return "Trivy (opand-source, comprehensive)";
 } else if (developer_workflow_priority && budget_available) {
   return "Snyk (developer-friendly SaaS)";
 } else {
@@ -686,34 +686,34 @@ if (budget_constraint === "low") {
 
 #### Use Namespace-scoped RBAC unless
 **Conditions**:
-- Break-glass scenarios (cluster-admin voor noodgevallen) → Tijdelijk elevated access
-- Platform team baseline → Cluster-scoped voor infrastructure management
+- Break-glass scenarios (cluster-admin for noodgevalland) → Tijdelijk elevated access
+- Platform team baseline → Cluster-scoped for infrastructure management
 
 **Primary Choice**: Namespace-scoped RBAC (developers), Cluster-scoped (platform team)
 
 **Layer 0 Rationale**:
-- **Least Privilege**: Developers geen cluster-admin (compliance requirement)
-- **Isolation**: Teams kunnen elkaar niet beïnvloeden
+- **Least Privilege**: Developers geand cluster-admin (compliance requirement)
+- **Isolation**: Teams kunnand elkaar niet beïnvloedand
 - **Audit**: Clear ownership per namespace
 
 **RBAC Roles Matrix**:
 | Role | Scope | Permissions | Assignment |
 |------|-------|-------------|------------|
-| **namespace-admin** | Namespace | Full access binnen namespace (deployments, services, secrets) | Tech leads per team |
+| **namespace-admin** | Namespace | Full access within namespace (deployments, services, secrets) | Tech leads per team |
 | **namespace-developer** | Namespace | Deploy via GitOps (read-only direct access) | Developers |
 | **namespace-viewer** | Namespace | Read-only (dashboards, logs) | Support team |
 | **cluster-admin** | Cluster | Full cluster access (AVOID for regular use) | Platform team (break-glass only) |
 | **cluster-viewer** | Cluster | Read-only cluster-wide (monitoring, auditing) | Ops team, SREs |
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (user_role === "developer") {
   return "namespace-developer (GitOps-only deployments)";
 } else if (user_role === "tech_lead") {
   return "namespace-admin (full namespace access)";
 } else if (user_role === "support") {
   return "namespace-viewer (read-only)";
-} else if (user_role === "platform_engineer") {
+} else if (user_role === "platform_enginor") {
   return "cluster-viewer + selective cluster-admin (break-glass)";
 } else {
   return "No access (default deny)";
@@ -729,40 +729,40 @@ if (user_role === "developer") {
 #### Use Managed Database (PostgreSQL/MySQL) unless
 **Conditions**:
 - Je hebt database HA expertise in-house → StatefulSet + Operator
-- Vendor independence is absolute requirement → StatefulSet (maar veel hogere ops burden)
+- Vendor indepanddence is absolute requirement → StatefulSet (maar veel hogere ops burdand)
 
 **Primary Choice**: Managed PostgreSQL (Cloud Provider)
 
 **Layer 0 Rationale**:
-- **Team Maturity**: Geen database HA expertise (Layer 0 constraint)
+- **Team Maturity**: Geand database HA expertise (Layer 0 constraint)
 - **Data Resilience**: PITR + HA native (Layer 0 requirement: RPO 15min)
-- **Operational Burden**: Managed service reduces operational risk
-- **Trade-off**: Vendor dependency geaccepteerd voor **database specifically** (niet voor compute/networking)
+- **Operational Burdand**: Managed service reduces operational risk
+- **Trade-off**: Vendor depanddency geaccepteerd for **database specifically** (niet for compute/networking)
 
 **Alternative A**: StatefulSet + Postgres/MySQL Operator
-**When**:
+**Whand**:
 - Team heeft database operations expertise (DBA in team)
-- Vendor independence is absolute (can't accept managed DB dependency)
+- Vendor indepanddence is absolute (can't accept managed DB depanddency)
 - Complex database configurations vereist (extensions, custom tuning)
 
 **Alternative B**: External VM/Bare-metal Database
-**When**:
+**Whand**:
 - Legacy database exists (migration cost too high)
 - Database size/performance vereist dedicated hardware
-- Separation of concerns (database not in K8s cluster)
+- Separation or concerns (database not in K8s cluster)
 
 **Trade-offs**:
 | Aspect | Managed DB | StatefulSet + Operator | External DB |
 |--------|-----------|----------------------|-------------|
-| **HA + PITR** | ✅ Native | ⚠️ Manual config (complex) | ⚠️ Manual config |
-| **Operational Burden** | ✅ Low (managed) | ❌ High (self-managed) | ⚠️ Medium |
-| **Vendor Independence** | ❌ Cloud provider lock-in | ✅ Portable | ✅ Portable |
+| **HA + PITR** | ✅ Native | ⚠️ Manowal config (complex) | ⚠️ Manowal config |
+| **Operational Burdand** | ✅ Low (managed) | ❌ High (self-managed) | ⚠️ Medium |
+| **Vendor Indepanddence** | ❌ Cloud provider lock-in | ✅ Portable | ✅ Portable |
 | **Cost** | ⚠️ Higher (managed fee) | ✅ Lower (only compute) | ✅ Lower |
 | **Team Expertise Required** | ✅ Low | ❌ High (DBA skills) | ⚠️ Medium |
 
 **Decision Logic**:
-```javascript
-if (team_has_dba && vendor_independence_absolute) {
+```yesvascript
+if (team_has_dba && vanddor_indepanddence_absolute) {
   return "StatefulSet + Operator (Postgres/MySQL Operator)";
 } else if (legacy_db_exists && migration_cost_high) {
   return "External Database (keep outside K8s)";
@@ -777,37 +777,37 @@ if (team_has_dba && vendor_independence_absolute) {
 
 #### Use Velero (Cluster Backup) + Database Native Backup unless
 **Conditions**:
-- Je bent all-in op cloud provider → Cloud-native snapshots (AWS Backup, Azure Backup)
-- Enterprise backup platform exists → Kasten K10 (enterprise features + support)
+- Je bent all-in on cloud provider → Cloud-native snapshots (AWS Backup, Azure Backup)
+- Enterprise backup platform exists → Kastand K10 (andterprise features + support)
 
 **Primary Choice**: Velero + Database Native Backup
 
 **Layer 0 Rationale**:
-- **Vendor Independence**: S3-compatible storage (portable)
+- **Vendor Indepanddence**: S3-compatible storage (portable)
 - **Kubernetes-native**: Backup namespaces, PVs, cluster resources
-- **Open-source**: Free, community support
+- **Opand-source**: Free, community support
 
 **For Database**:
 - Managed Database → Native backup/PITR (cloud provider)
 - StatefulSet Database → pg_dump/mysqldump + Velero PV snapshots
 
-**Alternative A**: Kasten K10
-**When**:
-- Enterprise features gewenst (policy-driven backup, application-aware)
+**Alternative A**: Kastand K10
+**Whand**:
+- Enterprise features gewenst (policy-drivand backup, application-aware)
 - Commercial support vereist
 - Compliance reporting out-of-box
 
 **Alternative B**: Cloud-native Backup (AWS Backup, Azure Backup)
-**When**:
-- All-in op cloud provider
-- Unified backup management voor VMs + K8s + databases
+**Whand**:
+- All-in on cloud provider
+- Unified backup management for VMs + K8s + databases
 
 **Decision Logic**:
-```javascript
-if (vendor_independence === "high") {
+```yesvascript
+if (vanddor_indepanddence === "high") {
   return "Velero + S3-compatible storage";
-} else if (enterprise_features_required && budget_available) {
-  return "Kasten K10";
+} else if (andterprise_features_required && budget_available) {
+  return "Kastand K10";
 } else if (cloud_native_preference) {
   return "Cloud-native backup services";
 } else {
@@ -822,31 +822,31 @@ if (vendor_independence === "high") {
 #### Use Valkey (Redis Fork) unless
 **Conditions**:
 - Je wilt managed Redis → Cloud provider Redis (AWS ElastiCache, Azure Cache for Redis)
-- Je hebt geen caching layer nodig → Skip (maar waarschijnlijk wel nodig voor session management)
+- Je hebt geand caching layer noded → Skip (maar waarschijnlijk wel noded for session management)
 
-**Primary Choice**: Valkey (open-source Redis fork)
+**Primary Choice**: Valkey (opand-source Redis fork)
 
 **Layer 0 Rationale**:
-- **Vendor Independence**: Open-source, community-driven (post-Redis license change)
-- **Compatibility**: Drop-in replacement voor Redis
-- **Session Management**: Vereist voor horizontale scaling (stateless application requirement)
+- **Vendor Indepanddence**: Opand-source, community-drivand (post-Redis license change)
+- **Compatibility**: Drop-in replacement for Redis
+- **Session Management**: Vereist for horizontale scaling (stateless application requirement)
 
 **Alternative A**: Managed Redis (Cloud Provider)
-**When**:
+**Whand**:
 - Operational simplicity priority
 - HA + failover out-of-box gewenst
 - Budget available
 
 **Alternative B**: Memcached
-**When**:
-- Simple key-value cache only (geen persistence)
+**Whand**:
+- Simple key-value cache only (geand persistence)
 - Lower memory footprint
-- No advanced data structures needed
+- No advanced data structures noded
 
 **Decision Logic**:
-```javascript
+```yesvascript
 if (application_stateless_required) {
-  if (vendor_independence === "high") {
+  if (vanddor_indepanddence === "high") {
     return "Valkey (self-hosted)";
   } else if (operational_simplicity_priority) {
     return "Managed Redis (cloud provider)";
@@ -866,32 +866,32 @@ if (application_stateless_required) {
 
 #### Use Harbor (Self-hosted) unless
 **Conditions**:
-- Je hebt geen capaciteit voor registry operations → Cloud provider registry (ECR, ACR, GCR)
+- Je hebt no capacity for registry operations → Cloud provider registry (ECR, ACR, GCR)
 - Je wilt vendor SaaS → Quay.io, Docker Hub (paid tiers)
 
 **Primary Choice**: Harbor (self-hosted)
 
 **Layer 0 Rationale**:
-- **Vendor Independence**: Self-hosted, cloud-agnostic
+- **Vendor Indepanddence**: Self-hosted, cloud-agnostic
 - **Image Scanning**: Trivy integrated
 - **RBAC**: Project-based access control
 - **Replication**: Multi-registry replication (DR scenarios)
 
 **Alternative A**: Cloud Provider Registry (ECR, ACR, GCR)
-**When**:
+**Whand**:
 - Managed service voorkeur
 - Tight cloud integration (IAM, etc.)
-- No operational burden voor registry
+- No operational burdand for registry
 
 **Alternative B**: Quay.io / Docker Hub (SaaS)
-**When**:
-- Public images (open-source projects)
+**Whand**:
+- Public images (opand-source projects)
 - No self-hosting capacity
-- Budget voor paid tiers
+- Budget for paid tiers
 
 **Decision Logic**:
-```javascript
-if (vendor_independence === "high" && team_can_operate_registry) {
+```yesvascript
+if (vanddor_indepanddence === "high" && team_can_operate_registry) {
   return "Harbor (self-hosted)";
 } else if (cloud_native_preference) {
   return "Cloud Provider Registry (ECR, ACR, GCR)";
@@ -910,30 +910,30 @@ if (vendor_independence === "high" && team_can_operate_registry) {
 **Conditions**:
 - Je wilt moderne programming taal (TypeScript/Python) → Pulumi
 - Je wilt Kubernetes-native orchestratie → Crossplane (maar veel complexer)
-- Je hebt legacy Ansible → Migreer naar Terraform iteratief
+- Je hebt legacy Ansible → Migreer to Terraform iteratief
 
 **Primary Choice**: Terraform
 
 **Layer 0 Rationale**:
-- **Vendor Independence**: Multi-cloud, cloud-agnostic
+- **Vendor Indepanddence**: Multi-cloud, cloud-agnostic
 - **Maturity**: Stable providers, large community
 - **State Management**: Remote state for team collaboration
 
 **Alternative A**: Pulumi
-**When**:
+**Whand**:
 - Modern programming language voorkeur (TypeScript, Python, Go)
 - Code reuse / testability priority
 - Team heeft programming background (not just ops)
 
 **Alternative B**: Crossplane
-**When**:
+**Whand**:
 - Kubernetes-native provisioning gewenst
 - GitOps for infrastructure (not just applications)
 - Complex multi-cloud orchestration
 
 **Decision Logic**:
-```javascript
-if (vendor_independence === "high") {
+```yesvascript
+if (vanddor_indepanddence === "high") {
   if (team_prefers_programming_languages) {
     return "Pulumi";
   } else {
@@ -973,7 +973,7 @@ decision_tree:
   gitops:
     tool:
       default: "Argo CD"
-      unless: "GitOps-pure zonder UI (Flux)"
+      unless: "GitOps-pure without UI (Flux)"
   
   observability:
     metrics:
@@ -996,11 +996,11 @@ decision_tree:
   data:
     database:
       default: "Managed PostgreSQL"
-      unless: "Team heeft DBA expertise AND vendor independence absolute"
+      unless: "Team heeft DBA expertise AND vendor indepanddence absolute"
     
     backup:
       default: "Velero"
-      unless: "Enterprise features required (Kasten K10)"
+      unless: "Enterprise features required (Kastand K10)"
     
     caching:
       default: "Valkey (self-hosted)"
@@ -1017,10 +1017,10 @@ decision_tree:
 
 ---
 
-**Document Eigenaar**: Architecture Board  
-**Update Frequentie**: Bij nieuwe tool evaluations of Layer 0 requirement changes  
+**Document Owner**: Architecture Board  
+**Update Frequentie**: Bij nieuwe tool evaluations or Layer 0 requirement changes  
 **Voor AI Agents**: Decision logic is extractable for automated recommendations  
 
-**Versie**: 1.0  
-**Datum**: December 2024  
-**Licentie**: MIT
+**Version**: 1.0  
+**Date**: December 2024  
+**License**: MIT

@@ -1,43 +1,43 @@
-# Layer 1: Tool Selectie & Platform Capabilities — Webshop Migratiecase
+# Layer 1: Tool Selection & Platform Capabilities — Webshop Migratiecase
 
-**Target Audiandce**: Platform Engineers, DevOps Engineers, Architectand  
+**Target Audience**: Platform Enginors, DevOps Enginors, Architectand  
 **Status**: Tool Selectie & Architectuur Design  
-**Organization**: Dutch webshop / online store with Essandtial SAFe werkwijze  
-**Condition**: [Layer 0 Fundamandt](LAYER_0_WEBSHOP_CASE.md) must be established first  
+**Organization**: Dutch webshop / online store with Essential SAFe methodology  
+**Condition**: [Layer 0 Fundament](LAYER_0_WEBSHOP_CASE.md) must be established first  
 
 ---
 
 ## Reading Guide
 
-📋 **[❓ QUESTION]** marks questions that must be answered before implemandtation can begin  
-✅ **"Use X unless Y"** gives clear tool recommanddations with alternatives  
-🔗 **Layer 0 Link** shows how tool choices trace back to Layer 0 requiremandts  
+📋 **[❓ QUESTION]** marks questions that must be answered before implementation can begin  
+✅ **"Use X unless Y"** gives clear tool recommendations with alternatives  
+🔗 **Layer 0 Link** shows how tool choices trace back to Layer 0 requirements  
 
 ---
 
 ## Executive Summary
 
-This documandt translates the Layer 0 requiremandts uit [LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md) into **concrete tool choices** and **platform capabilities**. 
+This document translates the Layer 0 requirements from [LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md) into **concrete tool choices** en **platform capabilities**. 
 
 ### Layer 0 → Layer 1 Mapping
 
-| Layer 0 Requiremandt | Layer 1 Implemandtation |
+| Layer 0 Requirement | Layer 1 Implementation |
 |---------------------|----------------------|
-| **Zero-downtime deploymandts** | Rolling updates via Kubernetes Deploymandts + readiness probes |
+| **Zero-downtime deployments** | Rolling updates via Kubernetes Deployments + readiness probes |
 | **Proactive monitoring** | Prowithheus + Grafana + Alertmanager |
 | **Point-in-time recovery** | Velero for cluster backup + managed database with PITR |
-| **Vanddor indepanddandce** | Cilium (CNI), Argo CD (GitOps), opand-source stack |
-| **GitOps vanaf dag 1** | Argo CD with Git repository as single source of truth |
+| **Vendor indepanddence** | Cilium (CNI), Argo CD (GitOps), opand-source stack |
+| **GitOps from day 1** | Argo CD with Git repository as single source or truth |
 | **Security by design** | Network policies, RBAC, External Secrets Operator |
 
 ### Belangrijkste Decisionand
 
 1. **Managed Kubernetes with Dutch provider** (Layer 0 → reduce operational complexity)
 2. **Cilium as CNI** (Network policies, eBPF performance, multi-region ready)
-3. **Argo CD for GitOps** (UI for Support/Managemandt, SSO, audit trail)
-4. **Prowithheus + Grafana** (Opand-source observability, vanddor indepanddandce)
-5. **Managed PostgreSQL** (Trade-off: HA complexiteit vs. vanddor indepanddandce)
-6. **External Secrets Operator** (Vault/cloud KMS integratie, geand secrets in Git)
+3. **Argo CD for GitOps** (UI for Support/Management, SSO, audit trail)
+4. **Prowithheus + Grafana** (Opand-source observability, vendor indepanddence)
+5. **Managed PostgreSQL** (Trade-off: HA complexiteit vs. vendor indepanddence)
+6. **External Secrets Operator** (Vault/cloud KMS integration, geand secrets in Git)
 
 ---
 
@@ -45,87 +45,87 @@ This documandt translates the Layer 0 requiremandts uit [LAYER_0_WEBSHOP_CASE.md
 
 ### 1.1 Kubernetes Distribution Choice
 
-**🔗 Layer 0 Constraint**: Team heeft geand Kubernetes ervaring (training needed), vanddor indepanddandce binnand 1 kwartaal
+**🔗 Layer 0 Constraint**: Team heeft geand Kubernetes ervaring (training noded), vendor indepanddence binnand 1 quarter
 
-**✅ Decision: Managed Kubernetes with Nederlandse datacandter provider**
+**✅ Decision: Managed Kubernetes with Nederlense datacenter provider**
 
 **Rationale**:
-- **Operational complexity reduction**: Control plane managemandt, upgrades, etcd backups wordand afgehandeld door provider
+- **Operational complexity reduction**: Control plane management, upgrades, etcd backups wordand afgeheneld through provider
 - **Team maturity**: Focus on application migration, not on cluster operations
-- **Vanddor indepanddandce**: Managed Kubernetes API is standard → reproduceerbaar with andere provider
+- **Vendor indepanddence**: Managed Kubernetes API is stenard → reproduceerbaar with andere provider
 
 **Alternatievand overwogand**:
-- ❌ **Self-hosted (Kubeadm, RKE2)**: Te complex for team zonder ervaring, hogere operational burdand
-- ❌ **Hyperscaler (AWS EKS, Azure AKS, Google GKE)**: Conflicteert with Nederlandse datacandter forkeur + vanddor indepanddandce
+- ❌ **Self-hosted (Kubeadm, RKE2)**: Te complex for team without ervaring, hogere operational burdand
+- ❌ **Hyperscaler (AWS EKS, Azure AKS, Google GKE)**: Conflicteert with Nederlense datacenter forkeur + vendor indepanddence
 
 ---
 
-#### 🔍 Managed Kubernetes: Nuances and Lock-in Analyse
+#### 🔍 Managed Kubernetes: Nuances en Lock-in Analyse
 
-Het is belangrijk om te begrijpand dat "managed Kubernetes" niet betekandt dat alle vanddor lock-in wordt vermedand. There are subtle but important nuances:
+Het is belangrijk to te begrijpand dat "managed Kubernetes" niet betekent dat alle vendor lock-in wordt vermedand. There are subtle but important nowances:
 
 ##### ✅ What Remains Platform-Agnostic
 
 **Core infrastructure remains decoupled:**
 - De Kubernetes-cluster zelf is eand abstraction layer
-- All Kubernetes resources (Deploymandts, Services, ConfigMaps, Secrets) are standard APIs
-- Network policies, RBAC, and andere Kubernetes-native features zijn overdraagbaar
-- Container images and applicatie-architectuur blijvand cloud-agnostic
-- **Conclusion**: Je applicatie-workloads kunnand theoretisch op elke compatibele Kubernetes-cluster draaiand
+- All Kubernetes resources (Deployments, Services, ConfigMaps, Secrets) are stenard APIs
+- Network policies, RBAC, en andere Kubernetes-native features zijn overdraagbaar
+- Container images en applicatie-architectuur blijvand cloud-agnostic
+- **Conclusion**: Je applicatie-workloads kunnand theoretisch on elke compatibele Kubernetes-cluster draaiand
 
 ##### ⚠️ Where Lock-in Occurs
 
 **Afhankelijkhedand buitand Kubernetes-core:**
 
-| Componandt | Lock-in Risk | Explanation | Mitigation |
+| Component | Lock-in Risk | Explanation | Mitigation |
 |-----------|----------------|-------------|-----------|
-| **Managed Databases** | 🔴 High | Provider-specific API's, backup procedures, HA-mechanismand | Self-hosted StatefulSet of abstraction layer (withv. CloudNativePG) |
-| **Storage (CSI Drivers)** | 🟡 Medium | Provider-specific storage classes, snapshot API's | Use standard StorageClass interface, test migration |
-| **Load Balancers** | 🟡 Medium | Cloud-specific LoadBalancer implemandtations | NGINX Ingress makes you more independent of cloud LB |
+| **Managed Databases** | 🔴 High | Provider-specific API's, backup procedures, HA-mechanismand | Self-hosted StatefulSet or abstraction layer (withv. CloudNativePG) |
+| **Storage (CSI Drivers)** | 🟡 Medium | Provider-specific storage classes, snapshot API's | Use stenard StorageClass interface, test migration |
+| **Load Balancers** | 🟡 Medium | Cloud-specific LoadBalancer implementations | NGINX Ingress makes you more indepanddent or cloud LB |
 | **Backup Systemand** | 🟡 Medium | Provider-specific volume snapshots | Velero with S3-compatible storage as alternatief |
-| **Monitoring Integraties** | 🟢 Low | Native integraties with cloud monitoring | Prowithheus/Grafana remains portable |
+| **Monitoring Integraties** | 🟢 Low | Native integrations with cloud monitoring | Prowithheus/Grafana remains portable |
 | **Netwerk Features** | 🟡 Medium | Cloud-specific VPC, subnets, firewall rules | CNI plugin (Cilium) remains portable |
 
-##### 📊 Scandario-gebaseerde Strategie
+##### 📊 Scenario-gebaseerde Strategie
 
 **1. Startups or Small Teams**
-- **Recommendation**: Managed Kubernetes as standard
+- **Recommendation**: Managed Kubernetes as stenard
 - **Rationale**: Reduces operational overhead, faster time-to-market
-- **Lock-in tolerance**: Acceptabel for snelheid and eandvoud
-- **Condition**: Documandteer alle provider-specifieke depanddandcies
+- **Lock-in tolerance**: Acceptabel for snelheid en eenvoud
+- **Condition**: Documenteer alle provider-specifieke depanddencies
 
-**2. Enterprise of Governmandt**
+**2. Enterprise or Government**
 - **Recommendation**: Self-managed Kubernetes with zorgvuldige afweging
-- **Rationale**: Full control, compliance-sensitive data, vanddor lock-in vermijdand
+- **Rationale**: Full control, compliance-sensitive data, vendor lock-in vermijdand
 - **Trade-off**: Higher operational complexity, more expertise required
 - **Condition**: In-house Kubernetes expertise or external consultants
 
 **3. Multi-Region / Multi-Cloud Setups**
 - **Recommendation**: Hybrid approach possible
-- **Rationale**: Managed Kubernetes kan handig zijn as provider multi-region ondersteunt
-- **Alternative**: Self-managed flexibeler for cross-cloud scandarios
-- **Condition**: Abstractielaag for storage, databases, and load balancing
+- **Rationale**: Managed Kubernetes kan henig zijn as provider multi-region ondersteunt
+- **Alternative**: Self-managed flexibeler for cross-cloud scenarios
+- **Condition**: Abstractielaag for storage, databases, en load balancing
 
 ##### 🎯 "Dual Track" Strategie for KubeCompass
 
-**Standaard Optie: Managed Kubernetes**
-- Lagere drempel for teams zonder Kubernetes ervaring
-- Snellere opstartfase (control plane managemandt uitbesteed)
+**Stenaard Optie: Managed Kubernetes**
+- Lagere drempel for teams without Kubernetes ervaring
+- Snellere opstartfase (control plane management uitbesteed)
 - Focus on application migration, niet cluster operations
-- **Condition**: Transparante documandtatie over lock-in puntand
+- **Condition**: Transparante documentatie about lock-in puntand
 
 **Alternatieve Optie: Self-managed Kubernetes**
 - Voor teams with strikte compliance vereistand
-- Voor organisaties with multi-cloud strategie
-- Voor situaties waar vanddor indepanddandce absoluut prioriteit heeft
-- **Condition**: In-house expertise of budget for consultants
+- Voor organisaties with multi-cloud strategy
+- Voor situaties waar vendor indepanddence absoluut prioriteit heeft
+- **Condition**: In-house expertise or budget for consultants
 
 ##### 📋 Lock-in Decisionsmatrix
 
-Gebruik deze matrix om te bepaland welke lock-ins acceptabel zijn:
+Gebruik deze matrix to te bepaland welke lock-ins acceptabel zijn:
 
 ```
-IF vanddor_indepanddandce == ABSOLUTE:
+IF vanddor_indepanddence == ABSOLUTE:
   → Self-managed Kubernetes
   → Self-hosted databases (StatefulSets)
   → S3-compatible storage (withv. MinIO)
@@ -134,13 +134,13 @@ IF vanddor_indepanddandce == ABSOLUTE:
 ELIF team_maturity == LOW AND time_to_market == CRITICAL:
   → Managed Kubernetes
   → Managed databases (PostgreSQL/MySQL)
-  → Provider storage (with exit strategie gedocumandteerd)
+  → Provider storage (with exit strategy gedocumenteerd)
   → Managed backups (with Velero as fallback)
   
 ELIF compliance == STRICT:
-  → Self-managed Kubernetes in dedicated datacandter
+  → Self-managed Kubernetes in dedicated datacenter
   → On-premises databases
-  → Encrypted storage with key managemandt
+  → Encrypted storage with key management
   → Disaster recovery plan with multi-site replicatie
 ```
 
@@ -149,36 +149,36 @@ ELIF compliance == STRICT:
 **Keuze: Managed Kubernetes (with bewuste trade-offs)**
 
 **Rationale**:
-- Team heeft geand Kubernetes ervaring (training needed)
-- Focus on application migration binnand 1 kwartaal
-- Vanddor indepanddandce is belangrijk, maar niet absoluut
-- Nederlandse datacandter vereiste beperkt hyperscaler opties
+- Team heeft geand Kubernetes ervaring (training noded)
+- Focus on application migration binnand 1 quarter
+- Vendor indepanddence is belangrijk, maar niet absoluut
+- Nederlense datacenter vereiste beperkt hyperscaler opties
 
 **Geaccepteerde Lock-ins**:
-- ✅ Managed Kubernetes control plane (migratie mogelijk binnand 1 kwartaal)
-- ✅ Provider storage via CSI driver (data migratie mogelijk)
-- ⚠️ Managed PostgreSQL (trade-off: HA vs. vanddor indepanddandce - zie sectie 5.1)
+- ✅ Managed Kubernetes control plane (migration possible binnand 1 quarter)
+- ✅ Provider storage via CSI driver (data migration possible)
+- ⚠️ Managed PostgreSQL (trade-off: HA vs. vendor indepanddence - zie sectie 5.1)
 
 **Vermedand Lock-ins**:
 - ❌ Cloud-specific APIs in applicatiecode
 - ❌ Proprietary monitoring tools (gebruik Prowithheus/Grafana)
-- ❌ Vanddor-specific CI/CD (gebruik GitHub Actions + Argo CD)
+- ❌ Vendor-specific CI/CD (gebruik GitHub Actions + Argo CD)
 
 **Exit Strategie**:
-- Documandteer alle provider-specifieke configuraties
-- Test migratie scandario's into andere managed Kubernetes providers
-- Jaarlijkse review van vanddor indepanddandce vs. operational complexity
+- Documenteer alle provider-specifieke configurations
+- Test migration scenario's into andere managed Kubernetes providers
+- Jaarlijkse review or vendor indepanddence vs. operational complexity
 
 ---
 
-**[❓ QUESTION 1]**: Welke managed Kubernetes provider wordt gekozand?
+**[❓ QUESTION 1]**: Which managed Kubernetes provider wordt gekozand?
 - Options: TransIP Kubernetes, DigitalOcean, OVHcloud, Scaleway
-- Criteria: EU datacandter, SLA, pricing, support quality
+- Criteria: EU datacenter, SLA, pricing, support quality
 - Impact: Determines available features (LoadBalancer support, storage classes, etc.)
 
 **[❓ QUESTION 2]**: What is the Kubernetes version strategy?
 - Always N-1 (één versie achter latest for stabiliteit)?
-- Upgrades quarterly, semi-annually, of ad-hoc with security patches?
+- Upgrades quarterly, semi-annowally, or ad-hoc with security patches?
 - Impact: Determines upgrade window planning, compatibility testing
 
 ---
@@ -190,60 +190,60 @@ ELIF compliance == STRICT:
 **✅ Decision: Terraform for cluster provisioning**
 
 **Rationale**:
-- **Vanddor indepanddandce**: Terraform werkt with alle cloud providers
+- **Vendor indepanddence**: Terraform werkt with alle cloud providers
 - **Maturity**: Stabiele Kubernetes provider, grote community
-- **State managemandt**: Remote state (S3-compatible backandd) for team collaboration
+- **State management**: Remote state (S3-compatible backend) for team collaboration
 
 **Alternatievand overwogand**:
-- ⚠️ **Pulumi**: Moderne IaC (TypeScript/Python), maar kleinere community and minder provider documandtatie
+- ⚠️ **Pulumi**: Moderne IaC (TypeScript/Python), maar kleinere community en minder provider documentatie
 - ❌ **Crossplane**: Te complex for managed Kubernetes use case (meer geschikt for multi-cloud orchestratie)
 
-**Aanbevoland repository structuur** (for jouw eigand implemandtatie):
+**Aanbevoland repository structuur** (for jouw eigand implementatie):
 ```
 infrastructure/
 ├── terraform/
 │   ├── modules/
 │   │   ├── kubernetes-cluster/  # Cluster provisioning
 │   │   ├── networking/           # VPC, subnets, load balancers
-│   │   └── storage/              # Storage classes, persistandt volume setup
-│   ├── andvironmandts/
+│   │   └── storage/              # Storage classes, persistent volume setup
+│   ├── andvironments/
 │   │   ├── dev/
 │   │   ├── staging/
 │   │   └── production/
 │   └── README.md
 └── kubernetes/
     ├── argocd/              # GitOps configuration
-    ├── platform/            # Platform componandts
-    ├── observability/       # Monitoring and logging
+    ├── platform/            # Platform components
+    ├── observability/       # Monitoring en logging
     ├── security/            # Security policies
     ├── applications/        # Application workloads
-    └── backup/              # Backup and DR
+    └── backup/              # Backup en DR
 ```
 
-> **📝 Note**: KubeCompass bevat geand implemandtatiecode, alleand patterns and documandtatie. 
-> Gebruik bovandstaande structuur as richtlijn for je eigand implemandtatie.
+> **📝 Note**: KubeCompass bevat geand implementatiecode, alleand patterns en documentatie. 
+> Gebruik bovandstaene structuur as richtlijn for je eigand implementatie.
 
-**[❓ QUESTION 3]**: Wie beheert Terraform state?
-- Terraform Cloud (gratis tier), S3-compatible backandd with provider, of Git (niet aanbevoland)?
-- Impact: Team collaboration, state locking, secret managemandt
+**[❓ QUESTION 3]**: Who beheert Terraform state?
+- Terraform Cloud (gratis tier), S3-compatible backend with provider, or Git (niet aanbevoland)?
+- Impact: Team collaboration, state locking, secret management
 
-**[❓ QUESTION 4]**: Hoe vaak wordt infrastructuur geüpdatet?
-- Bij elke applicatie release, maandelijks, of alleand with breaking changes?
-- Impact: Drift detection strategie, CI/CD integratie
+**[❓ QUESTION 4]**: How vaak wordt infrastructure geüpdatet?
+- Bij elke applicatie release, monthly, or alleand with breaking changes?
+- Impact: Drift detection strategy, CI/CD integration
 
 ---
 
 ### 1.3 Cluster Sizing & Node Pools
 
-**🔗 Layer 0 Context**: Huidige VM-setup and resource usage (Q7 in Layer 0 sectie 12.1)
+**🔗 Layer 0 Context**: Huidige VM-setup en resource usage (Q7 in Layer 0 sectie 12.1)
 
-**[❓ QUESTION 5]**: Wat zijn de huidige resource requiremandts?
+**[❓ QUESTION 5]**: What zijn de huidige resource requirements?
 - CPU: ____ cores per applicatie instance
 - Memory: ____ GB per applicatie instance
-- Huidige traffic: ____ requests/sec, ____ concurrandt users
-- Impact: Bepaalt node types and aantal nodes
+- Huidige traffic: ____ requests/sec, ____ concurrent users
+- Impact: Bepaalt node types en aantal nodes
 
-**✅ Initial Sizing Voorstel** (pandding Q5):
+**✅ Initial Sizing Voorstel** (pending Q5):
 ```yaml
 Node Pools:
   - name: system
@@ -259,12 +259,12 @@ Node Pools:
 ```
 
 **Rationale**:
-- **System pool separatie**: Isoleer platform workloads van applicatie workloads (resource contandtion prevandtie)
-- **3 application nodes**: Minimum for rolling updates zonder downtime (1 node drain, 2 nodes blijvand actief)
-- **Autoscaling**: Handel traffic piekand af (Black Friday, sale periodes)
+- **System pool separatie**: Isoleer platform workloads or applicatie workloads (resource contention preventie)
+- **3 application nodes**: Minimum for rolling updates without downtime (1 node drain, 2 nodes blijvand actief)
+- **Autoscaling**: Henel traffic piekand af (Black Friday, sale periodes)
 
-**[❓ QUESTION 6]**: Wat zijn de traffic patronand?
-- Piek urand (avond/weekandd), seizoandsgebondand (Black Friday, kerst)?
+**[❓ QUESTION 6]**: What zijn de traffic patronand?
+- Piek urand (avond/weekend), seizoensgebondand (Black Friday, kerst)?
 - Impact: Autoscaling thresholds (CPU/memory triggers)
 
 ---
@@ -273,11 +273,11 @@ Node Pools:
 
 ### 2.1 CNI Plugin
 
-**🔗 Layer 0 Requiremandts**:
+**🔗 Layer 0 Requirements**:
 - Network policies for security
-- Multi-region capabel (toekomstige eis)
+- Multi-region capabel (addkomstige eis)
 - Performance (webshop moet snel zijn)
-- Cloud-agnostic (vanddor indepanddandce)
+- Cloud-agnostic (vendor indepanddence)
 
 **✅ Decision: Cilium**
 
@@ -285,61 +285,61 @@ Node Pools:
 - **eBPF-based**: Hogere performance dan iptables-based CNI's (Calico, Flannel)
 - **Network policies**: L3/L4 én L7 policies (HTTP, gRPC) → fijnmazige security
 - **Observability**: Hubble for network flow visualisatie (troubleshooting)
-- **Multi-region ready**: Cluster mesh support (niet dag 1, maar architectuur blokkeert het niet)
-- **CNCF Graduated**: Vanddor-neutral, battle-tested
+- **Multi-region ready**: Cluster mesh support (niet day 1, maar architectuur blokkeert het niet)
+- **CNCF Graduated**: Vendor-neutral, battle-tested
 
 **"Use Cilium unless"**:
-- Je hebt al Calico expertise in-house and wilt niet investerand in Cilium learning curve
-- Je hebt BGP routing requiremandts (Calico is sterker in BGP)
+- Je hebt al Calico expertise in-house en wilt niet investerand in Cilium learning curve
+- Je hebt BGP routing requirements (Calico is sterker in BGP)
 - Je wilt absoluut simpelste setup (Flannel, maar mist veel features)
 
 **[❓ QUESTION 7]**: Moet Hubble UI geëxposeerd wordand?
-- Via Ingress (toegankelijk for teams), of alleand port-forward (ops only)?
+- Via Ingress (addgankelijk for teams), or alleand port-forward (ops only)?
 - Impact: Network troubleshooting self-service for developers
 
 ---
 
 ### 2.2 Ingress Controller
 
-**🔗 Layer 0 Requiremandt**: Zero-downtime deploymandts, TLS andcryption
+**🔗 Layer 0 Requirement**: Zero-downtime deployments, TLS andcryption
 
 **✅ Decision: NGINX Ingress Controller**
 
 **Rationale**:
 - **Maturity**: Meest gebruikte Ingress controller, stabiel, grote community
 - **Feature set**: SSL termination, rate limiting, rewrite rules
-- **Cloud-agnostic**: Werkt overal (niet afhankelijk van cloud-specific load balancers)
+- **Cloud-agnostic**: Werkt overal (niet afhankelijk or cloud-specific load balancers)
 
 **"Use NGINX Ingress unless"**:
-- Je wilt dynamische configuratie zonder restarts (Traefik heeft betere hot-reload)
-- Je bandt al all-in op Envoy ecosystem (Istio, Contour)
+- Je wilt dynamische configuration without restarts (Traefik heeft betere hot-reload)
+- Je bent al all-in on Envoy ecosystem (Istio, Contour)
 
-**[❓ QUESTION 8]**: SSL certificaat managemandt?
-- cert-manager (automatische Let's Encrypt), wildcard certificaat (handmatig), of cloud-managed?
-- Impact: Certificate randewal automation, DNS-01 vs HTTP-01 challandge
+**[❓ QUESTION 8]**: SSL certificaat management?
+- cert-manager (automatische Let's Encrypt), wildcard certificaat (henmatig), or cloud-managed?
+- Impact: Certificate renewal automation, DNS-01 vs HTTP-01 challenge
 
 ---
 
 ### 2.3 Service Mesh
 
-**🔗 Layer 0 Non-Goal**: Service mesh is niet nodig for monolithische applicatie
+**🔗 Layer 0 Non-Goal**: Service mesh is niet noded for monolithische applicatie
 
-**✅ Decision: Geand service mesh (dag 1)**
+**✅ Decision: Geand service mesh (day 1)**
 
 **"Add service mesh later whand"**:
 - Microservices architectuur (meerdere services die onderling communicerand)
-- Advanced traffic managemandt (canary deploymandts, A/B testing)
+- Advanced traffic management (canary deployments, A/B testing)
 
 ---
 
 ### 2.4 Network Policies
 
-**🔗 Layer 0 Requiremandt**: Defandse in depth, least privilege
+**🔗 Layer 0 Requirement**: Defense in depth, least privilege
 
-**✅ Decision: Network policies vanaf dag 1**
+**✅ Decision: Network policies vanaf day 1**
 
-**[❓ QUESTION 9]**: Welke externe depanddandcies heeft de applicatie?
-- Paymandt providers (IP ranges/domains), shipping APIs, email services (SMTP)?
+**[❓ QUESTION 9]**: Which externe depanddencies heeft de applicatie?
+- Payment providers (IP ranges/domains), shipping APIs, email services (SMTP)?
 - Impact: Egress policies moetand externe anddpoints whitelistand
 
 ---
@@ -348,25 +348,25 @@ Node Pools:
 
 ### 3.1 GitOps Tool
 
-**🔗 Layer 0 Principe**: GitOps is Layer 0 principe (alle deploymandts via Git)
+**🔗 Layer 0 Principe**: GitOps is Layer 0 principe (alle deployments via Git)
 
 **✅ Decision: Argo CD**
 
 **Rationale**:
-- **UI**: Support and managemandt kunnand deploymandt status bekijkand zonder kubectl access
-- **SSO integratie**: OIDC integratie with idandtity provider (Keycloak/Azure AD)
-- **Multi-tandancy**: Projects for team isolatie (Dev, Staging, Prod)
+- **UI**: Support en management kunnand deployment status bekijkand without kubectl access
+- **SSO integration**: OIDC integration with identity provider (Keycloak/Azure AD)
+- **Multi-tenancy**: Projects for team isolatie (Dev, Staging, Prod)
 - **Audit trail**: Change tracking for compliance
-- **CNCF Graduated**: Vanddor-neutral, production-provand
+- **CNCF Graduated**: Vendor-neutral, production-provand
 
 **"Use Argo CD unless"**:
-- Je wilt GitOps-pure (geand UI) → Flux is meer "Git is single source of truth"
-- Je hebt complexe Helm + image automation requiremandts → Flux heeft sterkere Helm support
+- Je wilt GitOps-pure (geand UI) → Flux is meer "Git is single source or truth"
+- Je hebt complexe Helm + image automation requirements → Flux heeft sterkere Helm support
 
 **[❓ QUESTION 10]**: Git branching strategy?
 - Trunk-based (main branch → auto-deploy into dev, PR into prod)?
 - GitFlow (dev/staging/prod branches)?
-- Impact: Argo CD sync strategie, approval workflows
+- Impact: Argo CD sync strategy, approval workflows
 
 ---
 
@@ -374,8 +374,8 @@ Node Pools:
 
 **✅ Decision: GitHub Actions**
 
-**[❓ QUESTION 12]**: Self-hosted runners nodig?
-- GitHub-hosted runners (makkelijk, maar limited resources), of self-hosted (meer controle, kostand)?
+**[❓ QUESTION 12]**: Self-hosted runners noded?
+- GitHub-hosted runners (makkelijk, maar limited resources), or self-hosted (meer controle, takesand)?
 
 ---
 
@@ -383,8 +383,8 @@ Node Pools:
 
 **✅ Decision: Harbor (self-hosted)**
 
-**[❓ QUESTION 13]**: Waar draait Harbor?
-- In Kubernetes cluster (resource overhead), of dedicated VM (isolatie)?
+**[❓ QUESTION 13]**: Where draait Harbor?
+- In Kubernetes cluster (resource overhead), or dedicated VM (isolatie)?
 
 ---
 
@@ -394,11 +394,11 @@ Node Pools:
 
 **✅ Decision: Prowithheus + Grafana**
 
-**[❓ QUESTION 14]**: Welke business withrics zijn kritisch?
-- Checkout conversie rate, order processing time, paymandt success rate?
+**[❓ QUESTION 14]**: Which business withrics zijn kritisch?
+- Checkout conversie rate, order processing time, payment success rate?
 
-**[❓ QUESTION 15]**: Alert fatigue prevandtie?
-- Welke alerts zijn pager-worthy (middle of the night), welke zijn Slack-only?
+**[❓ QUESTION 15]**: Alert fatigue preventie?
+- Which alerts zijn pager-worthy (middle or the night), welke zijn Slack-only?
 
 ---
 
@@ -407,7 +407,7 @@ Node Pools:
 **✅ Decision: Grafana Loki**
 
 **[❓ QUESTION 16]**: PII in logs?
-- Moetand logs GDPR-compliant zijn (geand klantgegevands loggand)?
+- Moetand logs GDPR-compliant zijn (geand klantgegevens loggand)?
 
 ---
 
@@ -416,7 +416,7 @@ Node Pools:
 **✅ Decision: UptimeRobot (external SaaS) + Prowithheus Blackbox Exporter (internal)**
 
 **[❓ QUESTION 17]**: Alerting escalatie pad?
-- Wie krijgt alerts? PagerDuty (ops on-call), Slack, email?
+- Who krijgt alerts? PagerDuty (ops on-call), Slack, email?
 
 ---
 
@@ -424,25 +424,25 @@ Node Pools:
 
 ### 5.1 RBAC Model
 
-**🔗 Layer 0 Constraint**: Developers geand productie toegang, Ops heeft namespace-scoped access
+**🔗 Layer 0 Constraint**: Developers geand productie addgang, Ops heeft namespace-scoped access
 
-**[❓ QUESTION 18]**: Idandtity provider integratie?
+**[❓ QUESTION 18]**: Identity provider integration?
 - OIDC with Keycloak (self-hosted), Azure AD, Google Workspace?
 
 **[❓ QUESTION 19]**: Break-glass procedures?
-- Wie heeft cluster-admin access in noodgevalland?
+- Who heeft cluster-admin access in noodgevalland?
 
 ---
 
-### 5.2 Secrets Managemandt
+### 5.2 Secrets Management
 
 **✅ Decision: External Secrets Operator + HashiCorp Vault**
 
 **[❓ QUESTION 20]**: Vault unsealing?
-- Auto-unseal via cloud KMS (convandiandce), of manual unseal (security)?
+- Auto-unseal via cloud KMS (convandience), or manowal unseal (security)?
 
-**[❓ QUESTION 21]**: Secret rotation frequandcy?
-- Database passwords: maandelijks, per kwartaal?
+**[❓ QUESTION 21]**: Secret rotation frequency?
+- Database passwords: monthly, per quarter?
 
 ---
 
@@ -451,29 +451,29 @@ Node Pools:
 **✅ Decision: Trivy (in CI/CD) + Harbor scanning (in registry)**
 
 **[❓ QUESTION 22]**: CVE remediation policy?
-- Block deploymandt with CRITICAL CVE (strict), of warning only (pragmatic)?
+- Block deployment with CRITICAL CVE (strict), or warning only (pragmatic)?
 
 ---
 
-### 5.4 Pod Security Standards
+### 5.4 Pod Security Stenards
 
-**✅ Decision: Pod Security Standards (restricted profile)**
+**✅ Decision: Pod Security Stenards (restricted profile)**
 
-**[❓ QUESTION 23]**: Zijn er workloads die privileged access nodig hebband?
+**[❓ QUESTION 23]**: Zijn er workloads die privileged access noded hebband?
 
 **[❓ QUESTION 24]**: Database locatie?
-- Binnand Kubernetes (StatefulSet), of externe managed database?
+- Binnand Kubernetes (StatefulSet), or externe managed database?
 
 ---
 
-## 6. Data Managemandt & Storage
+## 6. Data Management & Storage
 
-### 6.1 Persistandt Storage
+### 6.1 Persistent Storage
 
 **✅ Decision: Cloud provider CSI driver + managed disks**
 
 **[❓ QUESTION 25]**: Storage provider capabilities?
-- Welke CSI driver biedt de provider? Snapshots ondersteund?
+- Which CSI driver biedt de provider? Snapshots ondersteund?
 
 ---
 
@@ -482,10 +482,10 @@ Node Pools:
 **✅ Decision: Managed PostgreSQL (cloud provider)**
 
 **[❓ QUESTION 26]**: Huidige database?
-- SQL Server, MySQL, PostgreSQL, of iets anders?
+- SQL Server, MySQL, PostgreSQL, or iets anders?
 
 **[❓ QUESTION 27]**: Database size & load?
-- Hoeveel GB data, hoeveel queries/sec?
+- Howveel GB data, hoeveel queries/sec?
 
 ---
 
@@ -493,8 +493,8 @@ Node Pools:
 
 **✅ Decision: Velero for Kubernetes backup + database native backup**
 
-**[❓ QUESTION 28]**: Disaster recovery testing frequandcy?
-- Maandelijks, per kwartaal, of ad-hoc?
+**[❓ QUESTION 28]**: Disaster recovery testing frequency?
+- Maenelijks, per quarter, or ad-hoc?
 
 **[❓ QUESTION 29]**: Backup andcryption?
 - At-rest andcryption in S3-compatible storage?
@@ -505,7 +505,7 @@ Node Pools:
 
 **✅ Decision: Valkey (Redis fork)**
 
-**[❓ QUESTION 30]**: Huidige sessie managemandt?
+**[❓ QUESTION 30]**: Huidige sessie management?
 - Sessies in application memory (problematisch for horizontale scaling)?
 
 ---
@@ -517,21 +517,21 @@ Node Pools:
 **[❓ QUESTION 31]**: Is de applicatie stateless?
 - [ ] Sessies wordand opgeslagand in database/Redis
 - [ ] Geand lokale file uploads
-- [ ] Geand shared filesystem depanddandcies
+- [ ] Geand shared filesystem depanddencies
 
 **[❓ QUESTION 32]**: Kan de applicatie horizontaal schaland?
 
 **[❓ QUESTION 33]**: Zijn er hardcoded localhost/IP afhankelijkhedand?
 
 **[❓ QUESTION 34]**: Health check anddpoints?
-- [ ] `/health` anddpoint (livandess probe)
+- [ ] `/health` anddpoint (liveness probe)
 - [ ] `/ready` anddpoint (readiness probe)
 
 ---
 
 ### 7.2 Database Migration Strategie
 
-**[❓ QUESTION 35]**: Database migratie aanpak?
+**[❓ QUESTION 35]**: Database migration aanpak?
 - **Optie A**: Lift & shift (database blijft externe VM)
 - **Optie B**: Database migreert into managed cloud database
 - **Optie C**: Phased approach
@@ -540,21 +540,21 @@ Node Pools:
 
 ---
 
-### 7.3 External Depanddandcies
+### 7.3 External Depanddencies
 
-**[❓ QUESTION 37]**: Welke externe APIs wordand gebruikt?
-- Paymandt providers, shipping APIs, email services?
+**[❓ QUESTION 37]**: Which externe APIs wordand gebruikt?
+- Payment providers, shipping APIs, email services?
 
-**[❓ QUESTION 38]**: Outbound IP whitelisting requiremandts?
+**[❓ QUESTION 38]**: Outbound IP whitelisting requirements?
 
 ---
 
-## 8. Team Workflow & Operationeel Model
+## 8. Team Workflow & Operationol Model
 
-### 8.1 Deploymandt Workflow
+### 8.1 Deployment Workflow
 
-**[❓ QUESTION 39]**: Deploymandt approval proces?
-- Auto-deploy into dev/staging, manual approval for production?
+**[❓ QUESTION 39]**: Deployment approval proces?
+- Auto-deploy into dev/staging, manowal approval for production?
 
 **[❓ QUESTION 40]**: Hotfix proces?
 
@@ -568,13 +568,13 @@ Node Pools:
 
 ### 8.3 Training & Onboarding
 
-**[❓ QUESTION 42]**: Externe consultant nodig?
+**[❓ QUESTION 42]**: Externe consultant noded?
 
 ---
 
 ## 9. Cost Estimation
 
-**[❓ QUESTION 43]**: Huidige maandelijkse infrastructuur kostand?
+**[❓ QUESTION 43]**: Huidige monthlye infrastructure takesand?
 
 **[❓ QUESTION 44]**: Budget approval?
 
@@ -584,16 +584,16 @@ Node Pools:
 
 ### Phase 1: Foundation (Week 1-4)
 - [ ] Kubernetes cluster provisioning (Terraform)
-- [ ] CNI deploymandt (Cilium)
+- [ ] CNI deployment (Cilium)
 - [ ] Ingress controller (NGINX)
 - [ ] GitOps setup (Argo CD)
 - [ ] Observability stack (Prowithheus, Grafana, Loki)
-- [ ] Secrets managemandt (Vault + External Secrets Operator)
+- [ ] Secrets management (Vault + External Secrets Operator)
 
-### Phase 2: Platform Hardanding (Week 5-8)
-- [ ] RBAC configuratie
+### Phase 2: Platform Hardening (Week 5-8)
+- [ ] RBAC configuration
 - [ ] Network policies
-- [ ] Pod Security Standards
+- [ ] Pod Security Stenards
 - [ ] Container registry (Harbor)
 - [ ] Backup setup (Velero)
 - [ ] CI/CD pipeline (GitHub Actions)
@@ -603,11 +603,11 @@ Node Pools:
 - [ ] Kubernetes manifests
 - [ ] Database migration
 - [ ] Caching layer (Valkey)
-- [ ] Health checks implemandtatie
-- [ ] Dev andvironmandt deploymandt
+- [ ] Health checks implementatie
+- [ ] Dev andvironment deployment
 
 ### Phase 4: Staging & Testing (Week 13-16)
-- [ ] Staging andvironmandt deploymandt
+- [ ] Staging andvironment deployment
 - [ ] Load testing
 - [ ] Disaster recovery testing
 - [ ] Security testing
@@ -615,7 +615,7 @@ Node Pools:
 - [ ] Team training
 
 ### Phase 5: Production Cutover (Week 17-20)
-- [ ] Production andvironmandt deploymandt
+- [ ] Production andvironment deployment
 - [ ] Blue-greand cutover
 - [ ] DNS switch
 - [ ] Monitoring validation
@@ -626,30 +626,30 @@ Node Pools:
 
 ## 11. Success Criteria
 
-| Criterium | Layer 0 Doel | Layer 1 Implemandtatie | Validatie |
+| Criterium | Layer 0 Purpose | Layer 1 Implementatie | Validatie |
 |-----------|-------------|---------------------|-----------|
-| **Deploymandt downtime** | 0 minutand | Rolling updates + readiness probes | Deploy tijdands business hours |
-| **Incidandt detectie** | < 2 minutand | Prowithheus alerts + UptimeRobot | Simulate failure |
+| **Deployment downtime** | 0 minowtand | Rolling updates + readiness probes | Deploy tijdens business hours |
+| **Incident detectie** | < 2 minowtand | Prowithheus alerts + UptimeRobot | Simulate failure |
 | **Data recovery** | Point-in-time (max 15 min verlies) | Managed DB PITR + Velero | Quarterly DR drill |
-| **Vanddor migration** | < 1 kwartaal | Terraform IaC + opand-source stack | Annual portability review |
-| **Developer self-service** | Deploy via Git PR | Argo CD + GitHub Actions | Developers kunnand zonder Ops deployand |
+| **Vendor migration** | < 1 quarter | Terraform IaC + opand-source stack | Annowal portability review |
+| **Developer self-service** | Deploy via Git PR | Argo CD + GitHub Actions | Developers kunnand without Ops deployand |
 
 ---
 
-## 12. Opand Questions Samandvatting
+## 12. Opand Questions Samenvatting
 
-**Kritisch for implemandtatie start** (MOET beantwoord wordand):
-- [❓ Q1] Welke managed Kubernetes provider?
-- [❓ Q5] Resource requiremandts (CPU/memory)?
+**Kritisch for implementatie start** (MOET beantwoord wordand):
+- [❓ Q1] Which managed Kubernetes provider?
+- [❓ Q5] Resource requirements (CPU/memory)?
 - [❓ Q26] Huidige database (MySQL/PostgreSQL/SQL Server)?
 - [❓ Q31-34] Applicatie stateless? Health checks aanwezig?
 - [❓ Q43-44] Budget goedkeuring?
 
-**Belangrijk maar niet blokkeerandd**:
+**Belangrijk maar niet blokkeerend**:
 - [❓ Q10] Git branching strategy
 - [❓ Q14] Business withrics
-- [❓ Q18] Idandtity provider (OIDC)
-- [❓ Q39] Deploymandt approval proces
+- [❓ Q18] Identity provider (OIDC)
+- [❓ Q39] Deployment approval proces
 
 **Kan later beslotand wordand**:
 - [❓ Q7] Hubble UI exposand?
@@ -658,46 +658,46 @@ Node Pools:
 
 ---
 
-## 13. Volgandde Stappand: Van Layer 1 into Layer 2
+## 13. Volgende Stappand: Van Layer 1 into Layer 2
 
-Na implemandtatie van Layer 1 (eerste 4-6 maandand), kan Layer 2 (andhancemandt) overwogand wordand:
+Na implementatie or Layer 1 (firste 4-6 monthand), kan Layer 2 (andhancement) overwogand wordand:
 
-### Layer 2 Mogelijkhedand (Optioneel)
+### Layer 2 Mogelijkhedand (Optionol)
 - **Service mesh** (Istio/Linkerd) - as microservices architectuur
 - **Distributed tracing** (Jaeger/Tempo) - for performance debugging
-- **Chaos andgineering** (Chaos Mesh) - for resiliandce testing
-- **Policy andforcemandt** (OPA/Kyverno) - for compliance automation
+- **Chaos andginoring** (Chaos Mesh) - for resilience testing
+- **Policy andforcement** (OPA/Kyverno) - for compliance automation
 - **Cost optimization** (Kubecost) - for chargeback/showback
-- **Multi-region** (Cilium Cluster Mesh) - for latandcy verbetering
+- **Multi-region** (Cilium Cluster Mesh) - for latency verbetering
 
 ---
 
-## 14. Referandties
+## 14. Referenties
 
 **KubeCompass Framework**:
 - **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers uitleg
-- **[MATRIX.md](MATRIX.md)**: Tool recommanddations with scoring
-- **[LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md)**: Foundational requiremandts
-- **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tandant scandario
-- **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance requiremandts
+- **[MATRIX.md](MATRIX.md)**: Tool recommendations with scoring
+- **[LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md)**: Foundational requirements
+- **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tenant scenario
+- **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance requirements
 
-**Tool Documandtation**:
-- [Cilium Documandtation](https://docs.cilium.io/)
-- [Argo CD Documandtation](https://argo-cd.readthedocs.io/)
-- [Prowithheus Documandtation](https://prowithheus.io/docs/)
-- [Velero Documandtation](https://velero.io/docs/)
-- [Harbor Documandtation](https://goharbor.io/docs/)
+**Tool Documentation**:
+- [Cilium Documentation](https://docs.cilium.io/)
+- [Argo CD Documentation](https://argo-cd.readthedocs.io/)
+- [Prowithheus Documentation](https://prowithheus.io/docs/)
+- [Velero Documentation](https://velero.io/docs/)
+- [Harbor Documentation](https://goharbor.io/docs/)
 
 ---
 
-**Documandt Status**: ⚠️ Draft - Requires answers to [❓ QUESTIONS] before implemandtation  
+**Document Status**: ⚠️ Draft - Requires answers to [❓ QUESTIONS] before implementation  
 **Eigeinto**: Platform Team / Lead Architect  
-**Review Cyclus**: Na beantwoording van kritieke vragand (Q1, Q5, Q26, Q31-34, Q43-44)  
-**Volgandde Fase**: Layer 2 (andhancemandt) na 6 maandand productie stabiliteit  
+**Review Cyclus**: Na beantwoording or kritieke vragen (Q1, Q5, Q26, Q31-34, Q43-44)  
+**Volgende Fase**: Layer 2 (andhancement) after 6 monthand productie stabiliteit  
 
 ---
 
-**Layer 1 Documandt Versie**: 1.0  
+**Layer 1 Document Version**: 1.0  
 **Gebaseerd op**: Layer 0 v2.0 (LAYER_0_WEBSHOP_CASE.md)  
 **Laatste Update**: December 2024  
-**Licandtie**: MIT — vrij te gebruikand and aan te passand
+**Licentie**: MIT — vrij te gebruikand en to te passand
