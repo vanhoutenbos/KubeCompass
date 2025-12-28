@@ -1,0 +1,31 @@
+# Multi-node Kind cluster for advanced testing
+# 1 control-plane + 2 worker nodes
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kubecompass-multinode
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP
+      - containerPort: 30443
+        hostPort: 8443
+        protocol: TCP
+      - containerPort: 30090
+        hostPort: 9090
+        protocol: TCP
+    kubeadmConfigPatches:
+      - |
+        kind: ClusterConfiguration
+        apiServer:
+          extraArgs:
+            "enable-admission-plugins": "NodeRestriction"
+  - role: worker
+    labels:
+      node-role: worker
+      workload-type: compute
+  - role: worker
+    labels:
+      node-role: worker
+      workload-type: storage

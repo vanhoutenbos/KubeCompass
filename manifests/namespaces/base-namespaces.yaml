@@ -1,0 +1,74 @@
+# Layer 0 - Foundation Namespaces
+# These represent the base operational namespaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-platform
+  labels:
+    name: kube-compass-platform
+    layer: "0"
+    type: platform
+    managed-by: kubecompass
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-monitoring
+  labels:
+    name: kube-compass-monitoring
+    layer: "0"
+    type: observability
+    managed-by: kubecompass
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-security
+  labels:
+    name: kube-compass-security
+    layer: "0"
+    type: security
+    managed-by: kubecompass
+---
+# Layer 1 - Application Support Namespaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-data
+  labels:
+    name: kube-compass-data
+    layer: "1"
+    type: data-services
+    managed-by: kubecompass
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-messaging
+  labels:
+    name: kube-compass-messaging
+    layer: "1"
+    type: messaging
+    managed-by: kubecompass
+---
+# Layer 2 - Test Workload Namespaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-test
+  labels:
+    name: kube-compass-test
+    layer: "2"
+    type: application
+    managed-by: kubecompass
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-compass-webshop
+  labels:
+    name: kube-compass-webshop
+    layer: "2"
+    type: application
+    use-case: webshop
+    managed-by: kubecompass

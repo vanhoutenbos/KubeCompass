@@ -304,25 +304,83 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 
 ---
 
+## Local Testing Platform 🧪 NEW!
+
+**Test Kubernetes platform concepts locally without cloud dependencies.**
+
+We provide a complete Kind-based testing environment to validate platform decisions:
+
+- ✅ **Multiple cluster configurations** (base, Cilium, Calico, multi-node)
+- ✅ **Bootstrap scripts** (Windows PowerShell + Linux Bash)
+- ✅ **Smoke test suite** for cluster validation
+- ✅ **Layered manifests** (Layer 0/1/2 structure)
+- ✅ **Reproducible and declarative** (Git-first, IaC approach)
+
+### Quick Start - Local Testing
+
+```bash
+# Clone repository
+git clone https://github.com/vanhoutenbos/KubeCompass.git
+cd KubeCompass
+
+# Create base cluster (Windows)
+.\kind\create-cluster.ps1
+
+# Create base cluster (Linux/WSL)
+./kind/create-cluster.sh
+
+# Run smoke tests
+.\tests\smoke\run-tests.ps1     # Windows
+./tests/smoke/run-tests.sh       # Linux
+
+# Deploy test workloads
+kubectl apply -f manifests/namespaces/
+kubectl apply -f manifests/base/
+```
+
+📖 **[Complete Getting Started Guide](docs/GETTING_STARTED.md)**  
+📁 **[Kind Configuration Reference](kind/README.md)**  
+🧪 **[Testing Documentation](tests/README.md)**
+
+**Testing different CNIs:**
+```bash
+# Each CNI needs its own cluster
+./kind/create-cluster.sh cilium
+cilium install
+
+./kind/create-cluster.sh calico
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+```
+
+**Why local testing?**
+- ✅ Validate platform concepts **before** cloud deployment
+- ✅ Test tool combinations in **isolated environments**
+- ✅ Learn Kubernetes **without cloud costs**
+- ✅ Reproduce issues **consistently**
+- ✅ Practice IaC and GitOps workflows **locally**
+
+---
+
 ## Quick Start
 
-1. **🛒 Try the [Interactive Tool Selector](tool-selector-wizard.html)** — webshop-style tool selection
-2. **🤖 Use the [AI Chat Guide](AI_CHAT_GUIDE.md)** — get "Use X unless Y" recommendations from AI
-3. **🎨 Explore the [Visual Diagrams](DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
-4. **Start with the [Framework](FRAMEWORK.md)** to understand the decision landscape
-5. **Read the [Production-Ready Definition](PRODUCTION_READY.md)** for enterprise compliance requirements
-6. **Check the [Decision Matrix](MATRIX.md)** for tool recommendations across all layers
-7. **Review the [Scenarios](SCENARIOS.md)** for architecture examples
-8. **🗺️ Check the [Domain Roadmap](DOMAIN_ROADMAP.md)** for step-by-step implementation guidance **NEW!**
+1. **🧪 Set up [Local Testing Environment](docs/GETTING_STARTED.md)** — validate concepts with Kind clusters **NEW!**
+2. **🛒 Try the [Interactive Tool Selector](tool-selector-wizard.html)** — webshop-style tool selection
+3. **🤖 Use the [AI Chat Guide](docs/AI_CHAT_GUIDE.md)** — get "Use X unless Y" recommendations from AI
+4. **🎨 Explore the [Visual Diagrams](docs/DIAGRAMS.md)** or open [interactive-diagram.html](interactive-diagram.html) in your browser
+5. **Start with the [Framework](docs/architecture/FRAMEWORK.md)** to understand the decision landscape
+5. **Read the [Production-Ready Definition](docs/implementation/PRODUCTION_READY.md)** for enterprise compliance requirements
+6. **Check the [Decision Matrix](docs/MATRIX.md)** for tool recommendations across all layers
+7. **Review the [Scenarios](docs/planning/SCENARIOS.md)** for architecture examples
+8. **🗺️ Check the [Domain Roadmap](docs/planning/DOMAIN_ROADMAP.md)** for step-by-step implementation guidance **NEW!**
    - Complete tool options for all 15 domains (Layer 0, 1, 2)
    - Testing plans with 2+ options per domain
    - Week-by-week schedule for hands-on testing
    - Decision rules to guide tool selection
 9. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
-   - **[Layer 0: Foundational Requirements](LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
-   - **[Layer 1: Tool Selection](LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
-   - **[Layer 2: Enhancement Decisions](LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
-   - **🆕 [Architecture Review Summary](ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
+   - **[Layer 0: Foundational Requirements](docs/cases/LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
+   - **[Layer 1: Tool Selection](docs/cases/LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
+   - **[Layer 2: Enhancement Decisions](docs/cases/LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
+   - **🆕 [Architecture Review Summary](docs/architecture/ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support (NEW!)
    - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP (NEW!)
 10. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
 11. **Check the [Gap Analysis](GAP_ANALYSIS.md)** to see what we're working on
@@ -331,6 +389,42 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 13. **See [CNCF Alignment Analysis](CNCF_ALIGNMENT.md)** for comprehensive CNCF Cloud Native Landscape mapping
 14. **Read [Related Initiatives](RELATED_INITIATIVES.md)** to understand how KubeCompass differs from CNCF Landscape, OpenSSF, ThoughtWorks Tech Radar, and others
 15. **Read [Project Challenges](CHALLENGES.md)** to understand our struggles and how you can help
+
+---
+
+## Repository Structure
+
+```
+KubeCompass/
+├── kind/                  # Kind cluster configurations
+│   ├── cluster-*.yaml     # Cluster configs (base, cilium, calico, multinode)
+│   ├── create-cluster.*   # Bootstrap scripts (PowerShell + Bash)
+│   └── README.md          # Kind documentation
+├── manifests/             # Kubernetes manifests (layered)
+│   ├── base/              # Layer 2 - Test workloads
+│   ├── namespaces/        # Layer 0 - Namespace definitions
+│   ├── rbac/              # Layer 0 - RBAC policies
+│   ├── networking/        # Layer 0/1 - Network policies
+│   └── README.md          # Manifests documentation
+├── tests/                 # Test suites
+│   ├── smoke/             # Basic cluster validation
+│   ├── policy/            # Policy engine testing
+│   ├── chaos/             # Chaos engineering tests
+│   └── README.md          # Testing documentation
+├── docs/                  # Documentation
+│   ├── architecture/      # Framework, vision, methodology
+│   ├── cases/             # Layer 0/1/2 case studies
+│   ├── planning/          # Roadmaps, challenges, scenarios
+│   ├── implementation/    # Implementation guides, production ready
+│   ├── runbooks/          # Operational runbooks
+│   ├── GETTING_STARTED.md # Local setup guide
+│   └── *.md               # Other documentation
+├── cases/                 # Use case definitions (JSON + MD)
+├── reviews/               # Hands-on tool reviews
+├── *.html                 # Interactive tools (wizard, diagrams)
+├── README.md              # This file
+└── CONTRIBUTING.md        # Contribution guidelines
+```
 
 ---
 

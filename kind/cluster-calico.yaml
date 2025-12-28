@@ -1,0 +1,28 @@
+# Kind cluster configuration for Calico CNI testing
+# Disables default CNI to allow Calico installation
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kubecompass-calico
+networking:
+  # Disable default kindnet CNI
+  disableDefaultCNI: true
+  # Calico works with kube-proxy
+  podSubnet: "192.168.0.0/16"
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP
+      - containerPort: 30443
+        hostPort: 8443
+        protocol: TCP
+      - containerPort: 30090
+        hostPort: 9090
+        protocol: TCP
+    kubeadmConfigPatches:
+      - |
+        kind: ClusterConfiguration
+        apiServer:
+          extraArgs:
+            "enable-admission-plugins": "NodeRestriction"
