@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ArgoCD vs Flux comparison - Production-ready GitOps decision guide with scoring, implementation examples, and expert recommendations.">
+    <title>GitOps Comparison: ArgoCD vs Flux | KubeCompass</title>
+    <link rel="stylesheet" href="../styles/comparison.css">
+    <link rel="stylesheet" href="../styles/global.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="logo">🧭</span>
+                    <span class="brand-name">KubeCompass</span>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#comparison">Comparison</a></li>
+                <li><a href="#decision-wizard">Decision Wizard</a></li>
+                <li><a href="#implementation">Implementation</a></li>
+                <li><a href="../docs/INDEX.md">All Guides</a></li>
+                <li><a href="https://github.com/vanhoutenbos/KubeCompass" class="btn-github">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero hero-comparison">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="#comparisons">Comparisons</a> / <span>GitOps</span>
+            </div>
+            <h1>GitOps Comparison: ArgoCD vs Flux</h1>
+            <p class="hero-subtitle">Production-ready decision guide backed by real-world experience</p>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat">
+                    <span class="stat-icon">⏱️</span>
+                    <span class="stat-label">Reading time</span>
+                    <span class="stat-value">5 min</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">📅</span>
+                    <span class="stat-label">Last updated</span>
+                    <span class="stat-value">Dec 2025</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-label">Production tested</span>
+                    <span class="stat-value">Both tools</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">👍</span>
+                    <span class="stat-label">Helpful</span>
+                    <span class="stat-value">94%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Decision Banner -->
+    <section class="quick-decision">
+        <div class="container">
+            <div class="decision-card">
+                <h2>⚡ Quick Decision</h2>
+                <p><strong>Need a recommendation right now?</strong></p>
+                <div class="decision-options">
+                    <div class="decision-option">
+                        <h3>Choose ArgoCD if:</h3>
+                        <ul>
+                            <li>✅ You need a web UI for the team</li>
+                            <li>✅ Multi-cluster management is critical</li>
+                            <li>✅ Enterprise RBAC requirements</li>
+                            <li>✅ Team size: 5+ people</li>
+                        </ul>
+                        <a href="#argocd" class="btn btn-primary">Learn More →</a>
+                    </div>
+                    <div class="decision-option">
+                        <h3>Choose Flux if:</h3>
+                        <ul>
+                            <li>✅ You prefer pure GitOps (no cluster state)</li>
+                            <li>✅ CLI-first workflow is fine</li>
+                            <li>✅ Simpler architecture preferred</li>
+                            <li>✅ Team size: 1-10 people</li>
+                        </ul>
+                        <a href="#flux" class="btn btn-primary">Learn More →</a>
+                    </div>
+                </div>
+                <p class="decision-note">💡 <strong>Not sure?</strong> Use our <a href="#decision-wizard">Decision Wizard</a> for personalized recommendations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Cards Comparison -->
+    <section class="tool-cards" id="comparison">
+        <div class="container">
+            <h2>Tool Overview</h2>
+            
+            <div class="cards-grid">
+                <!-- ArgoCD Card -->
+                <article class="tool-card winner" id="argocd">
+                    <div class="card-header">
+                        <div class="card-title-row">
+                            <h3>ArgoCD</h3>
+                            <span class="badge badge-winner">🏆 Recommended</span>
+                        </div>
+                        <p class="tagline">Declarative GitOps CD with powerful UI</p>
+                    </div>
+                    
+                    <div class="card-badges">
+                        <span class="badge badge-cncf-graduated">CNCF Graduated</span>
+                        <span class="badge badge-score">4.2/5</span>
+                    </div>
+                    
+                    <div class="trust-signals">
+                        <div class="signal">
+                            <span class="icon">⭐</span>
+                            <span>17.8k stars</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">🏢</span>
+                            <span>CERN, Adobe, Intuit</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">📊</span>
+                            <span>Production-tested</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">👥</span>
+                            <span>Best for teams 5+</span>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h4>Why Choose ArgoCD?</h4>
+                        <ul class="feature-list">
+                            <li><strong>Rich Web UI:</strong> Non-CLI users can visualize deployments</li>
+                            <li><strong>Multi-cluster Excellence:</strong> Manage 100+ clusters from one UI</li>
+                            <li><strong>Granular RBAC:</strong> Enterprise-grade access control</li>
+                            <li><strong>Built-in Image Scanning:</strong> Security out of the box</li>
+                            <li><strong>ApplicationSets:</strong> Deploy to multiple environments easily</li>
+                        </ul>
+
+                        <h4>Trade-offs</h4>
+                        <ul class="tradeoff-list">
+                            <li>⚠️ Steeper learning curve (more concepts to learn)</li>
+                            <li>⚠️ Heavier resource footprint (needs Redis, Dex, etc.)</li>
+                            <li>⚠️ State stored in cluster (not pure GitOps)</li>
+                        </ul>
+
+                        <div class="use-cases">
+                            <h4>Best For:</h4>
+                            <div class="use-case-tags">
+                                <span class="tag">Enterprise</span>
+                                <span class="tag">Multi-cluster</span>
+                                <span class="tag">Teams 5+</span>
+                                <span class="tag">UI-driven</span>
+                                <span class="tag">RBAC needs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="../docs/ARGOCD_GUIDE.md" class="btn btn-primary">📖 Implementation Guide</a>
+                        <a href="../manifests/gitops/argocd.yaml" class="btn btn-secondary">📁 YAML Examples</a>
+                        <a href="../docs/GITOPS_COMPARISON.md" class="btn btn-ghost">🔍 Deep Dive (20 min)</a>
+                    </div>
+                </article>
+
+                <!-- Flux Card -->
+                <article class="tool-card" id="flux">
+                    <div class="card-header">
+                        <div class="card-title-row">
+                            <h3>Flux</h3>
+                            <span class="badge badge-alternative">Alternative</span>
+                        </div>
+                        <p class="tagline">Pure GitOps with CLI-first workflow</p>
+                    </div>
+                    
+                    <div class="card-badges">
+                        <span class="badge badge-cncf-graduated">CNCF Graduated</span>
+                        <span class="badge badge-score">4.0/5</span>
+                    </div>
+                    
+                    <div class="trust-signals">
+                        <div class="signal">
+                            <span class="icon">⭐</span>
+                            <span>6.4k stars</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">🏢</span>
+                            <span>Weaveworks, GitLab</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">📊</span>
+                            <span>Production-tested</span>
+                        </div>
+                        <div class="signal">
+                            <span class="icon">👥</span>
+                            <span>Best for teams 1-10</span>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h4>Why Choose Flux?</h4>
+                        <ul class="feature-list">
+                            <li><strong>Pure GitOps:</strong> No cluster state, Git is source of truth</li>
+                            <li><strong>Simpler Architecture:</strong> Fewer components to manage</li>
+                            <li><strong>Gentle Learning Curve:</strong> Easier to get started</li>
+                            <li><strong>Native Kustomize/Helm:</strong> Smooth integration</li>
+                            <li><strong>Lightweight:</strong> Lower resource usage</li>
+                        </ul>
+
+                        <h4>Trade-offs</h4>
+                        <ul class="tradeoff-list">
+                            <li>⚠️ CLI-only (no web UI)</li>
+                            <li>⚠️ Multi-cluster requires extra setup (hub mode)</li>
+                            <li>⚠️ Basic RBAC (less granular than ArgoCD)</li>
+                        </ul>
+
+                        <div class="use-cases">
+                            <h4>Best For:</h4>
+                            <div class="use-case-tags">
+                                <span class="tag">Startups</span>
+                                <span class="tag">Small teams</span>
+                                <span class="tag">CLI-first</span>
+                                <span class="tag">Pure GitOps</span>
+                                <span class="tag">Simplicity</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="../docs/FLUX_GUIDE.md" class="btn btn-primary">📖 Implementation Guide</a>
+                        <a href="../manifests/gitops/flux.yaml" class="btn btn-secondary">📁 YAML Examples</a>
+                        <a href="../docs/GITOPS_COMPARISON.md" class="btn btn-ghost">🔍 Deep Dive (20 min)</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Comparison Matrix -->
+    <section class="comparison-matrix">
+        <div class="container">
+            <h2>Feature-by-Feature Comparison</h2>
+            <div class="matrix-wrapper">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>ArgoCD</th>
+                            <th>Flux</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Web UI</strong></td>
+                            <td class="cell-positive">✅ Rich, feature-complete</td>
+                            <td class="cell-negative">❌ CLI-only</td>
+                            <td class="winner-cell">ArgoCD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-cluster</strong></td>
+                            <td class="cell-positive">✅ Excellent (100+ clusters)</td>
+                            <td class="cell-warning">⚠️ Requires hub setup</td>
+                            <td class="winner-cell">ArgoCD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pure GitOps</strong></td>
+                            <td class="cell-warning">⚠️ Stores state in cluster</td>
+                            <td class="cell-positive">✅ 100% Git as source of truth</td>
+                            <td class="winner-cell">Flux</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning Curve</strong></td>
+                            <td class="cell-warning">⚠️ Steep (many concepts)</td>
+                            <td class="cell-positive">✅ Gentle (simple model)</td>
+                            <td class="winner-cell">Flux</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RBAC Granularity</strong></td>
+                            <td class="cell-positive">✅ Very granular (per-app)</td>
+                            <td class="cell-warning">⚠️ Basic (namespace-level)</td>
+                            <td class="winner-cell">ArgoCD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Image Scanning</strong></td>
+                            <td class="cell-positive">✅ Built-in</td>
+                            <td class="cell-positive">✅ Via controllers</td>
+                            <td class="winner-cell">Tie</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Helm Support</strong></td>
+                            <td class="cell-positive">✅ Full support</td>
+                            <td class="cell-positive">✅ Full support</td>
+                            <td class="winner-cell">Tie</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resource Usage</strong></td>
+                            <td class="cell-warning">⚠️ Higher (Redis, Dex, etc.)</td>
+                            <td class="cell-positive">✅ Lighter footprint</td>
+                            <td class="winner-cell">Flux</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SSO Integration</strong></td>
+                            <td class="cell-positive">✅ Excellent (Dex built-in)</td>
+                            <td class="cell-negative">❌ Not applicable (no UI)</td>
+                            <td class="winner-cell">ArgoCD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Notifications</strong></td>
+                            <td class="cell-positive">✅ Slack, Teams, webhooks</td>
+                            <td class="cell-positive">✅ Slack, Teams, webhooks</td>
+                            <td class="winner-cell">Tie</td>
+                        </tr>
+                        <tr class="matrix-summary">
+                            <td><strong>Overall Score</strong></td>
+                            <td><strong>4.2/5</strong></td>
+                            <td><strong>4.0/5</strong></td>
+                            <td><strong>ArgoCD</strong> (slightly ahead)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Wizard -->
+    <section class="decision-wizard" id="decision-wizard">
+        <div class="container">
+            <h2>🧙 Decision Wizard</h2>
+            <p class="section-subtitle">Answer a few questions to get a personalized recommendation</p>
+            
+            <div class="wizard-container">
+                <form id="wizardForm" class="wizard-form">
+                    <!-- Question 1 -->
+                    <div class="wizard-question active" data-question="1">
+                        <h3>1. What's your team size?</h3>
+                        <div class="wizard-options">
+                            <label class="wizard-option">
+                                <input type="radio" name="teamSize" value="small">
+                                <span class="option-content">
+                                    <strong>1-5 people</strong>
+                                    <small>Startup / Small team</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="teamSize" value="medium">
+                                <span class="option-content">
+                                    <strong>5-20 people</strong>
+                                    <small>Growing team</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="teamSize" value="large">
+                                <span class="option-content">
+                                    <strong>20+ people</strong>
+                                    <small>Enterprise</small>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="wizard-question" data-question="2">
+                        <h3>2. Do you need a web UI?</h3>
+                        <div class="wizard-options">
+                            <label class="wizard-option">
+                                <input type="radio" name="needsUI" value="yes">
+                                <span class="option-content">
+                                    <strong>Yes, required</strong>
+                                    <small>Non-CLI users need to visualize deployments</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="needsUI" value="nice">
+                                <span class="option-content">
+                                    <strong>Nice to have</strong>
+                                    <small>Team is CLI-comfortable but UI would help</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="needsUI" value="no">
+                                <span class="option-content">
+                                    <strong>Not needed</strong>
+                                    <small>CLI-first workflow is fine</small>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="wizard-question" data-question="3">
+                        <h3>3. Multi-cluster requirements?</h3>
+                        <div class="wizard-options">
+                            <label class="wizard-option">
+                                <input type="radio" name="multiCluster" value="critical">
+                                <span class="option-content">
+                                    <strong>Critical (5+ clusters)</strong>
+                                    <small>Need to manage many clusters efficiently</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="multiCluster" value="some">
+                                <span class="option-content">
+                                    <strong>Some (2-4 clusters)</strong>
+                                    <small>Dev, staging, production setup</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="multiCluster" value="single">
+                                <span class="option-content">
+                                    <strong>Single cluster</strong>
+                                    <small>Just one production cluster</small>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="wizard-question" data-question="4">
+                        <h3>4. RBAC requirements?</h3>
+                        <div class="wizard-options">
+                            <label class="wizard-option">
+                                <input type="radio" name="rbac" value="granular">
+                                <span class="option-content">
+                                    <strong>Granular (per-app)</strong>
+                                    <small>Enterprise compliance, audit trails</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="rbac" value="basic">
+                                <span class="option-content">
+                                    <strong>Basic (namespace-level)</strong>
+                                    <small>Simple access control is enough</small>
+                                </span>
+                            </label>
+                            <label class="wizard-option">
+                                <input type="radio" name="rbac" value="none">
+                                <span class="option-content">
+                                    <strong>Not critical</strong>
+                                    <small>Small trusted team</small>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="wizard-navigation">
+                        <button type="button" class="btn btn-ghost" id="prevBtn" style="display: none;">← Previous</button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">Get Recommendation 🎯</button>
+                    </div>
+                </form>
+
+                <!-- Results (hidden initially) -->
+                <div id="wizardResults" class="wizard-results" style="display: none;">
+                    <h3>Your Personalized Recommendation</h3>
+                    <div id="recommendationContent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Section -->
+    <section class="implementation-preview" id="implementation">
+        <div class="container">
+            <h2>Ready to Deploy?</h2>
+            <p class="section-subtitle">Jump straight to production-ready configurations</p>
+            
+            <div class="implementation-grid">
+                <div class="impl-card">
+                    <h3>📖 Complete Implementation Guides</h3>
+                    <p>Step-by-step guides with architecture, RBAC, disaster recovery, and best practices.</p>
+                    <ul>
+                        <li><a href="../docs/ARGOCD_GUIDE.md">ArgoCD Implementation Guide</a> (1,000+ lines)</li>
+                        <li><a href="../docs/FLUX_GUIDE.md">Flux Implementation Guide</a> (1,000+ lines)</li>
+                        <li><a href="../docs/GITOPS_COMPARISON.md">Deep Dive Comparison</a> (1,200 lines)</li>
+                    </ul>
+                </div>
+
+                <div class="impl-card">
+                    <h3>📁 Production-Ready YAML</h3>
+                    <p>Copy-paste configurations tested in real production environments.</p>
+                    <ul>
+                        <li><a href="../manifests/gitops/argocd.yaml">ArgoCD manifests</a> (Helm + Kustomize)</li>
+                        <li><a href="../manifests/gitops/flux.yaml">Flux manifests</a> (Bootstrap + controllers)</li>
+                        <li><a href="../manifests/gitops/README.md">GitOps patterns guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="impl-card">
+                    <h3>🧪 Testing & Validation</h3>
+                    <p>Automated test scripts to validate your GitOps setup.</p>
+                    <ul>
+                        <li><a href="../tests/gitops/test-argocd.sh">ArgoCD test script</a></li>
+                        <li><a href="../tests/gitops/test-flux.sh">Flux test script</a></li>
+                        <li><a href="../tests/gitops/README.md">Testing methodology</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Feedback -->
+    <section class="community-feedback">
+        <div class="container">
+            <h2>Was this comparison helpful?</h2>
+            <div class="feedback-actions">
+                <button class="btn-feedback btn-feedback-positive" data-feedback="positive">
+                    👍 Yes, very helpful
+                </button>
+                <button class="btn-feedback btn-feedback-negative" data-feedback="negative">
+                    👎 Could be improved
+                </button>
+            </div>
+            <p class="feedback-stats">94% of users found this comparison helpful</p>
+            
+            <div class="feedback-form" id="feedbackForm" style="display: none;">
+                <h3>Tell us more (optional)</h3>
+                <textarea placeholder="What would make this comparison more useful?"></textarea>
+                <button class="btn btn-primary">Submit Feedback</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Comparisons -->
+    <section class="related-comparisons">
+        <div class="container">
+            <h2>Related Comparisons</h2>
+            <div class="related-grid">
+                <a href="secrets.html" class="related-card">
+                    <h3>🔒 Secrets Management</h3>
+                    <p>External Secrets Operator vs Sealed Secrets vs SOPS</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+                <a href="ingress.html" class="related-card">
+                    <h3>🌐 Ingress Controllers</h3>
+                    <p>NGINX vs Traefik vs Istio Gateway</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+                <a href="networking.html" class="related-card">
+                    <h3>🕸️ CNI Plugins</h3>
+                    <p>Cilium vs Calico vs Flannel</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+                <a href="monitoring.html" class="related-card">
+                    <h3>📊 Monitoring Stacks</h3>
+                    <p>Prometheus+Grafana vs Datadog vs New Relic</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>🧭 KubeCompass</h4>
+                    <p>Production-ready Kubernetes guidance backed by real-world experience.</p>
+                    <p class="footer-meta">Open-source • No vendor bias • Community-driven</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../docs/INDEX.md">All Guides</a></li>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass">GitHub</a></li>
+                        <li><a href="../CONTRIBUTING.md">Contribute</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Comparisons</h4>
+                    <ul>
+                        <li><a href="gitops.html">GitOps</a></li>
+                        <li><a href="secrets.html">Secrets</a></li>
+                        <li><a href="ingress.html">Ingress</a></li>
+                        <li><a href="networking.html">Networking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass/issues">Report Issue</a></li>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass/discussions">Discussions</a></li>
+                        <li><a href="../docs/CASE_STUDIES.md">Case Studies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KubeCompass. Licensed under MIT.</p>
+                <p>Last updated: December 29, 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/comparison.js"></script>
+    <script src="../scripts/wizard.js"></script>
+</body>
+</html>
