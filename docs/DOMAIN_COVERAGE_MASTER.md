@@ -17,10 +17,10 @@ Dit document bevat:
 4. 🎯 **Test target**: Minimaal 2 tools per domein
 5. 📊 **Status per domein** met prioriteit
 
-**Total domains identified**: 16  
-**Currently tested**: 4-5  
-**In documentation only**: 7-8  
-**Missing completely**: 4-5
+**Total domains identified**: 18  
+**Currently tested**: 0 (all need practical validation)  
+**Theory documented**: 2 (CNI, GitOps - need practical testing)  
+**Coming soon**: 16 (not started)
 
 ---
 
@@ -57,7 +57,7 @@ Dit document bevat:
 ### 1. Container Networking (CNI) 📝 🔴
 
 **Status**: 📝 Gedocumenteerd (theorie), niet praktisch getest  
-**Priority**: CRITICAL (Week 2 in roadmap)  
+**Priority**: 🔴 CRITICAL (Week 1 in roadmap)  
 **Cost of Change**: VERY HIGH - requires cluster rebuild
 
 **Documentatie**:
@@ -86,7 +86,7 @@ Dit document bevat:
 ### 2. GitOps Strategy 📝 🔴
 
 **Status**: 📝 Gedocumenteerd (theorie), niet praktisch getest  
-**Priority**: CRITICAL (Week 4 in roadmap)  
+**Priority**: 🔴 CRITICAL (Week 3 in roadmap)  
 **Cost of Change**: VERY HIGH - changes deployment workflow
 
 **Documentatie**:
@@ -115,9 +115,9 @@ Dit document bevat:
 
 ### 3. Identity, Access & Security (RBAC) 🧪 🔴
 
-**Status**: 🧪 Getest, documentatie incompleet  
-**Layer**: 0 - Foundational  
-**Priority**: CRITICAL
+**Status**: ❌ Niet getest, minimale documentatie  
+**Priority**: 🔴 CRITICAL (Week 2 in roadmap)  
+**Cost of Change**: VERY HIGH - requires proper access control
 
 **Documentatie**:
 - ✅ [FRAMEWORK.md](architecture/FRAMEWORK.md) - Domain definitie
@@ -141,9 +141,9 @@ Dit document bevat:
 
 ### 4. Secrets Management 📝 🔴
 
-**Status**: 📝 Gedocumenteerd, nog niet praktisch getest  
-**Layer**: 0 - Foundational  
-**Priority**: CRITICAL
+**Status**: 📝 Gedocumenteerd (theorie), niet praktisch getest  
+**Priority**: 🔴 CRITICAL (Week 2 in roadmap)  
+**Cost of Change**: VERY HIGH - requires external secret provider integration
 
 **Documentatie**:
 - ✅ [SECRETS_MANAGEMENT.md](planning/SECRETS_MANAGEMENT.md) - Uitgebreide analyse
@@ -167,9 +167,9 @@ Dit document bevat:
 
 ### 5. Provisioning & Infrastructure (IaC) ⚠️ 🔴
 
-**Status**: ⚠️ Gedeeltelijk gedocumenteerd, geen testing  
-**Layer**: 0 - Foundational  
-**Priority**: CRITICAL
+**Status**: ❌ Niet getest, minimale documentatie  
+**Priority**: 🔴 CRITICAL (Week 0 in roadmap)  
+**Cost of Change**: VERY HIGH - requires cluster rebuild
 
 **Documentatie**:
 - ✅ [TRANSIP_INFRASTRUCTURE_AS_CODE.md](TRANSIP_INFRASTRUCTURE_AS_CODE.md) - TransIP-specific IaC
@@ -195,9 +195,9 @@ Dit document bevat:
 
 ### 6. Network Policies 🧪 🔴
 
-**Status**: 🧪 Getest, documentatie incompleet  
-**Layer**: 0 - Foundational  
-**Priority**: HIGH
+**Status**: 📝 Gedocumenteerd (theorie), niet praktisch getest  
+**Priority**: 🔴 CRITICAL (Week 2 in roadmap)  
+**Cost of Change**: VERY HIGH - foundational security layer
 
 **Documentatie**:
 - ✅ [manifests/networking/](../manifests/networking/) - Praktische voorbeelden
@@ -218,13 +218,18 @@ Dit document bevat:
 
 ---
 
-## Layer 1: Core Operations (Within First Month)
+## Priority 2: 🟠 Operations Ready (Needed for Production)
+
+**Cost of Change**: MEDIUM - significant effort but possible  
+**When to Decide**: Within first month
+
+---
 
 ### 7. Observability (Metrics, Logging, Tracing) 📝 🟠
 
-**Status**: 📝 Gedocumenteerd, nog niet praktisch getest  
-**Layer**: 1 - Core Operations  
-**Priority**: HIGH
+**Status**: ❌ Niet getest, minimale documentatie  
+**Priority**: 🟠 OPERATIONS (Week 4 in roadmap)  
+**Cost of Change**: MEDIUM - significant effort to replace
 
 **Documentatie**:
 - ✅ [FRAMEWORK.md](architecture/FRAMEWORK.md) - Domain definitie

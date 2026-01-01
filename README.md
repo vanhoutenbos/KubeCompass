@@ -94,8 +94,11 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 ### 4. Interactive Visual Diagrams 🎨
 Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
 
+🌊 **[Complete Deployment Flow](deployment-flow.html)** (Open in browser) — All 18 domains in implementation order  
+📊 **[Domain Overview by Priority](domain-overview.html)** (Open in browser) — Interactive cards organized by Critical/Operations/Enhancement  
+🗓️ **[Timeline View](deployment-order.html)** (Open in browser) — Week-by-week roadmap  
 🚢 **[Kubernetes Ecosystem Infographic](kubernetes-ecosystem.html)** (Open in browser)  
-⚙️ **[Kubernetes Architecture Infographic](kubernetes-architecture.html)** (Open in browser) **NEW!**  
+⚙️ **[Kubernetes Architecture Infographic](kubernetes-architecture.html)** (Open in browser)  
 🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
 📊 **[See All Diagrams](DIAGRAMS.md)** (Complete visual guide)
 
@@ -247,7 +250,7 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 🚧 **Early Stage** — actively building the foundation.
 
 �️ **[Interactive Deployment Order](deployment-order.html)** — Visual timeline: what to deploy when  
-📊 **[Complete Domain Coverage Overview](docs/DOMAIN_COVERAGE_MASTER.md)** — Master plan with 18 domains, testing targets  
+📊 **[Complete Domain Coverage Overview](docs/DOMAIN_COVERAGE_MASTER_V2.md)** — Master plan with 18 domains, testing targets  
 🚀 **[Launch Roadmap](LAUNCH_ROADMAP.md)** — 12-week roadmap to go live with tested tools
 
 **Domain Coverage Progress**:
