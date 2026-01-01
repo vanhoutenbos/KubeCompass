@@ -94,10 +94,12 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 ### 4. Interactive Visual Diagrams 🎨
 Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
 
+🚢 **[Kubernetes Ecosystem Infographic](kubernetes-ecosystem.html)** (Open in browser) **NEW!**  
 🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
 📊 **[See All Diagrams](DIAGRAMS.md)** (Complete visual guide)
 
 **What you'll find:**
+- **NEW!** Colorful ecosystem infographic with character-driven design (like Scaled Agile Framework)
 - Domain architecture overview with dependency flows
 - Decision layer timing model (when to decide what)
 - Scale-based deployment models (1 team → multi-team → enterprise)

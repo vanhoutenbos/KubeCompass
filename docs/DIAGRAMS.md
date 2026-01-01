@@ -4,13 +4,39 @@ This document contains visual representations of KubeCompass domains, subdomains
 
 ---
 
+## 🚢 NEW: Kubernetes Ecosystem Infographic
+
+**A colorful, character-driven visualization of the entire Kubernetes ecosystem!**
+
+🎨 **[View Kubernetes Ecosystem Infographic](../kubernetes-ecosystem.html)** - Interactive HTML viewer  
+📄 **[Download SVG](../kubernetes-ecosystem-infographic.svg)** - Editable vector format  
+📖 **[Infographic Documentation](../INFOGRAPHIC_README.md)** - Complete guide and technical details
+
+**Features:**
+- Character-based design (like Linux penguin, but for Kubernetes!)
+- Three-layer platform visualization (Foundational, Core, Enhancements)
+- Color-coded domains for easy navigation
+- Fully editable SVG format (Inkscape, Illustrator, Figma compatible)
+- Ready for interactive clickable areas (like Scaled Agile Framework)
+- Dutch language with easy translation support
+
+**Perfect for:**
+- Presentations and stakeholder communication
+- Team onboarding and training
+- Documentation navigation
+- Poster printing for team spaces
+- Interactive website integration
+
+---
+
 ## Table of Contents
 
-1. [Domain Architecture Overview](#1-domain-architecture-overview)
-2. [Decision Layer Visualization](#2-decision-layer-visualization)
-3. [Scale-Based Deployment Models](#3-scale-based-deployment-models)
-4. [CNCF Alignment Map](#4-cncf-alignment-map)
-5. [Interactive Navigation Guide](#5-interactive-navigation-guide)
+1. [Kubernetes Ecosystem Infographic](#-new-kubernetes-ecosystem-infographic) **NEW!**
+2. [Domain Architecture Overview](#1-domain-architecture-overview)
+3. [Decision Layer Visualization](#2-decision-layer-visualization)
+4. [Scale-Based Deployment Models](#3-scale-based-deployment-models)
+5. [CNCF Alignment Map](#4-cncf-alignment-map)
+6. [Interactive Navigation Guide](#5-interactive-navigation-guide)
 
 ---
 
