@@ -48,7 +48,7 @@
     🔒 DevSecOps Pipeline - Security at Every Stage
   </text>
   <text x="900" y="90" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#34495E">
-    Van Developer tot Productie: Waar vindt beveiging plaats in de pipeline
+    From Developer to Production: Where Security Happens in the Pipeline
   </text>
   
   <!-- Main Pipeline Flow -->
