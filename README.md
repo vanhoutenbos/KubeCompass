@@ -246,6 +246,18 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 
 🚧 **Early Stage** — actively building the foundation.
 
+�️ **[Interactive Deployment Order](deployment-order.html)** — Visual timeline: what to deploy when  
+📊 **[Complete Domain Coverage Overview](docs/DOMAIN_COVERAGE_MASTER.md)** — Master plan with 18 domains, testing targets  
+🚀 **[Launch Roadmap](LAUNCH_ROADMAP.md)** — 12-week roadmap to go live with tested tools
+
+**Domain Coverage Progress**:
+- ✅ **Fully Tested**: 0/18 domains (all need practical validation)
+- 📝 **Theory Documented**: 2/18 domains (CNI, GitOps - need practical testing)
+- 🚧 **In Progress**: 4/18 domains (RBAC, Network Policies, Observability, CI/CD)
+- ❌ **Not Started**: 12/18 domains
+- 🎯 **MVP Goal**: 6-8 critical domains with minimum 2 tested tools each
+- 📅 **Target Launch**: Week 12 (mid-March 2026)
+
 **What's ready:**
 - [x] Framework structure and domains
 - [x] Testing methodology
