@@ -81,7 +81,8 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 
 📖 **[Unified Case Structure](UNIFIED_CASE_STRUCTURE.md)** - Template for case analysis  
 📘 **[Case Analysis Template](CASE_ANALYSIS_TEMPLATE.md)** - Step-by-step guide for creating new cases  
-📚 **[Example: Webshop Migration](cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete SME case study
+📚 **[Example: Webshop Migration](cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete SME case study  
+🏦 **[Example: Enterprise Financial Services](cases/enterprise/ENTERPRISE_UNIFIED_CASE.md)** - Complete enterprise case study
 
 **What you get:**
 - Structured requirements extraction (Layer 0/1/2 methodology)

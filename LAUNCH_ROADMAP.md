@@ -15,7 +15,9 @@
 - ✅ Interactieve website met domain selector
 - ✅ Visual domain map (deployment order)
 - ✅ "Choose X unless Y" beslisregels voor alle MVP domeinen
-- ✅ Minimaal 1 complete case study (webshop al gedaan ✓)
+- ✅ Minimaal 2 complete case studies:
+  - ✅ Webshop (SME) - 486 lines, gedaan ✓
+  - ✅ Enterprise Financial Services - 600+ lines, gedaan ✓
 - ⚠️ Overige domeinen krijgen "Coming Soon" badge
 
 **Post-Launch (iteratief)**:
@@ -579,7 +581,7 @@ Week 5+: Enhancements
 ### Launch Metrics (Week 12)
 - ✅ 6-8 critical domains with 2+ tested tools
 - ✅ Interactive website live
-- ✅ 1 complete case study
+- ✅ 2+ complete case studies (webshop SME ✓ + enterprise financial services ✓)
 - ✅ Clear "Choose X unless Y" for all MVP domains
 - ✅ GitHub repo public & contribution-ready
 
