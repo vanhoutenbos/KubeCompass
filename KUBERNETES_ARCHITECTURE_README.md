@@ -185,14 +185,14 @@ Een Service Mesh is een infrastructure layer die **tussen je Services** leeft en
 - ✅ **Service Discovery** - Automatische service registration
 
 **Populaire implementaties:**
-Er zijn verschillende service mesh oplossingen beschikbaar, elk met hun eigen sterke punten qua complexiteit, performance en features.
+There are various service mesh solutions available, each with their own strengths in terms of complexity, performance and features.
 
-**Wanneer heb je een Service Mesh nodig?**
-- Microservices architectuur met 10+ services
-- Compliance vereist mTLS tussen alle services
-- Advanced traffic management nodig (canary, A/B testing)
-- Gedetailleerde observability tussen services
-- Zero-trust networking binnen het cluster
+**When do you need a Service Mesh?**
+- Microservices architecture with 10+ services
+- Compliance requires mTLS between all services
+- Advanced traffic management needed (canary, A/B testing)
+- Detailed observability between services
+- Zero-trust networking within the cluster
 
 ### Laag 7: Persistent Storage 💾
 
@@ -814,13 +814,13 @@ De architectuur flow is natuurlijk top-down:
 
 Een Service Mesh is geen aparte laag maar een **overlay network** die tussen services leeft. De semi-transparante styling en dashed border visualiseren dat het "bovenop" het cluster ligt en verkeer onderschept.
 
-### Waarom Managed K8s Bovenaan?
+### Why Managed K8s at the Top?
 
-Voor de meeste teams is "waar haal ik mijn cluster vandaan" de eerste beslissing. Managed vs self-managed heeft grote impact op de rest van de architectuur (control plane visibility, upgrade management, cloud integrations).
+For most teams, "where do I get my cluster from" is the first decision. Managed vs self-managed has a major impact on the rest of the architecture (control plane visibility, upgrade management, cloud integrations).
 
-### Kleurenschema Rationale
+### Color Scheme Rationale
 
-- **Blauw** (Control Plane) - Betrouwbaar, stabiel, "brain"
+- **Blue** (Control Plane) - Reliable, stable, "brain"
 - **Groen** (Worker Nodes) - Groeiend, scaling, "workhorses"
 - **Oranje** (Service Mesh) - Overlay, warning (adds complexity)
 - **Paars** (Pipeline) - Automation, modern tooling
