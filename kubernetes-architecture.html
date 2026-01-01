@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kubernetes Architectuur Infographic - KubeCompass</title>
+    <title>Kubernetes Architecture Infographic - KubeCompass</title>
     <style>
         * {
             margin: 0;
@@ -285,38 +285,38 @@
 <body>
     <div class="container">
         <header>
-            <h1>⚙️ Kubernetes Architectuur</h1>
-            <div class="subtitle">High-level overzicht van concepten en oplossingen</div>
+            <h1>⚙️ Kubernetes Architecture</h1>
+            <div class="subtitle">High-level overview of concepts and solutions</div>
             <div class="description">
-                Deze pagina visualiseert Kubernetes architectuur en DevSecOps pipeline vanuit een hoog niveau: 
-                alle concepten zoals Pods, Services, Deployments, en waar een Service Mesh leeft. 
-                Plus een complete security pipeline die laat zien waar CVE scanning, image signing, 
-                runtime security en andere beveiligingsmaatregelen plaatsvinden.
+                This page visualizes Kubernetes architecture and DevSecOps pipeline from a high level: 
+                all concepts like Pods, Services, Deployments, and where a Service Mesh lives. 
+                Plus a complete security pipeline showing where CVE scanning, image signing, 
+                runtime security and other security measures take place.
             </div>
         </header>
 
         <div class="controls">
             <a href="kubernetes-architecture-infographic.svg" download class="btn">
-                📥 Download Architectuur SVG
+                📥 Download Architecture SVG
             </a>
             <a href="kubernetes-devsecops-pipeline.svg" download class="btn">
                 📥 Download DevSecOps Pipeline SVG
             </a>
             <a href="KUBERNETES_ARCHITECTURE_README.md" class="btn btn-secondary">
-                📖 Lees Documentatie
+                📖 Read Documentation
             </a>
             <a href="kubernetes-ecosystem.html" class="btn btn-tertiary">
-                🚢 Bekijk Ecosysteem Infographic
+                🚢 View Ecosystem Infographic
             </a>
             <button class="btn" onclick="showGuide()">
-                💡 Interactieve Gids
+                💡 Interactive Guide
             </button>
         </div>
 
         <div class="infographic-container">
-            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">⚙️ Kubernetes Architectuur</h2>
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">⚙️ Kubernetes Architecture</h2>
             <object id="infographic" data="kubernetes-architecture-infographic.svg" type="image/svg+xml">
-                <img src="kubernetes-architecture-infographic.svg" alt="Kubernetes Architectuur Infographic" />
+                <img src="kubernetes-architecture-infographic.svg" alt="Kubernetes Architecture Infographic" />
             </object>
         </div>
 
@@ -332,17 +332,17 @@
                 <div class="icon">☁️</div>
                 <h3>Managed Kubernetes</h3>
                 <p>
-                    <strong>Cloud provider opties:</strong> Azure AKS, AWS EKS, Google GKE, DigitalOcean DOKS, 
-                    of self-managed. Elk met hun eigen voor- en nadelen qua kosten, vendor lock-in, en features.
+                    <strong>Cloud provider options:</strong> Azure AKS, AWS EKS, Google GKE, DigitalOcean DOKS, 
+                    or self-managed. Each with their own pros and cons regarding cost, vendor lock-in, and features.
                 </p>
             </div>
 
             <div class="feature-card">
                 <div class="icon">🚀</div>
-                <h3>CI/CD Pipeline met GitOps</h3>
+                <h3>CI/CD Pipeline with GitOps</h3>
                 <p>
-                    <strong>De moderne deployment flow:</strong> Van Git repository → CI Build → Container Registry 
-                    → GitOps Controller → Deployment naar Kubernetes → Continue synchronisatie.
+                    <strong>The modern deployment flow:</strong> From Git repository → CI Build → Container Registry 
+                    → GitOps Controller → Deployment to Kubernetes → Continuous synchronization.
                 </p>
             </div>
 
@@ -350,12 +350,12 @@
                 <div class="icon">🧠</div>
                 <h3>Control Plane</h3>
                 <p>
-                    <strong>De hersenen van Kubernetes:</strong>
+                    <strong>The brain of Kubernetes:</strong>
                 </p>
                 <ul>
-                    <li>API Server - centrale toegangspunt</li>
-                    <li>Scheduler - plaatst pods op nodes</li>
-                    <li>Controller Manager - beheert desired state</li>
+                    <li>API Server - central access point</li>
+                    <li>Scheduler - places pods on nodes</li>
+                    <li>Controller Manager - manages desired state</li>
                     <li>etcd - distributed key-value store</li>
                     <li>CoreDNS - service discovery</li>
                 </ul>
@@ -365,27 +365,27 @@
                 <div class="icon">🖥️</div>
                 <h3>Worker Nodes</h3>
                 <p>
-                    <strong>Waar je workloads draaien:</strong>
+                    <strong>Where your workloads run:</strong>
                 </p>
                 <ul>
                     <li>Kubelet - node agent</li>
                     <li>Kube-proxy - network proxy</li>
-                    <li>Container Runtime - draait containers</li>
-                    <li>Pods - kleinste deploybare eenheid</li>
+                    <li>Container Runtime - runs containers</li>
+                    <li>Pods - smallest deployable unit</li>
                 </ul>
             </div>
 
             <div class="feature-card">
                 <div class="icon">📦</div>
-                <h3>Kubernetes Objecten</h3>
+                <h3>Kubernetes Objects</h3>
                 <p>
-                    <strong>Verschillende workload types:</strong>
+                    <strong>Different workload types:</strong>
                 </p>
                 <ul>
                     <li>Pods - containers grouping</li>
                     <li>Deployments - stateless apps</li>
                     <li>StatefulSets - stateful apps</li>
-                    <li>DaemonSets - runs op alle nodes</li>
+                    <li>DaemonSets - runs on all nodes</li>
                     <li>Jobs/CronJobs - batch workloads</li>
                 </ul>
             </div>
@@ -394,7 +394,7 @@
                 <div class="icon">🔗</div>
                 <h3>Services & Networking</h3>
                 <p>
-                    <strong>Hoe componenten communiceren:</strong>
+                    <strong>How components communicate:</strong>
                 </p>
                 <ul>
                     <li>Services - stable endpoints</li>
@@ -408,9 +408,9 @@
                 <div class="icon">🕸️</div>
                 <h3>Service Mesh</h3>
                 <p>
-                    <strong>Leeft tussen de Services!</strong> Een Service Mesh layer 
-                    voegt toe: mTLS encryptie, advanced load balancing, circuit breaking, distributed tracing, 
-                    en metrics - zonder code aanpassingen.
+                    <strong>Lives between the Services!</strong> A Service Mesh layer 
+                    adds: mTLS encryption, advanced load balancing, circuit breaking, distributed tracing, 
+                    and metrics - without code changes.
                 </p>
             </div>
 
@@ -418,7 +418,7 @@
                 <div class="icon">💾</div>
                 <h3>Persistent Storage</h3>
                 <p>
-                    <strong>Data die blijft bestaan:</strong>
+                    <strong>Data that persists:</strong>
                 </p>
                 <ul>
                     <li>Persistent Volumes (PV)</li>
@@ -433,7 +433,7 @@
                 <div class="icon">🔐</div>
                 <h3>Security & Configuration</h3>
                 <p>
-                    <strong>Beveiliging en configuratie:</strong>
+                    <strong>Security and configuration:</strong>
                 </p>
                 <ul>
                     <li>RBAC - role-based access control</li>
@@ -446,9 +446,9 @@
 
             <div class="feature-card">
                 <div class="icon">📊</div>
-                <h3>Autoscaling & Optimalisatie</h3>
+                <h3>Autoscaling & Optimization</h3>
                 <p>
-                    <strong>Automatische schaling:</strong>
+                    <strong>Automatic scaling:</strong>
                 </p>
                 <ul>
                     <li>Horizontal Pod Autoscaler (HPA)</li>
@@ -462,13 +462,13 @@
                 <div class="icon">🌐</div>
                 <h3>Ingress & Load Balancing</h3>
                 <p>
-                    <strong>External toegang tot je cluster:</strong>
+                    <strong>External access to your cluster:</strong>
                 </p>
                 <ul>
                     <li>Ingress Controllers - HTTP/HTTPS routing</li>
                     <li>Load Balancers - traffic distribution</li>
                     <li>API Gateways - advanced routing</li>
-                    <li>TLS/Certificate Management - automatische SSL</li>
+                    <li>TLS/Certificate Management - automatic SSL</li>
                 </ul>
             </div>
 
@@ -476,35 +476,35 @@
                 <div class="icon">🔒</div>
                 <h3>DevSecOps Pipeline</h3>
                 <p>
-                    <strong>Security op elk niveau:</strong>
+                    <strong>Security at every level:</strong>
                 </p>
                 <ul>
-                    <li>SAST - Static code analysis tijdens development</li>
+                    <li>SAST - Static code analysis during development</li>
                     <li>CVE Scanning - Container image vulnerability scanning</li>
                     <li>Image Signing - Cryptographic verification</li>
-                    <li>Admission Control - Policy enforcement bij deployment</li>
-                    <li>Runtime Security - Threat detection in productie</li>
+                    <li>Admission Control - Policy enforcement at deployment</li>
+                    <li>Runtime Security - Threat detection in production</li>
                 </ul>
             </div>
 
             <div class="feature-card">
                 <div class="icon">🎯</div>
-                <h3>Verschil met Ecosysteem</h3>
+                <h3>Difference from Ecosystem</h3>
                 <p>
-                    De <strong>Ecosysteem Infographic</strong> toont welke domeinen je moet invullen (security, 
-                    observability, CI/CD). Deze <strong>Architectuur Infographic</strong> toont hoe Kubernetes 
-                    technisch werkt en waar elk component leeft.
+                    The <strong>Ecosystem Infographic</strong> shows which domains you need to fill in (security, 
+                    observability, CI/CD). This <strong>Architecture Infographic</strong> shows how Kubernetes 
+                    technically works and where each component lives.
                 </p>
             </div>
         </div>
 
         <footer>
             <p>
-                <strong>KubeCompass</strong> - Jouw gids door het Kubernetes ecosysteem<br>
+                <strong>KubeCompass</strong> - Your guide through the Kubernetes ecosystem<br>
                 <a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank">🌟 GitHub Repository</a> | 
-                <a href="docs/INDEX.md">📖 Documentatie</a> | 
-                <a href="interactive-diagram.html">🎨 Interactieve Diagrammen</a> |
-                <a href="kubernetes-ecosystem.html">🚢 Ecosysteem Infographic</a>
+                <a href="docs/INDEX.md">📖 Documentation</a> | 
+                <a href="interactive-diagram.html">🎨 Interactive Diagrams</a> |
+                <a href="kubernetes-ecosystem.html">🚢 Ecosystem Infographic</a>
             </p>
         </footer>
     </div>
@@ -514,32 +514,32 @@
     <div class="info-panel" id="infoPanel">
         <button class="close-btn" onclick="closeInfo()">×</button>
         <div id="infoPanelContent">
-            <h2>Over deze Infographics</h2>
+            <h2>About these Infographics</h2>
             <p>
-                Deze pagina bevat twee belangrijke infographics die Kubernetes en DevSecOps visualiseren.
+                This page contains two important infographics that visualize Kubernetes and DevSecOps.
             </p>
             
-            <h3>⚙️ Kubernetes Architectuur Infographic</h3>
+            <h3>⚙️ Kubernetes Architecture Infographic</h3>
             <p>
-                Toont de complete Kubernetes architectuur vanuit een hoog niveau perspectief, zonder specifieke tools te noemen.
-                Focus op concepten, componenten en architectuurlagen.
+                Shows the complete Kubernetes architecture from a high-level perspective, without naming specific tools.
+                Focus on concepts, components and architecture layers.
             </p>
             
-            <h3>🏗️ Opbouw van boven naar beneden:</h3>
+            <h3>🏗️ Structure from top to bottom:</h3>
             <ol style="margin-left: 20px; line-height: 1.8;">
-                <li><strong>Managed Kubernetes Layer:</strong> Waar je je cluster vandaan haalt</li>
-                <li><strong>CI/CD Pipeline met GitOps:</strong> Hoe code naar productie komt</li>
-                <li><strong>Control Plane:</strong> De hersenen die het cluster beheren</li>
-                <li><strong>Ingress/Load Balancer:</strong> Externe toegang tot je cluster</li>
-                <li><strong>Worker Nodes:</strong> Waar je applicaties draaien in Pods</li>
-                <li><strong>Service Mesh:</strong> Overlay netwerk tussen services voor advanced networking</li>
-                <li><strong>Persistent Storage:</strong> Data die blijft bestaan</li>
+                <li><strong>Managed Kubernetes Layer:</strong> Where you get your cluster from</li>
+                <li><strong>CI/CD Pipeline with GitOps:</strong> How code gets to production</li>
+                <li><strong>Control Plane:</strong> The brain that manages the cluster</li>
+                <li><strong>Ingress/Load Balancer:</strong> External access to your cluster</li>
+                <li><strong>Worker Nodes:</strong> Where your applications run in Pods</li>
+                <li><strong>Service Mesh:</strong> Overlay network between services for advanced networking</li>
+                <li><strong>Persistent Storage:</strong> Data that persists</li>
             </ol>
 
             <h3>🔒 DevSecOps Pipeline Infographic</h3>
             <p>
-                Visualiseert de complete security journey van code naar productie. Toont exact wanneer en waar 
-                elke beveiligingsmaatregel wordt toegepast in de pipeline.
+                Visualizes the complete security journey from code to production. Shows exactly when and where 
+                each security measure is applied in the pipeline.
             </p>
             
             <h3>📍 Security per Pipeline Stage:</h3>
@@ -551,27 +551,27 @@
                 <li><strong>Runtime:</strong> Runtime Detection, Behavior Monitoring, Anomaly Detection, Threat Response</li>
             </ul>
 
-            <h3>🕸️ Service Mesh - Het verschil</h3>
+            <h3>🕸️ Service Mesh - The difference</h3>
             <p>
-                Een Service Mesh is een speciale laag die <strong>tussen je Services</strong> leeft. Het onderschept 
-                al het verkeer tussen microservices en voegt functionaliteit toe zoals:
+                A Service Mesh is a special layer that lives <strong>between your Services</strong>. It intercepts 
+                all traffic between microservices and adds functionality such as:
             </p>
             <ul style="margin-left: 20px; line-height: 1.6;">
-                <li>Mutual TLS (mTLS) encryptie tussen alle services</li>
-                <li>Advanced load balancing en traffic management</li>
-                <li>Circuit breaking en retry logic</li>
-                <li>Distributed tracing voor observability</li>
-                <li>Metrics en logging zonder code aanpassingen</li>
+                <li>Mutual TLS (mTLS) encryption between all services</li>
+                <li>Advanced load balancing and traffic management</li>
+                <li>Circuit breaking and retry logic</li>
+                <li>Distributed tracing for observability</li>
+                <li>Metrics and logging without code changes</li>
             </ul>
 
-            <h3>🎯 Gebruik van deze Infographics</h3>
+            <h3>🎯 Use of these Infographics</h3>
             <ul style="margin-left: 20px; line-height: 1.6;">
-                <li>Training en onboarding van nieuwe teamleden</li>
-                <li>Architectuur reviews en discussies</li>
-                <li>Security awareness en DevSecOps training</li>
-                <li>Stakeholder presentaties</li>
-                <li>Documentatie en knowledge base</li>
-                <li>Print als poster voor in de teamruimte</li>
+                <li>Training and onboarding of new team members</li>
+                <li>Architecture reviews and discussions</li>
+                <li>Security awareness and DevSecOps training</li>
+                <li>Stakeholder presentations</li>
+                <li>Documentation and knowledge base</li>
+                <li>Print as poster for the team room</li>
             </ul>
         </div>
     </div>

@@ -1,67 +1,67 @@
 # Layer 2: Platform Enhancements & Resilience — Decision Framework
 
-**Target Audience**: Platform Enginors, DevOps Enginors, SREs, Architects  
+**Target Audience**: Platform Engineers, DevOps Engineers, SREs, Architects  
 **Type**: Decision Framework & Capability Mapping  
 **Organization**: Dutch webshop / online store with Essential SAFe methodology  
-**Prerequisite**: Layer 0 en Layer 1 zijn **geanalyseerd en gestructureerd** (niet per se geïmplementeerd)  
+**Prerequisite**: Layer 0 and Layer 1 are **analyzed and structured** (not necessarily implemented)  
 
 ---
 
-## ⚠️ Belangrijk: Dit is GEEN Implementatiegids
+## ⚠️ Important: This is NOT an Implementation Guide
 
-**Dit document is:**
-- 🎯 Eand **decision framework** for whand Layer 2 capabilities relevant wordand
-- 🧭 Eand **capability map** with keuzeruimte en trade-offs
-- 💡 Eand **denkraam** for volwassand platformteams
-- 📚 Eand **referentie** for architectuurbeslissingen
-- 🤖 **Input for AI agents** to architectuurkeuzes te redenerand
+**This document is:**
+- 🎯 A **decision framework** for when Layer 2 capabilities become relevant
+- 🧭 A **capability map** with choice space and trade-offs
+- 💡 A **thinking framework** for mature platform teams
+- 📚 A **reference** for architecture decisions
+- 🤖 **Input for AI agents** to reason about architecture choices
 
-**Dit document is NOT:**
-- ❌ Eand deployment guide
-- ❌ Eand Helm/Terraform tutorial
-- ❌ Eand "copy-paste en deployand" henleiding
-- ❌ Eand vervanging for vendor documentatie
-- ❌ Eand implementation die je 1-op-1 kunt draaiand
+**This document is NOT:**
+- ❌ A deployment guide
+- ❌ A Helm/Terraform tutorial
+- ❌ A "copy-paste and deploy" manual
+- ❌ A replacement for vendor documentation
+- ❌ An implementation you can run 1-to-1
 
 ---
 
 ## Reading Guide
 
-🎯 **[TRIGGER]** - Whand wordt deze capability relevant?  
-🔀 **[TRADE-OFFS]** - Which keuzes heb je en wat zijn de afwegingand?  
-⚠️ **[TIMING]** - Why now wel/niet implementerand?  
-💭 **[BESLUITPUNT]** - Which vragen moet je kunnand beantwoorden?  
-🔗 **[LAYER 1 LINK]** - How bouwt dit on Layer 1?  
+🎯 **[TRIGGER]** - When does this capability become relevant?  
+🔀 **[TRADE-OFFS]** - What choices do you have and what are the trade-offs?  
+⚠️ **[TIMING]** - Why implement now or not?  
+💭 **[DECISION POINT]** - What questions must you be able to answer?  
+🔗 **[LAYER 1 LINK]** - How does this build on Layer 1?  
 
 ---
 
 ## Executive Summary
 
-Dit document beschrijft **Layer 2: Platform Enhancements & Resilience** — het **besluitvormingsproces** for geavanceerde platform capabilities nadat de Layer 1 basis stabiel is.
+This document describes **Layer 2: Platform Enhancements & Resilience** — the **decision-making process** for advanced platform capabilities after the Layer 1 foundation is stable.
 
-### Context: Van Layer 1 to Layer 2
+### Context: From Layer 1 to Layer 2
 
-**Layer 1 (Fundament)** gaat over:
-- Cluster draait
-- GitOps werkt
+**Layer 1 (Foundation)** is about:
+- Cluster runs
+- GitOps works
 - Basic observability (metrics, logs)
-- Network policies bestaan
-- Deployments lukkand
+- Network policies exist
+- Deployments succeed
 
-**Layer 2 (Enhancement)** gaat about **maturity en optimization**:
-- What gebeurt er **tussand** services? → service mesh
-- How **traceer** je eand request andd-to-andd? → distributed tracing
-- How **test** je failure scenarios? → chaos andginoring
-- How **forceer** je security policies? → policy andforcement
-- Where gaat het **geld** naaradd? → cost visibility
-- Zijn we **klaar** for multi-region? → architectural readiness
+**Layer 2 (Enhancement)** is about **maturity and optimization**:
+- What happens **between** services? → service mesh
+- How do you **trace** a request end-to-end? → distributed tracing
+- How do you **test** failure scenarios? → chaos engineering
+- How do you **enforce** security policies? → policy enforcement
+- Where does the **money** go? → cost visibility
+- Are we **ready** for multi-region? → architectural readiness
 
 ### Core Question Layer 2
 
-> **"Whand wordt deze complexity investment de moeite waard?"**
+> **"When does this complexity investment become worthwhile?"**
 
-Niet: "Which tool is het beste?"  
-Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
+Not: "What tool is best?"  
+But: "**Under what circumstances would I even want this?**"
 
 ---
 
@@ -71,137 +71,137 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 |-----------|-------------------|----------------|------------|
 | **Service Mesh** | > 5 microservices, security/observability per-service | Medium-High | Monolith or < 3 services |
 | **Distributed Tracing** | Debugging cross-service issues takes > 1h | Medium | < 5 services, simple call chains |
-| **Chaos Enginoring** | Production incidents, HA validation noded | Low-Medium | Dev andvironment, single instance |
-| **Policy Enforcement** | Compliance requirement, > 10 developers | Medium | Small team, manowal review werkt |
-| **Cost Visibility** | Budget concerns, multi-tenant | Low | Single team, vaste takesand |
-| **Multi-Region Readiness** | Latency requirements, DR strategy | High | Single region voldoet, geand DR eis |
-| **Enhanced Auditing** | GDPR/DORA compliance, security team | Medium | Geand compliance eis |
+| **Chaos Engineering** | Production incidents, HA validation needed | Low-Medium | Dev environment, single instance |
+| **Policy Enforcement** | Compliance requirement, > 10 developers | Medium | Small team, manual review works |
+| **Cost Visibility** | Budget concerns, multi-tenant | Low | Single team, fixed costs |
+| **Multi-Region Readiness** | Latency requirements, DR strategy | High | Single region sufficient, no DR requirement |
+| **Enhanced Auditing** | GDPR/DORA compliance, security team | Medium | No compliance requirement |
 
 ---
 
 ## 1. Service Mesh
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer eand service mesh whand:**
-- ✅ Je **> 5 microservices** hebt with complexe inter-service communicatie
-- ✅ Je **per-service security** wilt (mTLS without code changes)
-- ✅ Je **gedetailleerde service-level metrics** noded hebt (latency, error rate, traffic)
-- ✅ Je **canary deployments** or **traffic splitting** wilt doand
-- ✅ Je **service topology** en **depanddency mapping** wilt visualiserand
+**Implement a service mesh when:**
+- ✅ You have **> 5 microservices** with complex inter-service communication
+- ✅ You want **per-service security** (mTLS without code changes)
+- ✅ You need **detailed service-level metrics** (latency, error rate, traffic)
+- ✅ You want to do **canary deployments** or **traffic splitting**
+- ✅ You want to visualize **service topology** and **dependency mapping**
 
-**NOT implementerand whand:**
-- ❌ Je eand **monolith** hebt or **< 3 services**
-- ❌ Je team **no capacity** heeft for additional operational overhead
-- ❌ **Network policies (L3/L4)** sufficientde zijn for je security model
-- ❌ Basic Prometheus metrics genoeg informatie gevand
+**NOT implement when:**
+- ❌ You have a **monolith** or **< 3 services**
+- ❌ Your team has **no capacity** for additional operational overhead
+- ❌ **Network policies (L3/L4)** are sufficient for your security model
+- ❌ Basic Prometheus metrics provide enough information
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Tool | Pro | Contra | Use Whand |
+| Tool | Pro | Contra | Use When |
 |------|-----|--------|----------|
-| **Linkerd** | Kleinste footprint, eenvoudig, auto-mTLS | Minder features dan Istio | Klein team, eenvoudige use case |
-| **Istio** | Feature-rich, andterprise support, mature | Complex, resource-intensive | Grote org, complexe routing |
-| **Cilium Service Mesh** | eBPF-based (zeer performant), CNI-integration | Beta, minder mature | Al Cilium CNI, early adopter |
-| **Consul Connect** | Multi-datacenter native, HashiCorp stack | Vereist Consul infra | Al HashiCorp stack (Vault, Nomad) |
+| **Linkerd** | Smallest footprint, simple, auto-mTLS | Fewer features than Istio | Small team, simple use case |
+| **Istio** | Feature-rich, enterprise support, mature | Complex, resource-intensive | Large org, complex routing |
+| **Cilium Service Mesh** | eBPF-based (very performant), CNI-integration | Beta, less mature | Already Cilium CNI, early adopter |
+| **Consul Connect** | Multi-datacenter native, HashiCorp stack | Requires Consul infra | Already HashiCorp stack (Vault, Nomad) |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **Hebband we now eand probleem dat eand service mesh solves?**
-   - Hebband we incidents gehad through miscommunicatie tussand services?
-   - Missand we visibility in service-to-service latencies?
-   - Is onze huidige security model (network policies) onsufficientde?
+1. **Do we have a problem now that a service mesh solves?**
+   - Have we had incidents through miscommunication between services?
+   - Are we missing visibility in service-to-service latencies?
+   - Is our current security model (network policies) insufficient?
 
-2. **Kunnand we de operationele overhead aan?**
-   - Hebband we capacity for learning curve?
-   - Kunnand we sidecar injection debuggand?
-   - Hebband we monitoring for mesh health?
+2. **Can we handle the operational overhead?**
+   - Do we have capacity for learning curve?
+   - Can we debug sidecar injection?
+   - Do we have monitoring for mesh health?
 
-3. **What is onze exit strategy?**
-   - Kunnand we terug to geand mesh without grote refactor?
-   - Zijn we vendor-locked?
+3. **What is our exit strategy?**
+   - Can we return to no mesh without major refactor?
+   - Are we vendor-locked?
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
-- Je microservices in productie draait
-- Je security compliance vereist (mTLS everywhere)
-- Je debugging cross-service issues > 4 uur per week takes
+**Implement NOW if:**
+- You run microservices in production
+- You require security compliance (mTLS everywhere)
+- Debugging cross-service issues takes > 4 hours per week
 
-**Wacht LATER als:**
-- Layer 1 nog not stable is
-- Je < 5 services hebt
-- Team nog geand Kubernetes-ervaring heeft
+**Wait LATER if:**
+- Layer 1 is not yet stable
+- You have < 5 services
+- Team has no Kubernetes experience yet
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
-- Cilium CNI (Layer 1) → Service mesh voegt L7 visibility add
-- Prometheus (Layer 1) → Service mesh voegt per-service goldand signals add
-- Network Policies (Layer 1) → Service mesh voegt mTLS add (zero-trust)
+**Builds on:**
+- Cilium CNI (Layer 1) → Service mesh adds L7 visibility
+- Prometheus (Layer 1) → Service mesh adds per-service golden signals
+- Network Policies (Layer 1) → Service mesh adds mTLS (zero-trust)
 
-**Vervangat niet:**
-- Network policies blijvand relevant (defense in depth)
-- Cilium CNI blijft, service mesh is additive
+**Does not replace:**
+- Network policies remain relevant (defense in depth)
+- Cilium CNI remains, service mesh is additive
 
 ---
 
 ## 2. Distributed Tracing
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer distributed tracing whand:**
-- ✅ Je **> 5 microservices** hebt with **complexe call chains**
-- ✅ **Debugging cross-service issues** > 1 uur per incident duurt
-- ✅ Je **root cause analysis** or performance problemand noded hebt
-- ✅ Je **service depanddencies** wilt begrijpand (depanddency graph)
-- ✅ Je **correlatie** tussand logs/metrics/traces wilt (observability maturity)
+**Implement distributed tracing when:**
+- ✅ You have **> 5 microservices** with **complex call chains**
+- ✅ **Debugging cross-service issues** takes > 1 hour per incident
+- ✅ You need **root cause analysis** of performance problems
+- ✅ You want to understand **service dependencies** (dependency graph)
+- ✅ You want **correlation** between logs/metrics/traces (observability maturity)
 
-**NOT implementerand whand:**
-- ❌ Je **< 5 services** hebt with simpele call chains
-- ❌ **Logs + metrics** sufficientde zijn for debugging
-- ❌ Je geand **storage budget** hebt for traces (hoge data volume)
-- ❌ Team geand tijd heeft for **service instrumentation**
+**NOT implement when:**
+- ❌ You have **< 5 services** with simple call chains
+- ❌ **Logs + metrics** are sufficient for debugging
+- ❌ You have no **storage budget** for traces (high data volume)
+- ❌ Team has no time for **service instrumentation**
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Approach | Pro | Contra | Use Whand |
+| Approach | Pro | Contra | Use When |
 |----------|-----|--------|----------|
-| **OpenTelemetry + Jaeger** | Opand stenard, vendor-neutral, mature | Storage overhead, setup complexity | Self-hosted, vendor indepanddence |
-| **OpenTelemetry + Tempo** | Grafana native, S3 storage, cost-efficient | Nieuwer dan Jaeger, minder features | Al Grafana stack, S3 beschikbaar |
-| **Cloud Provider (X-Ray, AppInsights)** | Managed, auto-instrumentation | Vendor lock-in, takesand | Al in die cloud, geand self-host |
-| **Zipkin** | Lightweight, eenvoudig | Minder actief dan Jaeger | Legacy use case |
+| **OpenTelemetry + Jaeger** | Open standard, vendor-neutral, mature | Storage overhead, setup complexity | Self-hosted, vendor independence |
+| **OpenTelemetry + Tempo** | Grafana native, S3 storage, cost-efficient | Newer than Jaeger, less features | Already Grafana stack, S3 available |
+| **Cloud Provider (X-Ray, AppInsights)** | Managed, auto-instrumentation | Vendor lock-in, costs | Already in that cloud, no self-host |
+| **Zipkin** | Lightweight, simple | Minder actief dan Jaeger | Legacy use case |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **What is de business impact or slow debugging?**
-   - Howveel tijd takes cross-service debugging per week?
-   - Howveel klantimpact hebband performance issues?
+1. **What is the business impact of slow debugging?**
+   - How many tijd takes cross-service debugging per week?
+   - How many klantimpact hebband performance issues?
 
-2. **Kunnand we services instrumenterand?**
-   - Hebband we ownership per service (voor SDK integration)?
-   - Kunnand we auto-instrumentation gebruikand (.NET, Java)?
-   - Hebband we capacity for manowal instrumentation (Go, Python)?
+2. **Can we services instrumenterand?**
+   - Do we have ownership per service (for SDK integration)?
+   - Can we auto-instrumentation gebruikand (.NET, Java)?
+   - Do we have capacity for manual instrumentation (Go, Python)?
 
-3. **What is onze trace retention strategy?**
-   - Howveel dayand traces bewarand? (storage takesand!)
+3. **What is our trace retention strategy?**
+   - How many days traces store? (storage costs!)
    - Sampling ratio (100% dev, 10% prod, 1% for high-traffic)?
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
+**Implement NOW if:**
 - Debugging cross-service issues > 1 uur per incident
-- Je production incidents hebt without duidelijke root cause
-- Je service depanddencies onbekend zijn (shadow depanddencies)
+- You production incidents have without clear root cause
+- You service depanddencies onbekend are (shadow depanddencies)
 
-**Wacht LATER als:**
-- Je < 5 services hebt
-- Logs + metrics sufficientde zijn
-- Geand budget for trace storage (TB's per month!)
+**Wait LATER if:**
+- You < 5 services have
+- Logs + metrics sufficient are
+- No budget for trace storage (TB's per month!)
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - Prometheus (Layer 1) → Traces voegand request-level detail add
 - Loki (Layer 1) → Trace ID in logs for correlatie
 - Grafana (Layer 1) → Unified view (metrics + logs + traces)
@@ -210,128 +210,128 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## 3. Chaos Enginoring
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer chaos andginoring whand:**
-- ✅ Je **HA (High Availability) claimt** maar niet test
-- ✅ Je **production incidents** wilt voorkomand through proactief testand
-- ✅ Je **RTO/RPO** wilt validerand (Disaster Recovery testing)
-- ✅ Je **team confidence** wilt bouwand in platform resilience
-- ✅ Je **SLO's** hebt die je wilt validerand
+**Implementeer chaos andginoring when:**
+- ✅ You **HA (High Availability) claimt** maar niet test
+- ✅ You **production incidents** want voorkomand through proactief testand
+- ✅ You **RTO/RPO** want validerand (Disaster Recovery testing)
+- ✅ You **team confidence** want bouwand in platform resilience
+- ✅ You **SLO's** have die je want validerand
 
-**NOT implementerand whand:**
-- ❌ Je **geand HA setup** hebt (single replica, single node)
-- ❌ Je **Layer 1 basis not stable** is
-- ❌ Team **geand tijd** heeft for experiment analysis
-- ❌ Je **geand monitoring** hebt to impact te metand
+**NOT implement when:**
+- ❌ You **no HA setup** have (single replica, single node)
+- ❌ You **Layer 1 basis not stable** is
+- ❌ Team **no tijd** has for experiment analysis
+- ❌ You **no monitoring** have to impact to measure
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Tool | Pro | Contra | Use Whand |
+| Tool | Pro | Contra | Use When |
 |------|-----|--------|----------|
 | **Chaos Mesh** | K8s-native, rich scenarios, GitOps | Chinos project (governance concern?) | Self-hosted, veel scenarios |
 | **LitmusChaos** | CNCF project, community-drivand | Complex setup | CNCF preference |
-| **Gremlin** | Enterprise support, managed | Commercial, niet self-hosted | Budget beschikbaar, managed voorkeur |
-| **AWS/Azure Chaos** | Cloud-native, provider integration | Vendor lock-in | Al in die cloud |
+| **Gremlin** | Enterprise support, managed | Commercial, niet self-hosted | Budget available, managed voorkeur |
+| **AWS/Azure Chaos** | Cloud-native, provider integration | Vendor lock-in | Already in that cloud |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **What is onze chaos maturity?**
-   - Hebband we HA setup (meerdere replicas, nodes)?
-   - Hebband we PodDisruptionBudgets?
-   - Hebband we readiness/liveness probes?
+1. **What is our chaos maturity?**
+   - Do we have HA setup (meerdere replicas, nodes)?
+   - Do we have PodDisruptionBudgets?
+   - Do we have readiness/liveness probes?
 
-2. **Which failure scenarios zijn relevant?**
-   - Pod crash? (test: K8s restart werkt)
+2. **What failure scenarios are relevant?**
+   - Pod crash? (test: K8s restart works)
    - Node failure? (test: pod scheduling on andere node)
-   - Network partition? (test: services blijvand beschikbaar)
-   - Resource stress? (test: HPA scaling werkt)
+   - Network partition? (test: services blijvand available)
+   - Resource stress? (test: HPA scaling works)
 
-3. **How metand we success?**
+3. **How do we measure success?**
    - SLO's blijvand within target? (99.9% uptime maintained)
    - Alerts triggerand correct?
-   - Automated recovery werkt?
+   - Automated recovery works?
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
-- Je HA claimt maar nooit test
-- Je production incidents hebt through failure scenarios
-- Je confidence wilt bouwand in platform resilience
+**Implement NOW if:**
+- You HA claimt maar nooit test
+- You production incidents have through failure scenarios
+- You confidence want bouwand in platform resilience
 
-**Wacht LATER als:**
+**Wait LATER if:**
 - Layer 1 nog not stable is
-- Je geand HA setup hebt
-- Geand monitoring to impact te metand
+- You no HA setup have
+- No monitoring to impact to measure
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
-- Velero (Layer 1) → Chaos test: cluster restore werkt?
+**Builds on:**
+- Velero (Layer 1) → Chaos test: cluster restore works?
 - Prometheus (Layer 1) → Chaos experiments zichtbaar in metrics
-- HA setup (Layer 1) → Chaos valideert dat HA daadwerkelijk werkt
+- HA setup (Layer 1) → Chaos valideert dat HA daadwerkelijk works
 
 ---
 
 ## 4. Policy Enforcement (Low Trust)
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer policy andforcement whand:**
-- ✅ Je **> 10 developers** hebt die niet allemaal K8s-experts zijn
-- ✅ Je **compliance vereistand** hebt (GDPR, DORA, PCI-DSS)
-- ✅ Je **security incidents** hebt gehad through misconfigurations
-- ✅ Je **automated validation** wilt for deployments
-- ✅ Je **audit trail** noded hebt for wie-wat-whand
+**Implementeer policy enforcement when:**
+- ✅ You **> 10 developers** have die niet allemaal K8s-experts are
+- ✅ You **compliance verrequirementtand** have (GDPR, DORA, PCI-DSS)
+- ✅ You **security incidents** have gehad through misconfigurations
+- ✅ You **automated validation** want for deployments
+- ✅ You **audit trail** needed have for wie-wat-whand
 
-**NOT implementerand whand:**
-- ❌ Je **< 5 developers** hebt die allemaal K8s-experts zijn
-- ❌ **Manowal review** proces werkt goed
-- ❌ Geand compliance requirements
+**NOT implement when:**
+- ❌ You **< 5 developers** have die allemaal K8s-experts are
+- ❌ **Manowal review** proces works goed
+- ❌ No compliance requirements
 - ❌ Team kan policy complexity niet aan
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Tool | Pro | Contra | Use Whand |
+| Tool | Pro | Contra | Use When |
 |------|-----|--------|----------|
-| **Kyverno** | YAML-based (geand Rego), mutations, generate policies | Minder krachtig dan OPA | Developer-friendly, eenvoud |
+| **Kyverno** | YAML-based (no Rego), mutations, generate policies | Minder krachtig dan OPA | Developer-friendly, eenvoud |
 | **OPA Gatekeeper** | Zeer krachtig (Rego), mature, CNCF | Rego learning curve, complex | Security team, complexe policies |
 | **Kubewardand** | Policies in Rust/Go/etc, WebAssembly | Nieuw, kleine community | Bleeding edge, WASM fans |
-| **Pod Security Admission** | K8s native, gratis | Alleand pod security, niet extensible | Basic security, geand custom policies |
+| **Pod Security Admission** | K8s native, gratis | Alleand pod security, niet extensible | Basic security, no custom policies |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **Which policies zijn kritisch?**
+1. **What policies are kritisch?**
    - No privileged containers? (security critical)
    - Resource limits required? (capacity management)
    - Trusted registry only? (supply chain security)
    - Network policies required? (network security)
 
-2. **What is onze andforcement strategy?**
+2. **What is our enforcement strategy?**
    - Start in **audit mode** (1 month: collect violations)
    - Gradual **warnings** (1 month: teams fixand violations)
    - Per-policy **andforce mode** (dev → staging → production)
 
-3. **What is onze exception strategy?**
+3. **What is our exception strategy?**
    - Who kan policy exceptions goedkeurand?
-   - How lang zijn exceptions geldig?
+   - How lang are exceptions geldig?
    - Audit trail for exceptions?
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
-- Je compliance requirements hebt
-- Je security incidents hebt through misconfigs
-- Je > 10 developers hebt
+**Implement NOW if:**
+- You compliance requirements have
+- You security incidents have through misconfigs
+- You > 10 developers have
 
-**Wacht LATER als:**
-- Je < 5 developers hebt
-- Manowal review werkt prima
-- Team heeft geand capacity for policy management
+**Wait LATER if:**
+- You < 5 developers have
+- Manowal review works prima
+- Team has no capacity for policy management
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - Pod Security Stenards (Layer 1) → Policies andforce PSS automatisch
 - Network Policies (Layer 1) → Policy generates default-deny
 - RBAC (Layer 1) → Policy audit RBAC changes
@@ -340,30 +340,30 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## 5. Cost Visibility
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer cost visibility whand:**
-- ✅ Je **budget concerns** hebt (takesand stijgand onverwacht)
-- ✅ Je **multi-tenant cluster** hebt (takesand allocatie per team)
-- ✅ Je **showback/chargeback** wilt doand per team/project
-- ✅ Je **idle resources** wilt identificerand (cost optimization)
-- ✅ Je **capacity planning** wilt baserand on daadwerkelijk gebruik
+**Implementeer cost visibility when:**
+- ✅ You **budget concerns** have (costs rising unexpectedly)
+- ✅ You **multi-tenant cluster** have (costs allocatie per team)
+- ✅ You **showback/chargeback** want doand per team/project
+- ✅ You **idle resources** want identificerand (cost optimization)
+- ✅ You **capacity planning** want baserand on daadwerkelijk gebruik
 
-**NOT implementerand whand:**
-- ❌ Je **single tenant** bent with **vaste takesand**
-- ❌ **Cloud takesand zijn geand concern** (budget ruim sufficientde)
-- ❌ Basic CPU/memory metrics from Prometheus sufficientde zijn
-- ❌ Team heeft geand tijd for cost optimization
+**NOT implement when:**
+- ❌ You **single tenant** are with **fixed costs**
+- ❌ **Cloud costs are no concern** (budget amply sufficient)
+- ❌ Basic CPU/memory metrics from Prometheus sufficient are
+- ❌ Team has no tijd for cost optimization
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Tool | Pro | Contra | Use Whand |
+| Tool | Pro | Contra | Use When |
 |------|-----|--------|----------|
 | **Kubecost** | Feature-rich, recommendations, multi-cloud | Commercial (gratis versie OK) | Full-featured, single cluster |
 | **OpenCost** | 100% opand-source, CNCF senbox | Minder features dan Kubecost | Budget constraint, basics |
-| **Cloud Provider Tools** | Native integration, managed | Vendor lock-in, niet K8s-native | Al in die cloud, native voorkeur |
+| **Cloud Provider Tools** | Native integration, managed | Vendor lock-in, not K8s-native | Already in that cloud, native voorkeur |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
 1. **What willand we wetand?**
    - Kostand per namespace? (multi-tenancy)
@@ -372,30 +372,30 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
    - Trend analysis? (groei voorspelland)
 
 2. **What doand we with de data?**
-   - Showback (informative)? → OpenCost sufficientde
+   - Showback (informative)? → OpenCost sufficient
    - Chargeback (financieel)? → Kubecost aanbevoland
    - Optimization (rightsizing)? → Kubecost recommendations
 
-3. **What is onze cost optimization strategy?**
+3. **What is our cost optimization strategy?**
    - Automated rightsizing? (risky!)
    - Manowal review (monthly)? (safe)
    - Alert on anomalies? (proactive)
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
-- Kostand stijgand onverwacht (> 20% per month)
-- Je multi-tenant bent (takesand allocatie onduidelijk)
+**Implement NOW if:**
+- Kostand rising unexpectedly (> 20% per month)
+- You multi-tenant bent (costs allocatie unclear)
 - Management vraagt cost visibility
 
-**Wacht LATER als:**
-- Single tenant, vaste takesand
-- Budget ruim sufficientde
-- Geand capacity for cost optimization
+**Wait LATER if:**
+- Single tenant, fixed costs
+- Budget amply sufficient
+- No capacity for cost optimization
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - Prometheus (Layer 1) → Kubecost gebruikt CPU/memory metrics
 - Resource limits (Layer 1) → Cost tool toont waste (limits vs usage)
 
@@ -403,61 +403,61 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## 6. Multi-Region Readiness
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Overweeg multi-region whand:**
-- ✅ Je **gebruikers in meerdere regio's** hebt with **latency requirements**
-- ✅ Je **Disaster Recovery** strategy multi-region vereist (RTO < 1h)
-- ✅ Je **data residency** requirements hebt (GDPR: EU data in EU)
-- ✅ Je **traffic growth** verwacht die single region niet aankan
+**Overweeg multi-region when:**
+- ✅ You **gebruikers in meerdere regio's** have with **latency requirements**
+- ✅ You **Disaster Recovery** strategy multi-region verrequirementt (RTO < 1h)
+- ✅ You **data residency** requirements have (GDPR: EU data in EU)
+- ✅ You **traffic growth** verwacht die single region niet aankan
 
-**NOT implementerand whand:**
-- ❌ **Single region voldoet** for je use case
-- ❌ Je **geand DR requirement** hebt
+**NOT implement when:**
+- ❌ **Single region sufficient** for je use case
+- ❌ You **no DR requirement** have
 - ❌ **Complexity** outweighs benefits (multi-region is HARD)
-- ❌ Je **database** is niet multi-region ready (biggest blocker!)
+- ❌ You **database** is niet multi-region ready (biggest blocker!)
 
 ### 🔀 [TRADE-OFFS] Architectural Choices
 
-| Approach | Pro | Contra | Use Whand |
+| Approach | Pro | Contra | Use When |
 |----------|-----|--------|----------|
 | **Active-Active (beide regio's live)** | Beste latency, beste HA | Zeer complex, data sync issues | Mission-critical, budget |
-| **Active-Passive (1 live, 1 stenby)** | Simpeler, DR capability | Stenby idle (takesand), RTO > 5 min | DR requirement, niet latency |
+| **Active-Passive (1 live, 1 stenby)** | Simpeler, DR capability | Stenby idle (costs), RTO > 5 min | DR requirement, niet latency |
 | **Read Replicas (DB per regio)** | Beste latency, simpeler | Eventual consistency, complex writes | Read-heavy workload |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **What is onze multi-region strategy?**
+1. **What is our multi-region strategy?**
    - **NOT NOW**: Single region in Layer 2
-   - **LATER**: Multi-region in Layer 3 (indiand noded)
-   - **PREPAREDNESS**: Architectuur moet het niet blokkerand
+   - **LATER**: Multi-region in Layer 3 (indiand needed)
+   - **PREPAREDNESS**: Architectuur must het niet blokkerand
 
-2. **Is onze architectuur multi-region ready?**
+2. **Is our architectuur multi-region ready?**
    - ✅ **Stateless services** (horizontally scalable)
    - ✅ **Shared database** (read replicas possible)
    - ✅ **Session state in cache** (Redis/Valkey kan regionaal)
    - ❓ **Database replicatie** (biggest challenge!)
 
-3. **What zijn onze blockers?**
+3. **What are our blockers?**
    - Database (PostgreSQL multi-region replicatie?)
    - Stateful workloads (persistent volumes regional)
    - Cost (double infrastructure)
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
 **Voorbereidand NU (niet activerand!):**
-- Architectuur moet multi-region niet blokkerand
+- Architectuur must multi-region niet blokkerand
 - Cilium Cluster Mesh optie andabled (niet gebruikt)
 - DR scenario's documenterand
 
 **Activerand LATER (Layer 3):**
 - Alleand as business case duidelijk is
 - Database strategy duidelijk is
-- Team capacity heeft
+- Team capacity has
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - Cilium CNI (Layer 1) → Cluster Mesh capability for multi-region
 - Velero (Layer 1) → Backup restore in andere regio (DR)
 - Stateless design (Layer 1) → Maakt multi-region possible
@@ -466,13 +466,13 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## 7. Observability Uitbreiding
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Verhoog observability maturity whand:**
-- ✅ Je **Layer 1 observability** (metrics, logs) niet sufficientde is
-- ✅ Je **alerting strategy** onduidelijk is (alles is pager-worthy?)
-- ✅ Je **correlation** tussand metrics/logs/traces wilt
-- ✅ Je **SLO's** wilt monitorand (error budget)
+**Verhoog observability maturity when:**
+- ✅ You **Layer 1 observability** (metrics, logs) niet sufficient is
+- ✅ You **alerting strategy** unclear is (alles is pager-worthy?)
+- ✅ You **correlation** between metrics/logs/traces want
+- ✅ You **SLO's** want monitorand (error budget)
 
 ### 🔀 [TRADE-OFFS] Alerting Strategie
 
@@ -482,7 +482,7 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 | **WARNING** | Degraded performance | Notify team | Slack | High latency, high CPU |
 | **INFO** | Routine events | Log only | Dashboard | Deployment success, backup OK |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
 1. **What is pager-worthy?**
    - **CRITICAL**: Production down, payment failures, data loss
@@ -494,26 +494,26 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
    - Exemplars in Prometheus (metrics → traces)
    - Grafana Explore (unified view)
 
-3. **What is onze SLO strategy?**
+3. **What is our SLO strategy?**
    - Define SLO's (99.9% uptime, P95 < 200ms)
    - Monitor error budget
    - Alert on budget burn rate
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
 **Verhoog maturity NU als:**
 - Alert fatigue (te veel alerts, team negeert)
-- Debugging is slow (geand correlatie tussand metrics/logs/traces)
-- SLO's zijn undefined (geand error budget)
+- Debugging is slow (no correlatie between metrics/logs/traces)
+- SLO's are undefined (no error budget)
 
-**Wacht LATER als:**
-- Layer 1 observability werkt prima
+**Wait LATER if:**
+- Layer 1 observability works prima
 - Alert strategy is clear
-- Team heeft geand capacity
+- Team has no capacity
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - Prometheus (Layer 1) → Enhanced with SLO monitoring
 - Loki (Layer 1) → Enhanced with structured logging + trace ID
 - Grafana (Layer 1) → Enhanced with unified observability
@@ -522,61 +522,61 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## 8. Security & Auditing
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Verhoog audit maturity whand:**
-- ✅ Je **compliance requirements** hebt (GDPR, DORA, ISO 27001)
-- ✅ Je **security incidents** wilt kunnand investigerand
-- ✅ Je **break-glass procedures** noded hebt (emergency access)
-- ✅ Je **SIEM integration** wilt (centralized security monitoring)
+**Verhoog audit maturity when:**
+- ✅ You **compliance requirements** have (GDPR, DORA, ISO 27001)
+- ✅ You **security incidents** want kunnand investigerand
+- ✅ You **break-glass procedures** needed have (emergency access)
+- ✅ You **SIEM integration** want (centralized security monitoring)
 
-**NOT implementerand whand:**
-- ❌ Geand compliance requirements
-- ❌ Basic K8s audit logs sufficientde zijn
-- ❌ Geand security team
+**NOT implement when:**
+- ❌ No compliance requirements
+- ❌ Basic K8s audit logs sufficient are
+- ❌ No security team
 
 ### 🔀 [TRADE-OFFS] Audit Strategie
 
-| Component | Audit What | Retention | Use Whand |
+| Component | Audit What | Retention | Use When |
 |-----------|------------|-----------|----------|
 | **K8s Audit Logs** | API calls (kubectl, RBAC) | 1 year | Compliance |
-| **ArgoCD Audit** | GitOps syncs, manowal approvals | 1 year | Deployment audit |
+| **ArgoCD Audit** | GitOps syncs, manual approvals | 1 year | Deployment audit |
 | **Vault Audit** | Secret access (read/write) | 1 year | Secret compliance |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **What moetand we auditand?**
+1. **What mustand we auditand?**
    - K8s API calls (wie deed wat whand)
    - GitOps syncs (welke change, through wie)
    - Secret access (wie las welke secret)
    - Break-glass usage (emergency access audit)
 
-2. **What is onze break-glass strategy?**
+2. **What is our break-glass strategy?**
    - How krijg je emergency access? (privilege escalation tool)
    - Howlang geldig? (max 1 uur)
    - How loggand we dit? (full audit trail)
    - Post-incident review? (required)
 
 3. **How integrerand we with SIEM?**
-   - Which SIEM? (Splunk, Elastic, etc.)
+   - What SIEM? (Splunk, Elastic, etc.)
    - Push or pull? (Loki → SIEM)
    - Real-time or batch? (batch = cheaper)
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
+**Implement NOW if:**
 - Compliance requirements (DORA, GDPR)
 - Security team vraagt audit trail
-- Break-glass procedures noded
+- Break-glass procedures needed
 
-**Wacht LATER als:**
-- Geand compliance eis
+**Wait LATER if:**
+- No compliance requirement
 - Basic K8s audit logs sufficient
-- Geand security team
+- No security team
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
+**Builds on:**
 - RBAC (Layer 1) → Audit RBAC changes
 - Loki (Layer 1) → Centralized audit log storage
 - Vault (Layer 1) → Audit secret access
@@ -585,53 +585,53 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 ## Resultaat Layer 2: Maturity Assessment
 
-### Na Layer 2 Analyse Kun Je Beantwoorden:
+### Na Layer 2 Analyse Kun You Beantwoorden:
 
-✅ **Service Mesh**: Hebband we dit noded? (> 5 services, security/observability)  
+✅ **Service Mesh**: Do we have dit needed? (> 5 services, security/observability)  
 ✅ **Distributed Tracing**: Lost dit eand daadwerkelijk probleem op? (debugging > 1h)  
 ✅ **Chaos Enginoring**: Testand we HA or claimand we het alleand?  
-✅ **Policy Enforcement**: Automated validation or manowal review?  
-✅ **Cost Visibility**: Where gaat ons geld naaradd?  
-✅ **Multi-Region**: Nu noded or later?  
+✅ **Policy Enforcement**: Automated validation or manual review?  
+✅ **Cost Visibility**: Where does our money go?  
+✅ **Multi-Region**: Nu needed or later?  
 ✅ **Observability**: What is pager-worthy?  
 ✅ **Auditing**: Compliance requirement or overkill?  
 
 ### Layer 2 → Layer 3 (Toekomst)
 
 **Layer 3 zou gaan over:**
-- Zero trust networking (full mutual TLS andforcement)
+- Zero trust networking (full mutual TLS enforcement)
 - Active multi-region (Cilium Cluster Mesh actief)
 - Advanced chaos (automated, continowous)
 - SLO-based automation (error budget policies)
 - Cost optimization automation (rightsizing)
 - Security automation (auto-remediation)
 
-**Maar dat is alleand relevant as Layer 2 capabilities lopand en je **daadwerkelijk** complexity noded hebt.**
+**Maar dat is alleand relevant as Layer 2 capabilities lopand en je **daadwerkelijk** complexity needed have.**
 
 ---
 
 ## Conclusion: Complexity as Bewuste Keuze
 
 Layer 2 is niet "de volgende stap after Layer 1".  
-Layer 2 is "**welke extra capabilities zijn de complexity waard?**"
+Layer 2 is "**welke extra capabilities are de complexity waard?**"
 
 ### Beslisregels:
 
 1. **Start simpel**: Layer 1 first, Layer 2 alleand as trigger duidelijk is
 2. **Eén tegelijk**: Niet alle Layer 2 capabilities tegelijk (team overload!)
 3. **Measure impact**: Every capability must solve measurable problem
-4. **Exit strategy**: Kunnand we terug as het niet werkt?
+4. **Exit strategy**: Can we terug as het niet works?
 
 ### For the Webshop Case:
 
-**Whereschijnlijk YES:**
+**Probably YES:**
 - Distributed tracing (> 5 services, debugging issues)
 - Cost visibility (budget concerns, multi-tenant)
-- Policy andforcement (compliance, groeiend team)
+- Policy enforcement (compliance, groeiend team)
 
-**Whereschijnlijk NOT (now):**
+**Probably NOT (now):**
 - Service mesh (< 10 services, network policies sufficient)
-- Multi-region (single region voldoet, geand DR eis)
+- Multi-region (single region sufficient, no DR requirement)
 - Chaos andginoring (first HA setup stabilize)
 
 **Dit is de kracht or Layer 2: conscious, justified choices in plaats or "we doand alles maar".**

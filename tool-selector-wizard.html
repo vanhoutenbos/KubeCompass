@@ -697,7 +697,7 @@
                     <div class="filter-option" data-value="simple" onclick="selectOption(this, 'complexity')">
                         <div class="option-title">🎯 Eenvoudig</div>
                         <div class="option-description">
-                            Minimale configuratie, quick start, lage leercurve
+                            Minimal configuration, quick start, lage leercurve
                         </div>
                     </div>
                     <div class="filter-option" data-value="moderate" onclick="selectOption(this, 'complexity')">
@@ -791,19 +791,19 @@
                     'enterprise': { 
                         tool: 'Cilium', 
                         features: ['eBPF-based performance', 'L7 network policies', 'Hubble observability', 'Native encryption', 'CNCF Graduated'],
-                        rationale: 'Voor enterprise omgevingen biedt Cilium de beste combinatie van security, observability en performance. De L7 policies zijn cruciaal voor compliance.',
+                        rationale: 'For enterprise environments provides Cilium the best combination van security, observability en performance. De L7 policies are crucial for compliance.',
                         alternatives: 'Calico als je bestaande BGP routing hebt of sterke voorkeur voor iptables-based networking.'
                     },
                     'multi-team': { 
                         tool: 'Cilium', 
                         features: ['Moderne eBPF networking', 'Network policies', 'Goede observability', 'Relatief eenvoudig'],
-                        rationale: 'Cilium biedt moderne features zonder te complex te zijn voor mid-size teams. Network policies zijn essentieel voor team-isolatie.',
+                        rationale: 'Cilium provides moderne features zonder te complex te zijn voor mid-size teams. Network policies zijn essentieel voor team-isolatie.',
                         alternatives: 'Flannel voor zeer eenvoudige setups zonder speciale netwerk vereisten.'
                     },
                     'single-team': { 
                         tool: 'Flannel', 
-                        features: ['Simpel en betrouwbaar', 'Minimale configuratie', 'Lichte overhead', 'Goed gedocumenteerd'],
-                        rationale: 'Voor kleine teams is Flannel perfect - simpel, betrouwbaar en snel werkend zonder onnodige complexiteit.',
+                        features: ['Simple and reliable', 'Minimal configuration', 'Light overhead', 'Well documented'],
+                        rationale: 'For small teams is Flannel perfect - simple, reliable en working quickly without unnecessary complexity.',
                         alternatives: 'Cilium als je vanaf dag 1 wilt investeren in moderne networking (voor toekomstige groei).'
                     }
                 }
@@ -821,7 +821,7 @@
                     'simple': {
                         tool: 'Flux',
                         features: ['GitOps toolkit', 'Helm support', 'Image automation', 'GitOps-pure', 'CNCF Graduated'],
-                        rationale: 'Flux is ideaal voor teams die een lichtgewicht, pure GitOps aanpak willen zonder extra UI overhead.',
+                        rationale: 'Flux is ideaal voor teams die een lightweight, pure GitOps approach willen without extra UI overhead.',
                         alternatives: 'Argo CD als je een UI wilt voor niet-technische stakeholders.'
                     }
                 }
@@ -833,13 +833,13 @@
                     'enterprise': {
                         tool: 'External Secrets Operator + Vault',
                         features: ['Centralized secrets', 'Audit logging', 'Dynamic secrets', 'Multi-cloud support', 'Compliance-ready'],
-                        rationale: 'Voor enterprise omgevingen is Vault de gouden standaard. External Secrets Operator maakt integratie met Kubernetes native.',
+                        rationale: 'For enterprise environments is Vault de gold standard. External Secrets Operator makes integration with Kubernetes native.',
                         alternatives: 'Cloud-native secrets managers (AWS Secrets Manager, Azure Key Vault) als je al in die cloud zit.'
                     },
                     'simple': {
                         tool: 'Sealed Secrets',
                         features: ['Eenvoudig concept', 'Git-friendly', 'Minimale infrastructure', 'Open source'],
-                        rationale: 'Sealed Secrets is perfect voor kleinere teams - simpel concept, geen extra infrastructure, en goed te begrijpen.',
+                        rationale: 'Sealed Secrets is perfect voor kleinere teams - simple concept, no extra infrastructure, en easy to understand.',
                         alternatives: 'External Secrets Operator + cloud provider voor groei-pad naar enterprise-grade solution.'
                     }
                 }
@@ -851,7 +851,7 @@
                     'full-stack': {
                         tool: 'Prometheus + Grafana + Loki + Tempo',
                         features: ['Complete observability stack', 'Industry standard', 'Excellent ecosystem', 'Open source', 'CNCF Graduated (Prometheus)'],
-                        rationale: 'De klassieke CNCF stack biedt complete observability met metrics, logs en traces. Breed ondersteund en goed gedocumenteerd.',
+                        rationale: 'De klassieke CNCF stack provides complete observability met metrics, logs en traces. Widely supported en well documented.',
                         alternatives: 'Managed oplossingen (Datadog, New Relic) als je liever outsourced.'
                     },
                     'simple': {
@@ -869,13 +869,13 @@
                     'enterprise': {
                         tool: 'Istio (Service Mesh) of NGINX Ingress',
                         features: ['Advanced traffic management', 'mTLS', 'Observability', 'Circuit breaking', 'Rate limiting'],
-                        rationale: 'Voor enterprise omgevingen kan een service mesh zoals Istio of een robuuste ingress zoals NGINX de benodigde features bieden.',
+                        rationale: 'For enterprise environments kan een service mesh zoals Istio of een robuuste ingress zoals NGINX the needed features bieden.',
                         alternatives: 'Traefik voor eenvoudigere setups met goede features, of cloud-native load balancers.'
                     },
                     'simple': {
                         tool: 'Traefik',
                         features: ['Automatische configuratie', 'Let\'s Encrypt integratie', 'Dashboard', 'Kubernetes-native'],
-                        rationale: 'Traefik is perfect voor teams die snel iets werkends willen - minimale configuratie, automatische discovery.',
+                        rationale: 'Traefik is perfect voor teams die snel something working willen - minimal configuration, automatic discovery.',
                         alternatives: 'NGINX Ingress Controller voor meer controle en customization mogelijkheden.'
                     }
                 }
@@ -893,7 +893,7 @@
                     'simple': {
                         tool: 'Cloud-native registry (ECR/ACR/GCR)',
                         features: ['Fully managed', 'Seamless cloud integration', 'Security scanning', 'Pay-per-use'],
-                        rationale: 'Voor kleinere teams is een managed registry de beste keuze - geen operationele overhead.',
+                        rationale: 'For smaller teams is een managed registry de beste keuze - no operational overhead.',
                         alternatives: 'Harbor als je on-premise moet of multi-cloud portability wilt.'
                     }
                 }
@@ -905,14 +905,14 @@
                     'security-focused': {
                         tool: 'Falco + OPA/Gatekeeper',
                         features: ['Runtime threat detection', 'Policy enforcement', 'Compliance automation', 'Audit logging'],
-                        rationale: 'Voor security-first omgevingen is runtime detection (Falco) plus policy enforcement (OPA) de beste combinatie.',
-                        alternatives: 'Kyverno als alternatief voor OPA - eenvoudiger te gebruiken maar minder flexibel.'
+                        rationale: 'For security-first environments, runtime detection (Falco) plus policy enforcement (OPA) is the best combination.',
+                        alternatives: 'Kyverno as alternative to OPA - simpler to use but less flexible.'
                     },
                     'basic': {
                         tool: 'Pod Security Standards + Kyverno',
-                        features: ['Built-in Kubernetes security', 'Policy as code', 'Validation & mutation', 'Eenvoudig'],
-                        rationale: 'Start met Kubernetes native security (PSS) en voeg Kyverno toe voor custom policies - pragmatisch en effectief.',
-                        alternatives: 'OPA/Gatekeeper voor meer complexe policy requirements.'
+                        features: ['Built-in Kubernetes security', 'Policy as code', 'Validation & mutation', 'Simple'],
+                        rationale: 'Start with Kubernetes native security (PSS) and add Kyverno for custom policies - pragmatic and effective.',
+                        alternatives: 'OPA/Gatekeeper for more complex policy requirements.'
                     }
                 }
             },

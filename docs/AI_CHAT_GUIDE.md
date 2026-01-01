@@ -14,7 +14,7 @@ Voor eand **gestructureerde, interactieve workflow** die je stap-voor-stap throu
 - Context-specifieke aanbevelingen geeft on basis or jouw antwoorden
 - Eand gepersonaliseerd platform plan genereert
 
-Deze guide hieronder biedt **copy-paste prompts** for directe integration with ChatGPT, Claude, Gemini.
+Deze guide hieronder provides **copy-paste prompts** for directe integration with ChatGPT, Claude, Gemini.
 
 ---
 
@@ -44,7 +44,7 @@ geef aanbevelingen in dit format:
 
 **Domein**: [naam]
 **Gebruik**: [primary tool]
-**Tenzij**: [alternatieve scenario's]
+**Unless**: [alternatieve scenario's]
 **Why**: [korte rationale]
 ```
 
@@ -72,7 +72,7 @@ Geef me "Gebruik X, tenzij..." aanbevelingen voor:
 
 Format per domein:
 - **Gebruik**: [tool]
-- **Tenzij**: [alternatieve scenario]
+- **Unless**: [alternatieve scenario]
 - **Why**: [rationale in 1-2 zinnand]
 ```
 
@@ -81,14 +81,14 @@ Format per domein:
 ```
 1. Container Networking (CNI)
    - **Gebruik**: Flannel
-   - **Tenzij**: Je verwacht snel te groeiand to andterprise features 
+   - **Unless**: Je verwacht snel te groeiand to andterprise features 
      (dan direct Cilium)
    - **Why**: Flannel is simpel, stabiel en vereist minimale configuration. 
      Perfect for MVP fase waar networking "gewoon moet werkand".
 
 2. GitOps
    - **Gebruik**: Flux
-   - **Tenzij**: Je hebt niet-technische stakeholders die deployment 
+   - **Unless**: Je hebt niet-technische stakeholders die deployment 
      status moetand ziand (dan Argo CD for de UI)
    - **Why**: Flux is lichtgewicht en GitOps-pure. Voor kleine 
      teams geand overhead or extra UI.
@@ -136,7 +136,7 @@ Context:
 - Performance is top prioriteit bovand eenvoud
 
 Aanbevelingand with focus on performance:
-1. CNI Plugin (welke biedt beste throughput?)
+1. CNI Plugin (welke provides beste throughput?)
 2. Service Mesh (yes/no for performance use case?)
 3. Ingress/Load Balancing
 4. Observability (zonder performance impact)
@@ -144,7 +144,7 @@ Aanbevelingand with focus on performance:
 
 Per tool:
 - **Gebruik**: [tool]
-- **Tenzij**: [performance trade-off scenario]
+- **Unless**: [performance trade-off scenario]
 - **Performance rationale**: [waarom deze keuze for performance]
 ```
 
@@ -202,7 +202,7 @@ Voor elke aanbeveling:
 ### Format 1: Decision Matrix Style
 
 ```
-| Domain | Gebruik | Tenzij | Maturity | Complexity |
+| Domain | Gebruik | Unless | Maturity | Complexity |
 |--------|---------|--------|----------|------------|
 | CNI | Cilium | Je hebt eand zeer klein team en wilt maximale eenvoud (Flannel) | CNCF Graduated | Medium |
 | GitOps | Argo CD | Je prefereert pure GitOps without UI (Flux) | CNCF Graduated | Medium |
@@ -254,13 +254,13 @@ Voor elke aanbeveling:
 
 ### Container Networking
 - [ ] **Gebruik**: Cilium
-- [ ] **Tenzij**: Klein team without compliance vereistand → Flannel
+- [ ] **Unless**: Klein team without compliance vereistand → Flannel
 - [ ] **Actie**: Review [Cilium documentation](reviews/cilium.md)
 - [ ] **Priority**: HIGH - Kan niet later wordand verenerd
 
 ### GitOps Strategy
 - [ ] **Gebruik**: Argo CD
-- [ ] **Tenzij**: Pure GitOps voorkeur without UI → Flux
+- [ ] **Unless**: Pure GitOps voorkeur without UI → Flux
 - [ ] **Actie**: Setup Git repository structure
 - [ ] **Priority**: HIGH - Definieert deployment workflow
 
@@ -496,7 +496,7 @@ Output:
 - **Niet te generiek**: "Geef me Kubernetes tools" is te breed
 - **Geand blind AI vertrouwand**: Valideer against KubeCompass MATRIX.md
 - **Skip geand foundational decisions**: Layer 0 first!
-- **Negeer geand trade-offs**: "Tenzij" statements zijn cruciaal
+- **Negeer no trade-offs**: "Unless" statements are crucial
 - **Geand outdated info**: Verwijs to versie/datum in KubeCompass
 
 ---

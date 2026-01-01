@@ -1,7 +1,7 @@
-# TransIP & Infrastructure as Code: Uitdagingen en Oplossingen
+# TransIP & Infrastructure as Code: Challenges and Solutions
 
-**Doelgroep**: Platform Engineers, DevOps Teams  
-**Context**: Nederlandse webshop migratiecase met TransIP Kubernetes  
+**Target Audience**: Platform Engineers, DevOps Teams  
+**Context**: Dutch webshop migration case with TransIP Kubernetes  
 **Status**: Practical Guide  
 
 ---
@@ -311,12 +311,12 @@ TransIP Kubernetes ondersteunt **geen native Cluster Autoscaler** zoals GKE/EKS/
 
 **Nadelen**:
 - ⚠️ Manual intervention vereist
-- ⚠️ Langzame response time (minuten vs. seconden)
+- ⚠️ Slow response time (minutes vs. seconds)
 
-**Wanneer geschikt**:
+**When suitable**:
 - Predictable traffic patterns
-- Team heeft tijd voor monitoring
-- Budget voorspelbaarheid belangrijker dan auto-scaling
+- Team has time for monitoring
+- Budget predictability more important than auto-scaling
 
 #### Optie B: API-based Scaling Script
 
@@ -386,12 +386,12 @@ Scales node pool
 **Nadelen**:
 - ❌ Significant development effort
 - ❌ Operational complexity (extra component om te monitoren)
-- ❌ TransIP API rate limits kunnen probleem zijn
+- ❌ TransIP API rate limits can be a problem
 
-**Wanneer geschikt**:
-- Team heeft Golang/Python expertise
+**When suitable**:
+- Team has Golang/Python expertise
 - Unpredictable, spiky traffic
-- Budget voor development investment
+- Budget for development investment
 
 ### 3.3 Aanbeveling per Team Maturity
 
@@ -655,11 +655,11 @@ jobs:
 **A**: Ja, maar weeg af:
 - **Scaleway/OVHcloud**: Terraform support + EU, maar Franse support
 - **DigitalOcean**: Terraform support, maar US-based bedrijf (datacenter = EU)
-- **Hyperscalers** (AWS/Azure/GCP): Volledig Terraform, maar duurder + vendor lock-in risk hoger
+- **Hyperscalers** (AWS/Azure/GCP): Fully Terraform, but more expensive + higher vendor lock-in risk
 
-Voor de webshop case (Layer 0 constraint: vendor independence, GDPR, budget) blijft TransIP valide.
+For the webshop case (Layer 0 constraint: vendor independence, GDPR, budget) TransIP remains valid.
 
-### Q3: Hoe automatiseren we disaster recovery zonder Terraform?
+### Q3: How do we automate disaster recovery without Terraform?
 **A**: 
 1. **Cluster state**: Velero backups (in-cluster, Terraform-managed)
 2. **Cluster config**: Gedocumenteerde runbook (version-controlled)
@@ -688,11 +688,11 @@ Voor webshop case (SME, eerste K8s ervaring): manual scaling is **pragmatisch**,
 
 ---
 
-## 8. Conclusie & Aanbevelingen
+## 8. Conclusion & Recommendations
 
-### Voor de Webshop Case
+### For the Webshop Case
 
-**Aanbeveling**: ✅ **TransIP blijft de beste keuze**, ondanks Terraform limitaties
+**Recommendation**: ✅ **TransIP remains the best choice**, despite Terraform limitations
 
 **Rationale**:
 1. **Layer 0 Priorities**:

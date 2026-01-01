@@ -307,10 +307,10 @@ svgDoc.querySelectorAll('.domain').forEach(domain => {
 
 ### Directe Verbeteringen
 
-1. **Export naar PNG/PDF** - Voor presentaties
-2. **Vertaling naar Engels** - Voor internationale use
+1. **Export naar PNG/PDF** - For presentations
+2. **Vertaling naar Engels** - For international use
 3. **Print versie** - Optimaliseren voor A1 poster
-4. **Dark mode variant** - Voor donkere achtergronden
+4. **Dark mode variant** - For dark backgrounds
 
 ### Interactieve Features (Toekomst)
 
@@ -372,17 +372,17 @@ svgDoc.querySelectorAll('.domain').forEach(domain => {
 
 ## 📝 Licentie en Gebruik
 
-Deze infographic is onderdeel van het **KubeCompass** project en valt onder de **MIT License**.
+These infographics are part of the **KubeCompass** project and fall under the **MIT License**.
 
-✅ **Je mag:**
-- De infographic gebruiken in presentaties
-- Aanpassen voor je eigen organisatie
-- Delen met credits naar KubeCompass
-- Printen als poster of handout
-- Embedden in je eigen documentatie
+✅ **You may:**
+- Use the infographic in presentations
+- Customize for your own organization
+- Share with credits to KubeCompass
+- Print as poster or handout
+- Embed in your own documentation
 
-❌ **Je mag niet:**
-- De infographic verkopen zonder aanpassingen
+❌ **You may not:**
+- Sell the infographic without modifications
 - Claims maken alsof je het origineel hebt gemaakt
 - Gebruiken zonder credit als je het online deelt
 
@@ -416,9 +416,9 @@ Wil je de infographic verbeteren? Geweldig!
 
 ## 📞 Contact en Feedback
 
-- **GitHub Issues**: Voor bugs en feature requests
-- **GitHub Discussions**: Voor algemene vragen en ideeën
-- **Pull Requests**: Voor concrete verbeteringen
+- **GitHub Issues**: For bugs and feature requests
+- **GitHub Discussions**: For general questions and ideas
+- **Pull Requests**: For concrete improvements
 
 ---
 
