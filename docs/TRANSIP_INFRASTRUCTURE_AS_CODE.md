@@ -1,7 +1,7 @@
-# TransIP & Infrastructure as Code: Uitdagingen en Oplossingen
+# TransIP & Infrastructure as Code: Challenges and Solutions
 
-**Doelgroep**: Platform Engineers, DevOps Teams  
-**Context**: Nederlandse webshop migratiecase met TransIP Kubernetes  
+**Target Audience**: Platform Engineers, DevOps Teams  
+**Context**: Dutch webshop migration case with TransIP Kubernetes  
 **Status**: Practical Guide  
 
 ---

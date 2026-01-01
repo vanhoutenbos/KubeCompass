@@ -328,53 +328,53 @@ strategy:
 
 ### StatefulSets 💿
 
-**Wanneer gebruiken?**
+**When to use?**
 - Databases (PostgreSQL, MongoDB, Cassandra)
-- Message queues met persistent identity
-- Applicaties die persistent storage + stable network identity nodig hebben
+- Message queues with persistent identity
+- Applications that need persistent storage + stable network identity
 
-**Kenmerken:**
+**Characteristics:**
 - Ordered pod creation/deletion (pod-0, pod-1, pod-2)
 - Stable network identifiers
 - Persistent storage per pod
 
 ### DaemonSets ⚙️
 
-**Wanneer gebruiken?**
+**When to use?**
 - Log collectors (agent-based logging solutions)
 - Monitoring agents (system metrics exporters)
 - Storage daemons (distributed storage systems)
 - Network plugins (CNI implementations)
 
-**Kenmerk:** Draait exact 1 pod per node (of subset van nodes via node selector)
+**Characteristic:** Runs exactly 1 pod per node (or subset of nodes via node selector)
 
-### Service Mesh - Diepgaand 🕸️
+### Service Mesh - In Depth 🕸️
 
-**Hoe werkt het technisch?**
+**How does it work technically?**
 
 1. **Sidecar Proxy Pattern:**
-   - Elke pod krijgt een sidecar proxy container (bijvoorbeeld Envoy)
-   - Al het inbound/outbound verkeer gaat door de proxy
-   - Control plane configureert alle proxies
+   - Each pod gets a sidecar proxy container (e.g., Envoy)
+   - All inbound/outbound traffic goes through the proxy
+   - Control plane configures all proxies
 
 2. **Data Plane vs Control Plane:**
    - **Data Plane:** Sidecar proxies (handling actual traffic)
    - **Control Plane:** Mesh controller (configuration & policy)
 
-3. **mTLS in actie:**
+3. **mTLS in action:**
    ```
    Pod A → Envoy Proxy A [encrypt with mTLS] → Envoy Proxy B → Pod B
    ```
 
-**Kost vs Baat:**
-- **Kost:** Extra resource usage (CPU/memory per sidecar), complexity, latency overhead
-- **Baat:** Security (mTLS), observability (tracing), reliability (retries, circuit breaking)
+**Cost vs Benefit:**
+- **Cost:** Extra resource usage (CPU/memory per sidecar), complexity, latency overhead
+- **Benefit:** Security (mTLS), observability (tracing), reliability (retries, circuit breaking)
 
-**Wanneer NIET gebruiken:**
+**When NOT to use:**
 - Small clusters (<10 services)
 - Simple architectures (monolith, few microservices)
 - Resource constrained environments
-- Team heeft geen service mesh expertise
+- Team has no service mesh expertise
 
 ---
 

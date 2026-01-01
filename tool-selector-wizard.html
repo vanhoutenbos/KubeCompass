@@ -905,14 +905,14 @@
                     'security-focused': {
                         tool: 'Falco + OPA/Gatekeeper',
                         features: ['Runtime threat detection', 'Policy enforcement', 'Compliance automation', 'Audit logging'],
-                        rationale: 'Voor security-first omgevingen is runtime detection (Falco) plus policy enforcement (OPA) de beste combinatie.',
-                        alternatives: 'Kyverno als alternatief voor OPA - eenvoudiger te gebruiken maar minder flexibel.'
+                        rationale: 'For security-first environments, runtime detection (Falco) plus policy enforcement (OPA) is the best combination.',
+                        alternatives: 'Kyverno as alternative to OPA - simpler to use but less flexible.'
                     },
                     'basic': {
                         tool: 'Pod Security Standards + Kyverno',
-                        features: ['Built-in Kubernetes security', 'Policy as code', 'Validation & mutation', 'Eenvoudig'],
-                        rationale: 'Start met Kubernetes native security (PSS) en voeg Kyverno toe voor custom policies - pragmatisch en effectief.',
-                        alternatives: 'OPA/Gatekeeper voor meer complexe policy requirements.'
+                        features: ['Built-in Kubernetes security', 'Policy as code', 'Validation & mutation', 'Simple'],
+                        rationale: 'Start with Kubernetes native security (PSS) and add Kyverno for custom policies - pragmatic and effective.',
+                        alternatives: 'OPA/Gatekeeper for more complex policy requirements.'
                     }
                 }
             },

@@ -372,17 +372,17 @@ svgDoc.querySelectorAll('.domain').forEach(domain => {
 
 ## 📝 Licentie en Gebruik
 
-Deze infographic is onderdeel van het **KubeCompass** project en valt onder de **MIT License**.
+These infographics are part of the **KubeCompass** project and fall under the **MIT License**.
 
-✅ **Je mag:**
-- De infographic gebruiken in presentaties
-- Aanpassen voor je eigen organisatie
-- Delen met credits naar KubeCompass
-- Printen als poster of handout
-- Embedden in je eigen documentatie
+✅ **You may:**
+- Use the infographic in presentations
+- Customize for your own organization
+- Share with credits to KubeCompass
+- Print as poster or handout
+- Embed in your own documentation
 
-❌ **Je mag niet:**
-- De infographic verkopen zonder aanpassingen
+❌ **You may not:**
+- Sell the infographic without modifications
 - Claims maken alsof je het origineel hebt gemaakt
 - Gebruiken zonder credit als je het online deelt
 
