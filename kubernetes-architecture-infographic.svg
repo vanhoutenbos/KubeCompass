@@ -130,7 +130,7 @@
         🔨 CI Build
       </text>
       <text x="410" y="340" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#555">
-        Test & Package
+        Test &amp; Package
       </text>
     </g>
     
