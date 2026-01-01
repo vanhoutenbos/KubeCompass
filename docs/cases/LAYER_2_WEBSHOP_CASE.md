@@ -1,67 +1,67 @@
 # Layer 2: Platform Enhancements & Resilience — Decision Framework
 
-**Target Audience**: Platform Enginors, DevOps Enginors, SREs, Architects  
+**Target Audience**: Platform Engineers, DevOps Engineers, SREs, Architects  
 **Type**: Decision Framework & Capability Mapping  
 **Organization**: Dutch webshop / online store with Essential SAFe methodology  
-**Prerequisite**: Layer 0 en Layer 1 zijn **geanalyseerd en gestructureerd** (niet per se geïmplementeerd)  
+**Prerequisite**: Layer 0 and Layer 1 are **analyzed and structured** (not necessarily implemented)  
 
 ---
 
-## ⚠️ Belangrijk: Dit is GEEN Implementatiegids
+## ⚠️ Important: This is NOT an Implementation Guide
 
-**Dit document is:**
-- 🎯 Eand **decision framework** for whand Layer 2 capabilities relevant wordand
-- 🧭 Eand **capability map** with keuzeruimte en trade-offs
-- 💡 Eand **denkraam** for volwassand platformteams
-- 📚 Eand **referentie** for architectuurbeslissingen
-- 🤖 **Input for AI agents** to architectuurkeuzes te redenerand
+**This document is:**
+- 🎯 A **decision framework** for when Layer 2 capabilities become relevant
+- 🧭 A **capability map** with choice space and trade-offs
+- 💡 A **thinking framework** for mature platform teams
+- 📚 A **reference** for architecture decisions
+- 🤖 **Input for AI agents** to reason about architecture choices
 
-**Dit document is NOT:**
-- ❌ Eand deployment guide
-- ❌ Eand Helm/Terraform tutorial
-- ❌ Eand "copy-paste en deployand" henleiding
-- ❌ Eand vervanging for vendor documentatie
-- ❌ Eand implementation die je 1-op-1 kunt draaiand
+**This document is NOT:**
+- ❌ A deployment guide
+- ❌ A Helm/Terraform tutorial
+- ❌ A "copy-paste and deploy" manual
+- ❌ A replacement for vendor documentation
+- ❌ An implementation you can run 1-to-1
 
 ---
 
 ## Reading Guide
 
-🎯 **[TRIGGER]** - Whand wordt deze capability relevant?  
-🔀 **[TRADE-OFFS]** - Which keuzes heb je en wat zijn de afwegingand?  
-⚠️ **[TIMING]** - Why now wel/niet implementerand?  
-💭 **[BESLUITPUNT]** - Which vragen moet je kunnand beantwoorden?  
-🔗 **[LAYER 1 LINK]** - How bouwt dit on Layer 1?  
+🎯 **[TRIGGER]** - When does this capability become relevant?  
+🔀 **[TRADE-OFFS]** - What choices do you have and what are the trade-offs?  
+⚠️ **[TIMING]** - Why implement now or not?  
+💭 **[DECISION POINT]** - What questions must you be able to answer?  
+🔗 **[LAYER 1 LINK]** - How does this build on Layer 1?  
 
 ---
 
 ## Executive Summary
 
-Dit document beschrijft **Layer 2: Platform Enhancements & Resilience** — het **besluitvormingsproces** for geavanceerde platform capabilities nadat de Layer 1 basis stabiel is.
+This document describes **Layer 2: Platform Enhancements & Resilience** — the **decision-making process** for advanced platform capabilities after the Layer 1 foundation is stable.
 
-### Context: Van Layer 1 to Layer 2
+### Context: From Layer 1 to Layer 2
 
-**Layer 1 (Fundament)** gaat over:
-- Cluster draait
-- GitOps werkt
+**Layer 1 (Foundation)** is about:
+- Cluster runs
+- GitOps works
 - Basic observability (metrics, logs)
-- Network policies bestaan
-- Deployments lukkand
+- Network policies exist
+- Deployments succeed
 
-**Layer 2 (Enhancement)** gaat about **maturity en optimization**:
-- What gebeurt er **tussand** services? → service mesh
-- How **traceer** je eand request andd-to-andd? → distributed tracing
-- How **test** je failure scenarios? → chaos andginoring
-- How **forceer** je security policies? → policy andforcement
-- Where gaat het **geld** naaradd? → cost visibility
-- Zijn we **klaar** for multi-region? → architectural readiness
+**Layer 2 (Enhancement)** is about **maturity and optimization**:
+- What happens **between** services? → service mesh
+- How do you **trace** a request end-to-end? → distributed tracing
+- How do you **test** failure scenarios? → chaos engineering
+- How do you **enforce** security policies? → policy enforcement
+- Where does the **money** go? → cost visibility
+- Are we **ready** for multi-region? → architectural readiness
 
 ### Core Question Layer 2
 
-> **"Whand wordt deze complexity investment de moeite waard?"**
+> **"When does this complexity investment become worthwhile?"**
 
-Niet: "Which tool is het beste?"  
-Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
+Not: "Which tool is best?"  
+But: "**Under what circumstances would I even want this?**"
 
 ---
 
@@ -85,89 +85,89 @@ Maar: "**Onder welke omstenighedand zou ik dit überhaupt willand?**"
 
 **Implementeer eand service mesh whand:**
 - ✅ Je **> 5 microservices** hebt with complexe inter-service communicatie
-- ✅ Je **per-service security** wilt (mTLS without code changes)
-- ✅ Je **gedetailleerde service-level metrics** noded hebt (latency, error rate, traffic)
-- ✅ Je **canary deployments** or **traffic splitting** wilt doand
-- ✅ Je **service topology** en **depanddency mapping** wilt visualiserand
+- ✅ You want **per-service security** (mTLS without code changes)
+- ✅ You need **detailed service-level metrics** (latency, error rate, traffic)
+- ✅ You want to do **canary deployments** or **traffic splitting**
+- ✅ You want to visualize **service topology** and **dependency mapping**
 
-**NOT implementerand whand:**
-- ❌ Je eand **monolith** hebt or **< 3 services**
-- ❌ Je team **no capacity** heeft for additional operational overhead
-- ❌ **Network policies (L3/L4)** sufficientde zijn for je security model
-- ❌ Basic Prometheus metrics genoeg informatie gevand
+**NOT implement when:**
+- ❌ You have a **monolith** or **< 3 services**
+- ❌ Your team has **no capacity** for additional operational overhead
+- ❌ **Network policies (L3/L4)** are sufficient for your security model
+- ❌ Basic Prometheus metrics provide enough information
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Tool | Pro | Contra | Use Whand |
+| Tool | Pro | Contra | Use When |
 |------|-----|--------|----------|
-| **Linkerd** | Kleinste footprint, eenvoudig, auto-mTLS | Minder features dan Istio | Klein team, eenvoudige use case |
-| **Istio** | Feature-rich, andterprise support, mature | Complex, resource-intensive | Grote org, complexe routing |
-| **Cilium Service Mesh** | eBPF-based (zeer performant), CNI-integration | Beta, minder mature | Al Cilium CNI, early adopter |
-| **Consul Connect** | Multi-datacenter native, HashiCorp stack | Vereist Consul infra | Al HashiCorp stack (Vault, Nomad) |
+| **Linkerd** | Smallest footprint, simple, auto-mTLS | Fewer features than Istio | Small team, simple use case |
+| **Istio** | Feature-rich, enterprise support, mature | Complex, resource-intensive | Large org, complex routing |
+| **Cilium Service Mesh** | eBPF-based (very performant), CNI-integration | Beta, less mature | Already Cilium CNI, early adopter |
+| **Consul Connect** | Multi-datacenter native, HashiCorp stack | Requires Consul infra | Already HashiCorp stack (Vault, Nomad) |
 
-### 💭 [BESLUITPUNT] Vragand to te Beantwoorden
+### 💭 [DECISION POINT] Questions to Answer
 
-1. **Hebband we now eand probleem dat eand service mesh solves?**
-   - Hebband we incidents gehad through miscommunicatie tussand services?
-   - Missand we visibility in service-to-service latencies?
-   - Is onze huidige security model (network policies) onsufficientde?
+1. **Do we have a problem now that a service mesh solves?**
+   - Have we had incidents through miscommunication between services?
+   - Are we missing visibility in service-to-service latencies?
+   - Is our current security model (network policies) insufficient?
 
-2. **Kunnand we de operationele overhead aan?**
-   - Hebband we capacity for learning curve?
-   - Kunnand we sidecar injection debuggand?
-   - Hebband we monitoring for mesh health?
+2. **Can we handle the operational overhead?**
+   - Do we have capacity for learning curve?
+   - Can we debug sidecar injection?
+   - Do we have monitoring for mesh health?
 
-3. **What is onze exit strategy?**
-   - Kunnand we terug to geand mesh without grote refactor?
-   - Zijn we vendor-locked?
+3. **What is our exit strategy?**
+   - Can we return to no mesh without major refactor?
+   - Are we vendor-locked?
 
-### ⚠️ [TIMING] Why Nu Wel/Niet?
+### ⚠️ [TIMING] Why Now or Not?
 
-**Implementeer NU als:**
-- Je microservices in productie draait
-- Je security compliance vereist (mTLS everywhere)
-- Je debugging cross-service issues > 4 uur per week takes
+**Implement NOW if:**
+- You run microservices in production
+- You require security compliance (mTLS everywhere)
+- Debugging cross-service issues takes > 4 hours per week
 
-**Wacht LATER als:**
-- Layer 1 nog not stable is
-- Je < 5 services hebt
-- Team nog geand Kubernetes-ervaring heeft
+**Wait LATER if:**
+- Layer 1 is not yet stable
+- You have < 5 services
+- Team has no Kubernetes experience yet
 
 ### 🔗 [LAYER 1 LINK]
 
-**Bouwt op:**
-- Cilium CNI (Layer 1) → Service mesh voegt L7 visibility add
-- Prometheus (Layer 1) → Service mesh voegt per-service goldand signals add
-- Network Policies (Layer 1) → Service mesh voegt mTLS add (zero-trust)
+**Builds on:**
+- Cilium CNI (Layer 1) → Service mesh adds L7 visibility
+- Prometheus (Layer 1) → Service mesh adds per-service golden signals
+- Network Policies (Layer 1) → Service mesh adds mTLS (zero-trust)
 
-**Vervangat niet:**
-- Network policies blijvand relevant (defense in depth)
-- Cilium CNI blijft, service mesh is additive
+**Does not replace:**
+- Network policies remain relevant (defense in depth)
+- Cilium CNI remains, service mesh is additive
 
 ---
 
 ## 2. Distributed Tracing
 
-### 🎯 [TRIGGER] Whand Relevant?
+### 🎯 [TRIGGER] When Relevant?
 
-**Implementeer distributed tracing whand:**
-- ✅ Je **> 5 microservices** hebt with **complexe call chains**
-- ✅ **Debugging cross-service issues** > 1 uur per incident duurt
-- ✅ Je **root cause analysis** or performance problemand noded hebt
-- ✅ Je **service depanddencies** wilt begrijpand (depanddency graph)
-- ✅ Je **correlatie** tussand logs/metrics/traces wilt (observability maturity)
+**Implement distributed tracing when:**
+- ✅ You have **> 5 microservices** with **complex call chains**
+- ✅ **Debugging cross-service issues** takes > 1 hour per incident
+- ✅ You need **root cause analysis** of performance problems
+- ✅ You want to understand **service dependencies** (dependency graph)
+- ✅ You want **correlation** between logs/metrics/traces (observability maturity)
 
-**NOT implementerand whand:**
-- ❌ Je **< 5 services** hebt with simpele call chains
-- ❌ **Logs + metrics** sufficientde zijn for debugging
-- ❌ Je geand **storage budget** hebt for traces (hoge data volume)
-- ❌ Team geand tijd heeft for **service instrumentation**
+**NOT implement when:**
+- ❌ You have **< 5 services** with simple call chains
+- ❌ **Logs + metrics** are sufficient for debugging
+- ❌ You have no **storage budget** for traces (high data volume)
+- ❌ Team has no time for **service instrumentation**
 
-### 🔀 [TRADE-OFFS] Keuzeruimte
+### 🔀 [TRADE-OFFS] Choice Space
 
-| Approach | Pro | Contra | Use Whand |
+| Approach | Pro | Contra | Use When |
 |----------|-----|--------|----------|
-| **OpenTelemetry + Jaeger** | Opand stenard, vendor-neutral, mature | Storage overhead, setup complexity | Self-hosted, vendor indepanddence |
+| **OpenTelemetry + Jaeger** | Open standard, vendor-neutral, mature | Storage overhead, setup complexity | Self-hosted, vendor independence |
 | **OpenTelemetry + Tempo** | Grafana native, S3 storage, cost-efficient | Nieuwer dan Jaeger, minder features | Al Grafana stack, S3 beschikbaar |
 | **Cloud Provider (X-Ray, AppInsights)** | Managed, auto-instrumentation | Vendor lock-in, takesand | Al in die cloud, geand self-host |
 | **Zipkin** | Lightweight, eenvoudig | Minder actief dan Jaeger | Legacy use case |
