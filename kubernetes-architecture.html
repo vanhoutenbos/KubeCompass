@@ -286,18 +286,21 @@
     <div class="container">
         <header>
             <h1>⚙️ Kubernetes Architectuur</h1>
-            <div class="subtitle">Van componenten tot managed platform met GitOps</div>
+            <div class="subtitle">High-level overzicht van concepten en oplossingen</div>
             <div class="description">
-                Deze infographic visualiseert Kubernetes vanuit een technisch perspectief: alle componenten 
-                zoals Pods, Services, Deployments, en waar een Service Mesh precies leeft (tussen de services). 
-                Bovenop de basis architectuur zie je managed Kubernetes opties (AKS, EKS, GKE) en een complete 
-                CI/CD pipeline met GitOps methodiek.
+                Deze pagina visualiseert Kubernetes architectuur en DevSecOps pipeline vanuit een hoog niveau: 
+                alle concepten zoals Pods, Services, Deployments, en waar een Service Mesh leeft. 
+                Plus een complete security pipeline die laat zien waar CVE scanning, image signing, 
+                runtime security en andere beveiligingsmaatregelen plaatsvinden.
             </div>
         </header>
 
         <div class="controls">
             <a href="kubernetes-architecture-infographic.svg" download class="btn">
-                📥 Download SVG
+                📥 Download Architectuur SVG
+            </a>
+            <a href="kubernetes-devsecops-pipeline.svg" download class="btn">
+                📥 Download DevSecOps Pipeline SVG
             </a>
             <a href="KUBERNETES_ARCHITECTURE_README.md" class="btn btn-secondary">
                 📖 Lees Documentatie
@@ -311,8 +314,16 @@
         </div>
 
         <div class="infographic-container">
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">⚙️ Kubernetes Architectuur</h2>
             <object id="infographic" data="kubernetes-architecture-infographic.svg" type="image/svg+xml">
                 <img src="kubernetes-architecture-infographic.svg" alt="Kubernetes Architectuur Infographic" />
+            </object>
+        </div>
+
+        <div class="infographic-container" style="margin-top: 30px;">
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">🔒 DevSecOps Pipeline - Security at Every Stage</h2>
+            <object id="pipeline-infographic" data="kubernetes-devsecops-pipeline.svg" type="image/svg+xml">
+                <img src="kubernetes-devsecops-pipeline.svg" alt="DevSecOps Pipeline Infographic" />
             </object>
         </div>
 
@@ -331,7 +342,7 @@
                 <h3>CI/CD Pipeline met GitOps</h3>
                 <p>
                     <strong>De moderne deployment flow:</strong> Van Git repository → CI Build → Container Registry 
-                    → GitOps tool (ArgoCD/Flux) → Deployment naar Kubernetes → Continue synchronisatie.
+                    → GitOps Controller → Deployment naar Kubernetes → Continue synchronisatie.
                 </p>
             </div>
 
@@ -397,7 +408,7 @@
                 <div class="icon">🕸️</div>
                 <h3>Service Mesh</h3>
                 <p>
-                    <strong>Leeft tussen de Services!</strong> Een Service Mesh (Istio, Linkerd, Cilium) 
+                    <strong>Leeft tussen de Services!</strong> Een Service Mesh layer 
                     voegt toe: mTLS encryptie, advanced load balancing, circuit breaking, distributed tracing, 
                     en metrics - zonder code aanpassingen.
                 </p>
@@ -414,7 +425,7 @@
                     <li>Persistent Volume Claims (PVC)</li>
                     <li>Storage Classes - dynamic provisioning</li>
                     <li>CSI Drivers - cloud/NFS integration</li>
-                    <li>Backup & Recovery met Velero</li>
+                    <li>Backup & Recovery solutions</li>
                 </ul>
             </div>
 
@@ -449,16 +460,30 @@
 
             <div class="feature-card">
                 <div class="icon">🌐</div>
-                <h3>Ingress Controllers</h3>
+                <h3>Ingress & Load Balancing</h3>
                 <p>
                     <strong>External toegang tot je cluster:</strong>
                 </p>
                 <ul>
-                    <li>NGINX Ingress - meest gebruikt</li>
-                    <li>Traefik - modern & cloud-native</li>
-                    <li>Istio Gateway - deel van service mesh</li>
-                    <li>Cloud Load Balancers - managed solutions</li>
-                    <li>Cert Manager - automatische SSL certificates</li>
+                    <li>Ingress Controllers - HTTP/HTTPS routing</li>
+                    <li>Load Balancers - traffic distribution</li>
+                    <li>API Gateways - advanced routing</li>
+                    <li>TLS/Certificate Management - automatische SSL</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>DevSecOps Pipeline</h3>
+                <p>
+                    <strong>Security op elk niveau:</strong>
+                </p>
+                <ul>
+                    <li>SAST - Static code analysis tijdens development</li>
+                    <li>CVE Scanning - Container image vulnerability scanning</li>
+                    <li>Image Signing - Cryptographic verification</li>
+                    <li>Admission Control - Policy enforcement bij deployment</li>
+                    <li>Runtime Security - Threat detection in productie</li>
                 </ul>
             </div>
 
@@ -489,21 +514,42 @@
     <div class="info-panel" id="infoPanel">
         <button class="close-btn" onclick="closeInfo()">×</button>
         <div id="infoPanelContent">
-            <h2>Over deze Infographic</h2>
+            <h2>Over deze Infographics</h2>
             <p>
-                Deze infographic toont de complete Kubernetes architectuur vanuit een technisch perspectief.
+                Deze pagina bevat twee belangrijke infographics die Kubernetes en DevSecOps visualiseren.
+            </p>
+            
+            <h3>⚙️ Kubernetes Architectuur Infographic</h3>
+            <p>
+                Toont de complete Kubernetes architectuur vanuit een hoog niveau perspectief, zonder specifieke tools te noemen.
+                Focus op concepten, componenten en architectuurlagen.
             </p>
             
             <h3>🏗️ Opbouw van boven naar beneden:</h3>
             <ol style="margin-left: 20px; line-height: 1.8;">
-                <li><strong>Managed Kubernetes Layer:</strong> Waar je je cluster vandaan haalt (AKS, EKS, GKE, etc.)</li>
-                <li><strong>CI/CD Pipeline met GitOps:</strong> Hoe code naar productie komt via moderne GitOps methodiek</li>
+                <li><strong>Managed Kubernetes Layer:</strong> Waar je je cluster vandaan haalt</li>
+                <li><strong>CI/CD Pipeline met GitOps:</strong> Hoe code naar productie komt</li>
                 <li><strong>Control Plane:</strong> De hersenen die het cluster beheren</li>
                 <li><strong>Ingress/Load Balancer:</strong> Externe toegang tot je cluster</li>
                 <li><strong>Worker Nodes:</strong> Waar je applicaties draaien in Pods</li>
                 <li><strong>Service Mesh:</strong> Overlay netwerk tussen services voor advanced networking</li>
                 <li><strong>Persistent Storage:</strong> Data die blijft bestaan</li>
             </ol>
+
+            <h3>🔒 DevSecOps Pipeline Infographic</h3>
+            <p>
+                Visualiseert de complete security journey van code naar productie. Toont exact wanneer en waar 
+                elke beveiligingsmaatregel wordt toegepast in de pipeline.
+            </p>
+            
+            <h3>📍 Security per Pipeline Stage:</h3>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li><strong>Development:</strong> SAST, Linting, Secrets Detection, SCA (dependency scanning)</li>
+                <li><strong>Build & Test:</strong> Automated SAST, Unit Tests, Container Image Scanning, Image Signing, SBOM generation</li>
+                <li><strong>Registry:</strong> Access Control, Re-scanning, Signature Verification, Encryption, Policy Enforcement</li>
+                <li><strong>Deployment:</strong> Admission Control, Image Verification, RBAC, Network Policies, Pod Security Standards</li>
+                <li><strong>Runtime:</strong> Runtime Detection, Behavior Monitoring, Anomaly Detection, Threat Response</li>
+            </ul>
 
             <h3>🕸️ Service Mesh - Het verschil</h3>
             <p>
@@ -518,17 +564,11 @@
                 <li>Metrics en logging zonder code aanpassingen</li>
             </ul>
 
-            <h3>🚀 GitOps in Actie</h3>
-            <p>
-                De pipeline toont hoe GitOps werkt: je Git repository is de "single source of truth". 
-                Elke wijziging gaat door CI/CD, wordt gebouwd als container image, opgeslagen in een registry, 
-                en automatisch gedeployed door een GitOps tool zoals ArgoCD of Flux die continue synchroniseert.
-            </p>
-
-            <h3>🎯 Gebruik van deze Infographic</h3>
+            <h3>🎯 Gebruik van deze Infographics</h3>
             <ul style="margin-left: 20px; line-height: 1.6;">
                 <li>Training en onboarding van nieuwe teamleden</li>
                 <li>Architectuur reviews en discussies</li>
+                <li>Security awareness en DevSecOps training</li>
                 <li>Stakeholder presentaties</li>
                 <li>Documentatie en knowledge base</li>
                 <li>Print als poster voor in de teamruimte</li>

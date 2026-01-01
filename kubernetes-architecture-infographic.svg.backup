@@ -154,7 +154,7 @@
         🔄 GitOps Tool
       </text>
       <text x="810" y="340" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#555">
-        GitOps Controller
+        ArgoCD / Flux
       </text>
     </g>
     
@@ -286,39 +286,46 @@
     <g id="ingress-layer" class="layer" data-layer="ingress">
       <rect x="140" y="630" width="1320" height="80" rx="15" fill="#E74C3C" stroke="#C0392B" stroke-width="2" filter="url(#shadow)" opacity="0.9"/>
       <text x="800" y="660" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
-        🌐 Ingress / Load Balancer Layer
+        🌐 Ingress / Load Balancer
       </text>
       
-      <g id="ingress-controller" class="domain" data-domain="ingress">
-        <rect x="280" y="675" width="160" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
-        <text x="360" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
-          Ingress Controller
+      <g id="nginx-ingress" class="domain" data-domain="nginx">
+        <rect x="250" y="675" width="130" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
+        <text x="315" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
+          NGINX Ingress
+        </text>
+      </g>
+      
+      <g id="traefik" class="domain" data-domain="traefik">
+        <rect x="420" y="675" width="120" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
+        <text x="480" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
+          Traefik
+        </text>
+      </g>
+      
+      <g id="istio-gateway" class="domain" data-domain="istio-gw">
+        <rect x="580" y="675" width="150" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
+        <text x="655" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
+          Istio Gateway
         </text>
       </g>
       
       <g id="cloud-lb" class="domain" data-domain="cloud-lb">
-        <rect x="480" y="675" width="180" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
-        <text x="570" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
-          Load Balancer
+        <rect x="770" y="675" width="160" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
+        <text x="850" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
+          Cloud Load Balancer
         </text>
       </g>
       
-      <g id="tls-cert" class="domain" data-domain="tls">
-        <rect x="700" y="675" width="200" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
-        <text x="800" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
-          TLS/Certificate Management
-        </text>
-      </g>
-      
-      <g id="api-gateway" class="domain" data-domain="gateway">
-        <rect x="940" y="675" width="140" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
-        <text x="1010" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
-          API Gateway
+      <g id="cert-manager" class="domain" data-domain="cert-mgr">
+        <rect x="970" y="675" width="130" height="25" rx="5" fill="white" stroke="#E74C3C" stroke-width="2"/>
+        <text x="1035" y="693" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E74C3C">
+          Cert Manager
         </text>
       </g>
     </g>
     
-        <!-- Worker Nodes Section -->
+    <!-- Worker Nodes Section -->
     <g id="nodes-section">
       <!-- Node 1 -->
       <g id="node1" class="layer" data-layer="node">
@@ -556,7 +563,7 @@
     <g id="service-mesh" class="layer" data-layer="mesh">
       <rect x="140" y="1160" width="1320" height="100" rx="15" fill="url(#meshGradient)" stroke="#E67E22" stroke-width="3" stroke-dasharray="10,5" filter="url(#shadow)"/>
       <text x="800" y="1190" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#D35400">
-        🕸️ Service Mesh (Service Mesh Layer)
+        🕸️ Service Mesh (Istio / Linkerd / Cilium)
       </text>
       <text x="800" y="1215" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#D35400">
         Leeft tussen de Services: Traffic Management, Security, Observability
@@ -605,7 +612,7 @@
     <g id="backup" class="domain" data-domain="backup">
       <rect x="1020" y="1350" width="160" height="25" rx="5" fill="white" stroke="#DAA520" stroke-width="2"/>
       <text x="1100" y="1368" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#8B4513">
-        Backup Solution
+        Backup (Velero)
       </text>
     </g>
   </g>
