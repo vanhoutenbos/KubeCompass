@@ -1,22 +1,33 @@
 # Kubernetes Architectuur Infographic
 
-⚙️ **Van componenten tot managed platform - een visuele reis door de Kubernetes architectuur**
+⚙️ **High-level overzicht van concepten en oplossingen - tool-agnostisch**
 
 ---
 
 ## Overzicht
 
-Deze infographic visualiseert Kubernetes vanuit een **technisch architectuur perspectief**. In tegenstelling tot de ecosysteem infographic die laat zien *welke domeinen* je moet invullen (security, observability, CI/CD), toont deze infographic *hoe Kubernetes technisch werkt* en waar elk component leeft.
+Deze infographic visualiseert Kubernetes vanuit een **hoog niveau architectuur perspectief**. In tegenstelling tot de ecosysteem infographic die laat zien *welke domeinen* je moet invullen (security, observability, CI/CD), toont deze infographic *hoe Kubernetes technisch werkt* en waar elk component leeft.
+
+**Nieuw:** Deze pagina bevat nu ook een **DevSecOps Pipeline infographic** die laat zien waar security maatregelen zoals CVE scanning, image signing, en runtime security plaatsvinden in de pipeline.
 
 ### 🎨 **Design Concept**
 
-De infographic toont de complete Kubernetes stack van boven naar beneden:
-- **Managed Kubernetes opties** (AKS, EKS, GKE, etc.)
+De infographic toont de complete Kubernetes stack van boven naar beneden, **zonder specifieke tools te noemen**:
+- **Managed Kubernetes opties** (cloud providers en self-managed)
 - **CI/CD Pipeline met GitOps** methodiek
 - **Control Plane componenten** (API Server, Scheduler, etc.)
 - **Worker Nodes** met alle Kubernetes objecten (Pods, Services, Deployments)
 - **Service Mesh layer** die tussen de services leeft
 - **Persistent Storage** voor data persistentie
+
+### 🔒 **DevSecOps Pipeline**
+
+De nieuwe DevSecOps pipeline infographic visualiseert de complete security journey:
+- **Development:** SAST, Linting, Secrets Detection, Software Composition Analysis
+- **Build & Test:** Image Scanning (CVE), Image Signing, SBOM generation
+- **Registry:** Access Control, Re-scanning, Signature Verification
+- **Deployment:** Admission Control, RBAC, Network Policies, Pod Security
+- **Runtime:** Runtime Detection, Threat Detection & Response
 
 ### 🆚 **Verschil met Ecosysteem Infographic**
 
@@ -35,9 +46,21 @@ De infographic toont de complete Kubernetes stack van boven naar beneden:
 ## 📁 Bestanden
 
 ### Hoofdbestanden
-- **`kubernetes-architecture-infographic.svg`** - De hoofdinfographic in bewerkbaar SVG formaat
-- **`kubernetes-architecture.html`** - HTML viewer met uitleg en download optie
+- **`kubernetes-architecture-infographic.svg`** - De hoofdinfographic in bewerkbaar SVG formaat (tool-agnostisch)
+- **`kubernetes-devsecops-pipeline.svg`** - DevSecOps pipeline met security stages
+- **`kubernetes-architecture.html`** - HTML viewer met beide infographics en uitleg
 - **`KUBERNETES_ARCHITECTURE_README.md`** - Dit bestand
+
+### Structuur
+```
+KubeCompass/
+├── kubernetes-architecture-infographic.svg    # Architectuur infographic (tool-agnostic)
+├── kubernetes-devsecops-pipeline.svg          # DevSecOps pipeline
+├── kubernetes-architecture.html               # Interactive viewer
+├── KUBERNETES_ARCHITECTURE_README.md          # Documentatie
+├── kubernetes-ecosystem-infographic.svg       # Ecosysteem infographic (bestaand)
+└── kubernetes-ecosystem.html                  # Ecosysteem viewer (bestaand)
+```
 
 ### Structuur
 ```
@@ -76,8 +99,8 @@ De moderne deployment flow van code naar productie:
 **Flow uitleg:**
 1. **Git Repository** - Single source of truth voor alle configuratie
 2. **CI Build** - Automated testing, linting, building, packaging
-3. **Container Registry** - Opslag van container images (Docker Hub, ECR, ACR, GCR)
-4. **GitOps Tool** - ArgoCD of Flux synchroniseert Git → Kubernetes
+3. **Container Registry** - Opslag van container images
+4. **GitOps Controller** - Synchroniseert Git → Kubernetes automatically
 5. **Deployment** - Applicaties worden automatisch gedeployed
 6. **Sync Monitor** - Continue monitoring en synchronisatie van desired state
 
@@ -109,11 +132,10 @@ Externe toegang tot je cluster:
 
 | Component | Use Case |
 |-----------|----------|
-| **NGINX Ingress** | Meest gebruikt, stabiel, veel features |
-| **Traefik** | Modern, cloud-native, automatische service discovery |
-| **Istio Gateway** | Onderdeel van Istio service mesh, advanced routing |
-| **Cloud Load Balancer** | Managed solutions (Azure LB, AWS ALB/NLB, GCP GLB) |
-| **Cert Manager** | Automatische SSL/TLS certificates via Let's Encrypt |
+| **Ingress Controller** | HTTP/HTTPS routing en path-based routing |
+| **Load Balancer** | Layer 4 (TCP/UDP) traffic distribution |
+| **API Gateway** | Advanced routing, rate limiting, authentication |
+| **TLS/Certificate Management** | Automatische SSL/TLS certificates via protocollen zoals ACME |
 
 ### Laag 5: Worker Nodes 🖥️
 
@@ -162,10 +184,8 @@ Een Service Mesh is een infrastructure layer die **tussen je Services** leeft en
 - ✅ **Metrics & Observability** - Automatische metrics zonder code wijzigingen
 - ✅ **Service Discovery** - Automatische service registration
 
-**Populaire Service Meshes:**
-- **Istio** - Meest feature-rich, complex, enterprise-grade
-- **Linkerd** - Simpel, lightweight, Rust-based, CNCF graduated
-- **Cilium** - eBPF-based, combineert CNI + service mesh
+**Populaire implementaties:**
+Er zijn verschillende service mesh oplossingen beschikbaar, elk met hun eigen sterke punten qua complexiteit, performance en features.
 
 **Wanneer heb je een Service Mesh nodig?**
 - Microservices architectuur met 10+ services
@@ -184,7 +204,7 @@ Data die blijft bestaan na pod restarts:
 | **Persistent Volume Claim (PVC)** | Request voor storage door een pod |
 | **Storage Class** | Dynamic provisioning van volumes |
 | **CSI Driver** | Container Storage Interface voor cloud/NFS storage |
-| **Backup (Velero)** | Kubernetes backup and disaster recovery |
+| **Backup Solution** | Kubernetes backup and disaster recovery tools |
 
 **Storage Types:**
 - **Block Storage** - AWS EBS, Azure Disk, GCP Persistent Disk
@@ -321,10 +341,10 @@ strategy:
 ### DaemonSets ⚙️
 
 **Wanneer gebruiken?**
-- Log collectors (Fluentd, Filebeat)
-- Monitoring agents (Prometheus Node Exporter, Datadog agent)
-- Storage daemons (Ceph, GlusterFS)
-- Network plugins (Cilium, Calico)
+- Log collectors (agent-based logging solutions)
+- Monitoring agents (system metrics exporters)
+- Storage daemons (distributed storage systems)
+- Network plugins (CNI implementations)
 
 **Kenmerk:** Draait exact 1 pod per node (of subset van nodes via node selector)
 
@@ -333,13 +353,13 @@ strategy:
 **Hoe werkt het technisch?**
 
 1. **Sidecar Proxy Pattern:**
-   - Elke pod krijgt een sidecar proxy container (Envoy)
+   - Elke pod krijgt een sidecar proxy container (bijvoorbeeld Envoy)
    - Al het inbound/outbound verkeer gaat door de proxy
    - Control plane configureert alle proxies
 
 2. **Data Plane vs Control Plane:**
-   - **Data Plane:** Envoy proxies (handling actual traffic)
-   - **Control Plane:** Istiod/Linkerd controller (configuration & policy)
+   - **Data Plane:** Sidecar proxies (handling actual traffic)
+   - **Control Plane:** Mesh controller (configuration & policy)
 
 3. **mTLS in actie:**
    ```
@@ -372,12 +392,14 @@ strategy:
 
 ### GitOps Tools Vergelijking
 
-| Feature | ArgoCD | Flux |
-|---------|--------|------|
-| **UI** | ✅ Excellent web UI | ❌ CLI only (maar Weave GitOps UI beschikbaar) |
+Verschillende GitOps oplossingen hebben verschillende sterke punten:
+
+| Feature | Tool Type A (UI-focused) | Tool Type B (CLI-focused) |
+|---------|--------------------------|---------------------------|
+| **UI** | ✅ Excellent web UI | ❌ CLI only (maar web UI's beschikbaar) |
 | **Complexity** | Medium | Simple |
-| **Multi-cluster** | ✅ Native support | ✅ Via Flux multi-tenancy |
-| **CNCF Status** | Graduated | Graduated |
+| **Multi-cluster** | ✅ Native support | ✅ Via multi-tenancy patterns |
+| **CNCF Status** | Graduated options available | Graduated options available |
 | **Helm Support** | ✅ Excellent | ✅ Excellent |
 | **Kustomize** | ✅ Built-in | ✅ Native |
 | **Best For** | Teams wanting UI, multi-cluster | Pure GitOps, simple setups |
@@ -387,13 +409,13 @@ strategy:
 ```
 1. Developer pusht code naar Git
    ↓
-2. CI pipeline (GitHub Actions/GitLab CI)
+2. CI pipeline
    - Runs tests
    - Builds Docker image
    - Pushes to registry
    - Updates manifest in Git (image tag)
    ↓
-3. ArgoCD/Flux detects change in Git
+3. GitOps controller detects change in Git
    ↓
 4. Syncs new manifest to Kubernetes
    ↓
@@ -405,6 +427,94 @@ strategy:
 ```
 
 **Voordeel:** Rollback is een `git revert`, geen kubectl commando's!
+
+---
+
+## 🔒 DevSecOps Pipeline - Security at Every Stage
+
+De DevSecOps pipeline infographic visualiseert waar en wanneer security maatregelen worden toegepast in de complete pipeline van development tot runtime.
+
+### Pipeline Stages en Security Controls
+
+#### 1. Development Stage 👨‍💻
+
+**Security Maatregelen:**
+- **SAST (Static Application Security Testing)** - Scan source code voor security vulnerabilities
+- **Linting** - Code quality en security rules enforcement
+- **Secrets Detection** - Pre-commit hooks voorkomen hardcoded secrets
+- **SCA (Software Composition Analysis)** - Check dependencies voor bekende CVEs
+
+**Waarom belangrijk:** Vroeg in de pipeline gevonden vulnerabilities zijn goedkoper om te fixen.
+
+#### 2. Build & Test Stage 🔨
+
+**Security Maatregelen:**
+- **Automated SAST** - Geautomatiseerde security scans in CI
+- **Unit Tests** - Inclusief security-gerelateerde tests
+- **Container Image Scanning** - CVE scanning van base images en dependencies
+- **Image Signing** - Cryptografische handtekening voor image integrity
+- **SBOM Generation** - Software Bill of Materials voor compliance
+
+**Waarom belangrijk:** Voorkomt dat vulnerable images de registry bereiken.
+
+#### 3. Registry Stage 📦
+
+**Security Maatregelen:**
+- **Access Control** - RBAC op wie wat mag pullen/pushen
+- **Continuous Re-scanning** - Periodieke CVE scans van opgeslagen images
+- **Signature Verification** - Alleen signed images accepteren
+- **Encryption at Rest** - Images encrypted opslaan
+- **Policy Enforcement** - Vulnerability thresholds en retention policies
+
+**Waarom belangrijk:** Registry is single source of truth voor images.
+
+#### 4. Deployment Stage 🚀
+
+**Security Maatregelen:**
+- **Admission Control** - Policy enforcement bij deployment (OPA, Kyverno, etc.)
+- **Image Verification** - Verify signatures before allowing deployment
+- **RBAC** - Role-Based Access Control policies
+- **Network Policies** - Pod-to-pod communication restrictions
+- **Pod Security Standards** - Seccomp, AppArmor, security contexts
+
+**Waarom belangrijk:** Laatste defense line voordat code in productie draait.
+
+#### 5. Runtime Stage 🏃
+
+**Security Maatregelen:**
+- **Runtime Security** - Real-time threat detection
+- **Behavior Monitoring** - Detect abnormal container behavior
+- **Anomaly Detection** - Machine learning-based threat detection
+- **Incident Response** - Automated or manual threat response
+
+**Waarom belangrijk:** Detecteert zero-day exploits en runtime attacks.
+
+### Security Best Practices per Stage
+
+**Shift Left Security:**
+- Implementeer zo vroeg mogelijk in de pipeline
+- Maak security onderdeel van development proces
+- Automatiseer alle security checks
+
+**Defense in Depth:**
+- Meerdere security layers op verschillende niveaus
+- Geen single point of failure in security
+- Redundante controles waar kritisch
+
+**Continuous Monitoring:**
+- Security is geen one-time check
+- Continue monitoring gedurende hele lifecycle
+- Regular updates en re-scanning
+
+### Compliance en Audit
+
+De DevSecOps pipeline ondersteunt compliance requirements:
+- **Traceability** - Elke image traceable naar source code commit
+- **SBOM** - Complete inventory van alle componenten
+- **Audit Trail** - Logging van alle security events
+- **Policy as Code** - Reproducible en version-controlled policies
+
+
 
 ---
 
@@ -582,7 +692,7 @@ function toggleLayer(layerName) {
 
 1. **Study de pipeline layer in de infographic**
 2. **Hands-on Lab:**
-   - Setup ArgoCD
+   - Setup a GitOps controller
    - Deploy app via Git
    - Make change → automatic sync
    - Practice rollback via Git
@@ -591,10 +701,20 @@ function toggleLayer(layerName) {
 
 1. **Study Service Mesh layer**
 2. **Hands-on Lab (optional):**
-   - Install Istio/Linkerd in test cluster
+   - Install a service mesh in test cluster
    - Enable mTLS
    - View service mesh metrics
    - Configure traffic splitting
+
+### Week 6: DevSecOps & Security
+
+1. **Study DevSecOps pipeline infographic**
+2. **Hands-on Lab:**
+   - Implement SAST in development
+   - Setup container image scanning
+   - Configure admission controllers
+   - Practice image signing and verification
+   - Setup runtime security monitoring
 
 ---
 
@@ -602,8 +722,9 @@ function toggleLayer(layerName) {
 
 ### Q1 2026
 
-- [x] Basis architectuur infographic met alle lagen
-- [x] HTML viewer met uitleg
+- [x] Basis architectuur infographic met alle lagen (tool-agnostisch)
+- [x] DevSecOps pipeline infographic met security stages
+- [x] HTML viewer met beide infographics en uitleg
 - [x] Comprehensive README documentatie
 - [ ] Export naar PNG/PDF voor presentaties
 - [ ] Engelse versie
