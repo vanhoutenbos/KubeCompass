@@ -72,7 +72,7 @@
     <text x="65" y="310" font-size="14" font-weight="bold" fill="white" font-family="Arial, sans-serif">Domains:</text>
     <text x="75" y="335" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 12: Developer Experience</text>
     <text x="75" y="355" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 3: Security (Secret Detection)</text>
-    <text x="75" y="375" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 13: Governance & Policy</text>
+    <text x="75" y="375" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 13: Governance &amp; Policy</text>
     
     <!-- Gates -->
     <rect x="65" y="395" width="220" height="60" rx="5" fill="white" opacity="0.2"/>
@@ -101,9 +101,9 @@
     
     <!-- Domains -->
     <text x="365" y="310" font-size="14" font-weight="bold" fill="white" font-family="Arial, sans-serif">Domains:</text>
-    <text x="375" y="335" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 3: Identity & Access</text>
+    <text x="375" y="335" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 3: Identity &amp; Access</text>
     <text x="375" y="355" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 4: Runtime Security (SAST)</text>
-    <text x="375" y="375" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 13: Governance & Policy</text>
+    <text x="375" y="375" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 13: Governance &amp; Policy</text>
     
     <!-- Gates -->
     <rect x="365" y="395" width="220" height="60" rx="5" fill="white" opacity="0.2"/>
@@ -133,7 +133,7 @@
     
     <!-- Domains -->
     <text x="665" y="315" font-size="14" font-weight="bold" fill="white" font-family="Arial, sans-serif">Domains:</text>
-    <text x="675" y="340" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 6: CI/CD & GitOps</text>
+    <text x="675" y="340" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 6: CI/CD &amp; GitOps</text>
     <text x="675" y="360" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 4: Runtime Security</text>
     <text x="675" y="380" font-size="11" fill="white" font-family="Arial, sans-serif">• Domain 3: Security (Signing)</text>
     
@@ -172,7 +172,7 @@
     <!-- Gates -->
     <rect x="965" y="395" width="220" height="60" rx="5" fill="white" opacity="0.2"/>
     <text x="1075" y="415" font-size="13" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial, sans-serif">Gates:</text>
-    <text x="1075" y="435" font-size="11" fill="white" text-anchor="middle" font-family="Arial, sans-serif">✓ Image signed & verified</text>
+    <text x="1075" y="435" font-size="11" fill="white" text-anchor="middle" font-family="Arial, sans-serif">✓ Image signed &amp; verified</text>
     <text x="1075" y="450" font-size="11" fill="white" text-anchor="middle" font-family="Arial, sans-serif">✓ No critical CVEs</text>
   </g>
 
@@ -244,10 +244,10 @@
   <!-- Security Layer Indicator -->
   <rect x="50" y="520" width="1700" height="120" rx="10" fill="#667eea" opacity="0.1"/>
   <text x="900" y="550" font-size="18" font-weight="bold" fill="#667eea" text-anchor="middle" font-family="Arial, sans-serif">
-    🛡️ Security & Governance Throughout the Pipeline
+    🛡️ Security &amp; Governance Throughout the Pipeline
   </text>
   <text x="900" y="575" font-size="13" fill="#667eea" text-anchor="middle" font-family="Arial, sans-serif">
-    Domain 3: Identity, Access & Security • Domain 4: Runtime Security • Domain 13: Governance & Policy
+    Domain 3: Identity, Access &amp; Security • Domain 4: Runtime Security • Domain 13: Governance &amp; Policy
   </text>
   <text x="900" y="595" font-size="12" fill="#667eea" text-anchor="middle" font-family="Arial, sans-serif">
     Continuous validation, scanning, and policy enforcement at every stage
@@ -276,7 +276,7 @@
   <g>
     <text x="200" y="840" font-size="12" fill="#764ba2" font-family="Arial, sans-serif">• Domain 1: Provisioning</text>
     <text x="200" y="860" font-size="12" fill="#764ba2" font-family="Arial, sans-serif">• Domain 10: Message Brokers</text>
-    <text x="200" y="880" font-size="12" fill="#764ba2" font-family="Arial, sans-serif">• Domain 11: Data Stores & Caching</text>
+    <text x="200" y="880" font-size="12" fill="#764ba2" font-family="Arial, sans-serif">• Domain 11: Data Stores &amp; Caching</text>
     
     <text x="700" y="840" font-size="11" fill="#4a5568" font-family="Arial, sans-serif" font-style="italic">Infrastructure foundation</text>
     <text x="700" y="860" font-size="11" fill="#4a5568" font-family="Arial, sans-serif" font-style="italic">Event-driven communication</text>
