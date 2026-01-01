@@ -307,10 +307,10 @@ svgDoc.querySelectorAll('.domain').forEach(domain => {
 
 ### Directe Verbeteringen
 
-1. **Export naar PNG/PDF** - Voor presentaties
-2. **Vertaling naar Engels** - Voor internationale use
+1. **Export naar PNG/PDF** - For presentations
+2. **Vertaling naar Engels** - For international use
 3. **Print versie** - Optimaliseren voor A1 poster
-4. **Dark mode variant** - Voor donkere achtergronden
+4. **Dark mode variant** - For dark backgrounds
 
 ### Interactieve Features (Toekomst)
 
@@ -416,9 +416,9 @@ Wil je de infographic verbeteren? Geweldig!
 
 ## 📞 Contact en Feedback
 
-- **GitHub Issues**: Voor bugs en feature requests
-- **GitHub Discussions**: Voor algemene vragen en ideeën
-- **Pull Requests**: Voor concrete verbeteringen
+- **GitHub Issues**: For bugs and feature requests
+- **GitHub Discussions**: For general questions and ideas
+- **Pull Requests**: For concrete improvements
 
 ---
 

@@ -36,7 +36,7 @@ De nieuwe DevSecOps pipeline infographic visualiseert de complete security journ
 | 🚢 Toont **welke domeinen** te implementeren | ⚙️ Toont **hoe Kubernetes werkt** |
 | Laag 0/1/2 decision framework | Technische component layout |
 | Focus op beslissingen en timing | Focus op architectuur en flow |
-| Voor platform planning | Voor technische training |
+| For platform planning | For technical training |
 | Karakters representeren domeinen | Echte Kubernetes componenten |
 
 **Gebruik beide samen:** De ecosysteem infographic helpt je beslissen *wat* je nodig hebt, de architectuur infographic laat zien *hoe* het technisch werkt.
@@ -151,8 +151,8 @@ Waar je workloads daadwerkelijk draaien. Elke node heeft:
 | Object Type | Emoji | Gebruik |
 |-------------|-------|---------|
 | **Pod** | 📦 | Kleinste deploybare eenheid, groep van 1+ containers |
-| **Deployment** | 🚀 | Voor stateless applicaties, rolling updates |
-| **StatefulSet** | 💿 | Voor stateful applicaties met persistent identity |
+| **Deployment** | 🚀 | For stateless applications, rolling updates |
+| **StatefulSet** | 💿 | For stateful applications met persistent identity |
 | **DaemonSet** | ⚙️ | Draait op alle (of specifieke) nodes (monitoring, logging) |
 | **Job** | 📋 | One-time tasks |
 | **CronJob** | ⏰ | Scheduled recurring tasks |
@@ -217,7 +217,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 1. Technische Training & Onboarding
 
-**Voor nieuwe teamleden:**
+**For new team members:**
 - Toon hoe Kubernetes van boven naar beneden werkt
 - Leg uit waar elk component leeft
 - Visualiseer de deployment flow via GitOps
@@ -233,7 +233,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 2. Architectuur Reviews
 
-**Voor architectuur discussies:**
+**For architecture discussions:**
 - Gebruik om huidige vs gewenste architectuur te vergelijken
 - Markeer welke componenten je al hebt vs wat nog moet komen
 - Discussieer waar Service Mesh toegevoegde waarde heeft
@@ -241,7 +241,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 3. Stakeholder Presentaties
 
-**Voor management en niet-technische stakeholders:**
+**For management and non-technical stakeholders:**
 - Laat zien hoe complex maar ook goed georganiseerd Kubernetes is
 - Visualiseer waarom je bepaalde managed services kiest
 - Toon de investment in GitOps en automation
@@ -249,7 +249,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 4. Documentatie & Knowledge Base
 
-**Voor interne documentatie:**
+**For internal documentation:**
 - Embed in confluence/wiki als architectuur overzicht
 - Link vanuit component documentatie naar de infographic
 - Gebruik als startpunt voor nieuwe projecten
@@ -257,7 +257,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 5. Troubleshooting & Debugging
 
-**Voor incident response:**
+**For incident response:**
 - Identificeer welke laag het probleem zit
 - Trace request flow van Ingress → Service → Pod
 - Check Service Mesh metrics als die aanwezig is
@@ -265,7 +265,7 @@ Data die blijft bestaan na pod restarts:
 
 ### 6. Capacity Planning
 
-**Voor scaling discussies:**
+**For scaling discussions:**
 - Visualiseer hoeveel nodes en pods je hebt
 - Plan HPA/VPA/Cluster Autoscaler implementatie
 - Discussieer storage capacity en backup strategie
@@ -564,8 +564,8 @@ De DevSecOps pipeline ondersteunt compliance requirements:
 
 Elk component heeft:
 - `id` - Unieke identifier
-- `class="domain"` - Voor CSS styling
-- `data-domain` - Voor JavaScript interactie
+- `class="domain"` - For CSS styling
+- `data-domain` - For JavaScript interaction
 - `data-layer` - Layer identificatie
 
 ---
@@ -583,7 +583,7 @@ Elk component heeft:
 
 **Domeinen:** Infrastructure, Security, Networking, GitOps, CI/CD, Observability, Storage, Registry, Messaging, etc.
 
-**Voor wie:** Platform engineers, architects die een Kubernetes platform opzetten
+**For whom:** Platform engineers, architects die een Kubernetes platform set up
 
 ### Architectuur Infographic (nieuw)
 
@@ -595,7 +595,7 @@ Elk component heeft:
 
 **Componenten:** Pods, Services, Deployments, StatefulSets, Control Plane, Service Mesh, etc.
 
-**Voor wie:** Developers, operators, iedereen die Kubernetes technisch wil begrijpen
+**For whom:** Developers, operators, iedereen die Kubernetes technisch wil begrijpen
 
 ### Gebruik Samen
 
@@ -793,9 +793,9 @@ Wil je de infographic verbeteren? Geweldig!
 
 ## 📞 Contact en Feedback
 
-- **GitHub Issues**: Voor bugs en feature requests
-- **GitHub Discussions**: Voor vragen en ideeën
-- **Pull Requests**: Voor concrete verbeteringen
+- **GitHub Issues**: For bugs and feature requests
+- **GitHub Discussions**: For questions and ideas
+- **Pull Requests**: For concrete improvements
 
 ---
 

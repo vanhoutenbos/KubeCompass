@@ -473,7 +473,7 @@ Node Pools:
 **✅ Decision: Cloud provider CSI driver + managed disks**
 
 **[❓ QUESTION 25]**: Storage provider capabilities?
-- Which CSI driver biedt de provider? Snapshots ondersteund?
+- Which CSI driver provides de provider? Snapshots ondersteund?
 
 ---
 
