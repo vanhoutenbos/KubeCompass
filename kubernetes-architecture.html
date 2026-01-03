@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Architecture Infographic - KubeCompass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #326CE5 0%, #48C9B0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: #4a5568;
+            font-size: 1em;
+            max-width: 900px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .infographic-container {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        #infographic {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Hover effects for interactive elements */
+        .domain {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .domain:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .layer:hover {
+            opacity: 0.95;
+        }
+
+        .info-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 90%;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .info-panel.active {
+            display: block;
+        }
+
+        .info-panel h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .info-panel p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-panel .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-panel .close-btn:hover {
+            background: #c53030;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px;
+            background: #326CE5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            background: #2C5AA0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(50, 108, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: #48bb78;
+        }
+
+        .btn-secondary:hover {
+            background: #38a169;
+        }
+
+        .btn-tertiary {
+            background: #E67E22;
+        }
+
+        .btn-tertiary:hover {
+            background: #D35400;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #326CE5;
+        }
+
+        .feature-card h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature-card p {
+            color: #4a5568;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .feature-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feature-card ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .feature-card li {
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            color: #718096;
+        }
+
+        footer a {
+            color: #326CE5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Kubernetes Architecture</h1>
+            <div class="subtitle">High-level overview of concepts and solutions</div>
+            <div class="description">
+                This page visualizes Kubernetes architecture and DevSecOps pipeline from a high level: 
+                all concepts like Pods, Services, Deployments, and where a Service Mesh lives. 
+                Plus a complete security pipeline showing where CVE scanning, image signing, 
+                runtime security and other security measures take place.
+            </div>
+        </header>
+
+        <div class="controls">
+            <a href="kubernetes-architecture-infographic.svg" download class="btn">
+                📥 Download Architecture SVG
+            </a>
+            <a href="kubernetes-devsecops-pipeline.svg" download class="btn">
+                📥 Download DevSecOps Pipeline SVG
+            </a>
+            <a href="KUBERNETES_ARCHITECTURE_README.md" class="btn btn-secondary">
+                📖 Read Documentation
+            </a>
+            <a href="kubernetes-ecosystem.html" class="btn btn-tertiary">
+                🚢 View Ecosystem Infographic
+            </a>
+            <button class="btn" onclick="showGuide()">
+                💡 Interactive Guide
+            </button>
+        </div>
+
+        <div class="infographic-container">
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">⚙️ Kubernetes Architecture</h2>
+            <object id="infographic" data="kubernetes-architecture-infographic.svg" type="image/svg+xml">
+                <img src="kubernetes-architecture-infographic.svg" alt="Kubernetes Architecture Infographic" />
+            </object>
+        </div>
+
+        <div class="infographic-container" style="margin-top: 30px;">
+            <h2 style="text-align: center; color: #2d3748; margin-bottom: 15px;">🔒 DevSecOps Pipeline - Security at Every Stage</h2>
+            <object id="pipeline-infographic" data="kubernetes-devsecops-pipeline.svg" type="image/svg+xml">
+                <img src="kubernetes-devsecops-pipeline.svg" alt="DevSecOps Pipeline Infographic" />
+            </object>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">☁️</div>
+                <h3>Managed Kubernetes</h3>
+                <p>
+                    <strong>Cloud provider options:</strong> Azure AKS, AWS EKS, Google GKE, DigitalOcean DOKS, 
+                    or self-managed. Each with their own pros and cons regarding cost, vendor lock-in, and features.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🚀</div>
+                <h3>CI/CD Pipeline with GitOps</h3>
+                <p>
+                    <strong>The modern deployment flow:</strong> From Git repository → CI Build → Container Registry 
+                    → GitOps Controller → Deployment to Kubernetes → Continuous synchronization.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🧠</div>
+                <h3>Control Plane</h3>
+                <p>
+                    <strong>The brain of Kubernetes:</strong>
+                </p>
+                <ul>
+                    <li>API Server - central access point</li>
+                    <li>Scheduler - places pods on nodes</li>
+                    <li>Controller Manager - manages desired state</li>
+                    <li>etcd - distributed key-value store</li>
+                    <li>CoreDNS - service discovery</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🖥️</div>
+                <h3>Worker Nodes</h3>
+                <p>
+                    <strong>Where your workloads run:</strong>
+                </p>
+                <ul>
+                    <li>Kubelet - node agent</li>
+                    <li>Kube-proxy - network proxy</li>
+                    <li>Container Runtime - runs containers</li>
+                    <li>Pods - smallest deployable unit</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📦</div>
+                <h3>Kubernetes Objects</h3>
+                <p>
+                    <strong>Different workload types:</strong>
+                </p>
+                <ul>
+                    <li>Pods - containers grouping</li>
+                    <li>Deployments - stateless apps</li>
+                    <li>StatefulSets - stateful apps</li>
+                    <li>DaemonSets - runs on all nodes</li>
+                    <li>Jobs/CronJobs - batch workloads</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔗</div>
+                <h3>Services & Networking</h3>
+                <p>
+                    <strong>How components communicate:</strong>
+                </p>
+                <ul>
+                    <li>Services - stable endpoints</li>
+                    <li>Ingress - external access</li>
+                    <li>Load Balancers - traffic distribution</li>
+                    <li>Network Policies - traffic control</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🕸️</div>
+                <h3>Service Mesh</h3>
+                <p>
+                    <strong>Lives between the Services!</strong> A Service Mesh layer 
+                    adds: mTLS encryption, advanced load balancing, circuit breaking, distributed tracing, 
+                    and metrics - without code changes.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">💾</div>
+                <h3>Persistent Storage</h3>
+                <p>
+                    <strong>Data that persists:</strong>
+                </p>
+                <ul>
+                    <li>Persistent Volumes (PV)</li>
+                    <li>Persistent Volume Claims (PVC)</li>
+                    <li>Storage Classes - dynamic provisioning</li>
+                    <li>CSI Drivers - cloud/NFS integration</li>
+                    <li>Backup & Recovery solutions</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔐</div>
+                <h3>Security & Configuration</h3>
+                <p>
+                    <strong>Security and configuration:</strong>
+                </p>
+                <ul>
+                    <li>RBAC - role-based access control</li>
+                    <li>Network Policies - pod communication rules</li>
+                    <li>Secrets - sensitive data</li>
+                    <li>ConfigMaps - configuration data</li>
+                    <li>Pod Security Standards</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>Autoscaling & Optimization</h3>
+                <p>
+                    <strong>Automatic scaling:</strong>
+                </p>
+                <ul>
+                    <li>Horizontal Pod Autoscaler (HPA)</li>
+                    <li>Vertical Pod Autoscaler (VPA)</li>
+                    <li>Cluster Autoscaler</li>
+                    <li>Resource requests & limits</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h3>Ingress & Load Balancing</h3>
+                <p>
+                    <strong>External access to your cluster:</strong>
+                </p>
+                <ul>
+                    <li>Ingress Controllers - HTTP/HTTPS routing</li>
+                    <li>Load Balancers - traffic distribution</li>
+                    <li>API Gateways - advanced routing</li>
+                    <li>TLS/Certificate Management - automatic SSL</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>DevSecOps Pipeline</h3>
+                <p>
+                    <strong>Security at every level:</strong>
+                </p>
+                <ul>
+                    <li>SAST - Static code analysis during development</li>
+                    <li>CVE Scanning - Container image vulnerability scanning</li>
+                    <li>Image Signing - Cryptographic verification</li>
+                    <li>Admission Control - Policy enforcement at deployment</li>
+                    <li>Runtime Security - Threat detection in production</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h3>Difference from Ecosystem</h3>
+                <p>
+                    The <strong>Ecosystem Infographic</strong> shows which domains you need to fill in (security, 
+                    observability, CI/CD). This <strong>Architecture Infographic</strong> shows how Kubernetes 
+                    technically works and where each component lives.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>
+                <strong>KubeCompass</strong> - Your guide through the Kubernetes ecosystem<br>
+                <a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank">🌟 GitHub Repository</a> | 
+                <a href="docs/INDEX.md">📖 Documentation</a> | 
+                <a href="interactive-diagram.html">🎨 Interactive Diagrams</a> |
+                <a href="kubernetes-ecosystem.html">🚢 Ecosystem Infographic</a>
+            </p>
+        </footer>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeInfo()"></div>
+    
+    <div class="info-panel" id="infoPanel">
+        <button class="close-btn" onclick="closeInfo()">×</button>
+        <div id="infoPanelContent">
+            <h2>About these Infographics</h2>
+            <p>
+                This page contains two important infographics that visualize Kubernetes and DevSecOps.
+            </p>
+            
+            <h3>⚙️ Kubernetes Architecture Infographic</h3>
+            <p>
+                Shows the complete Kubernetes architecture from a high-level perspective, without naming specific tools.
+                Focus on concepts, components and architecture layers.
+            </p>
+            
+            <h3>🏗️ Structure from top to bottom:</h3>
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Managed Kubernetes Layer:</strong> Where you get your cluster from</li>
+                <li><strong>CI/CD Pipeline with GitOps:</strong> How code gets to production</li>
+                <li><strong>Control Plane:</strong> The brain that manages the cluster</li>
+                <li><strong>Ingress/Load Balancer:</strong> External access to your cluster</li>
+                <li><strong>Worker Nodes:</strong> Where your applications run in Pods</li>
+                <li><strong>Service Mesh:</strong> Overlay network between services for advanced networking</li>
+                <li><strong>Persistent Storage:</strong> Data that persists</li>
+            </ol>
+
+            <h3>🔒 DevSecOps Pipeline Infographic</h3>
+            <p>
+                Visualizes the complete security journey from code to production. Shows exactly when and where 
+                each security measure is applied in the pipeline.
+            </p>
+            
+            <h3>📍 Security per Pipeline Stage:</h3>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li><strong>Development:</strong> SAST, Linting, Secrets Detection, SCA (dependency scanning)</li>
+                <li><strong>Build & Test:</strong> Automated SAST, Unit Tests, Container Image Scanning, Image Signing, SBOM generation</li>
+                <li><strong>Registry:</strong> Access Control, Re-scanning, Signature Verification, Encryption, Policy Enforcement</li>
+                <li><strong>Deployment:</strong> Admission Control, Image Verification, RBAC, Network Policies, Pod Security Standards</li>
+                <li><strong>Runtime:</strong> Runtime Detection, Behavior Monitoring, Anomaly Detection, Threat Response</li>
+            </ul>
+
+            <h3>🕸️ Service Mesh - The difference</h3>
+            <p>
+                A Service Mesh is a special layer that lives <strong>between your Services</strong>. It intercepts 
+                all traffic between microservices and adds functionality such as:
+            </p>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li>Mutual TLS (mTLS) encryption between all services</li>
+                <li>Advanced load balancing and traffic management</li>
+                <li>Circuit breaking and retry logic</li>
+                <li>Distributed tracing for observability</li>
+                <li>Metrics and logging without code changes</li>
+            </ul>
+
+            <h3>🎯 Use of these Infographics</h3>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li>Training and onboarding of new team members</li>
+                <li>Architecture reviews and discussions</li>
+                <li>Security awareness and DevSecOps training</li>
+                <li>Stakeholder presentations</li>
+                <li>Documentation and knowledge base</li>
+                <li>Print as poster for the team room</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showGuide() {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('infoPanel').classList.add('active');
+        }
+
+        function closeInfo() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+
+        // Future: Add event listeners to SVG elements when loaded
+        window.addEventListener('load', function() {
+            const svgObject = document.getElementById('infographic');
+            
+            svgObject.addEventListener('load', function() {
+                try {
+                    const svgDoc = svgObject.contentDocument;
+                    if (svgDoc) {
+                        const domains = svgDoc.querySelectorAll('.domain');
+                        
+                        domains.forEach(domain => {
+                            domain.style.cursor = 'pointer';
+                            
+                            domain.addEventListener('mouseenter', function() {
+                                this.style.opacity = '0.8';
+                            });
+                            
+                            domain.addEventListener('mouseleave', function() {
+                                this.style.opacity = '1';
+                            });
+                            
+                            // Future: Add click handlers to show component details
+                            domain.addEventListener('click', function() {
+                                const domainName = this.getAttribute('data-domain');
+                                console.log('Clicked component:', domainName);
+                                // Could show detailed information about the component
+                            });
+                        });
+                    }
+                } catch (e) {
+                    console.log('SVG interactivity requires same-origin policy');
+                }
+            });
+        });
+
+        // Escape key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeInfo();
+            }
+        });
+    </script>
+</body>
+</html>

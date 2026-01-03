@@ -4,13 +4,71 @@ This document contains visual representations of KubeCompass domains, subdomains
 
 ---
 
+## 🚢 NEW: Kubernetes Ecosystem Infographic
+
+**A colorful, character-driven visualization of the entire Kubernetes ecosystem!**
+
+🎨 **[View Kubernetes Ecosystem Infographic](../kubernetes-ecosystem.html)** - Interactive HTML viewer  
+📄 **[Download SVG](../kubernetes-ecosystem-infographic.svg)** - Editable vector format  
+📖 **[Infographic Documentation](../INFOGRAPHIC_README.md)** - Complete guide and technical details
+
+**Features:**
+- Character-based design (like Linux penguin, but for Kubernetes!)
+- Three-layer platform visualization (Foundational, Core, Enhancements)
+- Color-coded domains for easy navigation
+- Fully editable SVG format (Inkscape, Illustrator, Figma compatible)
+- Ready for interactive clickable areas (like Scaled Agile Framework)
+- Dutch language with easy translation support
+
+**Perfect for:**
+- Presentations and stakeholder communication
+- Team onboarding and training
+- Documentation navigation
+- Poster printing for team spaces
+- Interactive website integration
+
+---
+
+## ⚙️ NEW: Kubernetes Architecture Infographic
+
+**A technical visualization showing how Kubernetes works from components to managed platforms!**
+
+🎨 **[View Kubernetes Architecture Infographic](../kubernetes-architecture.html)** - Interactive HTML viewer  
+📄 **[Download SVG](../kubernetes-architecture-infographic.svg)** - Editable vector format  
+📖 **[Architecture Documentation](../KUBERNETES_ARCHITECTURE_README.md)** - Complete technical guide
+
+**What's Visualized:**
+- **Managed Kubernetes Options**: AKS, EKS, GKE, DigitalOcean DOKS, Self-managed
+- **CI/CD Pipeline with GitOps**: Complete flow from Git → Build → Registry → ArgoCD/Flux → Deploy
+- **Control Plane Components**: API Server, Scheduler, Controller Manager, etcd, CoreDNS
+- **Worker Nodes**: Kubelet, Kube-proxy, Container Runtime with Pods, Deployments, StatefulSets
+- **Service Mesh Layer**: Shows where Istio/Linkerd/Cilium lives (between services!)
+- **Ingress Layer**: NGINX, Traefik, Istio Gateway, Cloud Load Balancers
+- **Storage Layer**: PV, PVC, Storage Classes, CSI Drivers, Backup with Velero
+- **Security & Config**: RBAC, Network Policies, ConfigMaps, Secrets, HPA
+
+**Perfect for:**
+- Technical training and architecture reviews
+- Understanding Kubernetes component relationships
+- Explaining where Service Mesh fits in the architecture
+- GitOps workflow visualization
+- Developer and operator onboarding
+
+**Complements the Ecosystem Infographic:**
+- **Ecosystem** shows *what domains* to implement (decision-focused)
+- **Architecture** shows *how Kubernetes works* (technical-focused)
+
+---
+
 ## Table of Contents
 
-1. [Domain Architecture Overview](#1-domain-architecture-overview)
-2. [Decision Layer Visualization](#2-decision-layer-visualization)
-3. [Scale-Based Deployment Models](#3-scale-based-deployment-models)
-4. [CNCF Alignment Map](#4-cncf-alignment-map)
-5. [Interactive Navigation Guide](#5-interactive-navigation-guide)
+1. [Kubernetes Ecosystem Infographic](#-new-kubernetes-ecosystem-infographic) **NEW!**
+2. [Kubernetes Architecture Infographic](#️-new-kubernetes-architecture-infographic) **NEW!**
+3. [Domain Architecture Overview](#1-domain-architecture-overview)
+4. [Decision Layer Visualization](#2-decision-layer-visualization)
+5. [Scale-Based Deployment Models](#3-scale-based-deployment-models)
+6. [CNCF Alignment Map](#4-cncf-alignment-map)
+7. [Interactive Navigation Guide](#5-interactive-navigation-guide)
 
 ---
 

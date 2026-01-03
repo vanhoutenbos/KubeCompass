@@ -41,7 +41,7 @@ Structured data for automation:
 
 ## Available Cases
 
-### Webshop Migration Case
+### 1. Webshop Migration Case (SME)
 **Type**: SME E-commerce Migration  
 **Organization**: Dutch webshop, ~10 people, Essential SAFe methodology  
 **Kubernetes Maturity**: None  
@@ -54,8 +54,9 @@ Structured data for automation:
 - Zero-downtime deployments required
 
 **Files**:
-- 📄 [WEBSHOP_UNIFIED_CASE.md](webshop/WEBSHOP_UNIFIED_CASE.md) - Complete analysis (479 lines)
+- 📄 [WEBSHOP_UNIFIED_CASE.md](webshop/WEBSHOP_UNIFIED_CASE.md) - Complete analysis (486 lines)
 - 📊 [webshop_case.json](webshop/webshop_case.json) - Machine-readable data
+- 📚 [Webshop README](webshop/README.md) - Quick reference
 
 **Use this case if you are**:
 - SME or startup (< 50 people)
@@ -64,6 +65,34 @@ Structured data for automation:
 - Budget-conscious
 - Need operational simplicity
 - Single region (multi-region not needed day 1)
+
+---
+
+### 2. Enterprise Financial Services Case (Global)
+**Type**: Global Enterprise Multi-Cloud Migration  
+**Organization**: International financial services, 5,000+ employees, 40+ teams  
+**Kubernetes Maturity**: Intermediate  
+
+**Key Characteristics**:
+- Multi-cloud requirement (AWS + Azure active-active)
+- Heavy compliance (SOC2, ISO27001, PCI-DSS, GDPR)
+- Zero-trust security with service mesh
+- Full FinOps with chargeback per business unit
+- 99.99% availability requirement
+- 24-month implementation timeline
+
+**Files**:
+- 📄 [ENTERPRISE_UNIFIED_CASE.md](enterprise/ENTERPRISE_UNIFIED_CASE.md) - Complete analysis (600+ lines)
+- 📚 [Enterprise README](enterprise/README.md) - Quick reference
+
+**Use this case if you are**:
+- Large enterprise (1,000+ employees)
+- Multi-cloud strategy required
+- Heavy compliance requirements (financial, healthcare, etc.)
+- Need cost accountability at scale
+- High availability critical (99.99%+)
+- Multiple teams/business units
+- Global presence (multi-region)
 
 ---
 
@@ -130,10 +159,10 @@ Cases are organized by organization type and use case:
 
 ## Case Comparison
 
-| Case | Org Type | Team Size | K8s Experience | Primary Goal | Top Constraint |
-|------|----------|-----------|----------------|--------------|----------------|
-| **Webshop** | SME E-commerce | ~10 | None | Zero-downtime deploys | GDPR + Vendor independence |
-| *More cases coming...* | | | | | |
+| Case | Org Type | Team Size | K8s Experience | Primary Goal | Top Constraint | Budget | Timeline |
+|------|----------|-----------|----------------|--------------|----------------|--------|----------|
+| **Webshop** | SME E-commerce | ~10 | None | Zero-downtime deploys | GDPR + Vendor independence | $5-20k/mo | 3-6 months |
+| **Enterprise Financial** | Global Enterprise | 5,000+ (40 teams) | Intermediate | Multi-cloud resilience | Compliance (SOC2/PCI-DSS) | $200k+/mo | 24 months |
 
 ---
 

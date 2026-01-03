@@ -1,87 +1,87 @@
-# Opand Vragand: Webshop Migratiecase
+# Open Questions: Webshop Migration Case
 
 **Target Audience**: Decision Makers, Project Leads, Architects  
-**Purpose**: Overzicht or alle onbeantwoorde vragen gesorteerd on kritikaliteit  
-**Status**: Living document - update with beantwoording  
+**Purpose**: Overview of all unanswered questions sorted by criticality  
+**Status**: Living document - update with answers  
 
 ---
 
-## Gebruiksinstructies
+## Usage Instructions
 
-### Prioriteit Classificatie
-- **🔴 KRITISCH**: Blokkeert implementation start - moet beantwoord wordand for Phase 1
-- **🟠 BELANGRIJK**: Impact on architectuur/tooling - moet beantwoord in firste month
-- **🟢 KAN LATER**: Refinement/optimalisatie - kan iteratief beslist wordand
+### Priority Classification
+- **🔴 CRITICAL**: Blocks implementation start - must be answered before Phase 1
+- **🟠 IMPORTANT**: Impact on architecture/tooling - must be answered in first month
+- **🟢 CAN BE LATER**: Refinement/optimization - can be decided iteratively
 
-### Impact Categorieën
-- **Architectuur**: Fundamentele platform design beslissingen
-- **Operationol**: Team workflow en dailye operations
+### Impact Categories
+- **Architecture**: Fundamental platform design decisions
+- **Operational**: Team workflow and daily operations
 - **Compliance**: Security, audit, GDPR requirements
 - **Budget**: Cost implications
-- **Risico**: Potentiële blockers or failure scenarios
+- **Risk**: Potential blockers or failure scenarios
 
 ---
 
-## KRITISCH (Blokkeert Implementatie Start)
+## CRITICAL (Blocks Implementation Start)
 
 ### 🔴 Q1: Which Managed Kubernetes Provider?
-**Categorie**: Architectuur + Budget  
-**Impact**: Bepaalt beschikbare features, pricing, support kwaliteit  
+**Category**: Architecture + Budget  
+**Impact**: Determines available features, pricing, support quality  
 **Layer 0 Constraint**: 
 - EU datacenter (GDPR data residency)
-- Vendor indepanddence (Terraform support required)
-- Team maturity (support kwaliteit kritisch)
+- Vendor independence (Terraform support required)
+- Team maturity (support quality critical)
 
-**Criteria for Keuze**:
-| Criterium | Requirement | Validation |
+**Selection Criteria**:
+| Criterion | Requirement | Validation |
 |-----------|-------------|-----------|
-| **Datacenter Locatie** | EU (bij voorkeur Nederland) | Compliance check |
+| **Datacenter Location** | EU (preferably Netherlands) | Compliance check |
 | **SLA** | > 99.5% uptime | Contract review |
-| **Terraform Support** | Native provider beschikbaar (⚠️ or acceptabel zonder) | Technical validation |
-| **Load Balancer Support** | Layer 4/7 LB beschikbaar | Feature check |
+| **Terraform Support** | Native provider available (⚠️ or acceptable without) | Technical validation |
+| **Load Balancer Support** | Layer 4/7 LB available | Feature check |
 | **Storage Options** | Block storage + object storage | Feature check |
-| **Pricing** | Transparant, voorspelbaar | Budget fit |
+| **Pricing** | Transparent, predictable | Budget fit |
 
-**Opties to te Evaluerand**:
-- TransIP Managed Kubernetes (NL datacenter, duidelijke pricing) ⚠️ **Geand Terraform for cluster lifecycle**
-- OVHcloud Managed Kubernetes (EU, goede pricing) ✅ **Terraform support**
-- DigitalOcean Kubernetes (globale aanwezigheid, simpele pricing) ✅ **Terraform support**
+**Options to Evaluate**:
+- TransIP Managed Kubernetes (NL datacenter, clear pricing) ⚠️ **No Terraform for cluster lifecycle**
+- OVHcloud Managed Kubernetes (EU, good pricing) ✅ **Terraform support**
+- DigitalOcean Kubernetes (global presence, simple pricing) ✅ **Terraform support**
 - Scaleway Kubernetes (FR datacenter, developer-friendly) ✅ **Terraform support**
 
-**BELANGRIJKE NOTITIE**: TransIP heeft **geand native Terraform provider** for Kubernetes cluster lifecycle management (create/delete cluster, node pools). Hybrid IaC approach noded: manowal cluster provisioning + Terraform for in-cluster resources. Zie [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) for details.
+**IMPORTANT NOTE**: TransIP has **no native Terraform provider** for Kubernetes cluster lifecycle management (create/delete cluster, node pools). Hybrid IaC approach needed: manual cluster provisioning + Terraform for in-cluster resources. See [TransIP Infrastructure as Code Guide](../docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md) for details.
 
-**Blokkerende Afhankelijkhedand**:
-- Infrastructure provisioning (Terraform code or documented manowal process)
+**Blocking Dependencies**:
+- Infrastructure provisioning (Terraform code or documented manual process)
 - Cost estimation (budget approval)
 - Network design (load balancer type)
 - Storage class selection
 
-**Beslissingsmoment**: Week 1 - for architectuur finalisatie
+**Decision Point**: Week 1 - for architecture finalization
 
 ---
 
 ### 🔴 Q5: Resource Requirements (CPU/Memory)?
-**Categorie**: Architectuur + Budget  
-**Impact**: Node sizing, aantal nodes, monthlye takesand  
-**Layer 0 Constraint**: Budget realisme, beschikbaarheid (HA requires multiple nodes)
+**Category**: Architecture + Budget  
+**Impact**: Node sizing, number of nodes, monthly costs  
+**Layer 0 Constraint**: Budget realism, availability (HA requires multiple nodes)
 
-**Te Metand**:
-| Metric | Huidige Situatie | K8s Equivalent |
+**To Measure**:
+| Metric | Current Situation | K8s Equivalent |
 |--------|-----------------|---------------|
 | **CPU per instance** | ___ cores | Pod requests/limits |
 | **Memory per instance** | ___ GB | Pod requests/limits |
-| **Aantal instances** | ___ VMs | Aantal replicas |
+| **Number of instances** | ___ VMs | Number of replicas |
 | **Peak traffic** | ___ req/sec | Autoscaling trigger |
 | **Database connections** | ___ concurrent | Connection pool sizing |
 
-**Meetmethode**:
-- [ ] Analyse huidige VM metrics (laatste 3 monthand)
-- [ ] Identificeer peak usage (Black Friday, sales)
-- [ ] Berekand overhead (K8s system pods, logging, monitoring = ~20-30%)
+**Measurement Method**:
+- [ ] Analyze current VM metrics (last 3 months)
+- [ ] Identify peak usage (Black Friday, sales)
+- [ ] Calculate overhead (K8s system pods, logging, monitoring = ~20-30%)
 
 **Output Needed**:
 ```yaml
-# Voorbeeld sizing
+# Example sizing
 application_pod:
   requests:
     cpu: "500m"
@@ -92,148 +92,148 @@ application_pod:
   replicas: 3  # HA minimum
 ```
 
-**Blokkerende Afhankelijkhedand**:
-- Cluster sizing (aantal en type nodes)
+**Blocking Dependencies**:
+- Cluster sizing (number and type of nodes)
 - Cost estimation
 - Autoscaling configuration
 
-**Beslissingsmoment**: Week 1 - for cluster provisioning
+**Decision Point**: Week 1 - for cluster provisioning
 
 ---
 
-### 🔴 Q26: Huidige Database (MySQL/PostgreSQL/SQL Server)?
-**Categorie**: Architectuur + Operationol  
-**Impact**: Migratie strategy, managed DB keuze, HA configuration  
-**Layer 0 Constraint**: Data resilience (PITR requirement), team maturity (geand DB HA expertise)
+### 🔴 Q26: Current Database (MySQL/PostgreSQL/SQL Server)?
+**Category**: Architecture + Operational  
+**Impact**: Migration strategy, managed DB choice, HA configuration  
+**Layer 0 Constraint**: Data resilience (PITR requirement), team maturity (no DB HA expertise)
 
-**Te Identificerand**:
-| Aspect | Vraag | Impact |
+**To Identify**:
+| Aspect | Question | Impact |
 |--------|-------|--------|
-| **Database Type** | MySQL, PostgreSQL, SQL Server, andere? | Managed DB opties, migration tools |
-| **Version** | Which versie? | Compatibility, upgrade path |
-| **Grootte** | Howveel GB data? | Storage sizing, backup duration |
+| **Database Type** | MySQL, PostgreSQL, SQL Server, other? | Managed DB options, migration tools |
+| **Version** | Which version? | Compatibility, upgrade path |
+| **Size** | How many GB data? | Storage sizing, backup duration |
 | **Query Load** | Queries/sec, connections? | Instance sizing, read replicas |
-| **Schema Complexity** | Aantal tables, foreign keys, triggers? | Migration complexity |
+| **Schema Complexity** | Number of tables, foreign keys, triggers? | Migration complexity |
 
-**Migratiepad Opties**:
-1. **Lift & Shift**: Database blijft externe VM
-   - ✅ Simpelste optie
-   - ❌ Geand HA improvement
+**Migration Path Options**:
+1. **Lift & Shift**: Database remains external VM
+   - ✅ Simplest option
+   - ❌ No HA improvement
    
-2. **Managed Cloud Database**: Migratie to cloud provider DB
+2. **Managed Cloud Database**: Migration to cloud provider DB
    - ✅ HA + PITR out-of-box
-   - ⚠️ Vendor depanddency (geaccepteerd for database)
+   - ⚠️ Vendor dependency (accepted for database)
    
 3. **StatefulSet + Operator**: Database in Kubernetes
-   - ✅ Vendor indepanddence
-   - ❌ Hoge operationele complexiteit
+   - ✅ Vendor independence
+   - ❌ High operational complexity
 
-**Layer 0 Decision**: Managed DB (Option 2) tenzij team DB HA expertise heeft
+**Layer 0 Decision**: Managed DB (Option 2) unless team has DB HA expertise
 
-**Blokkerende Afhankelijkhedand**:
+**Blocking Dependencies**:
 - Managed DB provisioning
 - Connection string configuration
 - Backup strategy
 - Schema migration planning
 
-**Beslissingsmoment**: Week 1-2 - for migration planning
+**Decision Point**: Week 1-2 - for migration planning
 
 ---
 
 ### 🔴 Q27: Database Size & Load?
-**Categorie**: Architectuur + Budget  
+**Category**: Architecture + Budget  
 **Impact**: Instance sizing, backup window, replication strategy  
-**Layer 0 Constraint**: RPO 15 minowtand (transactie data)
+**Layer 0 Constraint**: RPO 15 minutes (transaction data)
 
-**Te Metand**:
+**To Measure**:
 | Metric | Current State | K8s Impact |
 |--------|--------------|-----------|
 | **Data Size** | ___ GB | Storage provisioning, backup duration |
 | **Growth Rate** | ___ GB/month | Capacity planning |
-| **Queries/sec** | ___ QPS | Instance sizing, read replicas noded? |
+| **Queries/sec** | ___ QPS | Instance sizing, read replicas needed? |
 | **Peak Load** | ___ concurrent connections | Connection pool sizing |
 | **Write Volume** | ___ writes/sec | Replication lag considerations |
 
 **Backup Window Calculation**:
 ```
-Backup Duration = Data Size / Network Benwidth
-Voorbeeld: 100GB / 1Gbps = ~15 minowtand
-Impact: Bepaalt backup frequency for RPO 15min target
+Backup Duration = Data Size / Network Bandwidth
+Example: 100GB / 1Gbps = ~15 minutes
+Impact: Determines backup frequency for RPO 15min target
 ```
 
-**Blokkerende Afhankelijkhedand**:
+**Blocking Dependencies**:
 - Managed DB instance type selection
 - Backup frequency configuration
 - Read replica necessity
 
-**Beslissingsmoment**: Week 1-2 - parallel to Q26
+**Decision Point**: Week 1-2 - parallel to Q26
 
 ---
 
-### 🔴 Q31-34: Applicatie Readiness (Stateless, Scaling, Health Checks)?
-**Categorie**: Architectuur + Operationol  
-**Impact**: Zero-downtime deployments, horizontale scaling, rolling updates  
-**Layer 0 Requirement**: Zero-downtime deployments (business kritisch)
+### 🔴 Q31-34: Application Readiness (Stateless, Scaling, Health Checks)?
+**Category**: Architecture + Operational  
+**Impact**: Zero-downtime deployments, horizontal scaling, rolling updates  
+**Layer 0 Requirement**: Zero-downtime deployments (business critical)
 
-**Kritieke Validaties**:
+**Critical Validations**:
 
-#### Q31: Is de Applicatie Stateless?
-- [ ] **Sessies**: Opgeslagand in database/Redis (niet in memory)
-- [ ] **File Uploads**: Externe object storage (niet lokale disk)
-- [ ] **Caching**: Centralized (Redis/Memcached), niet in-memory
-- [ ] **Shared State**: Geand gedeelde filesystem depanddencies
+#### Q31: Is the Application Stateless?
+- [ ] **Sessions**: Stored in database/Redis (not in memory)
+- [ ] **File Uploads**: External object storage (not local disk)
+- [ ] **Caching**: Centralized (Redis/Memcached), not in-memory
+- [ ] **Shared State**: No shared filesystem dependencies
 
-**Impact**: Als NOT stateless → code refactoring noded for horizontale scaling
+**Impact**: If NOT stateless → code refactoring needed for horizontal scaling
 
 ---
 
-#### Q32: Kan de Applicatie Horizontaal Schaland?
+#### Q32: Can the Application Scale Horizontally?
 - [ ] **Database Connections**: Connection pooling configured
-- [ ] **Locking Mechanisms**: Distributed locks (Redis), niet file-based
-- [ ] **Scheduled Jobs**: Externe scheduler (Kubernetes CronJob), niet in-app
-- [ ] **Load Testing**: Kan with 3+ replicas without conflicts
+- [ ] **Locking Mechanisms**: Distributed locks (Redis), not file-based
+- [ ] **Scheduled Jobs**: External scheduler (Kubernetes CronJob), not in-app
+- [ ] **Load Testing**: Works with 3+ replicas without conflicts
 
-**Impact**: Als NOT schaalbaar → architectuur aanpassingand noded
+**Impact**: If NOT scalable → architecture changes needed
 
 ---
 
-#### Q33: Hardcoded Localhost/IP Depanddencies?
-- [ ] **Database Connection**: Environment variable (niet hardcoded IP)
+#### Q33: Hardcoded Localhost/IP Dependencies?
+- [ ] **Database Connection**: Environment variable (not hardcoded IP)
 - [ ] **Cache URL**: Environment variable
 - [ ] **External APIs**: Environment variable
-- [ ] **Service Discovery**: Hostname-based (niet IP-based)
+- [ ] **Service Discovery**: Hostname-based (not IP-based)
 
-**Impact**: Als hardcoded → code changes noded for Kubernetes service discovery
+**Impact**: If hardcoded → code changes needed for Kubernetes service discovery
 
 ---
 
-#### Q34: Health Check Endpoints Aanwezig?
-- [ ] **Liveness Probe**: `/health` anddpoint (is applicatie alive?)
-- [ ] **Readiness Probe**: `/ready` anddpoint (kan applicatie traffic ontvangand?)
-- [ ] **Startup Probe**: Langzame startup henling
+#### Q34: Health Check Endpoints Present?
+- [ ] **Liveness Probe**: `/health` endpoint (is application alive?)
+- [ ] **Readiness Probe**: `/ready` endpoint (can application receive traffic?)
+- [ ] **Startup Probe**: Slow startup handling
 
-**Impact**: Als NOT aanwezig → critical: moet geïmplementeerd for rolling updates
+**Impact**: If NOT present → critical: must be implemented for rolling updates
 
-**Blokkerende Afhankelijkhedand**:
+**Blocking Dependencies**:
 - Kubernetes Deployment manifests
 - Rolling update strategy
 - Zero-downtime guarantee
 
-**Beslissingsmoment**: Week 2-3 - for applicatie containerization
+**Decision Point**: Week 2-3 - for application containerization
 
 ---
 
-### 🔴 Q43: Huidige Maenelijkse Infrastructuur Kostand?
-**Categorie**: Budget  
+### 🔴 Q43: Current Monthly Infrastructure Costs?
+**Category**: Budget  
 **Impact**: Budget approval, sizing decisions, managed vs. self-hosted trade-offs  
-**Layer 0 Constraint**: Budget realisme
+**Layer 0 Constraint**: Budget realism
 
-**Te Inventariserand**:
+**To Inventory**:
 | Cost Category | Current (VM-based) | Estimated (K8s) | Delta |
 |--------------|-------------------|----------------|-------|
 | **Compute** | ___ EUR/month | ___ EUR/month | ___ |
 | **Storage** | ___ EUR/month | ___ EUR/month | ___ |
-| **Networking** | ___ EUR/month (benwidth) | ___ EUR/month (LB + benwidth) | ___ |
+| **Networking** | ___ EUR/month (bandwidth) | ___ EUR/month (LB + bandwidth) | ___ |
 | **Database** | ___ EUR/month (VM) | ___ EUR/month (managed DB) | ___ |
 | **Backups** | ___ EUR/month | ___ EUR/month | ___ |
 | **Monitoring** | ___ EUR/month (if any) | ___ EUR/month (self-hosted) | ___ |
@@ -242,22 +242,22 @@ Impact: Bepaalt backup frequency for RPO 15min target
 **Cost Drivers to Consider**:
 - Managed Kubernetes control plane fee (~50-150 EUR/month)
 - Load balancer costs (per LB, ~20-40 EUR/month)
-- Managed database (typically 2-3x VM cost, maar HA included)
-- Egress benwidth (can be significant for EU multi-region)
+- Managed database (typically 2-3x VM cost, but HA included)
+- Egress bandwidth (can be significant for EU multi-region)
 
-**Blokkerende Afhankelijkhedand**:
+**Blocking Dependencies**:
 - Budget approval (management sign-off)
 - Sizing decisions (Q5)
 - Managed vs. self-hosted trade-offs
 
-**Beslissingsmoment**: Week 1 - for project approval
+**Decision Point**: Week 1 - for project approval
 
 ---
 
 ### 🔴 Q44: Budget Approval & Sign-off?
-**Categorie**: Budget + Governance  
+**Category**: Budget + Governance  
 **Impact**: Project go/no-go  
-**Layer 0 Constraint**: Budget realisme
+**Layer 0 Constraint**: Budget realism
 
 **Approval Chain**:
 - [ ] Cost estimation complete (Q43)
@@ -267,42 +267,42 @@ Impact: Bepaalt backup frequency for RPO 15min target
 
 **Business Case Elements**:
 ```
-Current Cost or Downtime:
-- 1-4 uur/release * 4 releases/month = 4-16 uur/month
-- Omzet impact: ___ EUR/uur downtime
-- Annowal cost: ___ EUR
+Current Cost of Downtime:
+- 1-4 hours/release * 4 releases/month = 4-16 hours/month
+- Revenue impact: ___ EUR/hour downtime
+- Annual cost: ___ EUR
 
 Kubernetes Investment:
 - Infrastructure: ___ EUR/month
 - Training/consultants: ___ EUR one-time
-- ROI: ___ monthand
+- ROI: ___ months
 ```
 
-**Beslissingsmoment**: Week 1 - project start gate
+**Decision Point**: Week 1 - project start gate
 
 ---
 
-## BELANGRIJK (Eerste Maand Beslissand)
+## IMPORTANT (First Month Decisions)
 
 ### 🟠 Q10: Git Branching Strategy?
-**Categorie**: Operationol  
+**Category**: Operational  
 **Impact**: GitOps configuration, approval workflows, deployment frequency  
-**Layer 0 Principe**: GitOps from day 1, Essential SAFe methodology
+**Layer 0 Principle**: GitOps from day 1, Essential SAFe methodology
 
-**Opties**:
+**Options**:
 
-#### Optie A: Trunk-Based Development
+#### Option A: Trunk-Based Development
 ```
 main (production)
   ├── feature/ticket-123 (PR → main)
   └── hotfix/critical-bug (PR → main)
 ```
-**Voordeland**: Simpel, snelle releases, continowous deployment  
-**Nadeland**: Vereist goede CI/CD, feature flags for onafgemaakte features
+**Advantages**: Simple, fast releases, continuous deployment  
+**Disadvantages**: Requires good CI/CD, feature flags for unfinished features
 
 ---
 
-#### Optie B: GitFlow
+#### Option B: GitFlow
 ```
 main (production)
   ├── develop (staging)
@@ -310,26 +310,26 @@ main (production)
   │   └── release/v1.2 (PR → main)
   └── hotfix/critical-bug (PR → main + develop)
 ```
-**Voordeland**: Duidelijke andvironments, gestructureerde releases  
-**Nadeland**: Complexer, langzamere releases
+**Advantages**: Clear environments, structured releases  
+**Disadvantages**: More complex, slower releases
 
 ---
 
-#### Optie C: Environment Branches
+#### Option C: Environment Branches
 ```
-production (prod andv)
-staging (staging andv)
-development (dev andv)
+production (prod env)
+staging (staging env)
+development (dev env)
   └── feature/ticket-123 (PR → development)
 ```
-**Voordeland**: Environment = branch (visueel duidelijk)  
-**Nadeland**: Merge conflicts, moeilijk hotfixes
+**Advantages**: Environment = branch (visually clear)  
+**Disadvantages**: Merge conflicts, difficult hotfixes
 
 ---
 
 **Layer 0 Context**: Essential SAFe → sprints, PI planning  
-**Aanbeveling**: Start with Trunk-Based (Optie A), feature flags for WIP  
-**Rationale**: GitOps efficiency, snellere feedback loops
+**Recommendation**: Start with Trunk-Based (Option A), feature flags for WIP  
+**Rationale**: GitOps efficiency, faster feedback loops
 
 **Impact on Argo CD**:
 ```yaml
@@ -342,16 +342,16 @@ applications:
       path: k8s/overlays/production
 ```
 
-**Beslissingsmoment**: Week 3-4 - for firste deployment
+**Decision Point**: Week 3-4 - for first deployment
 
 ---
 
-### 🟠 Q14: Which Business Metrics zijn Kritisch?
-**Categorie**: Operationol + Monitoring  
+### 🟠 Q14: Which Business Metrics are Critical?
+**Category**: Operational + Monitoring  
 **Impact**: Custom application metrics, business dashboards, alerting  
-**Layer 0 Requirement**: Proactieve monitoring (detecteer voordat klantand belland)
+**Layer 0 Requirement**: Proactive monitoring (detect before customers call)
 
-**Te Definiërand**:
+**To Define**:
 | Metric Category | Examples | Alert Threshold |
 |----------------|----------|----------------|
 | **Checkout Funnel** | Checkout started, payment success rate | < 95% success → alert |
@@ -361,147 +361,147 @@ applications:
 | **Inventory** | Stock levels, out-of-stock events | ___ |
 
 **Implementation**:
-- Application moet Prometheus metrics exposand (`/metrics` anddpoint)
+- Application must expose Prometheus metrics (`/metrics` endpoint)
 - Grafana dashboard for business stakeholders
-- Alerts to business-specific channels (bijv. sales team Slack)
+- Alerts to business-specific channels (e.g., sales team Slack)
 
-**Beslissingsmoment**: Week 4-6 - during applicatie instrumentation
+**Decision Point**: Week 4-6 - during application instrumentation
 
 ---
 
-### 🟠 Q18: Identity Provider Integratie (OIDC)?
-**Categorie**: Security + Operationol  
+### 🟠 Q18: Identity Provider Integration (OIDC)?
+**Category**: Security + Operational  
 **Impact**: RBAC configuration, SSO, audit logging  
-**Layer 0 Requirement**: No kubeconfig files langetermijn (niet schaalbaar)
+**Layer 0 Requirement**: No kubeconfig files long-term (not scalable)
 
-**Opties**:
+**Options**:
 
-#### Optie A: Keycloak (Self-hosted)
-**Voordeland**: 
-- ✅ Vendor indepanddence
-- ✅ Opand-source
+#### Option A: Keycloak (Self-hosted)
+**Advantages**: 
+- ✅ Vendor independence
+- ✅ Open-source
 - ✅ Flexible identity federation
 
-**Nadeland**:
-- ❌ Operationele overhead (HA setup, upgrades, backup)
-- ❌ Team heeft geand Keycloak ervaring
+**Disadvantages**:
+- ❌ Operational overhead (HA setup, upgrades, backup)
+- ❌ Team has no Keycloak experience
 
 ---
 
-#### Optie B: Azure AD / Google Workspace
-**Voordeland**:
-- ✅ Managed (geand operational overhead)
-- ✅ Team heeft possible al accounts
+#### Option B: Azure AD / Google Workspace
+**Advantages**:
+- ✅ Managed (no operational overhead)
+- ✅ Team possibly already has accounts
 - ✅ MFA included
 
-**Nadeland**:
-- ❌ Vendor depanddency
+**Disadvantages**:
+- ❌ Vendor dependency
 - ❌ Cost per user
 
 ---
 
-#### Optie C: Kubeconfig Files (Tijdelijk)
-**Voordeland**:
-- ✅ Simpelste start
+#### Option C: Kubeconfig Files (Temporary)
+**Advantages**:
+- ✅ Simplest start
 - ✅ No extra tooling
 
-**Nadeland**:
-- ❌ Geand audit trail
-- ❌ Niet schaalbaar
+**Disadvantages**:
+- ❌ No audit trail
+- ❌ Not scalable
 - ❌ Security risk (credentials in files)
 
 ---
 
-**Aanbeveling**: Start with Kubeconfig (Optie C) for kleine team, migreer to Azure AD/Google Workspace (Optie B) within 3 monthand  
-**Rationale**: Pragmatisme (team maturity) vs. idealisme (Keycloak), maar tijdelijke oplossing
+**Recommendation**: Start with Kubeconfig (Option C) for small team, migrate to Azure AD/Google Workspace (Option B) within 3 months  
+**Rationale**: Pragmatism (team maturity) vs. idealism (Keycloak), but temporary solution
 
-**Beslissingsmoment**: Week 6-8 - niet blokkeerend for start
-
----
-
-### 🟠 Q20: Vault Unsealing Strategie?
-**Categorie**: Security + Operationol  
-**Impact**: Disaster recovery, operational burdand, security posture  
-**Layer 0 Requirement**: Secrets management vanaf day 1
-
-**Opties**:
-
-#### Optie A: Auto-Unseal via Cloud KMS
-**Voordeland**:
-- ✅ Vault automatisch beschikbaar after restart
-- ✅ No manowal intervention noded
-- ✅ DR scenarios simpeler
-
-**Nadeland**:
-- ❌ Cloud provider depanddency
-- ❌ Slightly lower security (KMS heeft auto-access)
+**Decision Point**: Week 6-8 - not blocking for start
 
 ---
 
-#### Optie B: Manowal Unseal (Shamir Shares)
-**Voordeland**:
-- ✅ Hoogste security (requires multiple keyholders)
-- ✅ No cloud depanddency
+### 🟠 Q20: Vault Unsealing Strategy?
+**Category**: Security + Operational  
+**Impact**: Disaster recovery, operational burden, security posture  
+**Layer 0 Requirement**: Secrets management from day 1
 
-**Nadeland**:
-- ❌ Manowal process with restart (operational burdand)
+**Options**:
+
+#### Option A: Auto-Unseal via Cloud KMS
+**Advantages**:
+- ✅ Vault automatically available after restart
+- ✅ No manual intervention needed
+- ✅ DR scenarios simpler
+
+**Disadvantages**:
+- ❌ Cloud provider dependency
+- ❌ Slightly lower security (KMS has auto-access)
+
+---
+
+#### Option B: Manual Unseal (Shamir Shares)
+**Advantages**:
+- ✅ Highest security (requires multiple keyholders)
+- ✅ No cloud dependency
+
+**Disadvantages**:
+- ❌ Manual process with restart (operational burden)
 - ❌ Keyholder availability required
 
 ---
 
-**Aanbeveling**: Auto-Unseal (Optie A) for operational simplicity  
-**Rationale**: Team maturity (geand 24/7 on-call), business continowity (faster recovery)  
-**Trade-off**: Slight vendor depanddency geaccepteerd for secrets management
+**Recommendation**: Auto-Unseal (Option A) for operational simplicity  
+**Rationale**: Team maturity (no 24/7 on-call), business continuity (faster recovery)  
+**Trade-off**: Slight vendor dependency accepted for secrets management
 
-**Beslissingsmoment**: Week 4-5 - with Vault setup
+**Decision Point**: Week 4-5 - with Vault setup
 
 ---
 
-### 🟠 Q39: Deployment Approval Proces?
-**Categorie**: Operationol + Governance  
+### 🟠 Q39: Deployment Approval Process?
+**Category**: Operational + Governance  
 **Impact**: GitOps workflow, CD pipeline design  
-**Layer 0 Principle**: Self-service for Dev, maar ownership duidelijk
+**Layer 0 Principle**: Self-service for Dev, but ownership clear
 
-**Opties**:
+**Options**:
 
-#### Optie A: Auto-Deploy (Dev/Staging), Manowal Approve (Prod)
+#### Option A: Auto-Deploy (Dev/Staging), Manual Approve (Prod)
 ```
 Dev: PR merge → auto-deploy
 Staging: PR merge → auto-deploy
-Production: PR merge → waiting for approval → manowal sync (Argo CD)
+Production: PR merge → waiting for approval → manual sync (Argo CD)
 ```
-**Voordeland**: Fast feedback (dev/staging), safety gate (prod)  
-**Nadeland**: Approval bottleneck possible
+**Advantages**: Fast feedback (dev/staging), safety gate (prod)  
+**Disadvantages**: Approval bottleneck possible
 
 ---
 
-#### Optie B: Fully Automated (met Rollback)
+#### Option B: Fully Automated (with Rollback)
 ```
-All andvs: PR merge → auto-deploy
+All envs: PR merge → auto-deploy
 Rollback: Git revert + auto-deploy
 ```
-**Voordeland**: Maximum speed, true continowous deployment  
-**Nadeland**: Requires high confidence in testing
+**Advantages**: Maximum speed, true continuous deployment  
+**Disadvantages**: Requires high confidence in testing
 
 ---
 
-#### Optie C: Manowal Everything (Cautious)
+#### Option C: Manual Everything (Cautious)
 ```
-All andvs: PR merge → manowal approval → manowal sync
+All envs: PR merge → manual approval → manual sync
 ```
-**Voordeland**: Maximum control  
-**Nadeland**: Ops bottleneck, against GitOps philosophy
+**Advantages**: Maximum control  
+**Disadvantages**: Ops bottleneck, against GitOps philosophy
 
 ---
 
-**Aanbeveling**: Optie A (auto dev/staging, manowal prod)  
-**Rationale**: Balance tussand speed en safety, team maturity considerations
+**Recommendation**: Option A (auto dev/staging, manual prod)  
+**Rationale**: Balance between speed and safety, team maturity considerations
 
-**Beslissingsmoment**: Week 3-4 - with GitOps configuration
+**Decision Point**: Week 3-4 - with GitOps configuration
 
 ---
 
-## KAN LATER (Iteratief Beslissand)
+## CAN BE LATER (Iterative Decisions)
 
 ### 🟢 Q7: Hubble UI Exposerand?
 **Categorie**: Operationol + Developer Experience  
@@ -543,87 +543,87 @@ All andvs: PR merge → manowal approval → manowal sync
 
 ---
 
-### 🟢 Q42: Externe Consultant Nodig?
-**Categorie**: Team + Budget  
+### 🟢 Q42: External Consultant Needed?
+**Category**: Team + Budget  
 **Impact**: Learning curve, time to production  
-**Opties**:
-- 3-6 monthand full-time consultant (duur, snelle setup)
-- Ad-hoc advisory (goedkoper, langzamere leerloop)
-- No consultant (langste leerloop, meeste risico)
+**Options**:
+- 3-6 months full-time consultant (expensive, fast setup)
+- Ad-hoc advisory (cheaper, slower learning)
+- No consultant (longest learning, most risk)
 
-**Aanbeveling**: 1-2 monthand advisory for initial setup + knowledge transfer  
-**Beslissingsmoment**: Week 1 - parallel to budgettering
-
----
-
-## Aanname Validatie (Zonder Vraag, Moet Gevalideerd)
-
-### ⚠️ Aanname: Applicatie is Containerizable
-**Validatie Nodig**:
-- [ ] Geand OS-specific depanddencies (Windows-only libraries)
-- [ ] Geand licensed software tied to hardware (MAC addresses)
-- [ ] Docker image bouwbaar
-
-**Impact as Fout**: Fundamentele blocker for Kubernetes
+**Recommendation**: 1-2 months advisory for initial setup + knowledge transfer  
+**Decision Point**: Week 1 - parallel to budgeting
 
 ---
 
-### ⚠️ Aanname: Team Heeft Basickennis Git
-**Validatie Nodig**:
-- [ ] Developers werkand daily with Git
-- [ ] Team begrijpt branching/merging
-- [ ] CI/CD basics bekend
+## Assumption Validation (No Question, Must Be Validated)
 
-**Impact as Fout**: GitOps niet haalbaar without training
+### ⚠️ Assumption: Application is Containerizable
+**Validation Needed**:
+- [ ] No OS-specific dependencies (Windows-only libraries)
+- [ ] No licensed software tied to hardware (MAC addresses)
+- [ ] Docker image buildable
+
+**Impact if Wrong**: Fundamental blocker for Kubernetes
 
 ---
 
-### ⚠️ Aanname: External Depanddencies Zijn Bereikbaar
-**Validatie Nodig**:
-- [ ] Payment API's hebband whitelisting (static IP noded?)
+### ⚠️ Assumption: Team Has Basic Git Knowledge
+**Validation Needed**:
+- [ ] Developers work daily with Git
+- [ ] Team understands branching/merging
+- [ ] CI/CD basics known
+
+**Impact if Wrong**: GitOps not feasible without training
+
+---
+
+### ⚠️ Assumption: External Dependencies Are Accessible
+**Validation Needed**:
+- [ ] Payment APIs have whitelisting (static IP needed?)
 - [ ] SMTP for email accessible
-- [ ] Third-party APIs hebband rate limits
+- [ ] Third-party APIs have rate limits
 
-**Impact as Fout**: Network policy blokkades, operational issues
+**Impact if Wrong**: Network policy blockages, operational issues
 
 ---
 
-### ⚠️ Aanname: Database Migratie Heeft Downtime Budget
-**Validatie Nodig**:
-- [ ] Business accepteert X uur downtime for cutover
-- [ ] Rollback scenario within X uur possible
+### ⚠️ Assumption: Database Migration Has Downtime Budget
+**Validation Needed**:
+- [ ] Business accepts X hours downtime for cutover
+- [ ] Rollback scenario within X hours possible
 
-**Impact as Fout**: Zero-downtime migration veel complexer
+**Impact if Wrong**: Zero-downtime migration much more complex
 
 ---
 
 ## Decision Timeline
 
 ```
-Week 1: KRITISCH vragen beantwoorden
+Week 1: CRITICAL questions to answer
   ├── Q1 (K8s provider)
   ├── Q5 (resource requirements)
   ├── Q43-44 (budget approval)
   └── Q26-27 (database identification)
 
-Week 2-3: Applicatie validatie
+Week 2-3: Application validation
   ├── Q31-34 (stateless, scaling, health checks)
   └── Database migration planning
 
-Week 4-6: BELANGRIJK vragen
+Week 4-6: IMPORTANT questions
   ├── Q10 (Git branching)
   ├── Q14 (business metrics)
   ├── Q18 (identity provider)
   ├── Q20 (Vault unsealing)
   └── Q39 (deployment approval)
 
-Week 6+: KAN LATER vragen (iteratief)
+Week 6+: CAN BE LATER questions (iterative)
   └── Q7, Q8, Q12, Q15, Q42, etc.
 ```
 
 ---
 
-## Voor Interactieve Site: Question Categorization
+## For Interactive Site: Question Categorization
 
 ```json
 {
@@ -634,19 +634,19 @@ Week 6+: KAN LATER vragen (iteratief)
       "category": "infrastructure",
       "priority": "critical",
       "blocking": true,
-      "layer_0_constraint": ["vanddor_indepanddence", "data_sovereignty", "team_maturity"],
+      "layer_0_constraint": ["vendor_independence", "data_sovereignty", "team_maturity"],
       "decision_week": 1
     },
     {
       "id": "Q5",
-      "text": "What zijn huidige resource requirements?",
+      "text": "What are current resource requirements?",
       "category": "sizing",
       "priority": "critical",
       "blocking": true,
       "layer_0_constraint": ["budget", "high_availability"],
       "decision_week": 1
     }
-    // ... meer vragen
+    // ... more questions
   ]
 }
 ```
@@ -654,8 +654,8 @@ Week 6+: KAN LATER vragen (iteratief)
 ---
 
 **Document Owner**: Project Lead / Architect  
-**Update Frequentie**: Bij beantwoording vragen → mark as RESOLVED  
-**Status Tracking**: Living document - vragen wordand afgevoerd with beslissing  
+**Update Frequency**: When answering questions → mark as RESOLVED  
+**Status Tracking**: Living document - questions removed with decision  
 
 **Version**: 1.0  
 **Date**: December 2024  

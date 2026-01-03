@@ -30,14 +30,14 @@ This document translates the Layer 0 requirements from [LAYER_0_WEBSHOP_CASE.md]
 | **GitOps from day 1** | Argo CD with Git repository as single source or truth |
 | **Security by design** | Network policies, RBAC, External Secrets Operator |
 
-### Belangrijkste Decisionand
+### Key Decisions
 
 1. **Managed Kubernetes with Dutch provider** (Layer 0 → reduce operational complexity)
 2. **Cilium as CNI** (Network policies, eBPF performance, multi-region ready)
 3. **Argo CD for GitOps** (UI for Support/Management, SSO, audit trail)
-4. **Prowithheus + Grafana** (Opand-source observability, vendor indepanddence)
-5. **Managed PostgreSQL** (Trade-off: HA complexiteit vs. vendor indepanddence)
-6. **External Secrets Operator** (Vault/cloud KMS integration, geand secrets in Git)
+4. **Prometheus + Grafana** (Open-source observability, vendor independence)
+5. **Managed PostgreSQL** (Trade-off: HA complexity vs. vendor independence)
+6. **External Secrets Operator** (Vault/cloud KMS integration, no secrets in Git)
 
 ---
 
@@ -473,7 +473,7 @@ Node Pools:
 **✅ Decision: Cloud provider CSI driver + managed disks**
 
 **[❓ QUESTION 25]**: Storage provider capabilities?
-- Which CSI driver biedt de provider? Snapshots ondersteund?
+- Which CSI driver provides de provider? Snapshots ondersteund?
 
 ---
 
@@ -638,41 +638,41 @@ Node Pools:
 
 ## 12. Opand Questions Samenvatting
 
-**Kritisch for implementatie start** (MOET beantwoord wordand):
+**Critical for implementation start** (MUST be answered):
 - [❓ Q1] Which managed Kubernetes provider?
 - [❓ Q5] Resource requirements (CPU/memory)?
-- [❓ Q26] Huidige database (MySQL/PostgreSQL/SQL Server)?
-- [❓ Q31-34] Applicatie stateless? Health checks aanwezig?
-- [❓ Q43-44] Budget goedkeuring?
+- [❓ Q26] Current database (MySQL/PostgreSQL/SQL Server)?
+- [❓ Q31-34] Application stateless? Health checks present?
+- [❓ Q43-44] Budget approval?
 
-**Belangrijk maar niet blokkeerend**:
+**Important but not blocking**:
 - [❓ Q10] Git branching strategy
-- [❓ Q14] Business withrics
+- [❓ Q14] Business metrics
 - [❓ Q18] Identity provider (OIDC)
-- [❓ Q39] Deployment approval proces
+- [❓ Q39] Deployment approval process
 
-**Kan later beslotand wordand**:
-- [❓ Q7] Hubble UI exposand?
+**Can be decided later**:
+- [❓ Q7] Hubble UI exposed?
 - [❓ Q12] Self-hosted CI runners?
-- [❓ Q42] Externe consultant?
+- [❓ Q42] External consultant?
 
 ---
 
-## 13. Volgende Stappand: Van Layer 1 into Layer 2
+## 13. Next Steps: From Layer 1 to Layer 2
 
-Na implementatie or Layer 1 (firste 4-6 monthand), kan Layer 2 (andhancement) overwogand wordand:
+After implementation of Layer 1 (first 4-6 months), Layer 2 (enhancements) can be considered:
 
-### Layer 2 Mogelijkhedand (Optionol)
-- **Service mesh** (Istio/Linkerd) - as microservices architectuur
+### Layer 2 Possibilities (Optional)
+- **Service mesh** (Istio/Linkerd) - if microservices architecture
 - **Distributed tracing** (Jaeger/Tempo) - for performance debugging
-- **Chaos andginoring** (Chaos Mesh) - for resilience testing
-- **Policy andforcement** (OPA/Kyverno) - for compliance automation
+- **Chaos engineering** (Chaos Mesh) - for resilience testing
+- **Policy enforcement** (OPA/Kyverno) - for compliance automation
 - **Cost optimization** (Kubecost) - for chargeback/showback
-- **Multi-region** (Cilium Cluster Mesh) - for latency verbetering
+- **Multi-region** (Cilium Cluster Mesh) - for latency improvement
 
 ---
 
-## 14. Referenties
+## 14. References
 
 **KubeCompass Framework**:
 - **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers uitleg

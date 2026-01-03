@@ -81,7 +81,8 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 
 📖 **[Unified Case Structure](UNIFIED_CASE_STRUCTURE.md)** - Template for case analysis  
 📘 **[Case Analysis Template](CASE_ANALYSIS_TEMPLATE.md)** - Step-by-step guide for creating new cases  
-📚 **[Example: Webshop Migration](cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete SME case study
+📚 **[Example: Webshop Migration](cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete SME case study  
+🏦 **[Example: Enterprise Financial Services](cases/enterprise/ENTERPRISE_UNIFIED_CASE.md)** - Complete enterprise case study
 
 **What you get:**
 - Structured requirements extraction (Layer 0/1/2 methodology)
@@ -94,10 +95,17 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 ### 4. Interactive Visual Diagrams 🎨
 Explore our visual diagrams showing domains, subdomains, and decision layers across different scales (single team, multi-team, enterprise):
 
+🌊 **[Complete Deployment Flow](deployment-flow.html)** (Open in browser) — All 18 domains in implementation order  
+📊 **[Domain Overview by Priority](domain-overview.html)** (Open in browser) — Interactive cards organized by Critical/Operations/Enhancement  
+🗓️ **[Timeline View](deployment-order.html)** (Open in browser) — Week-by-week roadmap  
+🚢 **[Kubernetes Ecosystem Infographic](kubernetes-ecosystem.html)** (Open in browser)  
+⚙️ **[Kubernetes Architecture Infographic](kubernetes-architecture.html)** (Open in browser)  
 🖼️ **[View Interactive Diagram](interactive-diagram.html)** (Open in browser)  
 📊 **[See All Diagrams](DIAGRAMS.md)** (Complete visual guide)
 
 **What you'll find:**
+- **🚢 Ecosystem Infographic**: Colorful character-driven design showing *which domains* to implement (Layer 0/1/2)
+- **⚙️ Architecture Infographic (NEW!)**: Technical visualization showing *how Kubernetes works* - all components (Pods, Services, Deployments), where Service Mesh lives, managed K8s options (AKS/EKS/GKE), and CI/CD pipeline with GitOps
 - Domain architecture overview with dependency flows
 - Decision layer timing model (when to decide what)
 - Scale-based deployment models (1 team → multi-team → enterprise)
@@ -241,6 +249,18 @@ We're not here to sell you SaaS licenses or enterprise support contracts. If a t
 ## Project Status
 
 🚧 **Early Stage** — actively building the foundation.
+
+�️ **[Interactive Deployment Order](deployment-order.html)** — Visual timeline: what to deploy when  
+📊 **[Complete Domain Coverage Overview](docs/DOMAIN_COVERAGE_MASTER_V2.md)** — Master plan with 18 domains, testing targets  
+🚀 **[Launch Roadmap](LAUNCH_ROADMAP.md)** — 12-week roadmap to go live with tested tools
+
+**Domain Coverage Progress**:
+- ✅ **Fully Tested**: 0/18 domains (all need practical validation)
+- 📝 **Theory Documented**: 2/18 domains (CNI, GitOps - need practical testing)
+- 🚧 **In Progress**: 4/18 domains (RBAC, Network Policies, Observability, CI/CD)
+- ❌ **Not Started**: 12/18 domains
+- 🎯 **MVP Goal**: 6-8 critical domains with minimum 2 tested tools each
+- 📅 **Target Launch**: Week 12 (mid-March 2026)
 
 **What's ready:**
 - [x] Framework structure and domains

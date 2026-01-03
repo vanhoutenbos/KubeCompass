@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KubeCompass - Complete Deployment Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .flow-container {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .flow-layer {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .layer-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .layer-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .layer-subtitle {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .domains-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            position: relative;
+        }
+
+        .domain-box {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .domain-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .domain-box.critical {
+            border-color: #fc8181;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        }
+
+        .domain-box.operations {
+            border-color: #f6ad55;
+            background: linear-gradient(135deg, #fffaf0 0%, #ffffff 100%);
+        }
+
+        .domain-box.enhancement {
+            border-color: #68d391;
+            background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+        }
+
+        .domain-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .domain-icon {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .domain-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .domain-desc {
+            font-size: 0.85em;
+            color: #718096;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .domain-meta {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .meta-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .tag-week {
+            background: #e6fffa;
+            color: #234e52;
+        }
+
+        .tag-status-tested {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .tag-status-theory {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .tag-status-coming {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .connector {
+            position: absolute;
+            left: 50%;
+            bottom: -60px;
+            width: 4px;
+            height: 40px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-50%);
+        }
+
+        .connector::after {
+            content: '▼';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #764ba2;
+            font-size: 1.5em;
+        }
+
+        .dependency-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .phase-marker {
+            background: #f7fafc;
+            border: 3px solid #667eea;
+            border-radius: 12px;
+            padding: 15px 30px;
+            text-align: center;
+            margin: 60px auto;
+            max-width: 600px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .legend {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 3px solid;
+        }
+
+        .legend-box.critical {
+            border-color: #fc8181;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        }
+
+        .legend-box.operations {
+            border-color: #f6ad55;
+            background: linear-gradient(135deg, #fffaf0 0%, #ffffff 100%);
+        }
+
+        .legend-box.enhancement {
+            border-color: #68d391;
+            background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+        }
+
+        .info-panel {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .info-panel strong {
+            color: #2c5282;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        .nav-btn.secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        @media (max-width: 1024px) {
+            .domains-row {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .domains-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Complete Kubernetes Deployment Flow</h1>
+        <p class="subtitle">Van cluster provisioning tot maturity enhancements - alle 18 domeinen in samenhang</p>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box critical"></div>
+                <span><strong>Critical Path</strong> - Blocks production</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box operations"></div>
+                <span><strong>Operations Ready</strong> - Needed for production</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box enhancement"></div>
+                <span><strong>Enhancements</strong> - Add as you scale</span>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <strong>💡 Hoe lees je deze flow?</strong>
+            Volg van boven naar beneden. Elk domein bouwt voort op de vorige. Nummers geven deployment volgorde aan.
+            Klik op een domein voor details (coming soon).
+        </div>
+
+        <div class="flow-container">
+            <!-- Week 0: Foundation -->
+            <div class="phase-marker">
+                📦 WEEK 0: FOUNDATION - Je hebt een cluster nodig
+            </div>
+
+            <div class="flow-layer">
+                <div class="domains-row">
+                    <div class="domain-box critical" onclick="alert('Coming Soon: IaC Guide')">
+                        <div class="domain-number">1</div>
+                        <div class="domain-icon">🏗️</div>
+                        <div class="domain-name">Infrastructure as Code</div>
+                        <div class="domain-desc">Cluster provisioning met Terraform, Pulumi, of Crossplane</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 0</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+            </div>
+
+            <!-- Week 1-2: Networking & Security -->
+            <div class="phase-marker">
+                🔒 WEEK 1-2: NETWORKING & SECURITY - Veilige communicatie
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Networking Foundation</div>
+                    <div class="layer-subtitle">Pods moeten kunnen communiceren en geïsoleerd zijn</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box critical" onclick="window.location.href='docs/planning/CNI_COMPARISON.md'">
+                        <div class="domain-number">2</div>
+                        <div class="domain-icon">🌐</div>
+                        <div class="domain-name">Container Networking</div>
+                        <div class="domain-desc">CNI plugin: Cilium, Calico, of Flannel</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 1</span>
+                            <span class="meta-tag tag-status-theory">Theory</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box critical" onclick="alert('Coming Soon: Network Policies')">
+                        <div class="domain-number">3</div>
+                        <div class="domain-icon">🔐</div>
+                        <div class="domain-name">Network Policies</div>
+                        <div class="domain-desc">Zero-trust isolation, deny-all defaults</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 2</span>
+                            <span class="meta-tag tag-status-theory">Theory</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Security Foundation</div>
+                    <div class="layer-subtitle">Wie heeft toegang en hoe beheer je secrets?</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box critical" onclick="alert('Coming Soon: RBAC Guide')">
+                        <div class="domain-number">4</div>
+                        <div class="domain-icon">👥</div>
+                        <div class="domain-name">RBAC & Identity</div>
+                        <div class="domain-desc">Access control met Native RBAC of OIDC</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 2</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box critical" onclick="window.location.href='docs/planning/SECRETS_MANAGEMENT.md'">
+                        <div class="domain-number">5</div>
+                        <div class="domain-icon">🔑</div>
+                        <div class="domain-name">Secrets Management</div>
+                        <div class="domain-desc">External Secrets Operator of Sealed Secrets</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 2</span>
+                            <span class="meta-tag tag-status-theory">Theory</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+            </div>
+
+            <!-- Week 3: Deployment -->
+            <div class="phase-marker">
+                🚢 WEEK 3: DEPLOYMENT - Hoe deploy je workloads?
+            </div>
+
+            <div class="flow-layer">
+                <div class="domains-row">
+                    <div class="domain-box critical" onclick="window.location.href='docs/planning/GITOPS_COMPARISON.md'">
+                        <div class="domain-number">6</div>
+                        <div class="domain-icon">🔄</div>
+                        <div class="domain-name">GitOps Strategy</div>
+                        <div class="domain-desc">ArgoCD of Flux voor declarative deployments</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 3</span>
+                            <span class="meta-tag tag-status-theory">Theory</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+            </div>
+
+            <!-- Week 4-7: Operations -->
+            <div class="phase-marker">
+                📊 WEEK 4-7: OPERATIONS READY - Production capabilities
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Observability & Traffic</div>
+                    <div class="layer-subtitle">Zie wat er gebeurt en route traffic</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box operations" onclick="alert('Coming Soon: Observability Guide')">
+                        <div class="domain-number">7</div>
+                        <div class="domain-icon">📈</div>
+                        <div class="domain-name">Observability</div>
+                        <div class="domain-desc">Prometheus, Grafana, Loki voor metrics & logs</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 4</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box operations" onclick="alert('Coming Soon: Ingress Guide')">
+                        <div class="domain-number">8</div>
+                        <div class="domain-icon">🚪</div>
+                        <div class="domain-name">Ingress & LB</div>
+                        <div class="domain-desc">NGINX Ingress of Traefik met cert-manager</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 5</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Container Lifecycle</div>
+                    <div class="layer-subtitle">Image management en CI/CD pipeline</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box operations" onclick="alert('Coming Soon: Registry Guide')">
+                        <div class="domain-number">9</div>
+                        <div class="domain-icon">📦</div>
+                        <div class="domain-name">Container Registry</div>
+                        <div class="domain-desc">Harbor, GHCR, of cloud registries</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 6</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box operations" onclick="alert('Coming Soon: CI/CD Guide')">
+                        <div class="domain-number">10</div>
+                        <div class="domain-icon">⚙️</div>
+                        <div class="domain-name">CI/CD Pipeline</div>
+                        <div class="domain-desc">GitHub Actions, GitLab CI, Tekton</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Partial</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Data & Resilience</div>
+                    <div class="layer-subtitle">Backup strategie en data persistence</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box operations" onclick="alert('Coming Soon: DR Guide')">
+                        <div class="domain-number">11</div>
+                        <div class="domain-icon">💾</div>
+                        <div class="domain-name">Disaster Recovery</div>
+                        <div class="domain-desc">Velero of Kasten K10 voor backups</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 7</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box operations" onclick="alert('Coming Soon: Storage Guide')">
+                        <div class="domain-number">12</div>
+                        <div class="domain-icon">💿</div>
+                        <div class="domain-name">Data Persistence</div>
+                        <div class="domain-desc">Cloud CSI, Longhorn voor stateful workloads</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-layer">
+                <div class="domains-row">
+                    <div class="domain-box operations" onclick="alert('Coming Soon: Testing Guide')">
+                        <div class="domain-number">13</div>
+                        <div class="domain-icon">🧪</div>
+                        <div class="domain-name">Cross-Provider Testing</div>
+                        <div class="domain-desc">Portability validation & migration playbooks</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="connector"></div>
+            </div>
+
+            <!-- Week 8+: Enhancements -->
+            <div class="phase-marker">
+                ✨ WEEK 8+: MATURITY ENHANCEMENTS - Scale & optimize
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Security & Governance</div>
+                    <div class="layer-subtitle">Runtime protection en policy enforcement</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box enhancement" onclick="alert('Coming Soon: Runtime Security Guide')">
+                        <div class="domain-number">14</div>
+                        <div class="domain-icon">🛡️</div>
+                        <div class="domain-name">Runtime Security</div>
+                        <div class="domain-desc">Falco of Tetragon voor threat detection</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box enhancement" onclick="alert('Coming Soon: Policy Guide')">
+                        <div class="domain-number">15</div>
+                        <div class="domain-icon">📋</div>
+                        <div class="domain-name">Policy & Governance</div>
+                        <div class="domain-desc">OPA/Gatekeeper of Kyverno voor compliance</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-layer">
+                <div class="layer-header">
+                    <div class="layer-title">Advanced Features</div>
+                    <div class="layer-subtitle">Service mesh, cost management, multi-cluster</div>
+                </div>
+                <div class="domains-row">
+                    <div class="domain-box enhancement" onclick="alert('Coming Soon: Service Mesh Guide')">
+                        <div class="domain-number">16</div>
+                        <div class="domain-icon">🕸️</div>
+                        <div class="domain-name">Service Mesh</div>
+                        <div class="domain-desc">Istio, Linkerd voor complex microservices</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box enhancement" onclick="alert('Coming Soon: FinOps Guide')">
+                        <div class="domain-number">17</div>
+                        <div class="domain-icon">💰</div>
+                        <div class="domain-name">Cost Management</div>
+                        <div class="domain-desc">OpenCost of Kubecost voor cost visibility</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="domain-box enhancement" onclick="alert('Coming Soon: Multi-Cluster Guide')">
+                        <div class="domain-number">18</div>
+                        <div class="domain-icon">🌍</div>
+                        <div class="domain-name">Multi-Cluster</div>
+                        <div class="domain-desc">Cluster API, Rancher voor federation</div>
+                        <div class="domain-meta">
+                            <span class="meta-tag tag-week">Week 8+</span>
+                            <span class="meta-tag tag-status-coming">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <strong>🎯 Launch Strategy</strong>
+            We gaan live zodra domeinen 1-13 minimaal 2 geteste tools hebben. Domeinen 14-18 krijgen "Coming Soon" en worden iteratief toegevoegd.
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-btn secondary">← Home</a>
+            <a href="domain-overview.html" class="nav-btn">📊 Domain Overview</a>
+            <a href="deployment-order.html" class="nav-btn">🗓️ Timeline View</a>
+            <a href="LAUNCH_ROADMAP.md" class="nav-btn">🚀 Launch Roadmap</a>
+            <a href="docs/DOMAIN_COVERAGE_MASTER_V2.md" class="nav-btn secondary">📑 Master Plan</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KubeCompass - Deployment Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .badge-tested { background: #48bb78; }
+        .badge-theory { background: #ecc94b; }
+        .badge-coming { background: #cbd5e0; }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-50%);
+        }
+
+        .phase {
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .phase-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #667eea;
+            z-index: 2;
+        }
+
+        .phase-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .phase-left, .phase-right {
+            flex: 1;
+        }
+
+        .phase:nth-child(odd) .phase-left {
+            text-align: right;
+        }
+
+        .phase:nth-child(even) .phase-right {
+            text-align: left;
+        }
+
+        .week-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .week-title {
+            font-size: 1.3em;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .week-subtitle {
+            color: #718096;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .domain-list {
+            list-style: none;
+        }
+
+        .domain-item {
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .domain-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .domain-name {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .domain-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-critical {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .badge-operations {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .badge-enhancement {
+            background: #c6f6d5;
+            color: #276749;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+
+        .status-tested {
+            background: #48bb78;
+            color: white;
+        }
+
+        .status-theory {
+            background: #ecc94b;
+            color: #744210;
+        }
+
+        .status-coming {
+            background: #cbd5e0;
+            color: #2d3748;
+        }
+
+        .priority-label {
+            display: inline-block;
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+
+        .info-box strong {
+            color: #2c5282;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .phase-marker {
+                left: 20px;
+            }
+
+            .phase-content {
+                flex-direction: column;
+                padding-left: 60px;
+            }
+
+            .phase:nth-child(odd) .phase-left {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Kubernetes Deployment Order</h1>
+        <p class="subtitle">In welke volgorde implementeer je Kubernetes domeinen?</p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-badge badge-tested"></div>
+                <span>Fully Tested</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-badge badge-theory"></div>
+                <span>Theory Only</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-badge badge-coming"></div>
+                <span>Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Pro Tip:</strong> Start niet met de "leukste" tools (service mesh, chaos engineering). 
+            Begin met de fundamenten. Deze volgorde reflecteert wat je <strong>eerst nodig hebt</strong> voor een production deployment.
+        </div>
+
+        <div class="timeline">
+            <!-- Week 0 -->
+            <div class="phase">
+                <div class="phase-marker">0</div>
+                <div class="phase-content">
+                    <div class="phase-left">
+                        <div class="week-card">
+                            <div class="week-title">Week 0: Cluster Provisioning</div>
+                            <div class="week-subtitle">Je hebt een cluster nodig om iets te testen</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="window.location.href='#iac'">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">Infrastructure as Code</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-right"></div>
+                </div>
+            </div>
+
+            <!-- Week 1 -->
+            <div class="phase">
+                <div class="phase-marker">1</div>
+                <div class="phase-content">
+                    <div class="phase-left"></div>
+                    <div class="phase-right">
+                        <div class="week-card">
+                            <div class="week-title">Week 1: Networking Foundation</div>
+                            <div class="week-subtitle">Pods moeten kunnen communiceren</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="window.location.href='docs/planning/CNI_COMPARISON.md'">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">Container Networking (CNI)</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-theory">Theory Only</span>
+                                    </span>
+                                </li>
+                                <li class="domain-item" onclick="window.location.href='manifests/networking/README.md'">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">Network Policies</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-theory">Theory Only</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="phase">
+                <div class="phase-marker">2</div>
+                <div class="phase-content">
+                    <div class="phase-left">
+                        <div class="week-card">
+                            <div class="week-title">Week 2: Security Foundation</div>
+                            <div class="week-subtitle">Security before deploying workloads</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: RBAC & Identity Guide')">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">RBAC & Identity</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                                <li class="domain-item" onclick="window.location.href='docs/planning/SECRETS_MANAGEMENT.md'">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">Secrets Management</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-theory">Theory Only</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-right"></div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="phase">
+                <div class="phase-marker">3</div>
+                <div class="phase-content">
+                    <div class="phase-left"></div>
+                    <div class="phase-right">
+                        <div class="week-card">
+                            <div class="week-title">Week 3: Deployment Pipeline</div>
+                            <div class="week-subtitle">Need deployment method before running workloads</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="window.location.href='docs/planning/GITOPS_COMPARISON.md'">
+                                    <span>
+                                        <span class="priority-label">🔴</span>
+                                        <span class="domain-name">GitOps Strategy</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-critical">CRITICAL</span>
+                                        <span class="status-badge status-theory">Theory Only</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="phase">
+                <div class="phase-marker">4</div>
+                <div class="phase-content">
+                    <div class="phase-left">
+                        <div class="week-card">
+                            <div class="week-title">Week 4: Observability</div>
+                            <div class="week-subtitle">Can't run production blind</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: Observability Guide')">
+                                    <span>
+                                        <span class="priority-label">🟠</span>
+                                        <span class="domain-name">Metrics, Logging, Tracing</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-operations">OPERATIONS</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-right"></div>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="phase">
+                <div class="phase-marker">5</div>
+                <div class="phase-content">
+                    <div class="phase-left"></div>
+                    <div class="phase-right">
+                        <div class="week-card">
+                            <div class="week-title">Week 5: Traffic Management</div>
+                            <div class="week-subtitle">Expose services externally</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: Ingress Guide')">
+                                    <span>
+                                        <span class="priority-label">🟠</span>
+                                        <span class="domain-name">Ingress & Load Balancing</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-operations">OPERATIONS</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="phase">
+                <div class="phase-marker">6</div>
+                <div class="phase-content">
+                    <div class="phase-left">
+                        <div class="week-card">
+                            <div class="week-title">Week 6: Container Registry</div>
+                            <div class="week-subtitle">Reliable image storage & scanning</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: Container Registry Guide')">
+                                    <span>
+                                        <span class="priority-label">🟠</span>
+                                        <span class="domain-name">Container Registry & Images</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-operations">OPERATIONS</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-right"></div>
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="phase">
+                <div class="phase-marker">7</div>
+                <div class="phase-content">
+                    <div class="phase-left"></div>
+                    <div class="phase-right">
+                        <div class="week-card">
+                            <div class="week-title">Week 7: Disaster Recovery</div>
+                            <div class="week-subtitle">Can't go production without backup</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: Disaster Recovery Guide')">
+                                    <span>
+                                        <span class="priority-label">🟠</span>
+                                        <span class="domain-name">Backup & DR</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-operations">OPERATIONS</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8+ -->
+            <div class="phase">
+                <div class="phase-marker">8+</div>
+                <div class="phase-content">
+                    <div class="phase-left">
+                        <div class="week-card">
+                            <div class="week-title">Week 8+: Data & Enhancements</div>
+                            <div class="week-subtitle">Stateful workloads & maturity features</div>
+                            <ul class="domain-list">
+                                <li class="domain-item" onclick="alert('Coming Soon: Storage Guide')">
+                                    <span>
+                                        <span class="priority-label">🟠</span>
+                                        <span class="domain-name">Data Persistence & Storage</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-operations">OPERATIONS</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                                <li class="domain-item" onclick="alert('Coming Soon: Service Mesh Guide')">
+                                    <span>
+                                        <span class="priority-label">🟢</span>
+                                        <span class="domain-name">Service Mesh</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-enhancement">ENHANCEMENT</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                                <li class="domain-item" onclick="alert('Coming Soon: FinOps Guide')">
+                                    <span>
+                                        <span class="priority-label">🟢</span>
+                                        <span class="domain-name">Cost Management</span>
+                                    </span>
+                                    <span>
+                                        <span class="domain-badge badge-enhancement">ENHANCEMENT</span>
+                                        <span class="status-badge status-coming">Coming Soon</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>🚀 Launch Plan:</strong> We gaan live zodra Week 0-7 domeinen minimaal 2 geteste tools hebben. 
+            De rest krijgt een "Coming Soon" badge en wordt iteratief toegevoegd.
+            <br><br>
+            <strong>📅 Target Launch:</strong> Mid-March 2026 (Week 12)
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" style="color: #667eea; text-decoration: none; font-weight: 600;">← Terug naar Home</a> |
+            <a href="deployment-flow.html" style="color: #667eea; text-decoration: none; font-weight: 600;">🌊 Complete Flow</a> |
+            <a href="domain-overview.html" style="color: #667eea; text-decoration: none; font-weight: 600;">📊 Domain Overview</a> |
+            <a href="LAUNCH_ROADMAP.md" style="color: #667eea; text-decoration: none; font-weight: 600;">Bekijk Volledige Roadmap →</a>
+        </div>
+    </div>
+</body>
+</html>
