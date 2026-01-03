@@ -403,6 +403,22 @@
             background: #f7fafc;
         }
 
+        /* Navbar Styles */
+        .navbar { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; margin-bottom: 20px; border-radius: 12px; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.5rem; font-weight: 700; }
+        .nav-logo a { color: #667eea; text-decoration: none; }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a { color: #4a5568; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-menu a:hover { color: #667eea; }
+        
+        /* Footer Styles */
+        .footer { background: rgba(45, 55, 72, 0.95); color: white; padding: 2rem; margin-top: 40px; border-radius: 12px; }
+        .footer-content { max-width: 1400px; margin: 0 auto; text-align: center; }
+        .footer p { color: #cbd5e0; }
+        .footer a { color: #667eea; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -419,10 +435,26 @@
             .tabs {
                 overflow-x: auto;
             }
+            
+            .nav-menu { flex-direction: column; gap: 1rem; }
         }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">🧭 KubeCompass</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
+                <li><a href="landscape.html">Landscape</a></li>
+                <li><a href="index.html#about">Over</a></li>
+                <li><a href="contribute.html">Bijdragen</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <h1>🧭 KubeCompass Domain Overview</h1>
         <p class="subtitle">Alle 18 Kubernetes platform domeinen in één overzicht</p>
@@ -1050,5 +1082,11 @@
             console.log('KubeCompass Domain Overview loaded');
         });
     </script>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 KubeCompass | <a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank">GitHub</a> | <a href="contribute.html">Bijdragen</a></p>
+        </div>
+    </footer>
 </body>
 </html>
