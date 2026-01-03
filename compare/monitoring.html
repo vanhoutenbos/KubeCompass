@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Comparison: Prometheus+Grafana vs Datadog vs New Relic | KubeCompass</title>
+    <meta name="description" content="Compare Prometheus+Grafana, Datadog, and New Relic for Kubernetes monitoring. Self-hosted vs SaaS, cost, observability features.">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/comparison.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">🧭 KubeCompass</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#comparison">Vergelijking</a></li>
+                <li><a href="#wizard">Beslissings-Wizard</a></li>
+                <li><a href="#implementation">Implementatie</a></li>
+                <li><a href="../index.html">Alle Gidsen</a></li>
+                <li><a href="https://github.com/jjuulliiaaa/KubeCompass" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">Home</a> / 
+                <a href="../index.html#comparisons">Vergelijkingen</a> / 
+                <span>Monitoring</span>
+            </nav>
+            <h1>Monitoring Stack Vergelijking</h1>
+            <p class="hero-subtitle">Prometheus+Grafana vs Datadog vs New Relic: Kosten, Observability & Vendor Lock-in</p>
+            <div class="quick-stats">
+                <div class="stat">📖 6 min read</div>
+                <div class="stat">🗓️ Jan 2026</div>
+                <div class="stat">✅ Prometheus tested</div>
+                <div class="stat">👍 91% helpful</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Decision -->
+    <section class="quick-decision">
+        <div class="container">
+            <h2>⚡ Snelle Beslissing</h2>
+            <div class="decision-grid">
+                <div class="decision-option recommended">
+                    <h3>🏆 Prometheus+Grafana</h3>
+                    <ul>
+                        <li>Open-source (€0 licensing)</li>
+                        <li>Industry standard voor K8s</li>
+                        <li>Best voor 80% use cases</li>
+                    </ul>
+                    <a href="#tool-prometheus" class="cta-button">Kies Prometheus</a>
+                </div>
+                <div class="decision-option">
+                    <h3>🔄 Datadog</h3>
+                    <ul>
+                        <li>SaaS (no ops burden)</li>
+                        <li>Beautiful UI & APM</li>
+                        <li>Best als budget toelaat</li>
+                    </ul>
+                    <a href="#tool-datadog" class="cta-button secondary">Kies Datadog</a>
+                </div>
+                <div class="decision-option">
+                    <h3>🔄 New Relic</h3>
+                    <ul>
+                        <li>SaaS met free tier</li>
+                        <li>Strong APM focus</li>
+                        <li>Best voor app-level tracing</li>
+                    </ul>
+                    <a href="#tool-newrelic" class="cta-button secondary">Kies New Relic</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Cards -->
+    <section id="comparison" class="comparison-section">
+        <div class="container">
+            <h2>🔍 Gedetailleerde Vergelijking</h2>
+            
+            <!-- Prometheus+Grafana -->
+            <div class="tool-card winner" id="tool-prometheus">
+                <div class="tool-header">
+                    <h3>Prometheus + Grafana</h3>
+                    <span class="badge recommended">🏆 Recommended</span>
+                    <span class="badge cncf">CNCF Graduated</span>
+                    <span class="score">4.4/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">⭐</span><span class="value">54,000+</span><span class="label">Prometheus Stars</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">75%</span><span class="label">K8s Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Production</span><span class="label">Battle-tested</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">5+</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>Kosten:</strong> €0 licensing (only infrastructure costs €50-200/month)</li>
+                        <li><strong>Vendor Independence:</strong> Self-hosted, no vendor lock-in, data ownership</li>
+                        <li><strong>Industry Standard:</strong> De facto standard voor Kubernetes monitoring</li>
+                        <li><strong>Ecosystem:</strong> Largest community, 1000+ exporters, integrations everywhere</li>
+                        <li><strong>Flexibility:</strong> PromQL query language, custom dashboards, alerting control</li>
+                        <li><strong>Grafana:</strong> Beautiful dashboards, multi-datasource, open-source</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li>Requires self-management (ops burden: monitoring the monitoring stack)</li>
+                        <li>Limited long-term storage (add Thanos/Mimir for retention >30 days)</li>
+                        <li>No built-in APM (application tracing needs separate tool: Tempo/Jaeger)</li>
+                        <li>Learning curve (PromQL, Alertmanager config, Grafana dashboards)</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Budget-conscious teams met 5+ mensen, vendor independence, standard Kubernetes
+                </div>
+                <div class="actions">
+                    <a href="https://prometheus.io/" target="_blank" class="btn primary">Docs →</a>
+                    <a href="../docs/DECISION_RULES.md#observability" class="btn secondary">Decision Rules →</a>
+                </div>
+            </div>
+
+            <!-- Datadog -->
+            <div class="tool-card" id="tool-datadog">
+                <div class="tool-header">
+                    <h3>Datadog</h3>
+                    <span class="badge alternative">🔄 SaaS Alternative</span>
+                    <span class="badge">Commercial SaaS</span>
+                    <span class="score">4.2/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">💰</span><span class="value">$15-30</span><span class="label">per host/month</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">10%</span><span class="label">K8s Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Enterprise</span><span class="label">Battle-tested</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">1-20</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>Zero Ops Burden:</strong> Fully managed SaaS (no infrastructure to maintain)</li>
+                        <li><strong>Beautiful UI:</strong> Best-in-class dashboards, service maps, anomaly detection</li>
+                        <li><strong>Complete Platform:</strong> Metrics + Logs + APM + RUM + Security in 1 tool</li>
+                        <li><strong>Quick Setup:</strong> 15 minuten van install naar production dashboards</li>
+                        <li><strong>AI/ML Features:</strong> Automatic anomaly detection, forecasting, root cause analysis</li>
+                        <li><strong>Integration Library:</strong> 700+ integrations (AWS, Azure, GCP, databases, apps)</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li><strong>Cost:</strong> $15-30/host/month (10 nodes = €200-350/month, 50 nodes = €1000-1750/month)</li>
+                        <li><strong>Vendor Lock-in:</strong> Proprietary platform, switching costs hoog</li>
+                        <li><strong>Data Sovereignty:</strong> Data leaves your infrastructure (compliance concerns)</li>
+                        <li><strong>Pricing Complexity:</strong> Per-host + per-custom-metric + APM traces + logs (costs can explode)</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Teams met budget (~€500+/month), willen zero ops, enterprise SaaS acceptable
+                </div>
+                <div class="actions">
+                    <a href="https://www.datadoghq.com/" target="_blank" class="btn primary">Website →</a>
+                    <a href="../docs/MATRIX.md" class="btn secondary">Comparison →</a>
+                </div>
+            </div>
+
+            <!-- New Relic -->
+            <div class="tool-card" id="tool-newrelic">
+                <div class="tool-header">
+                    <h3>New Relic</h3>
+                    <span class="badge alternative">🔄 APM Focus</span>
+                    <span class="badge">Commercial SaaS</span>
+                    <span class="score">4.0/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">💰</span><span class="value">Free Tier</span><span class="label">100GB/month</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">5%</span><span class="label">K8s Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Enterprise</span><span class="label">Battle-tested</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">1-10</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>Free Tier:</strong> 100GB data/month + 1 user gratis (good voor getting started)</li>
+                        <li><strong>APM Excellence:</strong> Best application performance monitoring (distributed tracing)</li>
+                        <li><strong>Full Stack:</strong> Infrastructure + APM + Logs + Browser RUM + Synthetics</li>
+                        <li><strong>User-Based Pricing:</strong> Per full platform user (not per host) = predictable costs</li>
+                        <li><strong>NRQL Query Language:</strong> Powerful query language (SQL-like)</li>
+                        <li><strong>Incident Intelligence:</strong> AI-powered incident correlation & analysis</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li>Vendor lock-in (proprietary platform)</li>
+                        <li>Costs scale with data volume (100GB free tier fills quickly at scale)</li>
+                        <li>Smaller Kubernetes community vs Prometheus (fewer K8s-specific features)</li>
+                        <li>Data sovereignty concerns (SaaS only, no on-prem)</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Application-focused teams, need strong APM/tracing, free tier attractive
+                </div>
+                <div class="actions">
+                    <a href="https://newrelic.com/" target="_blank" class="btn primary">Website →</a>
+                    <a href="../docs/DECISION_RULES.md" class="btn secondary">Decision Rules →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Matrix -->
+    <section class="matrix-section">
+        <div class="container">
+            <h2>📊 Feature Matrix</h2>
+            <div class="matrix-table-wrapper">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="winner-column">Prometheus+Grafana 🏆</th>
+                            <th>Datadog</th>
+                            <th>New Relic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cost (10 nodes)</strong></td>
+                            <td class="winner-column green">✅ €50-100/month</td>
+                            <td class="red">❌ €200-350/month</td>
+                            <td class="orange">⚠️ Free-€150/month</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vendor Lock-in</strong></td>
+                            <td class="winner-column green">✅ None (self-hosted)</td>
+                            <td class="red">❌ High</td>
+                            <td class="red">❌ High</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ops Burden</strong></td>
+                            <td class="winner-column orange">⚠️ Self-managed</td>
+                            <td class="green">✅ Zero (SaaS)</td>
+                            <td class="green">✅ Zero (SaaS)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Time</strong></td>
+                            <td class="winner-column orange">⚠️ 1-2 days</td>
+                            <td class="green">✅ 15 minutes</td>
+                            <td class="green">✅ 30 minutes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metrics Collection</strong></td>
+                            <td class="winner-column green">✅ Excellent (PromQL)</td>
+                            <td class="green">✅ Excellent</td>
+                            <td class="green">✅ Good</td>
+                        </tr>
+                        <tr>
+                            <td><strong>APM/Tracing</strong></td>
+                            <td class="winner-column orange">⚠️ Needs Tempo/Jaeger</td>
+                            <td class="green">✅ Built-in (best)</td>
+                            <td class="green">✅ Built-in (excellent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alerting</strong></td>
+                            <td class="winner-column green">✅ Alertmanager</td>
+                            <td class="green">✅ Built-in</td>
+                            <td class="green">✅ Built-in</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Community/Ecosystem</strong></td>
+                            <td class="winner-column green">✅ Largest</td>
+                            <td class="orange">⚠️ Commercial</td>
+                            <td class="orange">⚠️ Commercial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Long-term Storage</strong></td>
+                            <td class="winner-column orange">⚠️ Needs Thanos/Mimir</td>
+                            <td class="green">✅ Unlimited</td>
+                            <td class="green">✅ Unlimited</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Sovereignty</strong></td>
+                            <td class="winner-column green">✅ Full control</td>
+                            <td class="red">❌ SaaS only</td>
+                            <td class="red">❌ SaaS only</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><strong>Summary</strong></td>
+                            <td class="winner-column"><strong>Standard choice</strong></td>
+                            <td>Best UX/APM</td>
+                            <td>Free tier + APM</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Wizard -->
+    <section id="wizard" class="wizard-section">
+        <div class="container">
+            <h2>🧙 Beslissings-Wizard</h2>
+            <p>Beantwoord 4 vragen en krijg een gepersonaliseerde aanbeveling</p>
+            
+            <form id="wizardForm" class="wizard-form">
+                <!-- Question 1 -->
+                <div class="wizard-question active" data-question="1">
+                    <h3>1. Wat is je maandelijkse monitoring budget?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="budget" value="low" required>
+                            <div class="option-content">
+                                <strong>€0-100/month (Low)</strong>
+                                <p>Startup/small team, budget constraint</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="budget" value="medium">
+                            <div class="option-content">
+                                <strong>€100-500/month (Medium)</strong>
+                                <p>Growing team, some budget available</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="budget" value="high">
+                            <div class="option-content">
+                                <strong>€500+/month (High)</strong>
+                                <p>Enterprise, budget not primary concern</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="wizard-question" data-question="2">
+                    <h3>2. Wat is je prioriteit: kosten of operationele simpliciteit?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="priority" value="cost" required>
+                            <div class="option-content">
+                                <strong>Kosten Minimaliseren</strong>
+                                <p>Open-source preference, self-hosted OK</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="priority" value="balanced">
+                            <div class="option-content">
+                                <strong>Gebalanceerd</strong>
+                                <p>Kosten belangrijk maar simpliciteit ook</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="priority" value="simplicity">
+                            <div class="option-content">
+                                <strong>Zero Ops Burden</strong>
+                                <p>Fully managed SaaS, no infrastructure maintenance</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="wizard-question" data-question="3">
+                    <h3>3. Heb je Application Performance Monitoring (APM) nodig?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="apm" value="critical" required>
+                            <div class="option-content">
+                                <strong>Critical (Ja)</strong>
+                                <p>Need distributed tracing, code-level profiling</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="apm" value="nice">
+                            <div class="option-content">
+                                <strong>Nice to Have</strong>
+                                <p>Zou handig zijn maar niet essentieel</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="apm" value="no">
+                            <div class="option-content">
+                                <strong>Nee</strong>
+                                <p>Infrastructure metrics + logs voldoende</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="wizard-question" data-question="4">
+                    <h3>4. Hoe groot is je team?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="team" value="small" required>
+                            <div class="option-content">
+                                <strong>1-5 mensen</strong>
+                                <p>Solo developer of kleine startup</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="team" value="medium">
+                            <div class="option-content">
+                                <strong>5-20 mensen</strong>
+                                <p>Growing team met 1-2 DevOps/SRE</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="team" value="large">
+                            <div class="option-content">
+                                <strong>20+ mensen</strong>
+                                <p>Enterprise met dedicated SRE team</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard-nav">
+                    <button type="button" class="btn secondary" id="prevBtn" style="display: none;">← Vorige</button>
+                    <button type="button" class="btn primary" id="nextBtn">Volgende →</button>
+                    <button type="submit" class="btn primary" id="submitBtn" style="display: none;">Toon Aanbeveling 🎯</button>
+                </div>
+            </form>
+
+            <!-- Results (hidden initially) -->
+            <div id="wizardResults" class="wizard-results" style="display: none;">
+                <h3>🎯 Jouw Aanbeveling</h3>
+                <div class="result-card">
+                    <div class="result-header">
+                        <h4 id="resultTool"></h4>
+                        <span id="resultConfidence" class="confidence-badge"></span>
+                    </div>
+                    <div id="resultReasons" class="result-reasons"></div>
+                    <div id="resultScores" class="result-scores"></div>
+                    <div class="result-actions">
+                        <a id="resultDocsLink" href="#" class="btn primary">Start met deze tool →</a>
+                        <button type="button" class="btn secondary" id="restartBtn">🔄 Opnieuw</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Preview -->
+    <section id="implementation" class="implementation-section">
+        <div class="container">
+            <h2>🚀 Implementatie Preview</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>📖 Decision Rules</h3>
+                    <p>Complete decision logic: "Use Prometheus+Grafana unless..." met trade-off analysis</p>
+                    <a href="../docs/DECISION_RULES.md#observability" class="btn">Lees Rules →</a>
+                </div>
+                <div class="implementation-card">
+                    <h3>📊 Full Matrix</h3>
+                    <p>Detailed comparison met all monitoring options (VictoriaMetrics, Thanos, Mimir)</p>
+                    <a href="../docs/MATRIX.md" class="btn">Bekijk Matrix →</a>
+                </div>
+                <div class="implementation-card">
+                    <h3>⚙️ Runbooks</h3>
+                    <p>Production deployment runbooks met Helm charts & best practices</p>
+                    <a href="../docs/runbooks/deployment.md" class="btn">Bekijk Runbooks →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Feedback -->
+    <section class="feedback-section">
+        <div class="container">
+            <h3>Was deze vergelijking nuttig?</h3>
+            <div class="feedback-buttons">
+                <button class="feedback-btn" data-feedback="positive">👍 Ja, zeer nuttig</button>
+                <button class="feedback-btn" data-feedback="negative">👎 Nee, niet nuttig</button>
+            </div>
+            <div class="feedback-stats">
+                <span>✅ 91% vond dit nuttig (143 stemmen)</span>
+            </div>
+            <div class="feedback-form" id="feedbackForm" style="display: none;">
+                <textarea placeholder="Vertel ons meer (optioneel)..."></textarea>
+                <button class="btn primary">Verstuur Feedback</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Comparisons -->
+    <section class="related-section">
+        <div class="container">
+            <h2>🔗 Gerelateerde Vergelijkingen</h2>
+            <div class="related-grid">
+                <a href="gitops.html" class="related-card">
+                    <h3>GitOps Tools</h3>
+                    <p>ArgoCD vs Flux</p>
+                </a>
+                <a href="secrets.html" class="related-card">
+                    <h3>Secrets Management</h3>
+                    <p>ESO vs Sealed Secrets vs SOPS</p>
+                </a>
+                <a href="ingress.html" class="related-card">
+                    <h3>Ingress Controllers</h3>
+                    <p>NGINX vs Traefik vs Istio</p>
+                </a>
+                <a href="networking.html" class="related-card">
+                    <h3>CNI Networking</h3>
+                    <p>Cilium vs Calico vs Flannel</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>KubeCompass</h4>
+                    <p>Open-source beslissingshulp voor Kubernetes tooling</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Vergelijkingen</h4>
+                    <ul>
+                        <li><a href="gitops.html">GitOps Tools</a></li>
+                        <li><a href="secrets.html">Secrets Management</a></li>
+                        <li><a href="ingress.html">Ingress Controllers</a></li>
+                        <li><a href="networking.html">CNI Networking</a></li>
+                        <li><a href="monitoring.html">Monitoring</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../docs/DECISION_RULES.md">Decision Rules</a></li>
+                        <li><a href="../docs/MATRIX.md">Full Matrix</a></li>
+                        <li><a href="../METHODOLOGY.md">Methodology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/jjuulliiaaa/KubeCompass">GitHub</a></li>
+                        <li><a href="../CONTRIBUTING.md">Contributing</a></li>
+                        <li><a href="https://github.com/jjuulliiaaa/KubeCompass/discussions">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/comparison.js"></script>
+    <script src="../scripts/wizard.js"></script>
+    <script>
+        // Monitoring-specific wizard logic
+        function calculateRecommendation(answers) {
+            let prometheusScore = 0, datadogScore = 0, newrelicScore = 0;
+            let reasons = {
+                prometheus: [],
+                datadog: [],
+                newrelic: []
+            };
+
+            // Q1: Budget
+            if (answers.budget === 'low') {
+                prometheusScore += 5;
+                newrelicScore += 2;
+                reasons.prometheus.push('Low budget = Prometheus perfect (€0 licensing, only infra costs €50-100/month)');
+                reasons.newrelic.push('Free tier (100GB/month) kan voldoende zijn voor small setup');
+            } else if (answers.budget === 'medium') {
+                prometheusScore += 3;
+                datadogScore += 2;
+                newrelicScore += 3;
+                reasons.prometheus.push('Medium budget = self-hosted still best ROI');
+                reasons.datadog.push('Budget allows SaaS maar let op scale costs');
+                reasons.newrelic.push('Free tier + paid scales well voor medium teams');
+            } else { // high
+                datadogScore += 4;
+                newrelicScore += 3;
+                prometheusScore += 1;
+                reasons.datadog.push('High budget = Datadog\'s zero-ops convenience worth it');
+                reasons.newrelic.push('Enterprise budget makes full platform accessible');
+            }
+
+            // Q2: Priority
+            if (answers.priority === 'cost') {
+                prometheusScore += 5;
+                reasons.prometheus.push('Cost priority = Prometheus unbeatable (open-source, vendor independence)');
+            } else if (answers.priority === 'balanced') {
+                prometheusScore += 3;
+                datadogScore += 2;
+                newrelicScore += 2;
+                reasons.prometheus.push('Balanced = Prometheus good middle ground (some ops but huge savings)');
+                reasons.datadog.push('If team < 5, SaaS convenience kan worth cost');
+            } else { // simplicity
+                datadogScore += 5;
+                newrelicScore += 4;
+                reasons.datadog.push('Zero ops priority = Datadog beste fully managed experience');
+                reasons.newrelic.push('New Relic ook fully managed met goede UX');
+            }
+
+            // Q3: APM
+            if (answers.apm === 'critical') {
+                datadogScore += 5;
+                newrelicScore += 5;
+                prometheusScore += 1;
+                reasons.datadog.push('APM critical = Datadog heeft best-in-class APM (distributed tracing, profiling)');
+                reasons.newrelic.push('New Relic APM is excellent (code-level insights)');
+                reasons.prometheus.push('Prometheus needs Tempo/Jaeger addon voor tracing (extra complexity)');
+            } else if (answers.apm === 'nice') {
+                datadogScore += 3;
+                newrelicScore += 3;
+                prometheusScore += 2;
+                reasons.datadog.push('APM nice-to-have = Datadog heeft het included');
+                reasons.newrelic.push('New Relic APM included in platform');
+                reasons.prometheus.push('Kan Tempo/Jaeger later toevoegen als nodig');
+            } else { // no
+                prometheusScore += 3;
+                reasons.prometheus.push('Geen APM nodig = Prometheus metrics + logs voldoende (save costs)');
+            }
+
+            // Q4: Team Size
+            if (answers.team === 'small') {
+                newrelicScore += 4;
+                datadogScore += 3;
+                prometheusScore += 1;
+                reasons.newrelic.push('Small team (1-5) = Free tier attractive + easy setup');
+                reasons.datadog.push('Small team = SaaS reduces ops burden (no self-hosting)');
+                reasons.prometheus.push('Small team kan ops burden struggle (monitoring the monitoring)');
+            } else if (answers.team === 'medium') {
+                prometheusScore += 4;
+                datadogScore += 2;
+                newrelicScore += 2;
+                reasons.prometheus.push('Medium team (5-20) = heeft capacity voor self-hosting (1-2 DevOps/SRE)');
+                reasons.datadog.push('Medium team = pricing still reasonable (~€500-1000/month)');
+            } else { // large
+                prometheusScore += 5;
+                datadogScore += 2;
+                reasons.prometheus.push('Large team (20+) = dedicated SRE team kan Prometheus maintain');
+                reasons.datadog.push('Large team = Datadog costs scale expensive (watch budget)');
+            }
+
+            // Determine winner
+            const scores = {
+                'Prometheus+Grafana': prometheusScore,
+                'Datadog': datadogScore,
+                'New Relic': newrelicScore
+            };
+            
+            const sortedTools = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const winner = sortedTools[0][0];
+            const runnerUp = sortedTools[1][0];
+            const diff = sortedTools[0][1] - sortedTools[1][1];
+            
+            const confidence = diff > 4 ? 'high' : diff > 2 ? 'medium' : 'low';
+
+            return {
+                winner: winner,
+                confidence: confidence,
+                scores: scores,
+                reasons: reasons,
+                answers: answers
+            };
+        }
+
+        // Pass calculator to wizard.js
+        window.recommendationCalculator = calculateRecommendation;
+    </script>
+</body>
+</html>

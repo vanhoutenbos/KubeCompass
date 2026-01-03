@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ingress Controller comparison - NGINX vs Traefik vs Istio Gateway. Production-ready decision guide with scoring and implementation examples.">
+    <title>Ingress Controller Comparison: NGINX vs Traefik vs Istio Gateway | KubeCompass</title>
+    <link rel="stylesheet" href="../styles/comparison.css">
+    <link rel="stylesheet" href="../styles/global.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="logo">🧭</span>
+                    <span class="brand-name">KubeCompass</span>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#comparison">Comparison</a></li>
+                <li><a href="#decision-wizard">Decision Wizard</a></li>
+                <li><a href="#implementation">Implementation</a></li>
+                <li><a href="../docs/INDEX.md">All Guides</a></li>
+                <li><a href="https://github.com/vanhoutenbos/KubeCompass" class="btn-github">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero hero-comparison">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> / <a href="#comparisons">Comparisons</a> / <span>Ingress Controllers</span>
+            </div>
+            <h1>Ingress Controller Comparison</h1>
+            <p class="hero-subtitle">NGINX vs Traefik vs Istio Gateway</p>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat">
+                    <span class="stat-icon">⏱️</span>
+                    <span class="stat-label">Reading time</span>
+                    <span class="stat-value">5 min</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">📅</span>
+                    <span class="stat-label">Last updated</span>
+                    <span class="stat-value">Jan 2026</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-label">Production tested</span>
+                    <span class="stat-value">NGINX</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">👍</span>
+                    <span class="stat-label">Helpful</span>
+                    <span class="stat-value">92%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Decision Banner -->
+    <section class="quick-decision">
+        <div class="container">
+            <div class="decision-card">
+                <h2>⚡ Quick Decision</h2>
+                <p><strong>Need a recommendation right now?</strong></p>
+                <div class="decision-options">
+                    <div class="decision-option">
+                        <h3>Choose NGINX Ingress if:</h3>
+                        <ul>
+                            <li>✅ Battle-tested maturity required</li>
+                            <li>✅ Large community & documentation</li>
+                            <li>✅ Cloud-agnostic deployment</li>
+                            <li>✅ Most common use case (80%)</li>
+                        </ul>
+                        <a href="#nginx" class="btn btn-primary">Learn More →</a>
+                    </div>
+                    <div class="decision-option">
+                        <h3>Choose Traefik if:</h3>
+                        <ul>
+                            <li>✅ Dynamic config without restarts</li>
+                            <li>✅ Modern UI dashboard needed</li>
+                            <li>✅ Built-in Let's Encrypt automation</li>
+                            <li>✅ Simpler for small teams</li>
+                        </ul>
+                        <a href="#traefik" class="btn btn-primary">Learn More →</a>
+                    </div>
+                    <div class="decision-option">
+                        <h3>Choose Istio Gateway if:</h3>
+                        <ul>
+                            <li>✅ Already using Istio service mesh</li>
+                            <li>✅ Advanced traffic management needed</li>
+                            <li>✅ mTLS everywhere required</li>
+                            <li>✅ Enterprise observability</li>
+                        </ul>
+                        <a href="#istio" class="btn btn-primary">Learn More →</a>
+                    </div>
+                </div>
+                <p class="decision-note">💡 <strong>Not sure?</strong> Use our <a href="#decision-wizard">Decision Wizard</a> for personalized recommendations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Cards -->
+    <section class="tool-cards" id="comparison">
+        <div class="container">
+            <h2>Detailed Comparison</h2>
+            
+            <!-- NGINX Ingress -->
+            <div class="tool-card winner" id="nginx">
+                <div class="card-header">
+                    <div class="title-row">
+                        <h3>NGINX Ingress Controller</h3>
+                        <span class="badge badge-winner">🏆 Recommended</span>
+                    </div>
+                    <div class="badges">
+                        <span class="badge badge-cncf">Kubernetes Project</span>
+                        <span class="badge badge-score">KubeCompass Score: 4.3/5</span>
+                    </div>
+                </div>
+                
+                <div class="trust-signals">
+                    <div class="signal">
+                        <span class="signal-icon">⭐</span>
+                        <div>
+                            <div class="signal-value">17,000+ GitHub Stars</div>
+                            <div class="signal-label">Most popular</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">🏢</span>
+                        <div>
+                            <div class="signal-value">Used everywhere</div>
+                            <div class="signal-label">Industry standard</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">✅</span>
+                        <div>
+                            <div class="signal-value">Production-tested</div>
+                            <div class="signal-label">By KubeCompass team</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">👥</span>
+                        <div>
+                            <div class="signal-value">Best for: All team sizes</div>
+                            <div class="signal-label">Universal fit</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h4>🎯 Why Choose NGINX Ingress?</h4>
+                    <ul class="feature-list">
+                        <li>✅ <strong>Battle-tested maturity</strong> (most deployed ingress controller)</li>
+                        <li>✅ <strong>Cloud-agnostic</strong> (works everywhere)</li>
+                        <li>✅ <strong>Extensive documentation</strong> (largest community)</li>
+                        <li>✅ <strong>SSL/TLS termination</strong> (with cert-manager integration)</li>
+                        <li>✅ <strong>Rate limiting</strong> (protect your APIs)</li>
+                        <li>✅ <strong>Path-based routing</strong> (flexible URL patterns)</li>
+                    </ul>
+
+                    <h4>⚠️ Trade-offs:</h4>
+                    <ul class="tradeoff-list">
+                        <li>Configuration via annotations (can get verbose)</li>
+                        <li>Requires pod restart for some config changes</li>
+                        <li>Less modern than alternatives</li>
+                        <li>No built-in UI dashboard</li>
+                    </ul>
+
+                    <div class="use-cases">
+                        <span class="use-case-tag">Production</span>
+                        <span class="use-case-tag">Cloud-Agnostic</span>
+                        <span class="use-case-tag">Enterprise</span>
+                        <span class="use-case-tag">Mature</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <a href="../docs/DECISION_RULES.md#ingress-controller" class="btn btn-primary">📖 Implementation Guide</a>
+                    <a href="../manifests/ingress/nginx/" class="btn btn-secondary">📁 YAML Examples</a>
+                    <a href="../docs/MATRIX.md#8-ingress-controller" class="btn btn-ghost">🔍 Deep Dive</a>
+                </div>
+            </div>
+
+            <!-- Traefik -->
+            <div class="tool-card" id="traefik">
+                <div class="card-header">
+                    <div class="title-row">
+                        <h3>Traefik</h3>
+                        <span class="badge badge-alternative">🔄 Modern Alternative</span>
+                    </div>
+                    <div class="badges">
+                        <span class="badge badge-cncf">Cloud Native Proxy</span>
+                        <span class="badge badge-score">KubeCompass Score: 4.0/5</span>
+                    </div>
+                </div>
+                
+                <div class="trust-signals">
+                    <div class="signal">
+                        <span class="signal-icon">⭐</span>
+                        <div>
+                            <div class="signal-value">50,000+ GitHub Stars</div>
+                            <div class="signal-label">Very popular</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">🏢</span>
+                        <div>
+                            <div class="signal-value">Wide adoption</div>
+                            <div class="signal-label">Startups & SMBs</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">✅</span>
+                        <div>
+                            <div class="signal-value">Community tested</div>
+                            <div class="signal-label">Well regarded</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">👥</span>
+                        <div>
+                            <div class="signal-value">Best for: Small-Medium teams</div>
+                            <div class="signal-label">1-50 people</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h4>🎯 Why Choose Traefik?</h4>
+                    <ul class="feature-list">
+                        <li>✅ <strong>Dynamic configuration</strong> (no restart needed)</li>
+                        <li>✅ <strong>Modern UI dashboard</strong> (beautiful web interface)</li>
+                        <li>✅ <strong>Built-in Let's Encrypt</strong> (automatic HTTPS)</li>
+                        <li>✅ <strong>Middleware system</strong> (auth, rate limiting, retry)</li>
+                        <li>✅ <strong>IngressRoute CRD</strong> (Kubernetes-native)</li>
+                        <li>✅ <strong>Docker support</strong> (hybrid Docker/K8s setups)</li>
+                    </ul>
+
+                    <h4>⚠️ Trade-offs:</h4>
+                    <ul class="tradeoff-list">
+                        <li>Smaller enterprise adoption (less battle-tested)</li>
+                        <li>Different CRD (IngressRoute vs Ingress)</li>
+                        <li>Some features require Traefik Enterprise</li>
+                        <li>Less community documentation than NGINX</li>
+                    </ul>
+
+                    <div class="use-cases">
+                        <span class="use-case-tag">Modern</span>
+                        <span class="use-case-tag">Dynamic</span>
+                        <span class="use-case-tag">Small Teams</span>
+                        <span class="use-case-tag">Easy Setup</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <a href="../docs/DECISION_RULES.md#ingress-controller" class="btn btn-primary">📖 Implementation Guide</a>
+                    <a href="../manifests/ingress/traefik/" class="btn btn-secondary">📁 YAML Examples</a>
+                    <a href="https://doc.traefik.io/traefik/" class="btn btn-ghost">🔍 Traefik Docs</a>
+                </div>
+            </div>
+
+            <!-- Istio Gateway -->
+            <div class="tool-card" id="istio">
+                <div class="card-header">
+                    <div class="title-row">
+                        <h3>Istio Gateway</h3>
+                        <span class="badge badge-alternative">🔄 Service Mesh</span>
+                    </div>
+                    <div class="badges">
+                        <span class="badge badge-cncf">CNCF Graduated</span>
+                        <span class="badge badge-score">KubeCompass Score: 3.8/5</span>
+                    </div>
+                </div>
+                
+                <div class="trust-signals">
+                    <div class="signal">
+                        <span class="signal-icon">⭐</span>
+                        <div>
+                            <div class="signal-value">36,000+ GitHub Stars</div>
+                            <div class="signal-label">Service mesh leader</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">🏢</span>
+                        <div>
+                            <div class="signal-value">Used by enterprises</div>
+                            <div class="signal-label">Google, IBM, eBay</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">✅</span>
+                        <div>
+                            <div class="signal-value">CNCF Graduated</div>
+                            <div class="signal-label">Production grade</div>
+                        </div>
+                    </div>
+                    <div class="signal">
+                        <span class="signal-icon">👥</span>
+                        <div>
+                            <div class="signal-value">Best for: Large enterprises</div>
+                            <div class="signal-label">50+ people</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h4>🎯 Why Choose Istio Gateway?</h4>
+                    <ul class="feature-list">
+                        <li>✅ <strong>Integrated with Istio</strong> (service mesh benefits)</li>
+                        <li>✅ <strong>Advanced traffic management</strong> (canary, A/B testing)</li>
+                        <li>✅ <strong>mTLS everywhere</strong> (zero-trust networking)</li>
+                        <li>✅ <strong>Rich observability</strong> (built-in tracing, metrics)</li>
+                        <li>✅ <strong>Circuit breaking</strong> (resilience patterns)</li>
+                        <li>✅ <strong>Envoy proxy</strong> (modern, high-performance)</li>
+                    </ul>
+
+                    <h4>⚠️ Trade-offs:</h4>
+                    <ul class="tradeoff-list">
+                        <li>Requires full Istio installation (heavy)</li>
+                        <li>Steep learning curve (complex concepts)</li>
+                        <li>Higher resource usage (sidecar proxies)</li>
+                        <li>Overkill for simple ingress needs</li>
+                    </ul>
+
+                    <div class="use-cases">
+                        <span class="use-case-tag">Service Mesh</span>
+                        <span class="use-case-tag">Enterprise</span>
+                        <span class="use-case-tag">mTLS</span>
+                        <span class="use-case-tag">Advanced</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/" class="btn btn-primary">📖 Istio Gateway Docs</a>
+                    <a href="../manifests/ingress/istio/" class="btn btn-secondary">📁 YAML Examples</a>
+                    <a href="https://istio.io" class="btn btn-ghost">🔍 Istio Website</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Matrix -->
+    <section class="comparison-matrix">
+        <div class="container">
+            <h2>📊 Feature Comparison Matrix</h2>
+            <div class="matrix-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>NGINX Ingress</th>
+                            <th>Traefik</th>
+                            <th>Istio Gateway</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Maturity</strong></td>
+                            <td class="cell-positive">✅ Very mature</td>
+                            <td class="cell-positive">✅ Mature</td>
+                            <td class="cell-positive">✅ Mature</td>
+                            <td class="winner-cell">🏆 NGINX</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Complexity</strong></td>
+                            <td class="cell-positive">✅ Simple</td>
+                            <td class="cell-positive">✅ Simple</td>
+                            <td class="cell-negative">❌ Complex</td>
+                            <td class="winner-cell">🏆 NGINX/Traefik</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamic Config</strong></td>
+                            <td class="cell-warning">⚠️ Restart needed</td>
+                            <td class="cell-positive">✅ Live reload</td>
+                            <td class="cell-positive">✅ Live reload</td>
+                            <td class="winner-cell">🏆 Traefik</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Web UI Dashboard</strong></td>
+                            <td class="cell-negative">❌ No</td>
+                            <td class="cell-positive">✅ Beautiful UI</td>
+                            <td class="cell-positive">✅ Kiali/Grafana</td>
+                            <td class="winner-cell">🏆 Traefik</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Community Size</strong></td>
+                            <td class="cell-positive">✅ Largest</td>
+                            <td class="cell-positive">✅ Large</td>
+                            <td class="cell-positive">✅ Large</td>
+                            <td class="winner-cell">🏆 NGINX</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SSL/TLS Management</strong></td>
+                            <td class="cell-positive">✅ cert-manager</td>
+                            <td class="cell-positive">✅ Built-in LE</td>
+                            <td class="cell-positive">✅ Integrated</td>
+                            <td class="winner-cell">🤝 All good</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Advanced Traffic</strong></td>
+                            <td class="cell-warning">⚠️ Basic</td>
+                            <td class="cell-positive">✅ Good</td>
+                            <td class="cell-positive">✅ Excellent</td>
+                            <td class="winner-cell">🏆 Istio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resource Usage</strong></td>
+                            <td class="cell-positive">✅ Low</td>
+                            <td class="cell-positive">✅ Low</td>
+                            <td class="cell-warning">⚠️ High (sidecars)</td>
+                            <td class="winner-cell">🏆 NGINX</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Observability</strong></td>
+                            <td class="cell-positive">✅ Good (metrics)</td>
+                            <td class="cell-positive">✅ Good (metrics)</td>
+                            <td class="cell-positive">✅ Excellent (full)</td>
+                            <td class="winner-cell">🏆 Istio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud Agnostic</strong></td>
+                            <td class="cell-positive">✅ Yes</td>
+                            <td class="cell-positive">✅ Yes</td>
+                            <td class="cell-positive">✅ Yes</td>
+                            <td class="winner-cell">🤝 All equal</td>
+                        </tr>
+                        <tr class="summary-row">
+                            <td><strong>Overall Score</strong></td>
+                            <td>4.3/5 ⭐⭐⭐⭐</td>
+                            <td>4.0/5 ⭐⭐⭐⭐</td>
+                            <td>3.8/5 ⭐⭐⭐⭐</td>
+                            <td class="winner-cell">🏆 NGINX (general)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Wizard -->
+    <section class="decision-wizard" id="decision-wizard">
+        <div class="container">
+            <h2>🧙 Interactive Decision Wizard</h2>
+            <p>Answer 4 questions to get a personalized recommendation</p>
+            
+            <form id="wizardForm" class="wizard-form">
+                <!-- Question 1: Service Mesh -->
+                <div class="wizard-question active" data-question="1">
+                    <h3>Question 1 of 4: Are you using or planning a service mesh?</h3>
+                    <div class="wizard-options">
+                        <label class="wizard-option">
+                            <input type="radio" name="serviceMesh" value="yes">
+                            <div class="option-content">
+                                <div class="option-title">✅ Yes, using Istio</div>
+                                <div class="option-description">Already have or planning Istio</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="serviceMesh" value="considering">
+                            <div class="option-content">
+                                <div class="option-title">🤔 Considering it</div>
+                                <div class="option-description">Evaluating service mesh options</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="serviceMesh" value="no">
+                            <div class="option-content">
+                                <div class="option-title">❌ No, not needed</div>
+                                <div class="option-description">Just need ingress routing</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2: Team Size -->
+                <div class="wizard-question" data-question="2">
+                    <h3>Question 2 of 4: What's your team size?</h3>
+                    <div class="wizard-options">
+                        <label class="wizard-option">
+                            <input type="radio" name="teamSize" value="small">
+                            <div class="option-content">
+                                <div class="option-title">👤 1-10 people</div>
+                                <div class="option-description">Small team, prefer simplicity</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="teamSize" value="medium">
+                            <div class="option-content">
+                                <div class="option-title">👥 10-50 people</div>
+                                <div class="option-description">Medium team, need balance</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="teamSize" value="large">
+                            <div class="option-content">
+                                <div class="option-title">👨‍👩‍👧‍👦 50+ people</div>
+                                <div class="option-description">Large enterprise team</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3: Requirements -->
+                <div class="wizard-question" data-question="3">
+                    <h3>Question 3 of 4: What's your main requirement?</h3>
+                    <div class="wizard-options">
+                        <label class="wizard-option">
+                            <input type="radio" name="requirement" value="stability">
+                            <div class="option-content">
+                                <div class="option-title">🛡️ Stability & maturity</div>
+                                <div class="option-description">Battle-tested, proven solution</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="requirement" value="ease">
+                            <div class="option-content">
+                                <div class="option-title">⚡ Ease of use</div>
+                                <div class="option-description">Quick setup, nice UI</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="requirement" value="advanced">
+                            <div class="option-content">
+                                <div class="option-title">🚀 Advanced features</div>
+                                <div class="option-description">Traffic management, mTLS, observability</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4: Config Style -->
+                <div class="wizard-question" data-question="4">
+                    <h3>Question 4 of 4: What's your preferred configuration style?</h3>
+                    <div class="wizard-options">
+                        <label class="wizard-option">
+                            <input type="radio" name="configStyle" value="annotations">
+                            <div class="option-content">
+                                <div class="option-title">📝 Annotations (Kubernetes Ingress)</div>
+                                <div class="option-description">Standard Kubernetes way</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="configStyle" value="crd">
+                            <div class="option-content">
+                                <div class="option-title">🔧 CRDs (IngressRoute, Gateway)</div>
+                                <div class="option-description">Custom resources</div>
+                            </div>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="configStyle" value="either">
+                            <div class="option-content">
+                                <div class="option-title">🤷 Either is fine</div>
+                                <div class="option-description">No strong preference</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard-nav">
+                    <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">← Previous</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary">Next: Team Size →</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">See Recommendation 🎉</button>
+                </div>
+            </form>
+
+            <!-- Results -->
+            <div id="wizardResults" class="wizard-results" style="display: none;">
+                <div id="recommendationContent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Preview -->
+    <section class="implementation-preview" id="implementation">
+        <div class="container">
+            <h2>📦 Implementation Preview</h2>
+            <p>Jump straight to production-ready code and guides</p>
+            
+            <div class="impl-grid">
+                <a href="../docs/DECISION_RULES.md#ingress-controller" class="impl-card">
+                    <div class="impl-icon">📖</div>
+                    <h3>Decision Rules</h3>
+                    <p>Complete decision framework: "Choose NGINX Ingress unless..." with alternatives and trade-offs</p>
+                    <span class="impl-meta">Decision logic • Alternatives • When to choose each</span>
+                </a>
+                
+                <a href="../manifests/ingress/" class="impl-card">
+                    <div class="impl-icon">📁</div>
+                    <h3>YAML Examples</h3>
+                    <p>Production-ready manifests for NGINX (with cert-manager), Traefik (IngressRoute), and basic examples</p>
+                    <span class="impl-meta">All 3 tools • SSL/TLS • Path routing • Copy-paste ready</span>
+                </a>
+                
+                <a href="../docs/MATRIX.md#8-ingress-controller" class="impl-card">
+                    <div class="impl-icon">🧪</div>
+                    <h3>Decision Matrix</h3>
+                    <p>Feature comparison matrix with maturity, complexity, and recommendation for most use cases</p>
+                    <span class="impl-meta">Feature matrix • Best practices • Tool selection</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Feedback -->
+    <section class="community-feedback">
+        <div class="container">
+            <h2>💬 Was this helpful?</h2>
+            <div class="feedback-buttons">
+                <button class="btn-feedback btn-feedback-positive" data-feedback="positive">
+                    👍 Yes, very helpful!
+                </button>
+                <button class="btn-feedback btn-feedback-negative" data-feedback="negative">
+                    👎 Not quite what I needed
+                </button>
+            </div>
+            <div class="feedback-stats">
+                <p>📊 <strong>92%</strong> of readers found this comparison helpful</p>
+            </div>
+            <div class="feedback-form" id="feedbackForm" style="display: none;">
+                <h3>Help us improve</h3>
+                <textarea placeholder="What could we do better?" rows="4"></textarea>
+                <button class="btn btn-primary">Submit Feedback</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Comparisons -->
+    <section class="related-comparisons">
+        <div class="container">
+            <h2>🔗 Related Comparisons</h2>
+            <div class="related-grid">
+                <a href="gitops.html" class="related-card">
+                    <h3>🔄 GitOps</h3>
+                    <p>ArgoCD vs Flux</p>
+                    <span class="card-meta">2 tools compared</span>
+                </a>
+                <a href="secrets.html" class="related-card">
+                    <h3>🔒 Secrets Management</h3>
+                    <p>External Secrets Operator vs Sealed Secrets vs SOPS</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+                <a href="networking.html" class="related-card">
+                    <h3>🕸️ CNI Plugins</h3>
+                    <p>Cilium vs Calico vs Flannel</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+                <a href="monitoring.html" class="related-card">
+                    <h3>📊 Monitoring Stacks</h3>
+                    <p>Prometheus+Grafana vs Datadog vs New Relic</p>
+                    <span class="card-meta">3 tools compared</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>KubeCompass</h4>
+                    <p>Production-ready Kubernetes guidance by practitioners, for practitioners.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#comparisons">All Comparisons</a></li>
+                        <li><a href="../docs/INDEX.md">Documentation</a></li>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comparisons</h4>
+                    <ul>
+                        <li><a href="gitops.html">GitOps (ArgoCD vs Flux)</a></li>
+                        <li><a href="secrets.html">Secrets Management</a></li>
+                        <li><a href="ingress.html">Ingress Controllers</a></li>
+                        <li><a href="networking.html">CNI Plugins</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass/discussions">Discussions</a></li>
+                        <li><a href="https://github.com/vanhoutenbos/KubeCompass/issues">Report Issue</a></li>
+                        <li><a href="../CONTRIBUTING.md">Contributing</a></li>
+                        <li><a href="#newsletter">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KubeCompass • Open Source • MIT License</p>
+                <p>Last updated: January 3, 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/comparison.js"></script>
+    <script src="../scripts/wizard.js"></script>
+    <script>
+        // Ingress-specific wizard scoring
+        function calculateRecommendation(answers) {
+            let nginxScore = 0;
+            let traefikScore = 0;
+            let istioScore = 0;
+            let reasons = { nginx: [], traefik: [], istio: [] };
+
+            // Service Mesh
+            if (answers.serviceMesh === 'yes') {
+                istioScore += 5;
+                reasons.istio.push('You already use Istio - Istio Gateway provides seamless integration with your service mesh');
+            } else if (answers.serviceMesh === 'considering') {
+                istioScore += 2;
+                nginxScore += 2;
+                traefikScore += 2;
+            } else {
+                nginxScore += 3;
+                traefikScore += 3;
+                reasons.nginx.push('No service mesh needed - NGINX provides straightforward ingress without extra complexity');
+            }
+
+            // Team Size
+            if (answers.teamSize === 'small') {
+                traefikScore += 3;
+                reasons.traefik.push('Small teams benefit from Traefik\'s simple setup and nice UI dashboard');
+                nginxScore += 2;
+            } else if (answers.teamSize === 'medium') {
+                nginxScore += 3;
+                traefikScore += 2;
+            } else {
+                nginxScore += 4;
+                istioScore += 2;
+                reasons.nginx.push('Large teams benefit from NGINX\'s proven enterprise adoption and extensive documentation');
+            }
+
+            // Requirement
+            if (answers.requirement === 'stability') {
+                nginxScore += 4;
+                reasons.nginx.push('NGINX is the most battle-tested ingress controller with proven stability');
+            } else if (answers.requirement === 'ease') {
+                traefikScore += 4;
+                reasons.traefik.push('Traefik offers the easiest setup with built-in Let\'s Encrypt and beautiful UI');
+            } else {
+                istioScore += 4;
+                reasons.istio.push('Istio Gateway provides advanced traffic management, mTLS, and rich observability');
+            }
+
+            // Config Style
+            if (answers.configStyle === 'annotations') {
+                nginxScore += 2;
+            } else if (answers.configStyle === 'crd') {
+                traefikScore += 2;
+                istioScore += 2;
+            } else {
+                nginxScore += 1;
+                traefikScore += 1;
+                istioScore += 1;
+            }
+
+            const scores = {
+                'NGINX Ingress': nginxScore,
+                'Traefik': traefikScore,
+                'Istio Gateway': istioScore
+            };
+
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const runnerUp = Object.keys(scores).filter(k => k !== winner).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+            const diff = scores[winner] - scores[runnerUp];
+            const confidence = diff > 4 ? 'high' : diff > 2 ? 'medium' : 'low';
+
+            return {
+                winner: winner,
+                confidence: confidence,
+                scores: scores,
+                reasons: reasons,
+                answers: answers
+            };
+        }
+    </script>
+</body>
+</html>

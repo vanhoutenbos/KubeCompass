@@ -1,826 +1,427 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kubernetes Landscape - KubeCompass</title>
+    <link rel="stylesheet" href="styles/global.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background-color: #f7fafc;
-        }
-
-        /* Navigation */
-        nav {
-            background: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #4a5568;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Filters */
-        .filters {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .filters h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .filter-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #4a5568;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.25rem;
-            border: 2px solid #e2e8f0;
-            background: white;
-            color: #4a5568;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover {
-            border-color: #667eea;
-            color: #667eea;
-        }
-
-        .filter-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* Domains Grid */
-        .domains-section {
-            margin-top: 3rem;
-        }
-
-        .layer-section {
-            margin-bottom: 3rem;
-        }
-
-        .layer-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            border-radius: 10px;
-        }
-
-        .layer-header.layer-0 {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-        }
-
-        .layer-header.layer-1 {
-            background: linear-gradient(135deg, #ffd93d 0%, #f6c23e 100%);
-            color: #2d3748;
-        }
-
-        .layer-header.layer-2 {
-            background: linear-gradient(135deg, #6bcf7f 0%, #51cf66 100%);
-            color: white;
-        }
-
-        .layer-header h2 {
-            font-size: 1.75rem;
-            margin: 0;
-        }
-
-        .layer-description {
-            margin: 0;
-            opacity: 0.95;
-        }
-
-        .domains-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .domain-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-            border-left: 4px solid #667eea;
-        }
-
-        .domain-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .domain-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        .domain-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .domain-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .badge-foundational {
-            background: #fee;
-            color: #c53030;
-        }
-
-        .badge-core {
-            background: #fef5e7;
-            color: #c05621;
-        }
-
-        .badge-enhancement {
-            background: #e6fffa;
-            color: #2c7a7b;
-        }
-
-        .domain-description {
-            color: #718096;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .domain-recommendation {
-            background: #f7fafc;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .recommended-tool {
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .scale-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.75rem;
-        }
-
-        .scale-tag {
-            padding: 0.25rem 0.75rem;
-            background: #edf2f7;
-            color: #4a5568;
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-
-        /* No results */
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #718096;
-        }
-
-        .no-results h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .domains-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
+        .landscape-intro { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; text-align: center; }
+        .landscape-intro p { font-size: 1.1rem; color: #4a5568; max-width: 800px; margin: 1rem auto; }
+        .comparisons-quick-links { background: #f7fafc; padding: 2rem; margin: 2rem 0; border-radius: 8px; }
+        .comparisons-quick-links h2 { text-align: center; margin-bottom: 1.5rem; color: #2d3748; }
+        .quick-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        .quick-link-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: #2d3748; }
+        .quick-link-card:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2); }
+        .quick-link-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .quick-link-card h3 { font-size: 1.25rem; color: #667eea; margin: 0.5rem 0; }
+        .category-section { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+        .category-section h2 { font-size: 2rem; color: #2d3748; margin-bottom: 1.5rem; border-bottom: 3px solid #667eea; padding-bottom: 0.5rem; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .tool-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .tool-card h3 { font-size: 1.4rem; color: #667eea; margin-bottom: 0.75rem; }
+        .tool-card .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .badge { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .badge-cncf { background: #e0f2fe; color: #0369a1; }
+        .badge-stable { background: #dcfce7; color: #15803d; }
+        .badge-popular { background: #fef3c7; color: #a16207; }
+        .tool-card p { color: #4a5568; font-size: 0.95rem; line-height: 1.6; }
+        .tool-card .comparison-link { display: inline-block; margin-top: 1rem; color: #667eea; font-weight: 600; text-decoration: none; }
+        .tool-card .comparison-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .quick-links-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
+    <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">🧭 KubeCompass</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+            <div class="nav-logo"><a href="index.html"> KubeCompass</a></div>
+            <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#comparisons">Vergelijkingen</a></li>
+                <li><a href="index.html#features">Features</a></li>
                 <li><a href="landscape.html">Landscape</a></li>
-                <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
                 <li><a href="contribute.html">Contribute</a></li>
-                <li><a href="README.md">Docs</a></li>
+                <li><a href="https://github.com/jjuulliiaaa/KubeCompass" target="_blank">GitHub</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Header -->
-    <div class="header">
-        <h1>🗺️ Kubernetes Landscape</h1>
-        <p>Explore all operational domains and find the right tools for your platform</p>
+    <section class="hero-section">
+        <div class="container">
+            <h1> Kubernetes Landscape</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95; max-width: 800px; margin: 0 auto;">Een overzicht van alle belangrijke Kubernetes tools en hun categorieën.</p>
+        </div>
+    </section>
+
+    <div class="landscape-intro">
+        <p>Het Kubernetes ecosystem is enorm. Deze landscape biedt structuur en linkt naar onze diepgaande tool comparisons waar beschikbaar.</p>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Filters -->
-        <div class="filters">
-            <h2>Filter by Your Context</h2>
-            
-            <div class="filter-group">
-                <label>Company Size / Scale</label>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all" data-type="scale">All</button>
-                    <button class="filter-btn" data-filter="startup" data-type="scale">Startup (1-10 people)</button>
-                    <button class="filter-btn" data-filter="sme" data-type="scale">SME (10-100 people)</button>
-                    <button class="filter-btn" data-filter="enterprise" data-type="scale">Enterprise (100+ people)</button>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <label>Decision Layer</label>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all" data-type="layer">All Layers</button>
-                    <button class="filter-btn" data-filter="layer-0" data-type="layer">Layer 0: Foundational (Day 1)</button>
-                    <button class="filter-btn" data-filter="layer-1" data-type="layer">Layer 1: Core Operations (Month 1)</button>
-                    <button class="filter-btn" data-filter="layer-2" data-type="layer">Layer 2: Enhancements (As Needed)</button>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <label>Domain Category</label>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all" data-type="category">All Categories</button>
-                    <button class="filter-btn" data-filter="infrastructure" data-type="category">Infrastructure</button>
-                    <button class="filter-btn" data-filter="networking" data-type="category">Networking</button>
-                    <button class="filter-btn" data-filter="security" data-type="category">Security</button>
-                    <button class="filter-btn" data-filter="deployment" data-type="category">Deployment</button>
-                    <button class="filter-btn" data-filter="observability" data-type="category">Observability</button>
-                    <button class="filter-btn" data-filter="storage" data-type="category">Storage</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Domains Grid -->
-        <div class="domains-section" id="domainsSection">
-            <!-- Layer 0: Foundational -->
-            <div class="layer-section" data-layer="layer-0">
-                <div class="layer-header layer-0">
-                    <div>
-                        <h2>🏗️ Layer 0: Foundational (Day 1 Decisions)</h2>
-                        <p class="layer-description">Critical decisions that are hard to change later. Must be decided before going to production.</p>
-                    </div>
-                </div>
-                <div class="domains-grid">
-                    <div class="domain-card" data-category="infrastructure" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-infrastructure.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🏗️ Infrastructure & Provisioning</div>
-                            </div>
-                            <span class="domain-badge badge-foundational">Foundational</span>
-                        </div>
-                        <div class="domain-description">
-                            Cluster creation, node management, infrastructure as code. Managed vs. self-hosted decisions.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Recommended: Managed Kubernetes (GKE/EKS/AKS) + Terraform</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="networking" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-networking.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🌐 Container Networking (CNI)</div>
-                            </div>
-                            <span class="domain-badge badge-foundational">Foundational</span>
-                        </div>
-                        <div class="domain-description">
-                            Network plugin choice, pod-to-pod communication, network policies, service mesh decisions.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Cilium for advanced features, Flannel for simplicity</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="security" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-security.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🔒 Identity & Access Management</div>
-                            </div>
-                            <span class="domain-badge badge-foundational">Foundational</span>
-                        </div>
-                        <div class="domain-description">
-                            RBAC, authentication, authorization, service accounts, and cluster-level security policies.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Kubernetes RBAC + OIDC for authentication</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="security" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-secrets.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🔐 Secrets Management</div>
-                            </div>
-                            <span class="domain-badge badge-foundational">Foundational</span>
-                        </div>
-                        <div class="domain-description">
-                            How to store and manage sensitive data like passwords, API keys, certificates, and tokens.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Sealed Secrets (simple) or External Secrets Operator + Vault (enterprise)</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="deployment" data-scales="sme,enterprise" onclick="window.location.href='domain-gitops.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🔄 GitOps & Deployment</div>
-                            </div>
-                            <span class="domain-badge badge-foundational">Foundational</span>
-                        </div>
-                        <div class="domain-description">
-                            Declarative deployments with Git as source of truth. Argo CD vs. Flux decisions.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Argo CD (with UI) or Flux (GitOps-pure)</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Layer 1: Core Operations -->
-            <div class="layer-section" data-layer="layer-1">
-                <div class="layer-header layer-1">
-                    <div>
-                        <h2>⚙️ Layer 1: Core Operations (Month 1 Priorities)</h2>
-                        <p class="layer-description">Essential for production stability. Should be implemented before scaling significantly.</p>
-                    </div>
-                </div>
-                <div class="domains-grid">
-                    <div class="domain-card" data-category="observability" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-observability.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">👁️ Observability (Metrics, Logs, Traces)</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            Monitoring, logging, distributed tracing. Essential for understanding system behavior.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Prometheus + Grafana (+ Loki + Tempo for full stack)</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="networking" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-ingress.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🌍 Ingress & Load Balancing</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            External traffic routing, SSL/TLS termination, load balancing for services.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ NGINX Ingress or Traefik for most cases</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="storage" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-storage.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">💾 Storage & Persistence</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            Persistent volumes, storage classes, CSI drivers, and stateful workload management.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Cloud CSI drivers for managed K8s, Rook-Ceph for self-hosted</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="storage" data-scales="sme,enterprise" onclick="window.location.href='domain-backup.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">💿 Backup & Disaster Recovery</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            Cluster backup, restore procedures, disaster recovery planning, and data protection.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Velero for cluster backups</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="deployment" data-scales="startup,sme,enterprise" onclick="window.location.href='domain-cicd.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🚀 CI/CD Pipelines</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            Continuous integration and deployment automation, build pipelines, automated testing.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ GitHub Actions or GitLab CI for most teams</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Startup</span>
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="security" data-scales="sme,enterprise" onclick="window.location.href='domain-registry.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">📦 Container Registry</div>
-                            </div>
-                            <span class="domain-badge badge-core">Core Operations</span>
-                        </div>
-                        <div class="domain-description">
-                            Image storage, vulnerability scanning, registry replication, and access control.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Harbor for self-hosted, Cloud registries (ECR/ACR/GCR) for simplicity</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Layer 2: Enhancements -->
-            <div class="layer-section" data-layer="layer-2">
-                <div class="layer-header layer-2">
-                    <div>
-                        <h2>✨ Layer 2: Enhancements (Add As Needed)</h2>
-                        <p class="layer-description">Advanced capabilities that provide value but aren't essential for initial production deployment.</p>
-                    </div>
-                </div>
-                <div class="domains-grid">
-                    <div class="domain-card" data-category="security" data-scales="sme,enterprise" onclick="window.location.href='domain-policy.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">📋 Policy & Compliance</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Policy enforcement, compliance automation, admission control, and governance.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Kyverno for ease of use, OPA for complex policies</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="security" data-scales="enterprise" onclick="window.location.href='domain-runtime-security.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🛡️ Runtime Security</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Runtime threat detection, anomaly detection, security monitoring, and incident response.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Falco for runtime security monitoring</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="networking" data-scales="enterprise" onclick="window.location.href='domain-service-mesh.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🕸️ Service Mesh</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Advanced traffic management, mutual TLS, circuit breaking, canary deployments.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Istio or Linkerd (use only when needed)</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="observability" data-scales="sme,enterprise" onclick="window.location.href='domain-cost.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">💰 Cost Management</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Resource cost tracking, chargeback/showback, optimization recommendations.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ OpenCost for visibility, Kubecost for enterprise features</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="deployment" data-scales="sme,enterprise" onclick="window.location.href='domain-developer-platform.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">👨‍💻 Developer Experience Platform</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Self-service portals, service catalogs, templates, and developer productivity tools.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Backstage for internal developer portals</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">SME</span>
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="domain-card" data-category="observability" data-scales="enterprise" onclick="window.location.href='domain-chaos.html'">
-                        <div class="domain-header">
-                            <div>
-                                <div class="domain-title">🌪️ Chaos Engineering</div>
-                            </div>
-                            <span class="domain-badge badge-enhancement">Enhancement</span>
-                        </div>
-                        <div class="domain-description">
-                            Resilience testing, failure injection, chaos experiments to validate system robustness.
-                        </div>
-                        <div class="domain-recommendation">
-                            <div class="recommended-tool">✓ Chaos Mesh or Litmus for chaos engineering</div>
-                            <div class="scale-tags">
-                                <span class="scale-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="no-results" id="noResults" style="display: none;">
-            <h3>No domains match your filters</h3>
-            <p>Try adjusting your filter selections to see more results.</p>
+    <div class="comparisons-quick-links">
+        <h2> Beschikbare Tool Comparisons</h2>
+        <div class="quick-links-grid">
+            <a href="compare/gitops.html" class="quick-link-card">
+                <div class="icon"></div>
+                <h3>GitOps</h3>
+                <p>ArgoCD vs Flux</p>
+            </a>
+            <a href="compare/secrets.html" class="quick-link-card">
+                <div class="icon"></div>
+                <h3>Secrets</h3>
+                <p>ESO vs Sealed vs SOPS</p>
+            </a>
+            <a href="compare/ingress.html" class="quick-link-card">
+                <div class="icon"></div>
+                <h3>Ingress</h3>
+                <p>NGINX vs Traefik vs Istio</p>
+            </a>
+            <a href="compare/networking.html" class="quick-link-card">
+                <div class="icon"></div>
+                <h3>Networking</h3>
+                <p>Cilium vs Calico vs Flannel</p>
+            </a>
+            <a href="compare/monitoring.html" class="quick-link-card">
+                <div class="icon"></div>
+                <h3>Monitoring</h3>
+                <p>Prometheus vs Datadog vs New Relic</p>
+            </a>
         </div>
     </div>
 
-    <script>
-        // Filter logic
-        const filters = {
-            scale: 'all',
-            layer: 'all',
-            category: 'all'
-        };
+    <section class="category-section">
+        <h2> Continuous Deployment & GitOps</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>ArgoCD</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">17k+ </span>
+                </div>
+                <p>Declarative GitOps CD tool met UI en multi-cluster support. Best voor teams die een GUI willen en multi-tenancy nodig hebben.</p>
+                <a href="compare/gitops.html" class="comparison-link"> Zie GitOps Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Flux</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">6.4k+ </span>
+                </div>
+                <p>GitOps Toolkit voor Kubernetes. Modulair, extensible, GitLab-friendly. Best voor GitLab CI users en Helm chart deployments.</p>
+                <a href="compare/gitops.html" class="comparison-link"> Zie GitOps Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Jenkins</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Mature</span>
+                </div>
+                <p>Traditional CI/CD automation server. Push-based deployment met Kubernetes plugin. Best voor legacy CI/CD migrations.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Tekton</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                </div>
+                <p>Cloud-native CI/CD building blocks. Pipeline CRDs, reusable tasks. Best voor custom CI/CD pipelines in Kubernetes.</p>
+            </div>
+        </div>
+    </section>
 
-        function initializeFilters() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterType = this.dataset.type;
-                    const filterValue = this.dataset.filter;
-                    
-                    // Update active state
-                    const siblings = this.parentElement.querySelectorAll('.filter-btn');
-                    siblings.forEach(sib => sib.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Update filter state
-                    filters[filterType] = filterValue;
-                    
-                    // Apply filters
-                    applyFilters();
-                });
-            });
-        }
+    <section class="category-section">
+        <h2> Secrets Management</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>External Secrets Operator</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                    <span class="badge badge-popular">4.2k+ </span>
+                </div>
+                <p>Sync secrets van externe vaults (AWS, Azure, GCP, Vault) naar Kubernetes. Multi-cloud support, rotation, GitOps-native.</p>
+                <a href="compare/secrets.html" class="comparison-link"> Zie Secrets Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Sealed Secrets</h3>
+                <div class="badges">
+                    <span class="badge badge-popular">7.6k+ </span>
+                </div>
+                <p>Encrypt secrets in Git with public key. Controller decrypts in cluster. Best voor small teams zonder cloud vault.</p>
+                <a href="compare/secrets.html" class="comparison-link"> Zie Secrets Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>SOPS</h3>
+                <div class="badges">
+                    <span class="badge badge-popular">16k+ </span>
+                </div>
+                <p>Mozilla's file encryption tool. KMS/PGP support. Best voor Flux users met compliance needs.</p>
+                <a href="compare/secrets.html" class="comparison-link"> Zie Secrets Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>HashiCorp Vault</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Enterprise Ready</span>
+                </div>
+                <p>Centralized secrets management. Dynamic secrets, leasing, audit logs. Best voor multi-environment enterprise setups.</p>
+            </div>
+        </div>
+    </section>
 
-        function applyFilters() {
-            const domainCards = document.querySelectorAll('.domain-card');
-            const layerSections = document.querySelectorAll('.layer-section');
-            let visibleCount = 0;
+    <section class="category-section">
+        <h2> Ingress & Traffic Management</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>NGINX Ingress Controller</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">Kubernetes Project</span>
+                    <span class="badge badge-popular">17k+ </span>
+                </div>
+                <p>Battle-tested ingress controller. Annotation-based config, SSL/TLS, rate limiting. Best voor production stability.</p>
+                <a href="compare/ingress.html" class="comparison-link"> Zie Ingress Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Traefik</h3>
+                <div class="badges">
+                    <span class="badge badge-popular">50k+ </span>
+                </div>
+                <p>Cloud Native Edge Router. Auto service discovery, Let's Encrypt, web UI. Best voor ease of use.</p>
+                <a href="compare/ingress.html" class="comparison-link"> Zie Ingress Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Istio Gateway</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">36k+ </span>
+                </div>
+                <p>Service mesh ingress gateway. L7 policies, mTLS, traffic splitting. Best voor advanced traffic control.</p>
+                <a href="compare/ingress.html" class="comparison-link"> Zie Ingress Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Contour</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                </div>
+                <p>Envoy-based ingress controller. HTTPProxy CRDs. Best voor multi-tenant environments.</p>
+            </div>
+        </div>
+    </section>
 
-            // Hide all layer sections first
-            layerSections.forEach(section => {
-                section.style.display = 'none';
-            });
+    <section class="category-section">
+        <h2> Networking & CNI</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Cilium</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">17k+ </span>
+                </div>
+                <p>eBPF-based CNI. L3-L7 network policies, Hubble observability, service mesh. Best voor observability en security.</p>
+                <a href="compare/networking.html" class="comparison-link"> Zie Networking Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Calico</h3>
+                <div class="badges">
+                    <span class="badge badge-popular">5.5k+ </span>
+                </div>
+                <p>Pure L3 networking. BGP routing, network policies, mature. Best voor on-prem en BGP integration.</p>
+                <a href="compare/networking.html" class="comparison-link"> Zie Networking Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Flannel</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Sandbox</span>
+                    <span class="badge badge-popular">8.5k+ </span>
+                </div>
+                <p>Simple overlay network. Easy setup, minimal features. Best voor beginners en dev/test clusters.</p>
+                <a href="compare/networking.html" class="comparison-link"> Zie Networking Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Weave Net</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Mature</span>
+                </div>
+                <p>Simple, resilient mesh network. Auto mesh, encryption. Best voor small clusters without complex policies.</p>
+            </div>
+        </div>
+    </section>
 
-            // Show/hide domain cards based on filters
-            domainCards.forEach(card => {
-                const cardScales = card.dataset.scales ? card.dataset.scales.split(',') : [];
-                const cardCategory = card.dataset.category;
-                const cardLayer = card.closest('.layer-section').dataset.layer;
+    <section class="category-section">
+        <h2> Monitoring & Observability</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Prometheus + Grafana</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">54k+ </span>
+                </div>
+                <p>Open-source monitoring stack. Time-series DB, PromQL, alerting, dashboards. Best voor cost control en data sovereignty.</p>
+                <a href="compare/monitoring.html" class="comparison-link"> Zie Monitoring Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Datadog</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Enterprise SaaS</span>
+                </div>
+                <p>Commercial monitoring platform. APM, logs, RUM, infrastructure monitoring. Best voor enterprise teams met budget.</p>
+                <a href="compare/monitoring.html" class="comparison-link"> Zie Monitoring Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>New Relic</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Enterprise SaaS</span>
+                </div>
+                <p>Commercial observability platform. Free tier 100GB/month. Best voor small teams exploring commercial SaaS.</p>
+                <a href="compare/monitoring.html" class="comparison-link"> Zie Monitoring Comparison</a>
+            </div>
+            <div class="tool-card">
+                <h3>Elastic Stack (ELK)</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Mature</span>
+                </div>
+                <p>Elasticsearch, Logstash, Kibana. Log aggregation en search. Best voor centralized logging.</p>
+            </div>
+        </div>
+    </section>
 
-                let show = true;
+    <section class="category-section">
+        <h2> Service Mesh</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Istio</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">36k+ </span>
+                </div>
+                <p>Full-featured service mesh. Traffic management, mTLS, observability, policy enforcement. Best voor enterprise microservices.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Linkerd</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">10.6k+ </span>
+                </div>
+                <p>Lightweight service mesh. Simple, fast, secure. Best voor simplicity en low resource overhead.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Cilium Service Mesh</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                </div>
+                <p>eBPF-based service mesh. No sidecars, high performance. Best als je al Cilium CNI gebruikt.</p>
+            </div>
+        </div>
+    </section>
 
-                // Check scale filter
-                if (filters.scale !== 'all' && !cardScales.includes(filters.scale)) {
-                    show = false;
-                }
+    <section class="category-section">
+        <h2> Storage</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Rook-Ceph</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">12.3k+ </span>
+                </div>
+                <p>Cloud-native storage orchestrator voor Ceph. Block, object, file storage. Best voor self-hosted storage.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Longhorn</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                    <span class="badge badge-popular">6k+ </span>
+                </div>
+                <p>Distributed block storage. Snapshots, backups, UI. Best voor lightweight persistent storage.</p>
+            </div>
+            <div class="tool-card">
+                <h3>OpenEBS</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Sandbox</span>
+                    <span class="badge badge-popular">8.9k+ </span>
+                </div>
+                <p>Container-native storage. Multiple engines (Jiva, cStor, LocalPV). Best voor flexibility in storage engines.</p>
+            </div>
+        </div>
+    </section>
 
-                // Check layer filter
-                if (filters.layer !== 'all' && cardLayer !== filters.layer) {
-                    show = false;
-                }
+    <section class="category-section">
+        <h2> Security & Policy</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Kyverno</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                    <span class="badge badge-popular">5.6k+ </span>
+                </div>
+                <p>Kubernetes-native policy management. Validate, mutate, generate resources. Best voor Kubernetes-style policies.</p>
+            </div>
+            <div class="tool-card">
+                <h3>OPA Gatekeeper</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Incubating</span>
+                    <span class="badge badge-popular">3.6k+ </span>
+                </div>
+                <p>Policy enforcement via OPA. Rego language, flexible constraints. Best voor complex multi-system policies.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Falco</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">7.3k+ </span>
+                </div>
+                <p>Runtime security detection. eBPF-based threat detection. Best voor runtime anomaly detection.</p>
+            </div>
+        </div>
+    </section>
 
-                // Check category filter
-                if (filters.category !== 'all' && cardCategory !== filters.category) {
-                    show = false;
-                }
+    <section class="category-section">
+        <h2> Cost Management</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>OpenCost</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Sandbox</span>
+                    <span class="badge badge-popular">5k+ </span>
+                </div>
+                <p>Open-source Kubernetes cost monitoring. Real-time cost allocation, multi-cloud. Best voor cost visibility zonder vendor lock-in.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Kubecost</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Commercial</span>
+                </div>
+                <p>Kubernetes cost optimization. Built on OpenCost, additional features. Best voor enterprise cost management.</p>
+            </div>
+        </div>
+    </section>
 
-                // Show/hide card
-                card.style.display = show ? 'block' : 'none';
-                
-                if (show) {
-                    visibleCount++;
-                    // Show parent layer section
-                    card.closest('.layer-section').style.display = 'block';
-                }
-            });
+    <section class="category-section">
+        <h2> Backup & Disaster Recovery</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Velero</h3>
+                <div class="badges">
+                    <span class="badge badge-cncf">CNCF Graduated</span>
+                    <span class="badge badge-popular">8.6k+ </span>
+                </div>
+                <p>Backup and migrate Kubernetes resources. S3-compatible storage, snapshots. Best voor open-source backup.</p>
+            </div>
+            <div class="tool-card">
+                <h3>Kasten K10</h3>
+                <div class="badges">
+                    <span class="badge badge-stable">Commercial</span>
+                </div>
+                <p>Data management platform. Backup, disaster recovery, mobility. Best voor enterprise backup met support.</p>
+            </div>
+        </div>
+    </section>
 
-            // Show "no results" message if needed
-            const noResults = document.getElementById('noResults');
-            const domainsSection = document.getElementById('domainsSection');
-            
-            if (visibleCount === 0) {
-                noResults.style.display = 'block';
-                domainsSection.style.display = 'none';
-            } else {
-                noResults.style.display = 'none';
-                domainsSection.style.display = 'block';
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initializeFilters);
-    </script>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column"><h4>KubeCompass</h4><p>Open-source beslissingshulp voor Kubernetes tooling</p></div>
+                <div class="footer-column"><h4>Vergelijkingen</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">Networking</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
+                <div class="footer-column"><h4>Resources</h4><ul><li><a href="landscape.html">Landscape</a></li><li><a href="docs/DECISION_RULES.md">Decision Rules</a></li><li><a href="docs/MATRIX.md">Matrix</a></li></ul></div>
+                <div class="footer-column"><h4>Community</h4><ul><li><a href="https://github.com/jjuulliiaaa/KubeCompass">GitHub</a></li><li><a href="contribute.html">Contributing</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p></div>
+        </div>
+    </footer>
+    <script src="scripts/comparison.js"></script>
 </body>
 </html>

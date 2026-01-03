@@ -1,593 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contribute - KubeCompass</title>
+    <link rel="stylesheet" href="styles/global.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background-color: #f7fafc;
-        }
-
-        /* Navigation */
-        nav {
-            background: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #4a5568;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        /* Principles */
-        .principles {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .principles h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2d3748;
-        }
-
-        .principle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .principle-card {
-            padding: 2rem;
-            background: #f7fafc;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-        }
-
-        .principle-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .principle-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            color: #2d3748;
-        }
-
-        .principle-card p {
-            color: #4a5568;
-            line-height: 1.7;
-        }
-
-        /* Ways to Contribute */
-        .ways-to-contribute {
-            margin-bottom: 3rem;
-        }
-
-        .ways-to-contribute h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #2d3748;
-            text-align: center;
-        }
-
-        .contribution-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .contribution-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .contribution-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .contribution-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .contribution-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .contribution-card p {
-            color: #4a5568;
-            margin-bottom: 1.5rem;
-        }
-
-        .contribution-card ul {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .contribution-card li {
-            color: #4a5568;
-            margin-bottom: 0.75rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .contribution-card li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: 700;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 2rem;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #edf2f7;
-            color: #4a5568;
-        }
-
-        .btn-secondary:hover {
-            background: #e2e8f0;
-        }
-
-        /* Guidelines */
-        .guidelines {
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            padding: 3rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
-        }
-
-        .guidelines h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2d3748;
-        }
-
-        .guideline-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .guideline-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .guideline-section ul {
-            padding-left: 1.5rem;
-        }
-
-        .guideline-section li {
-            color: #4a5568;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Code of Conduct */
-        .code-of-conduct {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-        }
-
-        .code-of-conduct h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2d3748;
-        }
-
-        .code-of-conduct p {
-            color: #4a5568;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .code-of-conduct ul {
-            padding-left: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .code-of-conduct li {
-            color: #4a5568;
-            margin-bottom: 0.75rem;
-        }
-
-        /* CTA */
-        .cta-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-white {
-            background: white;
-            color: #667eea;
-        }
-
-        .btn-white:hover {
-            background: #f7fafc;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .principle-grid,
-            .contribution-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
+        .content-section { max-width: 900px; margin: 3rem auto; padding: 0 2rem; }
+        .content-section h2 { font-size: 2rem; margin: 2rem 0 1rem; color: #2d3748; }
+        .content-section h3 { font-size: 1.5rem; margin: 1.5rem 0 1rem; color: #4a5568; }
+        .content-section ul, .content-section ol { margin: 1rem 0; padding-left: 2rem; line-height: 1.8; }
+        .content-section li { margin: 0.5rem 0; color: #4a5568; }
+        .content-section code { background: #f7fafc; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.9em; color: #667eea; }
+        .content-section pre { background: #2d3748; color: #f7fafc; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; }
+        .cta-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 12px; text-align: center; margin: 3rem 0; }
+        .cta-box h2 { color: white; margin-bottom: 1rem; }
+        .btn { padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin: 0.5rem; }
+        .btn-primary { background: white; color: #667eea; }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
+    <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">🧭 KubeCompass</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+            <div class="nav-logo"><a href="index.html"> KubeCompass</a></div>
+            <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#comparisons">Vergelijkingen</a></li>
+                <li><a href="index.html#features">Features</a></li>
                 <li><a href="landscape.html">Landscape</a></li>
-                <li><a href="tool-selector-wizard.html">Tool Selector</a></li>
                 <li><a href="contribute.html">Contribute</a></li>
-                <li><a href="README.md">Docs</a></li>
+                <li><a href="https://github.com/jjuulliiaaa/KubeCompass" target="_blank">GitHub</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <div class="hero">
-        <h1>🤝 Contribute to KubeCompass</h1>
-        <p>Help build the most honest, practical guide to Kubernetes tooling — built by practitioners, for practitioners.</p>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Our Principles -->
-        <div class="principles">
-            <h2>Our Principles</h2>
-            <p>KubeCompass is built on a foundation of honesty, practical experience, and community collaboration. When you contribute, you're joining a community that values:</p>
-            
-            <div class="principle-grid">
-                <div class="principle-card">
-                    <div class="principle-icon">🎯</div>
-                    <h3>Honest Reviews</h3>
-                    <p>We share real experiences — both good and bad. If a tool has problems, we say so. If it works great, we explain why.</p>
-                </div>
-
-                <div class="principle-card">
-                    <div class="principle-icon">🔬</div>
-                    <h3>Hands-On Testing</h3>
-                    <p>Every recommendation comes from actual use, not marketing materials. We test tools in real environments and document what we learn.</p>
-                </div>
-
-                <div class="principle-card">
-                    <div class="principle-icon">🚫</div>
-                    <h3>No Vendor Bias</h3>
-                    <p>We accept no payment or incentives from tool vendors. Our recommendations are based solely on merit and suitability for different use cases.</p>
-                </div>
-
-                <div class="principle-card">
-                    <div class="principle-icon">🌍</div>
-                    <h3>Community-Driven</h3>
-                    <p>Real practitioners sharing real experiences. We value diverse perspectives from teams of all sizes and industries.</p>
-                </div>
-
-                <div class="principle-card">
-                    <div class="principle-icon">📊</div>
-                    <h3>Transparent Criteria</h3>
-                    <p>We clearly explain our evaluation criteria: maturity, complexity, lock-in risk, and more. You can disagree with our choices, but you'll understand them.</p>
-                </div>
-
-                <div class="principle-card">
-                    <div class="principle-icon">🎓</div>
-                    <h3>Educational</h3>
-                    <p>We don't just say "use this tool" — we explain the trade-offs, alternatives, and when NOT to use something.</p>
-                </div>
-            </div>
+    <section class="hero-section">
+        <div class="container">
+            <h1> Contribute to KubeCompass</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95; max-width: 700px; margin: 0 auto;">Help de Kubernetes community met production-tested tool comparisons.</p>
         </div>
+    </section>
 
-        <!-- Ways to Contribute -->
-        <div class="ways-to-contribute">
-            <h2>How You Can Contribute</h2>
-            
-            <div class="contribution-cards">
-                <div class="contribution-card">
-                    <div class="contribution-icon">📝</div>
-                    <h3>Share Your Tool Experience</h3>
-                    <p>Have you used a Kubernetes tool in production? Share your real-world experience!</p>
-                    <ul>
-                        <li>What worked well?</li>
-                        <li>What didn't work?</li>
-                        <li>What surprised you?</li>
-                        <li>What would you do differently?</li>
-                    </ul>
-                    <a href="https://github.com/vanhoutenbos/KubeCompass/issues/new?template=tool-review.md" class="btn">Submit a Review</a>
-                </div>
+    <div class="content-section">
+        <h2> Hoe kan je bijdragen?</h2>
+        <p>KubeCompass is 100% community-driven. Er zijn verschillende manieren om bij te dragen:</p>
 
-                <div class="contribution-card">
-                    <div class="contribution-icon">🏗️</div>
-                    <h3>Document Your Architecture</h3>
-                    <p>Share your Kubernetes platform architecture as a case study.</p>
-                    <ul>
-                        <li>What tools did you choose?</li>
-                        <li>Why did you choose them?</li>
-                        <li>What problems did you solve?</li>
-                        <li>What would you change?</li>
-                    </ul>
-                    <a href="https://github.com/vanhoutenbos/KubeCompass/issues/new?template=case-study.md" class="btn">Share Your Story</a>
-                </div>
+        <h3>1.  Verbeter Bestaande Comparisons</h3>
+        <ul>
+            <li><strong>Production Experience:</strong> Heb je een tool in productie gebruikt? Deel je ervaringen!</li>
+            <li><strong>Feature Updates:</strong> Zijn er nieuwe features toegevoegd? Update de feature matrix</li>
+            <li><strong>Decision Wizard:</strong> Kunnen de wizard vragen beter? Suggereer verbeteringen</li>
+            <li><strong>Trade-offs:</strong> Heb je andere trade-offs ontdekt? Voeg ze toe</li>
+        </ul>
 
-                <div class="contribution-card">
-                    <div class="contribution-icon">🔍</div>
-                    <h3>Improve Documentation</h3>
-                    <p>Help make our guides clearer and more useful.</p>
-                    <ul>
-                        <li>Fix typos and errors</li>
-                        <li>Add missing information</li>
-                        <li>Improve explanations</li>
-                        <li>Update outdated content</li>
-                    </ul>
-                    <a href="https://github.com/vanhoutenbos/KubeCompass/pulls" class="btn">Submit a PR</a>
-                </div>
+        <h3>2.  Voeg Nieuwe Comparisons Toe</h3>
+        <p>We willen uitbreiden naar meer domains:</p>
+        <ul>
+            <li><strong>Service Mesh:</strong> Istio vs Linkerd vs Cilium Service Mesh</li>
+            <li><strong>Storage:</strong> Rook-Ceph vs Longhorn vs Cloud Storage</li>
+            <li><strong>Policy:</strong> Kyverno vs OPA Gatekeeper</li>
+            <li><strong>Cost Management:</strong> OpenCost vs Kubecost</li>
+            <li><strong>Backup:</strong> Velero vs Kasten K10</li>
+        </ul>
 
-                <div class="contribution-card">
-                    <div class="contribution-icon">🧪</div>
-                    <h3>Test & Validate Tools</h3>
-                    <p>Help us test tools and validate our recommendations.</p>
-                    <ul>
-                        <li>Test installation procedures</li>
-                        <li>Validate upgrade paths</li>
-                        <li>Document gotchas</li>
-                        <li>Share benchmarks</li>
-                    </ul>
-                    <a href="TESTING_METHODOLOGY.md" class="btn btn-secondary">See Testing Guide</a>
-                </div>
+        <h3>3.  Test & Valideer</h3>
+        <ul>
+            <li>Test de decision wizards met jouw team</li>
+            <li>Valideer de "Choose X unless Y" rules</li>
+            <li>Check of de GitHub stars en CNCF status kloppen</li>
+            <li>Test de responsive design op mobile</li>
+        </ul>
 
-                <div class="contribution-card">
-                    <div class="contribution-icon">💬</div>
-                    <h3>Join Discussions</h3>
-                    <p>Participate in community discussions and help others.</p>
-                    <ul>
-                        <li>Answer questions</li>
-                        <li>Share insights</li>
-                        <li>Suggest improvements</li>
-                        <li>Debate trade-offs</li>
-                    </ul>
-                    <a href="https://github.com/vanhoutenbos/KubeCompass/discussions" class="btn">Join the Discussion</a>
-                </div>
+        <h3>4.  Vertalingen</h3>
+        <ul>
+            <li>Help met Engelse versies van de comparison pages</li>
+            <li>Voeg andere talen toe (Frans, Duits, Spaans)</li>
+        </ul>
 
-                <div class="contribution-card">
-                    <div class="contribution-icon">🌟</div>
-                    <h3>Spread the Word</h3>
-                    <p>Help others discover KubeCompass.</p>
-                    <ul>
-                        <li>Star us on GitHub</li>
-                        <li>Share with your team</li>
-                        <li>Write blog posts</li>
-                        <li>Present at meetups</li>
-                    </ul>
-                    <a href="https://github.com/vanhoutenbos/KubeCompass" class="btn">Star on GitHub ⭐</a>
-                </div>
-            </div>
-        </div>
+        <h2> Contribution Guidelines</h2>
 
-        <!-- Contribution Guidelines -->
-        <div class="guidelines">
-            <h2>📋 Contribution Guidelines</h2>
-            
-            <div class="guideline-section">
-                <h3>Quality Standards</h3>
-                <ul>
-                    <li><strong>Be specific:</strong> Share concrete details, not vague opinions</li>
-                    <li><strong>Be honest:</strong> Include both pros and cons</li>
-                    <li><strong>Be contextual:</strong> Explain your use case, scale, and requirements</li>
-                    <li><strong>Be current:</strong> Note which versions you tested</li>
-                    <li><strong>Be respectful:</strong> Critique tools, not people or companies</li>
-                </ul>
-            </div>
+        <h3>Comparison Page Template</h3>
+        <p>Elke comparison page moet bevatten:</p>
+        <ol>
+            <li><strong>Hero Section:</strong> Breadcrumb, title, reading time, last updated, helpful %</li>
+            <li><strong>Quick Decision:</strong> 3 opties met bullets en CTA buttons</li>
+            <li><strong>Tool Cards:</strong> 3 cards met badges, trust signals (GitHub stars, usage, testing), features, trade-offs, use cases</li>
+            <li><strong>Feature Matrix:</strong> Color-coded table ( green,  orange,  red) met 10 features</li>
+            <li><strong>Decision Wizard:</strong> 4 vragen met radio buttons, scoring algorithm, confidence calculation</li>
+            <li><strong>Implementation:</strong> Links naar docs, manifests, runbooks</li>
+            <li><strong>Feedback:</strong> Thumbs up/down buttons</li>
+            <li><strong>Related Comparisons:</strong> 4 cards linking naar andere pages</li>
+        </ol>
 
-            <div class="guideline-section">
-                <h3>What Makes a Good Tool Review</h3>
-                <ul>
-                    <li><strong>Real production usage:</strong> Hands-on experience, not just "hello world"</li>
-                    <li><strong>Specific scenarios:</strong> "We used X for Y with Z constraints"</li>
-                    <li><strong>Honest trade-offs:</strong> What worked well AND what didn't</li>
-                    <li><strong>Alternatives considered:</strong> Why you chose this tool over others</li>
-                    <li><strong>Context:</strong> Team size, scale, industry, compliance requirements</li>
-                    <li><strong>Lessons learned:</strong> What would you do differently?</li>
-                </ul>
-            </div>
+        <h3>Decision Wizard Scoring</h3>
+        <p>Elke wizard moet:</p>
+        <ul>
+            <li>4 vragen hebben (niet meer, niet minder)</li>
+            <li>Weighted scoring gebruiken (5 punten = strong match, 3 = good, 1 = neutral)</li>
+            <li>Confidence score berekenen (high: diff > 4, medium: diff > 2, low: diff  2)</li>
+            <li>Reasons array bijhouden per tool (waarom deze score?)</li>
+        </ul>
 
-            <div class="guideline-section">
-                <h3>What We Don't Accept</h3>
-                <ul>
-                    <li>❌ Vendor marketing copy or press releases</li>
-                    <li>❌ Content paid for or incentivized by vendors</li>
-                    <li>❌ Reviews without real usage experience</li>
-                    <li>❌ Personal attacks or unprofessional criticism</li>
-                    <li>❌ Unsubstantiated claims or rumors</li>
-                    <li>❌ Duplicate or low-effort content</li>
-                </ul>
-            </div>
+        <h3>Code Style</h3>
+        <pre><code>// All comparison pages use:
+- styles/global.css (navigation, footer, base styles)
+- styles/comparison.css (comparison-specific styles)
+- scripts/comparison.js (interactive features)
+- scripts/wizard.js (decision wizard logic)
 
-            <div class="guideline-section">
-                <h3>Review Process</h3>
-                <p>All contributions go through a review process to maintain quality:</p>
-                <ul>
-                    <li><strong>Step 1:</strong> Submit via GitHub issue or pull request</li>
-                    <li><strong>Step 2:</strong> Community and maintainers review</li>
-                    <li><strong>Step 3:</strong> Address feedback and questions</li>
-                    <li><strong>Step 4:</strong> Merge and publish (typically within 1 week)</li>
-                </ul>
-            </div>
-        </div>
+// Each page has embedded scoring function:
+function calculateRecommendation(answers) {
+    // Tool-specific scoring logic here
+    return { winner, confidence, scores, reasons };
+}</code></pre>
 
-        <!-- Code of Conduct -->
-        <div class="code-of-conduct">
-            <h2>🤝 Code of Conduct</h2>
-            <p>KubeCompass is a community for professionals. We expect all contributors to:</p>
-            <ul>
-                <li><strong>Be respectful:</strong> Treat others with respect, even when disagreeing</li>
-                <li><strong>Be constructive:</strong> Focus on improving the project, not tearing it down</li>
-                <li><strong>Be inclusive:</strong> Welcome contributors of all backgrounds and experience levels</li>
-                <li><strong>Be professional:</strong> Keep discussions focused on technical merit</li>
-                <li><strong>Be transparent:</strong> Disclose any conflicts of interest or vendor relationships</li>
-            </ul>
-            <p>Violations of our code of conduct may result in removal from the community. We want this to be a safe, productive space for everyone.</p>
-            <p>If you experience or witness unacceptable behavior, please report it to <a href="https://github.com/vanhoutenbos" style="color: #667eea;">@vanhoutenbos</a>.</p>
-        </div>
+        <h2> Getting Started</h2>
+        <ol>
+            <li>Fork de repository: <code>https://github.com/jjuulliiaaa/KubeCompass</code></li>
+            <li>Clone je fork: <code>git clone https://github.com/YOUR-USERNAME/KubeCompass</code></li>
+            <li>Create een branch: <code>git checkout -b feature/my-comparison</code></li>
+            <li>Maak je changes (volg de template)</li>
+            <li>Test lokaal (open HTML files in browser)</li>
+            <li>Commit: <code>git commit -m "Add X vs Y comparison"</code></li>
+            <li>Push: <code>git push origin feature/my-comparison</code></li>
+            <li>Open een Pull Request op GitHub</li>
+        </ol>
 
-        <!-- CTA -->
-        <div class="cta-section">
-            <h2>Ready to Contribute?</h2>
-            <p>Join hundreds of practitioners building the most honest Kubernetes guide on the internet.</p>
-            <div class="cta-buttons">
-                <a href="https://github.com/vanhoutenbos/KubeCompass/issues/new" class="btn btn-white">Submit a Contribution</a>
-                <a href="https://github.com/vanhoutenbos/KubeCompass" class="btn btn-outline">View on GitHub</a>
-                <a href="CONTRIBUTING.md" class="btn btn-outline">Read Full Guide</a>
-            </div>
+        <h2> Principes</h2>
+        <ul>
+            <li><strong>Production-Tested:</strong> Only recommend wat je zelf hebt getest of van trusted sources komt</li>
+            <li><strong>Vendor Neutral:</strong> Geen vendor bias, eerlijke trade-offs</li>
+            <li><strong>Actionable:</strong> Clear "Choose X unless Y" rules, geen vage adviezen</li>
+            <li><strong>Accessible:</strong> Nederlands én Engels, simpele taal, geen jargon</li>
+            <li><strong>Open Source:</strong> Geen paywalls, tracking, of vendor lock-in</li>
+        </ul>
+
+        <div class="cta-box">
+            <h2>Klaar om te contributen?</h2>
+            <p>Join de community en help Kubernetes teams betere beslissingen maken!</p>
+            <a href="https://github.com/jjuulliiaaa/KubeCompass" class="btn btn-primary" target="_blank"> Start op GitHub</a>
+            <a href="https://github.com/jjuulliiaaa/KubeCompass/discussions" class="btn btn-primary" target="_blank"> Join Discussions</a>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column"><h4>KubeCompass</h4><p>Open-source beslissingshulp voor Kubernetes tooling</p></div>
+                <div class="footer-column"><h4>Vergelijkingen</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">Networking</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
+                <div class="footer-column"><h4>Resources</h4><ul><li><a href="landscape.html">Landscape</a></li><li><a href="docs/DECISION_RULES.md">Decision Rules</a></li><li><a href="docs/MATRIX.md">Matrix</a></li></ul></div>
+                <div class="footer-column"><h4>Community</h4><ul><li><a href="https://github.com/jjuulliiaaa/KubeCompass">GitHub</a></li><li><a href="contribute.html">Contributing</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p></div>
+        </div>
+    </footer>
+    <script src="scripts/comparison.js"></script>
 </body>
 </html>

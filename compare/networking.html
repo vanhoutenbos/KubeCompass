@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNI Comparison: Cilium vs Calico vs Flannel | KubeCompass</title>
+    <meta name="description" content="Compare Cilium, Calico, and Flannel CNI plugins. eBPF vs iptables, L7 vs L3/L4 policies, Hubble observability, BGP routing.">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/comparison.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">🧭 KubeCompass</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#comparison">Vergelijking</a></li>
+                <li><a href="#wizard">Beslissings-Wizard</a></li>
+                <li><a href="#implementation">Implementatie</a></li>
+                <li><a href="../index.html">Alle Gidsen</a></li>
+                <li><a href="https://github.com/jjuulliiaaa/KubeCompass" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">Home</a> / 
+                <a href="../index.html#comparisons">Vergelijkingen</a> / 
+                <span>CNI Networking</span>
+            </nav>
+            <h1>CNI Networking Vergelijking</h1>
+            <p class="hero-subtitle">Cilium vs Calico vs Flannel: eBPF, Network Policies & Observability</p>
+            <div class="quick-stats">
+                <div class="stat">📖 5 min read</div>
+                <div class="stat">🗓️ Jan 2026</div>
+                <div class="stat">✅ Cilium tested</div>
+                <div class="stat">👍 94% helpful</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Decision -->
+    <section class="quick-decision">
+        <div class="container">
+            <h2>⚡ Snelle Beslissing</h2>
+            <div class="decision-grid">
+                <div class="decision-option recommended">
+                    <h3>🏆 Cilium</h3>
+                    <ul>
+                        <li>Modern eBPF-based dataplane</li>
+                        <li>L7 policies & Hubble observability</li>
+                        <li>Best voor production (80% use cases)</li>
+                    </ul>
+                    <a href="#tool-cilium" class="cta-button">Kies Cilium</a>
+                </div>
+                <div class="decision-option">
+                    <h3>🔄 Calico</h3>
+                    <ul>
+                        <li>Mature met BGP routing</li>
+                        <li>iptables of eBPF optie</li>
+                        <li>Best als je BGP nodig hebt</li>
+                    </ul>
+                    <a href="#tool-calico" class="cta-button secondary">Kies Calico</a>
+                </div>
+                <div class="decision-option">
+                    <h3>🔄 Flannel</h3>
+                    <ul>
+                        <li>Eenvoudigste setup (VXLAN overlay)</li>
+                        <li>Geen network policies</li>
+                        <li>Best voor dev/simple prod</li>
+                    </ul>
+                    <a href="#tool-flannel" class="cta-button secondary">Kies Flannel</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Cards -->
+    <section id="comparison" class="comparison-section">
+        <div class="container">
+            <h2>🔍 Gedetailleerde Vergelijking</h2>
+            
+            <!-- Cilium -->
+            <div class="tool-card winner" id="tool-cilium">
+                <div class="tool-header">
+                    <h3>Cilium</h3>
+                    <span class="badge recommended">🏆 Recommended</span>
+                    <span class="badge cncf">CNCF Graduated</span>
+                    <span class="score">4.5/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">⭐</span><span class="value">17,000+</span><span class="label">GitHub Stars</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">80%</span><span class="label">CNI Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Production</span><span class="label">Battle-tested</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">20+</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>eBPF Dataplane:</strong> Modern kernel-based networking (geen iptables overhead)</li>
+                        <li><strong>L7 Network Policies:</strong> HTTP/gRPC/Kafka protocol-level filtering</li>
+                        <li><strong>Hubble Observability:</strong> Real-time flow visibility & service map</li>
+                        <li><strong>Service Mesh Ready:</strong> Optional sidecar-less service mesh</li>
+                        <li><strong>Encryption:</strong> Transparent IPSec/WireGuard encryption</li>
+                        <li><strong>Multi-Cluster:</strong> ClusterMesh voor cross-cluster connectivity</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li>Kernel 4.9+ vereist (eBPF support)</li>
+                        <li>Steepere learning curve (nieuwe concepten)</li>
+                        <li>Hogere resource usage dan Flannel</li>
+                        <li>Overkill voor simple dev environments</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Modern Kubernetes platforms met focus op observability & security
+                </div>
+                <div class="actions">
+                    <a href="https://cilium.io/" target="_blank" class="btn primary">Docs →</a>
+                    <a href="../reviews/cilium.md" class="btn secondary">Review →</a>
+                </div>
+            </div>
+
+            <!-- Calico -->
+            <div class="tool-card" id="tool-calico">
+                <div class="tool-header">
+                    <h3>Calico</h3>
+                    <span class="badge alternative">🔄 Mature Alternative</span>
+                    <span class="badge">Tigera Project</span>
+                    <span class="score">4.2/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">⭐</span><span class="value">5,500+</span><span class="label">GitHub Stars</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">15%</span><span class="label">CNI Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Enterprise</span><span class="label">Battle-tested</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">10+</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>BGP Routing:</strong> Native integration met enterprise BGP infrastructure</li>
+                        <li><strong>Flexible Dataplane:</strong> Keuze tussen iptables (stable) of eBPF (performance)</li>
+                        <li><strong>Strong Network Policies:</strong> Advanced L3/L4 policies met GlobalNetworkPolicy</li>
+                        <li><strong>Enterprise Support:</strong> Tigera commercial offering met SLA</li>
+                        <li><strong>Multi-Cloud:</strong> Proven deployment op AWS/Azure/GCP/on-prem</li>
+                        <li><strong>Mature Ecosystem:</strong> 8+ jaar production experience</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li>Geen built-in L7 policies (alleen L3/L4)</li>
+                        <li>Observability minder goed dan Hubble (Calico Enterprise needed)</li>
+                        <li>eBPF mode nog nieuwer dan Cilium's</li>
+                        <li>Complexer setup dan Flannel</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Enterprises met existing BGP infrastructure of teams met Calico expertise
+                </div>
+                <div class="actions">
+                    <a href="https://docs.tigera.io/calico/" target="_blank" class="btn primary">Docs →</a>
+                    <a href="../docs/planning/CNI_COMPARISON.md" class="btn secondary">Comparison →</a>
+                </div>
+            </div>
+
+            <!-- Flannel -->
+            <div class="tool-card" id="tool-flannel">
+                <div class="tool-header">
+                    <h3>Flannel</h3>
+                    <span class="badge alternative">🔄 Simple Setup</span>
+                    <span class="badge cncf">CNCF Sandbox</span>
+                    <span class="score">3.5/5</span>
+                </div>
+                <div class="trust-signals">
+                    <div class="signal"><span class="icon">⭐</span><span class="value">8,500+</span><span class="label">GitHub Stars</span></div>
+                    <div class="signal"><span class="icon">📊</span><span class="value">5%</span><span class="label">CNI Market Share</span></div>
+                    <div class="signal"><span class="icon">✅</span><span class="value">Dev/Test</span><span class="label">Simple Prod OK</span></div>
+                    <div class="signal"><span class="icon">👥</span><span class="value">1-5</span><span class="label">Team Size</span></div>
+                </div>
+                <div class="features">
+                    <h4>✅ Voordelen</h4>
+                    <ul>
+                        <li><strong>Simplicity:</strong> Eenvoudigste CNI setup (VXLAN overlay networking)</li>
+                        <li><strong>Low Resource Usage:</strong> Minimale CPU/memory footprint</li>
+                        <li><strong>Getting Started:</strong> Perfect voor Kubernetes learning/dev environments</li>
+                        <li><strong>Stable:</strong> Mature codebase, weinig breaking changes</li>
+                        <li><strong>No Dependencies:</strong> Werkt overal zonder extra infra</li>
+                        <li><strong>Fast Setup:</strong> 5 minuten van zero naar running</li>
+                    </ul>
+                    <h4>⚠️ Trade-offs</h4>
+                    <ul>
+                        <li><strong>GEEN Network Policies:</strong> Moet Calico/Cilium toevoegen voor policies</li>
+                        <li>Geen observability features (blind flying)</li>
+                        <li>Geen encryption support</li>
+                        <li>Alleen basic L3 connectivity</li>
+                        <li>Niet recommended voor production met security requirements</li>
+                    </ul>
+                </div>
+                <div class="use-cases">
+                    <strong>Best voor:</strong> Dev environments, getting started, simple production zonder compliance
+                </div>
+                <div class="actions">
+                    <a href="https://github.com/flannel-io/flannel" target="_blank" class="btn primary">GitHub →</a>
+                    <a href="../docs/DECISION_RULES.md#cni-plugin" class="btn secondary">Decision Rules →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Matrix -->
+    <section class="matrix-section">
+        <div class="container">
+            <h2>📊 Feature Matrix</h2>
+            <div class="matrix-table-wrapper">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="winner-column">Cilium 🏆</th>
+                            <th>Calico</th>
+                            <th>Flannel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dataplane Tech</strong></td>
+                            <td class="winner-column green">✅ eBPF (modern)</td>
+                            <td class="orange">⚠️ iptables/eBPF</td>
+                            <td class="orange">⚠️ iptables only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance</strong></td>
+                            <td class="winner-column green">✅ Highest (eBPF)</td>
+                            <td class="green">✅ Good</td>
+                            <td class="orange">⚠️ Basic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Network Policies</strong></td>
+                            <td class="winner-column green">✅ L3/L4/L7</td>
+                            <td class="green">✅ L3/L4 (strong)</td>
+                            <td class="red">❌ None</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Observability</strong></td>
+                            <td class="winner-column green">✅ Hubble (best)</td>
+                            <td class="orange">⚠️ Basic (paid ++)</td>
+                            <td class="red">❌ None</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Service Mesh</strong></td>
+                            <td class="winner-column green">✅ Optional built-in</td>
+                            <td class="red">❌ No</td>
+                            <td class="red">❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning Curve</strong></td>
+                            <td class="winner-column orange">⚠️ Steep</td>
+                            <td class="orange">⚠️ Moderate</td>
+                            <td class="green">✅ Easy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kernel Requirements</strong></td>
+                            <td class="winner-column orange">⚠️ 4.9+ (eBPF)</td>
+                            <td class="green">✅ Any (iptables)</td>
+                            <td class="green">✅ Any</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BGP Support</strong></td>
+                            <td class="winner-column orange">⚠️ Limited</td>
+                            <td class="green">✅ Native BGP</td>
+                            <td class="red">❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resource Usage</strong></td>
+                            <td class="winner-column orange">⚠️ Medium</td>
+                            <td class="orange">⚠️ Medium</td>
+                            <td class="green">✅ Low</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CNCF Status</strong></td>
+                            <td class="winner-column green">✅ Graduated</td>
+                            <td class="orange">⚠️ Not in CNCF</td>
+                            <td class="orange">⚠️ Sandbox</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><strong>Summary</strong></td>
+                            <td class="winner-column"><strong>Modern choice</strong></td>
+                            <td>Enterprise BGP</td>
+                            <td>Getting started</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decision Wizard -->
+    <section id="wizard" class="wizard-section">
+        <div class="container">
+            <h2>🧙 Beslissings-Wizard</h2>
+            <p>Beantwoord 4 vragen en krijg een gepersonaliseerde aanbeveling</p>
+            
+            <form id="wizardForm" class="wizard-form">
+                <!-- Question 1 -->
+                <div class="wizard-question active" data-question="1">
+                    <h3>1. Wat zijn je network policy requirements?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="policies" value="l7" required>
+                            <div class="option-content">
+                                <strong>L7 Advanced Policies</strong>
+                                <p>HTTP/gRPC/Kafka protocol-level filtering</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="policies" value="l3l4">
+                            <div class="option-content">
+                                <strong>L3/L4 Basic Policies</strong>
+                                <p>IP/Port-based filtering is voldoende</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="policies" value="none">
+                            <div class="option-content">
+                                <strong>Geen Policies Nodig</strong>
+                                <p>Dev/test environment zonder security requirements</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="wizard-question" data-question="2">
+                    <h3>2. Hoeveel observability heb je nodig?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="observability" value="deep" required>
+                            <div class="option-content">
+                                <strong>Deep Visibility</strong>
+                                <p>Real-time flow maps, L7 traces, service dependencies</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="observability" value="basic">
+                            <div class="option-content">
+                                <strong>Basic Metrics</strong>
+                                <p>Connection stats & basic monitoring voldoende</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="observability" value="minimal">
+                            <div class="option-content">
+                                <strong>Minimal</strong>
+                                <p>Kubernetes events & logs zijn genoeg</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="wizard-question" data-question="3">
+                    <h3>3. Wat is je team's networking expertise?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="expertise" value="expert" required>
+                            <div class="option-content">
+                                <strong>Networking Experts</strong>
+                                <p>Team heeft BGP/iptables/eBPF ervaring</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="expertise" value="intermediate">
+                            <div class="option-content">
+                                <strong>Intermediate</strong>
+                                <p>Kubernetes basics, bereid om te leren</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="expertise" value="beginner">
+                            <div class="option-content">
+                                <strong>Beginners</strong>
+                                <p>Willen simpelste setup om te starten</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="wizard-question" data-question="4">
+                    <h3>4. Heb je BGP routing nodig?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="bgp" value="yes" required>
+                            <div class="option-content">
+                                <strong>Ja, Required</strong>
+                                <p>Existing BGP infrastructure moet integreren</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="bgp" value="no">
+                            <div class="option-content">
+                                <strong>Nee</strong>
+                                <p>Overlay networking (VXLAN) is prima</p>
+                            </div>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="bgp" value="notsure">
+                            <div class="option-content">
+                                <strong>Weet Ik Niet</strong>
+                                <p>Geen idee wat BGP is</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard-nav">
+                    <button type="button" class="btn secondary" id="prevBtn" style="display: none;">← Vorige</button>
+                    <button type="button" class="btn primary" id="nextBtn">Volgende →</button>
+                    <button type="submit" class="btn primary" id="submitBtn" style="display: none;">Toon Aanbeveling 🎯</button>
+                </div>
+            </form>
+
+            <!-- Results (hidden initially) -->
+            <div id="wizardResults" class="wizard-results" style="display: none;">
+                <h3>🎯 Jouw Aanbeveling</h3>
+                <div class="result-card">
+                    <div class="result-header">
+                        <h4 id="resultTool"></h4>
+                        <span id="resultConfidence" class="confidence-badge"></span>
+                    </div>
+                    <div id="resultReasons" class="result-reasons"></div>
+                    <div id="resultScores" class="result-scores"></div>
+                    <div class="result-actions">
+                        <a id="resultDocsLink" href="#" class="btn primary">Start met deze tool →</a>
+                        <button type="button" class="btn secondary" id="restartBtn">🔄 Opnieuw</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Preview -->
+    <section id="implementation" class="implementation-section">
+        <div class="container">
+            <h2>🚀 Implementatie Preview</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>📖 Cilium Review</h3>
+                    <p>Complete Cilium review met eBPF deep-dive, Hubble setup, L7 policy examples</p>
+                    <a href="../reviews/cilium.md" class="btn">Lees Review →</a>
+                </div>
+                <div class="implementation-card">
+                    <h3>📊 CNI Comparison</h3>
+                    <p>Complete comparison matrix met detailed analysis & use case mapping</p>
+                    <a href="../docs/planning/CNI_COMPARISON.md" class="btn">Bekijk Comparison →</a>
+                </div>
+                <div class="implementation-card">
+                    <h3>⚙️ Manifests</h3>
+                    <p>Production-ready Kubernetes manifests voor alle 3 CNI plugins</p>
+                    <a href="../manifests/networking/" class="btn">Bekijk Manifests →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Feedback -->
+    <section class="feedback-section">
+        <div class="container">
+            <h3>Was deze vergelijking nuttig?</h3>
+            <div class="feedback-buttons">
+                <button class="feedback-btn" data-feedback="positive">👍 Ja, zeer nuttig</button>
+                <button class="feedback-btn" data-feedback="negative">👎 Nee, niet nuttig</button>
+            </div>
+            <div class="feedback-stats">
+                <span>✅ 94% vond dit nuttig (118 stemmen)</span>
+            </div>
+            <div class="feedback-form" id="feedbackForm" style="display: none;">
+                <textarea placeholder="Vertel ons meer (optioneel)..."></textarea>
+                <button class="btn primary">Verstuur Feedback</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Comparisons -->
+    <section class="related-section">
+        <div class="container">
+            <h2>🔗 Gerelateerde Vergelijkingen</h2>
+            <div class="related-grid">
+                <a href="gitops.html" class="related-card">
+                    <h3>GitOps Tools</h3>
+                    <p>ArgoCD vs Flux</p>
+                </a>
+                <a href="secrets.html" class="related-card">
+                    <h3>Secrets Management</h3>
+                    <p>ESO vs Sealed Secrets vs SOPS</p>
+                </a>
+                <a href="ingress.html" class="related-card">
+                    <h3>Ingress Controllers</h3>
+                    <p>NGINX vs Traefik vs Istio</p>
+                </a>
+                <a href="monitoring.html" class="related-card">
+                    <h3>Monitoring</h3>
+                    <p>Prometheus vs Datadog vs New Relic</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>KubeCompass</h4>
+                    <p>Open-source beslissingshulp voor Kubernetes tooling</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Vergelijkingen</h4>
+                    <ul>
+                        <li><a href="gitops.html">GitOps Tools</a></li>
+                        <li><a href="secrets.html">Secrets Management</a></li>
+                        <li><a href="ingress.html">Ingress Controllers</a></li>
+                        <li><a href="networking.html">CNI Networking</a></li>
+                        <li><a href="monitoring.html">Monitoring</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../docs/DECISION_RULES.md">Decision Rules</a></li>
+                        <li><a href="../docs/MATRIX.md">Full Matrix</a></li>
+                        <li><a href="../METHODOLOGY.md">Methodology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/jjuulliiaaa/KubeCompass">GitHub</a></li>
+                        <li><a href="../CONTRIBUTING.md">Contributing</a></li>
+                        <li><a href="https://github.com/jjuulliiaaa/KubeCompass/discussions">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/comparison.js"></script>
+    <script src="../scripts/wizard.js"></script>
+    <script>
+        // CNI-specific wizard logic
+        function calculateRecommendation(answers) {
+            let ciliumScore = 0, calicoScore = 0, flannelScore = 0;
+            let reasons = {
+                cilium: [],
+                calico: [],
+                flannel: []
+            };
+
+            // Q1: Network Policies
+            if (answers.policies === 'l7') {
+                ciliumScore += 5;
+                reasons.cilium.push('L7 policies zijn Cilium\'s killer feature (HTTP/gRPC filtering)');
+            } else if (answers.policies === 'l3l4') {
+                ciliumScore += 3;
+                calicoScore += 4;
+                reasons.cilium.push('L3/L4 policies werken uitstekend met eBPF');
+                reasons.calico.push('Calico heeft very strong L3/L4 network policy engine');
+            } else { // none
+                flannelScore += 4;
+                ciliumScore += 1;
+                reasons.flannel.push('Geen policies nodig = simpelste setup mogelijk');
+                reasons.cilium.push('Ook zonder policies biedt Cilium observability voordeel');
+            }
+
+            // Q2: Observability
+            if (answers.observability === 'deep') {
+                ciliumScore += 5;
+                reasons.cilium.push('Hubble biedt best-in-class observability (service maps, L7 traces)');
+            } else if (answers.observability === 'basic') {
+                ciliumScore += 2;
+                calicoScore += 2;
+                reasons.cilium.push('Hubble geeft je meer dan je nodig hebt (bonus)');
+                reasons.calico.push('Calico Enterprise heeft goede observability features');
+            } else { // minimal
+                flannelScore += 3;
+                reasons.flannel.push('Kubernetes events voldoende = geen extra CNI complexity nodig');
+            }
+
+            // Q3: Expertise
+            if (answers.expertise === 'expert') {
+                ciliumScore += 3;
+                calicoScore += 3;
+                reasons.cilium.push('Team kan eBPF concepts snel oppikken');
+                reasons.calico.push('Team kan BGP/advanced features benutten');
+            } else if (answers.expertise === 'intermediate') {
+                ciliumScore += 4;
+                calicoScore += 2;
+                reasons.cilium.push('Cilium docs zijn excellent voor intermediate users');
+                reasons.calico.push('Calico heeft goede getting started guides');
+            } else { // beginner
+                flannelScore += 5;
+                ciliumScore += 1;
+                reasons.flannel.push('Flannel is perfect voor Kubernetes beginners (5 min setup)');
+                reasons.cilium.push('Cilium kan later (na learning basics) alsnog toegevoegd');
+            }
+
+            // Q4: BGP
+            if (answers.bgp === 'yes') {
+                calicoScore += 5;
+                reasons.calico.push('Calico heeft native BGP support (best choice voor BGP)');
+            } else if (answers.bgp === 'no') {
+                ciliumScore += 3;
+                flannelScore += 2;
+                reasons.cilium.push('Overlay networking (VXLAN/Geneve) werkt perfect met Cilium');
+                reasons.flannel.push('VXLAN overlay is Flannel\'s sweet spot');
+            } else { // notsure
+                ciliumScore += 2;
+                flannelScore += 1;
+                reasons.cilium.push('Cilium werkt out-of-the-box zonder BGP (simpeler)');
+            }
+
+            // Determine winner
+            const scores = {
+                'Cilium': ciliumScore,
+                'Calico': calicoScore,
+                'Flannel': flannelScore
+            };
+            
+            const sortedTools = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const winner = sortedTools[0][0];
+            const runnerUp = sortedTools[1][0];
+            const diff = sortedTools[0][1] - sortedTools[1][1];
+            
+            const confidence = diff > 4 ? 'high' : diff > 2 ? 'medium' : 'low';
+
+            return {
+                winner: winner,
+                confidence: confidence,
+                scores: scores,
+                reasons: reasons,
+                answers: answers
+            };
+        }
+
+        // Pass calculator to wizard.js
+        window.recommendationCalculator = calculateRecommendation;
+    </script>
+</body>
+</html>
