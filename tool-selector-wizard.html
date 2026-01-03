@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Kubernetes tool selector. Answer questions about scale and priorities to get personalized recommendations.">
     <title>Tool Selector - KubeCompass</title>
     <link rel="stylesheet" href="styles/global.css">
     <style>
@@ -66,160 +67,162 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-logo"><a href="index.html">🧭 KubeCompass <span style="background: rgba(102, 126, 234, 0.2); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">POC</span></a></div>
-            <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="tool-selector-wizard.html">🧙 Wizard</a></li>
-                <li><a href="AI_CHAT_GUIDE.md">🤖 AI Advisor</a></li>
+                <li><a href="docs/AI_CHAT_GUIDE.html">🤖 AI Advisor</a></li>
                 <li><a href="index.html#comparisons">Comparisons</a></li>
                 <li><a href="landscape.html">Landscape</a></li>
-                <li><a href="docs/INDEX.md">📖 Docs</a></li>
+                <li><a href="docs/index.html">📖 Docs</a></li>
                 <li><a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank">GitHub</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero-section">
+    <section class="hero-section" role="banner">
         <div class="container">
-            <h1> Tool Selector</h1>
-            <p style="font-size: 1.25rem; opacity: 0.95; max-width: 800px; margin: 0 auto;">Vind de beste Kubernetes tool voor jouw use case.</p>
+            <h1>🧙 Tool Selector</h1>
+            <p style="font-size: 1.25rem; opacity: 0.95; max-width: 800px; margin: 0 auto;">Find the best Kubernetes tool for your use case.</p>
         </div>
     </section>
 
-    <div class="wizard-container">
+    <main id="main-content" class="wizard-container">
         <div class="wizard-intro">
-            <h2>Kies Een Domain</h2>
-            <p>Selecteer het domein waar je hulp bij nodig hebt. Elke comparison bevat een interactieve wizard.</p>
+            <h2>Choose a Domain</h2>
+            <p>Select the domain where you need help. Each comparison includes an interactive wizard.</p>
         </div>
 
         <div class="domain-cards">
             <a href="compare/gitops.html" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🔄</div>
                 <h3>GitOps & Deployment</h3>
-                <p>Continuous deployment met Git als single source of truth</p>
-                <div class="tools">ArgoCD  Flux</div>
+                <p>Continuous deployment with Git as single source of truth</p>
+                <div class="tools">ArgoCD • Flux</div>
             </a>
 
             <a href="compare/secrets.html" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🔐</div>
                 <h3>Secrets Management</h3>
-                <p>Veilig secrets beheren en roteren in Kubernetes</p>
-                <div class="tools">External Secrets  Sealed Secrets  SOPS</div>
+                <p>Securely manage and rotate secrets in Kubernetes</p>
+                <div class="tools">External Secrets • Sealed Secrets • SOPS</div>
             </a>
 
             <a href="compare/ingress.html" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🌐</div>
                 <h3>Ingress Controllers</h3>
-                <p>External traffic routing naar jouw services</p>
-                <div class="tools">NGINX  Traefik  Istio Gateway</div>
+                <p>External traffic routing to your services</p>
+                <div class="tools">NGINX • Traefik • Istio Gateway</div>
             </a>
 
             <a href="compare/networking.html" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🔗</div>
                 <h3>Container Networking (CNI)</h3>
-                <p>Pod-to-pod networking en network policies</p>
-                <div class="tools">Cilium  Calico  Flannel</div>
+                <p>Pod-to-pod networking and network policies</p>
+                <div class="tools">Cilium • Calico • Flannel</div>
             </a>
 
             <a href="compare/monitoring.html" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">📊</div>
                 <h3>Monitoring & Observability</h3>
-                <p>Metrics, dashboards, alerting en tracing</p>
-                <div class="tools">Prometheus+Grafana  Datadog  New Relic</div>
+                <p>Metrics, dashboards, alerting and tracing</p>
+                <div class="tools">Prometheus+Grafana • Datadog • New Relic</div>
             </a>
 
             <a href="landscape.html#service-mesh" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🕸️</div>
                 <h3>Service Mesh</h3>
-                <p>Service-to-service traffic management en security</p>
-                <div class="tools">Istio  Linkerd  Cilium</div>
+                <p>Service-to-service traffic management and security</p>
+                <div class="tools">Istio • Linkerd • Cilium</div>
             </a>
 
             <a href="landscape.html#storage" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">💾</div>
                 <h3>Storage</h3>
-                <p>Persistent volumes en distributed storage</p>
-                <div class="tools">Rook-Ceph  Longhorn  OpenEBS</div>
+                <p>Persistent volumes and distributed storage</p>
+                <div class="tools">Rook-Ceph • Longhorn • OpenEBS</div>
             </a>
 
             <a href="landscape.html#security" class="domain-card">
-                <div class="icon"></div>
+                <div class="icon">🛡️</div>
                 <h3>Security & Policy</h3>
-                <p>Runtime security en policy enforcement</p>
-                <div class="tools">Kyverno  OPA  Falco</div>
+                <p>Runtime security and policy enforcement</p>
+                <div class="tools">Kyverno • OPA • Falco</div>
             </a>
         </div>
 
         <div class="flow-section">
-            <h2> Decision Workflow</h2>
+            <h2>🎯 Decision Workflow</h2>
             <div class="flow-step">
-                <strong>Step 1: Kies Een Domain</strong>
-                <p>Klik hierboven op het domein waar je een tool voor zoekt.</p>
+                <strong>Step 1: Choose a Domain</strong>
+                <p>Click on the domain above where you need a tool.</p>
             </div>
             <div class="flow-step">
-                <strong>Step 2: Gebruik de Decision Wizard</strong>
-                <p>Elke comparison page heeft een interactieve wizard met 4 vragen:</p>
+                <strong>Step 2: Use the Decision Wizard</strong>
+                <p>Each comparison page has an interactive wizard with 4 questions:</p>
                 <ul>
-                    <li>Context-specifieke vragen over jouw use case</li>
-                    <li>Weighted scoring gebaseerd op jouw antwoorden</li>
+                    <li>Context-specific questions about your use case</li>
+                    <li>Weighted scoring based on your answers</li>
                     <li>Confidence score (high/medium/low)</li>
-                    <li>Clear winner + redenen waarom</li>
+                    <li>Clear winner + reasons why</li>
                 </ul>
             </div>
             <div class="flow-step">
-                <strong>Step 3: Bekijk de Feature Matrix</strong>
-                <p>Color-coded vergelijking van alle belangrijke features:</p>
+                <strong>Step 3: Review the Feature Matrix</strong>
+                <p>Color-coded comparison of all important features:</p>
                 <ul>
-                    <li> Green = Excellente support</li>
-                    <li> Orange = Basic support / workarounds</li>
-                    <li> Red = Niet ondersteund</li>
+                    <li>🟢 Green = Excellent support</li>
+                    <li>🟠 Orange = Basic support / workarounds</li>
+                    <li>🔴 Red = Not supported</li>
                 </ul>
             </div>
             <div class="flow-step">
-                <strong>Step 4: Lees Trade-offs & Use Cases</strong>
-                <p>Elke tool heeft een card met:</p>
+                <strong>Step 4: Read Trade-offs & Use Cases</strong>
+                <p>Each tool has a card with:</p>
                 <ul>
-                    <li> Key Features (wat het goed doet)</li>
-                    <li> Trade-offs (waarom je het NIET zou kiezen)</li>
-                    <li> Best For (ideale use cases)</li>
+                    <li>✅ Key Features (what it does well)</li>
+                    <li>⚠️ Trade-offs (why you might NOT choose it)</li>
+                    <li>🎯 Best For (ideal use cases)</li>
                     <li>Trust signals (CNCF status, GitHub stars, production usage)</li>
                 </ul>
             </div>
             <div class="flow-step">
-                <strong>Step 5: Bekijk Implementation Links</strong>
-                <p>Directe links naar:</p>
+                <strong>Step 5: Review Implementation Links</strong>
+                <p>Direct links to:</p>
                 <ul>
-                    <li> Documentation & planning docs</li>
-                    <li> Kubernetes manifests (YAML examples)</li>
-                    <li> Tests & validation scripts</li>
-                    <li> Runbooks & troubleshooting guides</li>
+                    <li>📖 Documentation & planning docs</li>
+                    <li>🔧 Kubernetes manifests (YAML examples)</li>
+                    <li>✅ Tests & validation scripts</li>
+                    <li>📋 Runbooks & troubleshooting guides</li>
                 </ul>
             </div>
         </div>
 
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
-            <h2 style="color: white; margin-bottom: 1rem;"> Principe: "Choose X unless Y"</h2>
-            <p style="font-size: 1.1rem; opacity: 0.95;">Alle comparisons volgen het principe "Choose X unless Y". Dit geeft je een clear default keuze met uitzonderingen.</p>
+            <h2 style="color: white; margin-bottom: 1rem;">💡 Principle: "Choose X unless Y"</h2>
+            <p style="font-size: 1.1rem; opacity: 0.95;">All comparisons follow the "Choose X unless Y" principle. This gives you a clear default choice with exceptions.</p>
             <div style="margin-top: 2rem;">
-                <strong>Bijvoorbeeld:</strong>
-                <p style="margin-top: 0.5rem;">"Choose PROMETHEUS + GRAFANA unless budget allows SaaS AND team < 5  Datadog/New Relic"</p>
+                <strong>For example:</strong>
+                <p style="margin-top: 0.5rem;">"Choose PROMETHEUS + GRAFANA unless budget allows SaaS AND team &lt; 5 → Datadog/New Relic"</p>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-column"><h4>KubeCompass</h4><p>Open-source beslissingshulp voor Kubernetes tooling</p></div>
-                <div class="footer-column"><h4>Vergelijkingen</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">Networking</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
-                <div class="footer-column"><h4>Resources</h4><ul><li><a href="landscape.html">Landscape</a></li><li><a href="docs/DECISION_RULES.md">Decision Rules</a></li><li><a href="docs/MATRIX.md">Matrix</a></li></ul></div>
+                <div class="footer-column"><h4>KubeCompass</h4><p>Open-source decision support for Kubernetes tooling</p></div>
+                <div class="footer-column"><h4>Comparisons</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">Networking</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
+                <div class="footer-column"><h4>Resources</h4><ul><li><a href="landscape.html">Landscape</a></li><li><a href="docs/DECISION_RULES.html">Decision Rules</a></li><li><a href="docs/MATRIX.html">Matrix</a></li></ul></div>
                 <div class="footer-column"><h4>Community</h4><ul><li><a href="https://github.com/vanhoutenbos/KubeCompass">GitHub</a></li><li><a href="contribute.html">Contributing</a></li></ul></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p></div>
+            <div class="footer-bottom"><p>&copy; 2026 KubeCompass. Open-source under MIT License.</p></div>
         </div>
     </footer>
     <script src="scripts/comparison.js"></script>
+    <script src="scripts/navigation.js"></script>
 </body>
 </html>

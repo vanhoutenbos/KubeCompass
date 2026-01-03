@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Gap Analysis - KubeCompass</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: #f7fafc;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #718096;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+        
+        .priority-section {
+            margin: 2rem 0;
+        }
+        
+        .priority-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .priority-icon {
+            font-size: 2rem;
+        }
+        
+        .priority-header h2 {
+            color: #2d3748;
+            flex: 1;
+        }
+        
+        .priority-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .priority-critical { background: #fee; color: #c53030; }
+        .priority-high { background: #fef5e7; color: #c27803; }
+        .priority-medium { background: #e6fffa; color: #0c7c59; }
+        .priority-low { background: #e3f2fd; color: #1565c0; }
+        
+        .issues-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .issue-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid;
+            transition: all 0.3s;
+        }
+        
+        .issue-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transform: translateX(4px);
+        }
+        
+        .issue-card.critical { border-left-color: #e53e3e; }
+        .issue-card.high { border-left-color: #ed8936; }
+        .issue-card.medium { border-left-color: #48bb78; }
+        .issue-card.low { border-left-color: #4299e1; }
+        
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .issue-title {
+            font-size: 1.2rem;
+            color: #2d3748;
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .issue-number {
+            background: #edf2f7;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+        
+        .issue-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .issue-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #718096;
+        }
+        
+        .issue-description {
+            color: #4a5568;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+        
+        .issue-labels {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .label {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .label-bug { background: #fee; color: #c53030; }
+        .label-feature { background: #e6fffa; color: #0c7c59; }
+        .label-css { background: #fef5e7; color: #c27803; }
+        .label-a11y { background: #e3f2fd; color: #1565c0; }
+        .label-seo { background: #f3e5f5; color: #6a1b9a; }
+        
+        .sprint-timeline {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .sprint-timeline h3 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .sprint {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .sprint:last-child {
+            border-bottom: none;
+        }
+        
+        .sprint-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            min-width: 60px;
+        }
+        
+        .sprint-details {
+            flex: 1;
+        }
+        
+        .sprint-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sprint-goal {
+            color: #718096;
+            margin-bottom: 1rem;
+        }
+        
+        .sprint-tasks {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sprint-tasks li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sprint-tasks li::before {
+            content: "▸";
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        .sprint-effort {
+            text-align: right;
+            min-width: 100px;
+        }
+        
+        .effort-hours {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .effort-label {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+        
+        .matrix {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        
+        .matrix h3 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1rem;
+            aspect-ratio: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .matrix-quadrant {
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .quadrant-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .quadrant-items {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+        
+        .quadrant-items li {
+            padding: 0.25rem 0;
+        }
+        
+        .q1 { background: #fee; border: 2px solid #e53e3e; }
+        .q1 .quadrant-title { color: #c53030; }
+        
+        .q2 { background: #fef5e7; border: 2px solid #ed8936; }
+        .q2 .quadrant-title { color: #c27803; }
+        
+        .q3 { background: #fef9e7; border: 2px solid #f0b429; }
+        .q3 .quadrant-title { color: #946700; }
+        
+        .q4 { background: #e6fffa; border: 2px solid #48bb78; }
+        .q4 .quadrant-title { color: #0c7c59; }
+        
+        .axis-label {
+            text-align: center;
+            color: #718096;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        
+        .recommendations {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #667eea;
+            margin: 2rem 0;
+        }
+        
+        .recommendations h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recommendations li {
+            padding: 0.75rem 0;
+            color: #2d3748;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+        
+        .recommendations li::before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .summary-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .matrix-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .sprint {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Web Development Gap Analysis</h1>
+            <p>KubeCompass - Website & Documentation Review</p>
+            <p style="font-size: 0.95rem; margin-top: 0.5rem; opacity: 0.9;">Analyse datum: 3 januari 2026</p>
+        </header>
+        
+        <div class="summary-stats">
+            <div class="stat-card">
+                <span class="stat-number">18</span>
+                <span class="stat-label">Issues Geïdentificeerd</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">~117</span>
+                <span class="stat-label">Uren Effort</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">5</span>
+                <span class="stat-label">Kritieke Blockers</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Sprints Gepland</span>
+            </div>
+        </div>
+        
+        <!-- Priority Matrix -->
+        <div class="matrix">
+            <h3>📊 Prioriteit Matrix (Impact vs Effort)</h3>
+            <div class="axis-label">High Impact ↑</div>
+            <div class="matrix-grid">
+                <div class="matrix-quadrant q1">
+                    <div class="quadrant-title">🔴 DO FIRST (Kritiek)</div>
+                    <ul class="quadrant-items">
+                        <li>#1 Broken .md links</li>
+                        <li>#3 Content pages</li>
+                        <li>#4 Mobile menu</li>
+                        <li>#5 Color contrast</li>
+                    </ul>
+                </div>
+                <div class="matrix-quadrant q2">
+                    <div class="quadrant-title">🟡 STRATEGIC (Plan)</div>
+                    <ul class="quadrant-items">
+                        <li>#16 Build system</li>
+                        <li>#8 CSS consolidatie</li>
+                        <li>#11 Design system</li>
+                        <li>#7 Search feature</li>
+                    </ul>
+                </div>
+                <div class="matrix-quadrant q3">
+                    <div class="quadrant-title">🟢 QUICK WINS</div>
+                    <ul class="quadrant-items">
+                        <li>#9 SEO meta tags</li>
+                        <li>#13 Sitemap/robots</li>
+                        <li>#14 Analytics</li>
+                        <li>#12 Focus indicators</li>
+                    </ul>
+                </div>
+                <div class="matrix-quadrant q4">
+                    <div class="quadrant-title">🔵 OPTIMIZE (Later)</div>
+                    <ul class="quadrant-items">
+                        <li>#15 Dark mode</li>
+                        <li>#10 Doc hub</li>
+                        <li>Performance tuning</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="axis-label">Low Effort ← → High Effort</div>
+        </div>
+        
+        <!-- Sprint Timeline -->
+        <div class="sprint-timeline">
+            <h3>🗓️ Sprint Planning</h3>
+            
+            <div class="sprint">
+                <div class="sprint-number">1</div>
+                <div class="sprint-details">
+                    <div class="sprint-title">Kritieke Fixes</div>
+                    <div class="sprint-goal">Week 1 - Maak website functioneel en toegankelijk</div>
+                    <ul class="sprint-tasks">
+                        <li>Fix broken .md links in navbar</li>
+                        <li>Implementeer mobile menu JavaScript</li>
+                        <li>Fix color contrast (WCAG compliance)</li>
+                        <li>Voeg breadcrumbs toe aan alle pagina's</li>
+                        <li>Kies consistente taal (Engels aanbevolen)</li>
+                    </ul>
+                </div>
+                <div class="sprint-effort">
+                    <span class="effort-hours">14h</span>
+                    <span class="effort-label">effort</span>
+                </div>
+            </div>
+            
+            <div class="sprint">
+                <div class="sprint-number">2</div>
+                <div class="sprint-details">
+                    <div class="sprint-title">Content Toegankelijkheid</div>
+                    <div class="sprint-goal">Week 2 - Maak gedocumenteerde features beschikbaar</div>
+                    <ul class="sprint-tasks">
+                        <li>Creëer HTML versies van key Markdown files</li>
+                        <li>Implementeer site-wide search (Algolia)</li>
+                        <li>Consolideer inline CSS naar global.css</li>
+                        <li>Voeg SEO meta tags toe aan alle pagina's</li>
+                    </ul>
+                </div>
+                <div class="sprint-effort">
+                    <span class="effort-hours">26h</span>
+                    <span class="effort-label">effort</span>
+                </div>
+            </div>
+            
+            <div class="sprint">
+                <div class="sprint-number">3</div>
+                <div class="sprint-details">
+                    <div class="sprint-title">UX Improvements</div>
+                    <div class="sprint-goal">Week 3-4 - Professional polish en consistentie</div>
+                    <ul class="sprint-tasks">
+                        <li>Creëer Documentation Hub landing page</li>
+                        <li>Implementeer Design System / Component Library</li>
+                        <li>Voeg focus indicators toe (keyboard nav)</li>
+                        <li>Creëer sitemap.xml en robots.txt</li>
+                    </ul>
+                </div>
+                <div class="sprint-effort">
+                    <span class="effort-hours">27h</span>
+                    <span class="effort-label">effort</span>
+                </div>
+            </div>
+            
+            <div class="sprint">
+                <div class="sprint-number">4+</div>
+                <div class="sprint-details">
+                    <div class="sprint-title">Build System & Architectuur</div>
+                    <div class="sprint-goal">Week 5+ - Long-term schaalbaarheid</div>
+                    <ul class="sprint-tasks">
+                        <li>Implementeer analytics (Plausible)</li>
+                        <li>Voeg dark mode support toe</li>
+                        <li>Migreer naar Static Site Generator (Docusaurus)</li>
+                    </ul>
+                </div>
+                <div class="sprint-effort">
+                    <span class="effort-hours">50h</span>
+                    <span class="effort-label">effort</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Critical Issues -->
+        <div class="priority-section">
+            <div class="priority-header">
+                <span class="priority-icon">🔴</span>
+                <h2>Kritieke Issues (Sprint 1)</h2>
+                <span class="priority-badge priority-critical">5 Issues</span>
+            </div>
+            
+            <div class="issues-grid">
+                <div class="issue-card critical">
+                    <div class="issue-header">
+                        <div class="issue-title">#1 Fix Broken Navigation Links</div>
+                        <div class="issue-number">#1</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 2 hours</span>
+                        <span>🎯 P0 - Critical</span>
+                        <span>👥 Developer</span>
+                    </div>
+                    <div class="issue-description">
+                        Navigation bevat directe <code>.md</code> links die niet werken in browsers, causing 404 errors. Moet HTML versies maken of proper routing implementeren.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-bug">bug</span>
+                        <span class="label label-feature">navigation</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card critical">
+                    <div class="issue-header">
+                        <div class="issue-title">#2 Implement Mobile Menu Toggle</div>
+                        <div class="issue-number">#2</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 3 hours</span>
+                        <span>🎯 P0 - Critical</span>
+                        <span>👥 Frontend Dev</span>
+                    </div>
+                    <div class="issue-description">
+                        Hamburger menu button bestaat maar heeft geen JavaScript implementatie. Mobile users (40-60% traffic) kunnen niet navigeren.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-bug">bug</span>
+                        <span class="label label-feature">responsive</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card critical">
+                    <div class="issue-header">
+                        <div class="issue-title">#3 Fix Color Contrast (WCAG)</div>
+                        <div class="issue-number">#3</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 2 hours</span>
+                        <span>🎯 P0 - Critical</span>
+                        <span>👥 Designer + Dev</span>
+                    </div>
+                    <div class="issue-description">
+                        Meerdere UI elementen falen WCAG AA contrast requirements (4.5:1). Wettelijke vereiste onder EU Accessibility Act 2025.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-a11y">a11y</span>
+                        <span class="label label-css">css</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card critical">
+                    <div class="issue-header">
+                        <div class="issue-title">#4 Add Breadcrumbs Navigation</div>
+                        <div class="issue-number">#4</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 3 hours</span>
+                        <span>🎯 P1 - High</span>
+                        <span>👥 Frontend Dev</span>
+                    </div>
+                    <div class="issue-description">
+                        Alleen compare/gitops.html heeft breadcrumbs. Inconsistente UX - gebruikers weten niet waar ze zijn in site structuur.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-feature">navigation</span>
+                        <span class="label label-css">ux</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card critical">
+                    <div class="issue-header">
+                        <div class="issue-title">#5 Fix Language Consistency</div>
+                        <div class="issue-number">#5</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 4 hours</span>
+                        <span>🎯 P1 - High</span>
+                        <span>👥 Content + Dev</span>
+                    </div>
+                    <div class="issue-description">
+                        Inconsistent mixen van Nederlands en Engels in UI. Kies één taal (Engels recommended voor tech audience) voor professionele consistentie.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-feature">content</span>
+                        <span class="label label-feature">i18n</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- High Priority Issues -->
+        <div class="priority-section">
+            <div class="priority-header">
+                <span class="priority-icon">🟡</span>
+                <h2>High Priority Issues (Sprint 2)</h2>
+                <span class="priority-badge priority-high">4 Issues</span>
+            </div>
+            
+            <div class="issues-grid">
+                <div class="issue-card high">
+                    <div class="issue-header">
+                        <div class="issue-title">#6 Create HTML Versions of Key Docs</div>
+                        <div class="issue-number">#6</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 8 hours</span>
+                        <span>🎯 P1 - High</span>
+                    </div>
+                    <div class="issue-description">
+                        AI Chat Guide, Getting Started, Contributing guides niet toegankelijk via web. Alleen .md files.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-feature">content</span>
+                        <span class="label label-feature">documentation</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card high">
+                    <div class="issue-header">
+                        <div class="issue-title">#7 Implement Site-wide Search</div>
+                        <div class="issue-number">#7</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 6 hours</span>
+                        <span>🎯 P1 - High</span>
+                    </div>
+                    <div class="issue-description">
+                        Met 400+ documenten is content moeilijk vindbaar. Algolia DocSearch (gratis voor open source) recommended.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-feature">feature</span>
+                        <span class="label label-feature">search</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card high">
+                    <div class="issue-header">
+                        <div class="issue-title">#8 Consolidate Inline CSS</div>
+                        <div class="issue-number">#8</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 8 hours</span>
+                        <span>🎯 P1 - High</span>
+                    </div>
+                    <div class="issue-description">
+                        217 lines inline CSS per pagina, ~70% overlap. Move to global.css voor maintainability en performance.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-css">css</span>
+                        <span class="label label-feature">performance</span>
+                    </div>
+                </div>
+                
+                <div class="issue-card high">
+                    <div class="issue-header">
+                        <div class="issue-title">#9 Add SEO Meta Tags</div>
+                        <div class="issue-number">#9</div>
+                    </div>
+                    <div class="issue-meta">
+                        <span>⏱️ 4 hours</span>
+                        <span>🎯 P1 - High</span>
+                    </div>
+                    <div class="issue-description">
+                        Alleen gitops.html heeft proper meta tags. Voeg descriptions, OG tags, en structured data toe aan alle pagina's.
+                    </div>
+                    <div class="issue-labels">
+                        <span class="label label-seo">seo</span>
+                        <span class="label label-feature">meta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommendations -->
+        <div class="recommendations">
+            <h3>💡 Aanbevelingen voor Immediate Action</h3>
+            <ul>
+                <li><strong>Week 1 Quick Wins</strong>: Start met #1-#5 (kritieke blockers). Deze maken site bruikbaar en voorkomen bounce van nieuwe bezoekers.</li>
+                <li><strong>Static Site Generator</strong>: Evalueer Docusaurus parallel aan Sprint 1-2. Migratie in Sprint 4 voorkomt technische schuld.</li>
+                <li><strong>Design System</strong>: Begin met token definitie (colors, spacing) in Sprint 2. Full component library in Sprint 3.</li>
+                <li><strong>Accessibility First</strong>: Alle nieuwe code moet WCAG 2.1 Level AA compliant zijn. Test met axe DevTools en keyboard navigation.</li>
+                <li><strong>Content Parity</strong>: Website moet alle gedocumenteerde features tonen. Gap tussen docs en web schaadt geloofwaardigheid.</li>
+                <li><strong>Performance Budget</strong>: Target < 500KB initial load, < 1.5s FCP. Monitor met Lighthouse CI in build pipeline.</li>
+            </ul>
+        </div>
+        
+        <footer style="text-align: center; padding: 2rem; color: #718096; border-top: 1px solid #e2e8f0; margin-top: 3rem;">
+            <p><strong>Web Development Gap Analysis</strong> - KubeCompass</p>
+            <p style="margin-top: 0.5rem;">Gegenereerd: 3 januari 2026 | Status: ✅ Ready for Implementation</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="../docs/WEB_DEVELOPMENT_GAP_ANALYSIS.md" style="color: #667eea;">📄 Full Analysis</a> | 
+                <a href="../docs/WEB_DEVELOPMENT_ISSUES_TRACKER.md" style="color: #667eea;">📋 Issues Tracker</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
