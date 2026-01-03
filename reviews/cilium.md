@@ -1,7 +1,7 @@
-# Cilium Review
+﻿# Cilium Review
 
 **Domain**: Networking (CNI)  
-**Decision Type**: Foundational (Layer 0)  
+**Decision Type**: Foundational (Priority 0)  
 **Tested Version**: v1.14.5  
 **Test Date**: 2024-12-20  
 **Reviewer**: @vanhoutenbos (KubeCompass maintainer)  

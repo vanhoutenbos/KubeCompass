@@ -1,4 +1,4 @@
-# Architecture Review Summary: Webshop Migratiecase
+﻿# Architecture Review Summary: Webshop Migratiecase
 
 **Status**: ✅ Complete - Ready for Decision Board Review  
 **Type**: Executive Summary + Navigation Guide  
@@ -8,9 +8,9 @@
 
 ## Summary Restructurering
 
-Deze architecture review heeft de bestaene Layer 0 en Layer 1 documentatie geanalyseerd en geherstructureerd om:
+Deze architecture review heeft de bestaene Priority 0 en Priority 1 documentatie geanalyseerd en geherstructureerd om:
 
-1. ✅ **Alle beslissingen traceerbaar** te makand to Layer 0 principes
+1. ✅ **Alle beslissingen traceerbaar** te makand to Priority 0 principes
 2. ✅ **Opand vragen duidelijk** te categoriserand (kritisch/belangrijk/later)
 3. ✅ **"Kies X tenzij Y" regels** expliciet te makand per tool
 4. ✅ **Inconsistenties en gaps** te identificerand for resolutie
@@ -22,18 +22,18 @@ Deze architecture review heeft de bestaene Layer 0 en Layer 1 documentatie geana
 
 ## New Documents
 
-### 📊 [LAYER_0_LAYER_1_MAPPING.md](LAYER_0_LAYER_1_MAPPING.md)
-**Purpose**: Volledige traceerbaarheid or Layer 1 keuzes to Layer 0 requirements
+### 📊 [PRIORITY_0_PRIORITY_1_MAPPING.md](PRIORITY_0_PRIORITY_1_MAPPING.md)
+**Purpose**: Volledige traceerbaarheid or Priority 1 keuzes to Priority 0 requirements
 
 **Content**:
-- Layer 0 → Layer 1 mapping per capability (zero-downtime, monitoring, security, etc.)
+- Priority 0 → Priority 1 mapping per capability (zero-downtime, monitoring, security, etc.)
 - Depanddency chains: Business Requirement → Technical Requirement → Platform Capability → Tool Choice
-- Trade-off analyse waar Layer 0 principes conflicterand
+- Trade-off analyse waar Priority 0 principes conflicterand
 - Decision logic for interactieve filtering
 - "Use X unless Y" summary per tool category
 
 **Use Cases**:
-- Valideer dat elke tool keuze eand Layer 0 rationale heeft
+- Valideer dat elke tool keuze eand Priority 0 rationale heeft
 - Audit trail for compliance (waarom werd tool X gekozand?)
 - Input for AI decision agents (gestructureerde decision logic)
 
@@ -84,7 +84,7 @@ Deze architecture review heeft de bestaene Layer 0 en Layer 1 documentatie geana
 - **IaC**: Use Terraform unless (modern programming language preference)
 
 Elk decision rule heeft:
-- Layer 0 rationale
+- Priority 0 rationale
 - Alternatievand with trade-off matrix
 - Decision logic (JavaScript pseudocode for automation)
 
@@ -101,7 +101,7 @@ Elk decision rule heeft:
 **Content**:
 
 #### 1. **Kritieke Inconsistenties** (4)
-- **Vendor Indepanddence vs. Managed Database**: Layer 0 zegt "migration within 1 quarter", maar managed DB is vendor-specific
+- **Vendor Indepanddence vs. Managed Database**: Priority 0 zegt "migration within 1 quarter", maar managed DB is vendor-specific
   - Resolutie: Accept trade-off (reliability > portability for database)
 - **Budget Constraint vs. Managed Services**: "Geand andterprise SaaS" maar wel managed K8s/DB
   - Resolutie: Clarify "geand tooling SaaS (Datadog), maar infrastructure SaaS OK"
@@ -146,12 +146,12 @@ Elk decision rule heeft:
 ## Documentation Structure
 
 ```
-├── LAYER_0_WEBSHOP_CASE.md            # Bestaand: Foundational requirements
-├── LAYER_1_WEBSHOP_CASE.md            # Bestaand: Tool selectie & capabilities
-├── LAYER_2_WEBSHOP_CASE.md            # Bestaand: Enhancement decision framework
-├── WEBSHOP_LAYERS_OVERVIEW.md         # Bestaand: Layer 0/1/2 progressie uitleg
+├── PRIORITY_0_WEBSHOP_CASE.md            # Bestaand: Foundational requirements
+├── PRIORITY_1_WEBSHOP_CASE.md            # Bestaand: Tool selectie & capabilities
+├── PRIORITY_2_WEBSHOP_CASE.md            # Bestaand: Enhancement decision framework
+├── WEBSHOP_PRIORITIES_OVERVIEW.md         # Bestaand: Priority 0/1/2 progressie uitleg
 │
-├── LAYER_0_LAYER_1_MAPPING.md         # ✨ NIEUW: Traceability matrix
+├── PRIORITY_0_PRIORITY_1_MAPPING.md         # ✨ NIEUW: Traceability matrix
 ├── OPEN_QUESTIONS.md                  # ✨ NIEUW: Gecategoriseerde vragen
 ├── DECISION_RULES.md                  # ✨ NIEUW: "Kies X tenzij Y" regels
 ├── IMPROVEMENT_POINTS.md              # ✨ NIEUW: Inconsistenties & gaps
@@ -172,8 +172,8 @@ Elk decision rule heeft:
 ---
 
 ### 🏗️ Architects / Tech Leads
-**Start met**: [LAYER_0_LAYER_1_MAPPING.md](LAYER_0_LAYER_1_MAPPING.md)
-**Why**: Valideer dat alle tool keuzes traceerbaar zijn to Layer 0 requirements
+**Start met**: [PRIORITY_0_PRIORITY_1_MAPPING.md](PRIORITY_0_PRIORITY_1_MAPPING.md)
+**Why**: Valideer dat alle tool keuzes traceerbaar zijn to Priority 0 requirements
 
 **Vervolgens**: [DECISION_RULES.md](DECISION_RULES.md)
 **Why**: Quick reference for tool selectie + consistency validation
@@ -198,7 +198,7 @@ Elk decision rule heeft:
 ### 🤖 AI Decision Agents / Interactieve Site
 **Input**: Alle nieuwe documentand bevattand gestructureerde decision logic
 
-**[LAYER_0_LAYER_1_MAPPING.md](LAYER_0_LAYER_1_MAPPING.md)**:
+**[PRIORITY_0_PRIORITY_1_MAPPING.md](PRIORITY_0_PRIORITY_1_MAPPING.md)**:
 - Depanddency chains (traceability)
 - Decision logic (JavaScript pseudocode)
 - Input variables for filtering
@@ -303,7 +303,7 @@ function chooseCNI(context) {
 ## Validation Checklist
 
 ### ✅ Traceerbaarheid
-- [ ] Elke Layer 1 tool keuze heeft Layer 0 rationale ([LAYER_0_LAYER_1_MAPPING.md](LAYER_0_LAYER_1_MAPPING.md))
+- [ ] Elke Priority 1 tool keuze heeft Priority 0 rationale ([PRIORITY_0_PRIORITY_1_MAPPING.md](PRIORITY_0_PRIORITY_1_MAPPING.md))
 - [ ] Trade-offs zijn expliciet gedocumenteerd
 - [ ] Alternatievand zijn overwogand with rationale
 
@@ -329,7 +329,7 @@ function chooseCNI(context) {
 
 | Document | Size | Sections | Decision Points | Opand Questions |
 |----------|------|----------|----------------|---------------|
-| **LAYER_0_LAYER_1_MAPPING.md** | 23 KB | 16 | 12 | 5 |
+| **PRIORITY_0_PRIORITY_1_MAPPING.md** | 23 KB | 16 | 12 | 5 |
 | **OPEN_QUESTIONS.md** | 20 KB | 9 kritisch, 8 belangrijk, 10+ later | 27+ | 27+ |
 | **DECISION_RULES.md** | 30 KB | 8 tool categories | 20+ "Use X unless Y" | 0 |
 | **IMPROVEMENT_POINTS.md** | 22 KB | 25 actie items | 4 kritieke conflicts | 0 |
@@ -378,8 +378,8 @@ function chooseCNI(context) {
 ## For External Consultant / AI Agent
 
 ### Onboarding Sequence
-1. **Lees first**: [LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md) - Begrijp business context + requirements
-2. **Vervolgens**: [LAYER_0_LAYER_1_MAPPING.md](LAYER_0_LAYER_1_MAPPING.md) - Zie hoe requirements to tools mappand
+1. **Lees first**: [PRIORITY_0_WEBSHOP_CASE.md](PRIORITY_0_WEBSHOP_CASE.md) - Begrijp business context + requirements
+2. **Vervolgens**: [PRIORITY_0_PRIORITY_1_MAPPING.md](PRIORITY_0_PRIORITY_1_MAPPING.md) - Zie hoe requirements to tools mappand
 3. **Daarna**: [IMPROVEMENT_POINTS.md](IMPROVEMENT_POINTS.md) - Begrijp welke conflicts/gaps er zijn
 4. **Gebruik**: [DECISION_RULES.md](DECISION_RULES.md) - Concrete tool recommendations
 
@@ -389,7 +389,7 @@ Context: Dutch webshop migreert to Kubernetes. Team heeft geand K8s ervaring,
 budget constraint (geand andterprise SaaS), vendor indepanddence vereist.
 
 Lees de volgende documentand:
-1. LAYER_0_LAYER_1_MAPPING.md (requirements + tool mapping)
+1. PRIORITY_0_PRIORITY_1_MAPPING.md (requirements + tool mapping)
 2. OPEN_QUESTIONS.md (kritieke vragen)
 3. DECISION_RULES.md (tool selection logic)
 4. IMPROVEMENT_POINTS.md (conflicts die resolved moetand wordand)
@@ -406,7 +406,7 @@ Output formaat: Decision + rationale + trade-offs + alternatives
 
 ## Conclusion
 
-✅ **Alle beslissingen traceerbaar** to Layer 0 principes  
+✅ **Alle beslissingen traceerbaar** to Priority 0 principes  
 ✅ **Opand vragen gecategoriseerd** (kritisch → belangrijk → later)  
 ✅ **"Kies X tenzij Y" expliciet** per tool category  
 ✅ **Inconsistenties geïdentificeerd** with resolution opties  

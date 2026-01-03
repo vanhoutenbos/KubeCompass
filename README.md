@@ -1,6 +1,10 @@
-# KubeCompass
+﻿# KubeCompass
+
+![Status](https://img.shields.io/badge/Status-POC%20%2F%20Research-yellow) ![License](https://img.shields.io/badge/License-MIT-blue) ![Contributions](https://img.shields.io/badge/Contributions-Welcome-green)
 
 **Opinionated, hands-on guidance for building production-ready Kubernetes platforms — without the vendor fluff.**
+
+> ⚠️ **Current Status**: This project is in **POC/Research phase**. We're actively testing tools, gathering data, and refining the framework. Not all comparisons are complete yet. See [Project Status](#project-status) below.
 
 ---
 
@@ -85,7 +89,7 @@ Transform raw requirements into structured, AI-friendly decision frameworks:
 🏦 **[Example: Enterprise Financial Services](cases/enterprise/ENTERPRISE_UNIFIED_CASE.md)** - Complete enterprise case study
 
 **What you get:**
-- Structured requirements extraction (Layer 0/1/2 methodology)
+- Structured requirements extraction (Priority methodology)
 - "Choose X unless Y" decision rules for all domains
 - Provider recommendations mapped to scenarios
 - Prioritized question list (Critical/Important/Defer)
@@ -104,7 +108,7 @@ Explore our visual diagrams showing domains, subdomains, and decision layers acr
 📊 **[See All Diagrams](DIAGRAMS.md)** (Complete visual guide)
 
 **What you'll find:**
-- **🚢 Ecosystem Infographic**: Colorful character-driven design showing *which domains* to implement (Layer 0/1/2)
+- **🚢 Ecosystem Infographic**: Colorful character-driven design showing *which domains* to implement (Priority 0/1/2)
 - **⚙️ Architecture Infographic (NEW!)**: Technical visualization showing *how Kubernetes works* - all components (Pods, Services, Deployments), where Service Mesh lives, managed K8s options (AKS/EKS/GKE), and CI/CD pipeline with GitOps
 - Domain architecture overview with dependency flows
 - Decision layer timing model (when to decide what)
@@ -144,23 +148,23 @@ Example architectures for common use cases:
 
 📚 **[Browse Scenarios](docs/planning/SCENARIOS.md)**
 
-### 8. Layer 0, 1 & 2 Case Studies
+### 8. Priority 0, 1 & 2 Case Studies
 Deep-dive analysis for real-world Kubernetes adoption scenarios:
 
 #### Original Case Study Documents
-- **Layer 0: [Dutch Webshop Migration - Foundational Requirements](docs/cases/LAYER_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
+- **Priority 0: [Dutch Webshop Migration - Foundational Requirements](docs/cases/PRIORITY_0_WEBSHOP_CASE.md)** (in Dutch): E-commerce platform foundational analysis
   - Availability requirements and downtime expectations
   - Data criticality with RPO/RTO definitions
   - Security baseline and ownership models
   - Vendor independence principles
   - Foundational architecture decisions
-- **Layer 1: [Dutch Webshop Migration - Tool Selection](docs/cases/LAYER_1_WEBSHOP_CASE.md)** (in Dutch): Concrete tool choices and platform capabilities
+- **Priority 1: [Dutch Webshop Migration - Tool Selection](docs/cases/PRIORITY_1_WEBSHOP_CASE.md)** (in Dutch): Concrete tool choices and platform capabilities
   - Managed Kubernetes selection criteria
   - CNI, GitOps, and CI/CD tool decisions
   - Observability stack (Prometheus, Grafana, Loki)
   - Security implementation (RBAC, secrets management, network policies)
   - Migration roadmap and open questions for implementation
-- **Layer 2: [Platform Enhancements & Resilience - Decision Framework](docs/cases/LAYER_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
+- **Priority 2: [Platform Enhancements & Resilience - Decision Framework](docs/cases/PRIORITY_2_WEBSHOP_CASE.md)** (in Dutch): Advanced capability decisions
   - **NOT an implementation guide** - this is a decision framework
   - When to add service mesh, distributed tracing, chaos engineering
   - Trade-offs and timing considerations for each capability
@@ -176,8 +180,8 @@ Structured decision support documentation for audit-proof, interactive architect
   - Decision flow from week 1 to implementation
   - Validation checklist for audit-proof documentation
 
-- **🔗 [Layer 0 → Layer 1 Mapping](docs/cases/LAYER_0_LAYER_1_MAPPING.md)** — Complete traceability matrix
-  - Every Layer 1 tool choice traced back to Layer 0 requirements
+- **🔗 [Priority 0 → Priority 1 Mapping](docs/cases/PRIORITY_0_PRIORITY_1_MAPPING.md)** — Complete traceability matrix
+  - Every Priority 1 tool choice traced back to Priority 0 requirements
   - Dependency chains: Business → Technical → Platform → Tooling
   - Trade-off analysis for conflicting requirements
   - Decision logic for interactive filtering and AI agents
@@ -333,7 +337,7 @@ We provide a complete Kind-based testing environment to validate platform decisi
 - ✅ **Multiple cluster configurations** (base, Cilium, Calico, multi-node)
 - ✅ **Bootstrap scripts** (Windows PowerShell + Linux Bash)
 - ✅ **Smoke test suite** for cluster validation
-- ✅ **Layered manifests** (Layer 0/1/2 structure)
+- ✅ **Layered manifests** (Priority 0/1/2 structure)
 - ✅ **Reproducible and declarative** (Git-first, IaC approach)
 
 ### Quick Start - Local Testing
@@ -416,14 +420,14 @@ kubectl apply -f manifests/networking/
 7. **Check the [Decision Matrix](docs/MATRIX.md)** for tool recommendations across all layers
 8. **Review the [Scenarios](docs/planning/SCENARIOS.md)** for architecture examples
 9. **🗺️ Check the [Domain Roadmap](docs/planning/DOMAIN_ROADMAP.md)** for step-by-step implementation guidance
-   - Complete tool options for all 15 domains (Layer 0, 1, 2)
+   - Complete tool options for all 15 domains (Priority 0, 1, 2)
    - Testing plans with 2+ options per domain
    - Week-by-week schedule for hands-on testing
    - Decision rules to guide tool selection
-10. **Study the Layer 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
-   - **[Layer 0: Foundational Requirements](docs/cases/LAYER_0_WEBSHOP_CASE.md)** — Why & constraints
-   - **[Layer 1: Tool Selection](docs/cases/LAYER_1_WEBSHOP_CASE.md)** — What & how (basic platform)
-   - **[Layer 2: Enhancement Decisions](docs/cases/LAYER_2_WEBSHOP_CASE.md)** — When to add complexity
+10. **Study the Priority 0/1/2 Case Studies** — real-world decision frameworks (Dutch webshop migration):
+   - **[Priority 0: Foundational Requirements](docs/cases/PRIORITY_0_WEBSHOP_CASE.md)** — Why & constraints
+   - **[Priority 1: Tool Selection](docs/cases/PRIORITY_1_WEBSHOP_CASE.md)** — What & how (basic platform)
+   - **[Priority 2: Enhancement Decisions](docs/cases/PRIORITY_2_WEBSHOP_CASE.md)** — When to add complexity
    - **🆕 [Architecture Review Summary](docs/architecture/ARCHITECTURE_REVIEW_SUMMARY.md)** — Structured decision support
    - **🏗️ [TransIP IaC Guide](docs/TRANSIP_INFRASTRUCTURE_AS_CODE.md)** — Infrastructure as Code for TransIP
 11. **Explore [Tool Reviews](reviews/)** for detailed hands-on testing results
@@ -444,10 +448,10 @@ KubeCompass/
 │   ├── create-cluster.*   # Bootstrap scripts (PowerShell + Bash)
 │   └── README.md          # Kind documentation
 ├── manifests/             # Kubernetes manifests (layered)
-│   ├── base/              # Layer 2 - Test workloads
-│   ├── namespaces/        # Layer 0 - Namespace definitions
-│   ├── rbac/              # Layer 0 - RBAC policies
-│   ├── networking/        # Layer 0/1 - Network policies
+│   ├── base/              # Priority 2 - Test workloads
+│   ├── namespaces/        # Priority 0 - Namespace definitions
+│   ├── rbac/              # Priority 0 - RBAC policies
+│   ├── networking/        # Priority 0/1 - Network policies
 │   └── README.md          # Manifests documentation
 ├── tests/                 # Test suites
 │   ├── smoke/             # Basic cluster validation
@@ -456,7 +460,7 @@ KubeCompass/
 │   └── README.md          # Testing documentation
 ├── docs/                  # Documentation
 │   ├── architecture/      # Framework, vision, methodology
-│   ├── cases/             # Layer 0/1/2 case studies
+│   ├── cases/             # Priority 0/1/2 case studies
 │   ├── planning/          # Roadmaps, challenges, scenarios
 │   ├── implementation/    # Implementation guides, production ready
 │   ├── runbooks/          # Operational runbooks

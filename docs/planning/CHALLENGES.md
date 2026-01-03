@@ -1,4 +1,4 @@
-# Project Challenges & Solutions
+﻿# Project Challenges & Solutions
 
 This document captures the ongoing challenges in maintaining and growing the KubeCompass project, along with potential solutions and community contribution opportunities.
 
@@ -41,8 +41,8 @@ The Kubernetes ecosystem evolves at a breakneck pace:
    - Quarterly review cycles for each domain
 
 4. **Scope Management**:
-   - Focus on core domains first (Layer 0 and Layer 1)
-   - Accept that Layer 2 tools may have stale reviews
+   - Focus on core domains first (Priority 0 and Priority 1)
+   - Accept that Priority 2 tools may have stale reviews
    - Clearly mark last review date for each tool
 
 ### How You Can Help
@@ -97,9 +97,9 @@ Comprehensive testing requires multiple environments:
    - Collaborate with CNCF for testing resources
 
 5. **Test Prioritization**:
-   - **High priority**: Layer 0 foundational tools (CNI, storage, GitOps)
-   - **Medium priority**: Layer 1 core operations (observability, security)
-   - **Lower priority**: Layer 2 enhancement tools (chaos, policy)
+   - **High priority**: Priority 0 foundational tools (CNI, storage, GitOps)
+   - **Medium priority**: Priority 1 core operations (observability, security)
+   - **Lower priority**: Priority 2 enhancement tools (chaos, policy)
 
 ### How You Can Help
 

@@ -1,16 +1,16 @@
-# Layer 2: Platform Enhancements & Resilience — Decision Framework
+﻿# Priority 2: Platform Enhancements & Resilience — Decision Framework
 
 **Target Audience**: Platform Engineers, DevOps Engineers, SREs, Architects  
 **Type**: Decision Framework & Capability Mapping  
 **Organization**: Dutch webshop / online store with Essential SAFe methodology  
-**Prerequisite**: Layer 0 and Layer 1 are **analyzed and structured** (not necessarily implemented)  
+**Prerequisite**: Priority 0 and Priority 1 are **analyzed and structured** (not necessarily implemented)  
 
 ---
 
 ## ⚠️ Important: This is NOT an Implementation Guide
 
 **This document is:**
-- 🎯 A **decision framework** for when Layer 2 capabilities become relevant
+- 🎯 A **decision framework** for when Priority 2 capabilities become relevant
 - 🧭 A **capability map** with choice space and trade-offs
 - 💡 A **thinking framework** for mature platform teams
 - 📚 A **reference** for architecture decisions
@@ -31,24 +31,24 @@
 🔀 **[TRADE-OFFS]** - What choices do you have and what are the trade-offs?  
 ⚠️ **[TIMING]** - Why implement now or not?  
 💭 **[DECISION POINT]** - What questions must you be able to answer?  
-🔗 **[LAYER 1 LINK]** - How does this build on Layer 1?  
+🔗 **[Priority 1 LINK]** - How does this build on Priority 1?  
 
 ---
 
 ## Executive Summary
 
-This document describes **Layer 2: Platform Enhancements & Resilience** — the **decision-making process** for advanced platform capabilities after the Layer 1 foundation is stable.
+This document describes **Priority 2: Platform Enhancements & Resilience** — the **decision-making process** for advanced platform capabilities after the Priority 1 foundation is stable.
 
-### Context: From Layer 1 to Layer 2
+### Context: From Priority 1 to Priority 2
 
-**Layer 1 (Foundation)** is about:
+**Priority 1 (Foundation)** is about:
 - Cluster runs
 - GitOps works
 - Basic observability (metrics, logs)
 - Network policies exist
 - Deployments succeed
 
-**Layer 2 (Enhancement)** is about **maturity and optimization**:
+**Priority 2 (Enhancement)** is about **maturity and optimization**:
 - What happens **between** services? → service mesh
 - How do you **trace** a request end-to-end? → distributed tracing
 - How do you **test** failure scenarios? → chaos engineering
@@ -56,7 +56,7 @@ This document describes **Layer 2: Platform Enhancements & Resilience** — the 
 - Where does the **money** go? → cost visibility
 - Are we **ready** for multi-region? → architectural readiness
 
-### Core Question Layer 2
+### Core Question Priority 2
 
 > **"When does this complexity investment become worthwhile?"**
 
@@ -65,7 +65,7 @@ But: "**Under what circumstances would I even want this?**"
 
 ---
 
-## Decision Matrix: Layer 1 → Layer 2 Triggers
+## Decision Matrix: Priority 1 → Priority 2 Triggers
 
 | Capability | Trigger Condition | Complexity Cost | Skip If... |
 |-----------|-------------------|----------------|------------|
@@ -129,16 +129,16 @@ But: "**Under what circumstances would I even want this?**"
 - Debugging cross-service issues takes > 4 hours per week
 
 **Wait LATER if:**
-- Layer 1 is not yet stable
+- Priority 1 is not yet stable
 - You have < 5 services
 - Team has no Kubernetes experience yet
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Cilium CNI (Layer 1) → Service mesh adds L7 visibility
-- Prometheus (Layer 1) → Service mesh adds per-service golden signals
-- Network Policies (Layer 1) → Service mesh adds mTLS (zero-trust)
+- Cilium CNI (Priority 1) → Service mesh adds L7 visibility
+- Prometheus (Priority 1) → Service mesh adds per-service golden signals
+- Network Policies (Priority 1) → Service mesh adds mTLS (zero-trust)
 
 **Does not replace:**
 - Network policies remain relevant (defense in depth)
@@ -199,12 +199,12 @@ But: "**Under what circumstances would I even want this?**"
 - Logs + metrics sufficient are
 - No budget for trace storage (TB's per month!)
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Prometheus (Layer 1) → Traces voegand request-level detail add
-- Loki (Layer 1) → Trace ID in logs for correlatie
-- Grafana (Layer 1) → Unified view (metrics + logs + traces)
+- Prometheus (Priority 1) → Traces voegand request-level detail add
+- Loki (Priority 1) → Trace ID in logs for correlatie
+- Grafana (Priority 1) → Unified view (metrics + logs + traces)
 
 ---
 
@@ -221,7 +221,7 @@ But: "**Under what circumstances would I even want this?**"
 
 **NOT implement when:**
 - ❌ You **no HA setup** have (single replica, single node)
-- ❌ You **Layer 1 basis not stable** is
+- ❌ You **Priority 1 basis not stable** is
 - ❌ Team **no tijd** has for experiment analysis
 - ❌ You **no monitoring** have to impact to measure
 
@@ -260,16 +260,16 @@ But: "**Under what circumstances would I even want this?**"
 - You confidence want bouwand in platform resilience
 
 **Wait LATER if:**
-- Layer 1 nog not stable is
+- Priority 1 nog not stable is
 - You no HA setup have
 - No monitoring to impact to measure
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Velero (Layer 1) → Chaos test: cluster restore works?
-- Prometheus (Layer 1) → Chaos experiments zichtbaar in metrics
-- HA setup (Layer 1) → Chaos valideert dat HA daadwerkelijk works
+- Velero (Priority 1) → Chaos test: cluster restore works?
+- Prometheus (Priority 1) → Chaos experiments zichtbaar in metrics
+- HA setup (Priority 1) → Chaos valideert dat HA daadwerkelijk works
 
 ---
 
@@ -329,12 +329,12 @@ But: "**Under what circumstances would I even want this?**"
 - Manowal review works prima
 - Team has no capacity for policy management
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Pod Security Stenards (Layer 1) → Policies andforce PSS automatisch
-- Network Policies (Layer 1) → Policy generates default-deny
-- RBAC (Layer 1) → Policy audit RBAC changes
+- Pod Security Stenards (Priority 1) → Policies andforce PSS automatisch
+- Network Policies (Priority 1) → Policy generates default-deny
+- RBAC (Priority 1) → Policy audit RBAC changes
 
 ---
 
@@ -393,11 +393,11 @@ But: "**Under what circumstances would I even want this?**"
 - Budget amply sufficient
 - No capacity for cost optimization
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Prometheus (Layer 1) → Kubecost gebruikt CPU/memory metrics
-- Resource limits (Layer 1) → Cost tool toont waste (limits vs usage)
+- Prometheus (Priority 1) → Kubecost gebruikt CPU/memory metrics
+- Resource limits (Priority 1) → Cost tool toont waste (limits vs usage)
 
 ---
 
@@ -428,7 +428,7 @@ But: "**Under what circumstances would I even want this?**"
 ### 💭 [DECISION POINT] Questions to Answer
 
 1. **What is our multi-region strategy?**
-   - **NOT NOW**: Single region in Layer 2
+   - **NOT NOW**: Single region in Priority 2
    - **LATER**: Multi-region in Layer 3 (indiand needed)
    - **PREPAREDNESS**: Architectuur must het niet blokkerand
 
@@ -455,12 +455,12 @@ But: "**Under what circumstances would I even want this?**"
 - Database strategy duidelijk is
 - Team capacity has
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Cilium CNI (Layer 1) → Cluster Mesh capability for multi-region
-- Velero (Layer 1) → Backup restore in andere regio (DR)
-- Stateless design (Layer 1) → Maakt multi-region possible
+- Cilium CNI (Priority 1) → Cluster Mesh capability for multi-region
+- Velero (Priority 1) → Backup restore in andere regio (DR)
+- Stateless design (Priority 1) → Maakt multi-region possible
 
 ---
 
@@ -469,7 +469,7 @@ But: "**Under what circumstances would I even want this?**"
 ### 🎯 [TRIGGER] When Relevant?
 
 **Verhoog observability maturity when:**
-- ✅ You **Layer 1 observability** (metrics, logs) niet sufficient is
+- ✅ You **Priority 1 observability** (metrics, logs) niet sufficient is
 - ✅ You **alerting strategy** unclear is (alles is pager-worthy?)
 - ✅ You **correlation** between metrics/logs/traces want
 - ✅ You **SLO's** want monitorand (error budget)
@@ -507,16 +507,16 @@ But: "**Under what circumstances would I even want this?**"
 - SLO's are undefined (no error budget)
 
 **Wait LATER if:**
-- Layer 1 observability works prima
+- Priority 1 observability works prima
 - Alert strategy is clear
 - Team has no capacity
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- Prometheus (Layer 1) → Enhanced with SLO monitoring
-- Loki (Layer 1) → Enhanced with structured logging + trace ID
-- Grafana (Layer 1) → Enhanced with unified observability
+- Prometheus (Priority 1) → Enhanced with SLO monitoring
+- Loki (Priority 1) → Enhanced with structured logging + trace ID
+- Grafana (Priority 1) → Enhanced with unified observability
 
 ---
 
@@ -574,18 +574,18 @@ But: "**Under what circumstances would I even want this?**"
 - Basic K8s audit logs sufficient
 - No security team
 
-### 🔗 [LAYER 1 LINK]
+### 🔗 [Priority 1 LINK]
 
 **Builds on:**
-- RBAC (Layer 1) → Audit RBAC changes
-- Loki (Layer 1) → Centralized audit log storage
-- Vault (Layer 1) → Audit secret access
+- RBAC (Priority 1) → Audit RBAC changes
+- Loki (Priority 1) → Centralized audit log storage
+- Vault (Priority 1) → Audit secret access
 
 ---
 
-## Resultaat Layer 2: Maturity Assessment
+## Resultaat Priority 2: Maturity Assessment
 
-### Na Layer 2 Analyse Kun You Beantwoorden:
+### Na Priority 2 Analyse Kun You Beantwoorden:
 
 ✅ **Service Mesh**: Do we have dit needed? (> 5 services, security/observability)  
 ✅ **Distributed Tracing**: Lost dit eand daadwerkelijk probleem op? (debugging > 1h)  
@@ -596,7 +596,7 @@ But: "**Under what circumstances would I even want this?**"
 ✅ **Observability**: What is pager-worthy?  
 ✅ **Auditing**: Compliance requirement or overkill?  
 
-### Layer 2 → Layer 3 (Toekomst)
+### Priority 2 → Layer 3 (Toekomst)
 
 **Layer 3 zou gaan over:**
 - Zero trust networking (full mutual TLS enforcement)
@@ -606,19 +606,19 @@ But: "**Under what circumstances would I even want this?**"
 - Cost optimization automation (rightsizing)
 - Security automation (auto-remediation)
 
-**Maar dat is alleand relevant as Layer 2 capabilities lopand en je **daadwerkelijk** complexity needed have.**
+**Maar dat is alleand relevant as Priority 2 capabilities lopand en je **daadwerkelijk** complexity needed have.**
 
 ---
 
 ## Conclusion: Complexity as Bewuste Keuze
 
-Layer 2 is niet "de volgende stap after Layer 1".  
-Layer 2 is "**welke extra capabilities are de complexity waard?**"
+Priority 2 is niet "de volgende stap after Priority 1".  
+Priority 2 is "**welke extra capabilities are de complexity waard?**"
 
 ### Beslisregels:
 
-1. **Start simpel**: Layer 1 first, Layer 2 alleand as trigger duidelijk is
-2. **Eén tegelijk**: Niet alle Layer 2 capabilities tegelijk (team overload!)
+1. **Start simpel**: Priority 1 first, Priority 2 alleand as trigger duidelijk is
+2. **Eén tegelijk**: Niet alle Priority 2 capabilities tegelijk (team overload!)
 3. **Measure impact**: Every capability must solve measurable problem
 4. **Exit strategy**: Can we terug as het niet works?
 
@@ -634,7 +634,7 @@ Layer 2 is "**welke extra capabilities are de complexity waard?**"
 - Multi-region (single region sufficient, no DR requirement)
 - Chaos andginoring (first HA setup stabilize)
 
-**Dit is de kracht or Layer 2: conscious, justified choices in plaats or "we doand alles maar".**
+**Dit is de kracht or Priority 2: conscious, justified choices in plaats or "we doand alles maar".**
 
 ---
 

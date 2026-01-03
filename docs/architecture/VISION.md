@@ -1,4 +1,4 @@
-# Vision & Philosophy
+﻿# Vision & Philosophy
 
 ## 1. Global Idea
 
@@ -213,7 +213,7 @@ KubeCompass won't make all your decisions for you, but it will:
 
 **KubeCompass Solution**:
 - **Decision Matrix**: Shows CNI options with transparent scoring (maturity, complexity, lock-in)
-- **Layer Model**: "Service mesh is Layer 2 — skip it for now, focus on Layer 0/1"
+- **Layer Model**: "Service mesh is Priority 2 — skip it for now, focus on Priority 0/1"
 - **"Choose X unless Y" Rules**: "Use Cilium unless you have Calico expertise OR BGP requirements"
 - **Testing Validation**: Real installation on local kind cluster, documented failure scenarios
 
@@ -251,7 +251,7 @@ KubeCompass won't make all your decisions for you, but it will:
 - **Production-Ready Definition**: Explicit compliance criteria (RBAC, secrets management, audit logging)
 - **Enterprise Multi-Tenant Scenario**: Complete architecture with security posture
 - **Vendor Independence Scoring**: Clear analysis of lock-in risks
-- **Traceability**: Layer 0 requirements mapped to tool choices (OPEN_QUESTIONS.md, DECISION_RULES.md)
+- **Traceability**: Priority 0 requirements mapped to tool choices (OPEN_QUESTIONS.md, DECISION_RULES.md)
 
 **Outcome**: Architecture decisions are audit-proof with documented rationale.
 
@@ -284,7 +284,7 @@ KubeCompass won't make all your decisions for you, but it will:
 - "How do we avoid common mistakes?"
 
 **KubeCompass Solution**:
-- **Layer-Based Learning**: Focus on Layer 0 first (CNI, RBAC, secrets), defer Layer 2 (chaos engineering, service mesh)
+- **Layer-Based Learning**: Focus on Priority 0 first (CNI, RBAC, secrets), defer Priority 2 (chaos engineering, service mesh)
 - **Real-World Case Studies**: Dutch webshop migration with step-by-step decisions
 - **Anti-Patterns Documentation**: "Don't run databases in Kubernetes unless you have DBA expertise"
 - **Interactive Diagrams**: Visual navigation of domains and dependencies

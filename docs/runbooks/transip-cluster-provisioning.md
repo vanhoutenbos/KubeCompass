@@ -1,4 +1,4 @@
-# TransIP Kubernetes Cluster Provisioning Runbook
+﻿# TransIP Kubernetes Cluster Provisioning Runbook
 
 **Purpose**: Reproducible procedure for provisioning a TransIP Kubernetes cluster  
 **Audience**: Platform Engineers, DevOps Team  
@@ -61,7 +61,7 @@ Fill in the cluster details:
 | **Cluster Name** | `webshop-prod` | Descriptive, indicates environment |
 | **Region** | `Amsterdam (ams1)` | GDPR compliance (NL datacenter), low latency |
 | **Kubernetes Version** | `1.28.x` (N-1) | Stability over latest features |
-| **High Availability** | ✅ Enabled | Layer 0 requirement (99.9% uptime) |
+| **High Availability** | ✅ Enabled | Priority 0 requirement (99.9% uptime) |
 | **Automatic Updates** | ⚠️ Security patches only | Control upgrade timing |
 
 **Screenshot Location**: `docs/screenshots/transip-cluster-config.png` (optional: take screenshot for future reference)

@@ -1,4 +1,4 @@
-# Manifests
+﻿# Manifests
 
 Kubernetes manifests organized by layer and concern.
 
@@ -6,28 +6,28 @@ Kubernetes manifests organized by layer and concern.
 
 ```
 manifests/
-  ├── base/              # Layer 2 - Test workloads
-  ├── namespaces/        # Layer 0 - Namespace definitions
-  ├── rbac/              # Layer 0 - RBAC policies
-  └── networking/        # Layer 0/1 - Network policies
+  ├── base/              # Priority 2 - Test workloads
+  ├── namespaces/        # Priority 0 - Namespace definitions
+  ├── rbac/              # Priority 0 - RBAC policies
+  └── networking/        # Priority 0/1 - Network policies
 ```
 
 ## Layer Philosophy
 
-### Layer 0 - Platform Foundation
+### Priority 0 - Platform Foundation
 - Namespaces
 - RBAC
 - Network policies
 - Security policies
 - Base monitoring
 
-### Layer 1 - Application Support
+### Priority 1 - Application Support
 - Data services
 - Messaging
 - Caching
 - Service mesh (future)
 
-### Layer 2 - Applications
+### Priority 2 - Applications
 - Test workloads
 - Demo applications
 - Use case implementations
@@ -75,7 +75,7 @@ metadata:
     layer: "0|1|2"           # Platform layer
     managed-by: kubecompass  # Management ownership
     type: <type>             # Resource type/category
-    app: <name>              # Application name (Layer 2)
+    app: <name>              # Application name (Priority 2)
 ```
 
 ## Next Steps

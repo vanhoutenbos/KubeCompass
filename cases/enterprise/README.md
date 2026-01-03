@@ -1,4 +1,4 @@
-# Enterprise Financial Services Case
+﻿# Enterprise Financial Services Case
 
 **Organization Type**: Global Enterprise (5,000+ employees)  
 **Industry**: Financial Services (Banking, Insurance, Wealth Management)  
@@ -41,8 +41,8 @@ This case study demonstrates how a large financial services organization migrate
 
 **Sections**:
 1. Executive Summary (organization profile, constraints, metrics)
-2. Layer 0: Foundations (goals, trade-offs, risks)
-3. Layer 1: Tool Mapping ("Choose X unless Y" rules for all 18 domains)
+2. Priority 0: Foundations (goals, trade-offs, risks)
+3. Priority 1: Tool Mapping ("Choose X unless Y" rules for all 18 domains)
 4. Critical Decision Points (prioritized questions)
 5. Provider Comparison (AWS vs Azure vs GCP)
 6. Timeline & Budget (24-month roadmap, $5M budget)

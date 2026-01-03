@@ -1,4 +1,4 @@
-# KubeCompass Cases
+﻿# KubeCompass Cases
 
 This directory contains structured case analyses for Kubernetes platform migrations and implementations. Each case follows the [Unified Case Analysis Framework](../UNIFIED_CASE_STRUCTURE.md).
 
@@ -13,9 +13,9 @@ Each case includes:
 
 Human-readable document with:
 - Executive Summary (organization profile, constraints, success metrics)
-- Layer 0: Foundations (goals, non-goals, constraints, risks)
-- Layer 1: Tool Mapping ("Choose X unless Y" decision rules)
-- Layer 2: Enhancement Triggers (when to add advanced capabilities)
+- Priority 0: Foundations (goals, non-goals, constraints, risks)
+- Priority 1: Tool Mapping ("Choose X unless Y" decision rules)
+- Priority 2: Enhancement Triggers (when to add advanced capabilities)
 - Open Questions (prioritized: Critical/Important/Defer)
 - Provider Recommendations (scenario-specific with trade-offs)
 - Decision Rules (compiled IF/THEN/UNLESS logic)
@@ -33,7 +33,7 @@ Structured data for automation:
 - Provider recommendations (per scenario with pros/cons)
 - Critical questions (implementation blockers)
 - Risks (high/medium/low with mitigations)
-- Layer 2 triggers (when to implement advanced features)
+- Priority 2 triggers (when to implement advanced features)
 - Implementation phases (timeline and activities)
 - Success metrics (current state, target, validation)
 
@@ -104,7 +104,7 @@ To create a new case analysis, follow these steps:
 Start with **[CASE_ANALYSIS_TEMPLATE.md](../CASE_ANALYSIS_TEMPLATE.md)** which provides:
 - Step-by-step methodology
 - Interview questions to ask
-- Classification guidelines (Layer 0/1/2)
+- Classification guidelines (Priority 0/1/2)
 - Decision tree patterns
 - Quality checklist
 
@@ -118,9 +118,9 @@ Interview stakeholders to understand:
 
 ### 3. Structure the Analysis
 Follow the [Unified Case Structure](../UNIFIED_CASE_STRUCTURE.md):
-- Extract Layer 0 (strategic foundation)
-- Map Layer 1 (tactical tool selections)
-- Define Layer 2 (enhancement triggers)
+- Extract Priority 0 (strategic foundation)
+- Map Priority 1 (tactical tool selections)
+- Define Priority 2 (enhancement triggers)
 - Prioritize questions (Critical/Important/Defer)
 - Map providers to scenarios
 - Build decision rules
@@ -200,7 +200,7 @@ We welcome contributions of new cases! To contribute:
 
 ### Quality Criteria
 Before submitting:
-- [ ] All Layer 0 requirements have Layer 1 implementations
+- [ ] All Priority 0 requirements have Priority 1 implementations
 - [ ] Every tool choice has "Choose X unless Y" rationale
 - [ ] All risks have mitigations
 - [ ] Non-goals documented with reasoning
@@ -244,11 +244,11 @@ Before submitting:
 
 ### Common Non-Goals
 
-- ❌ Microservices refactoring (for monoliths - defer to Layer 2)
+- ❌ Microservices refactoring (for monoliths - defer to Priority 2)
 - ❌ Multi-region (for single-region orgs - defer until international expansion)
 - ❌ 100% uptime (unrealistic - 99.9% or 99.99% more achievable)
 - ❌ Service mesh (for < 5 services - defer until microservices)
-- ❌ Advanced observability (distributed tracing - Layer 2 for most)
+- ❌ Advanced observability (distributed tracing - Priority 2 for most)
 
 ---
 

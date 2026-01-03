@@ -1,4 +1,4 @@
-# AI Chat Integration Guide
+﻿# AI Chat Integration Guide
 
 **Gebruik KubeCompass with AI Assistenten for Gepersonaliseerde Aanbevelingand**
 
@@ -179,13 +179,13 @@ De AI zal waarschijnlijk vragen stelland over:
 ```
 Kun je now eand complete tool stack aanbeveland in dit format:
 
-## Layer 0: Foundational (Beslis Day 1)
+## Priority 0: Foundational (Beslis Day 1)
 [tools with "Gebruik X, tenzij..." format]
 
-## Layer 1: Core Operations (Binnand firste month)
+## Priority 1: Core Operations (Binnand firste month)
 [tools with "Gebruik X, tenzij..." format]
 
-## Layer 2: Enhancement (Toevoegand whand noded)
+## Priority 2: Enhancement (Toevoegand whand noded)
 [tools with "Gebruik X, tenzij..." format]
 
 Voor elke aanbeveling:
@@ -250,7 +250,7 @@ Voor elke aanbeveling:
 ```markdown
 # Kubernetes Platform Setup - Tool Decisions
 
-## ✅ Layer 0: Foundational (Beslis now)
+## ✅ Priority 0: Foundational (Beslis now)
 
 ### Container Networking
 - [ ] **Gebruik**: Cilium
@@ -350,9 +350,9 @@ Je bent eand Kubernetes architect die het KubeCompass framework gebruikt.
 KubeCompass is opinionated, hens-on en transparant about trade-offs.
 
 Key principes:
-1. Layer 0 (Foundational) beslissingen zijn hard to change - beslis vroeg
-2. Layer 1 (Core Ops) within firste month
-3. Layer 2 (Enhancement) whand noded
+1. Priority 0 (Foundational) beslissingen zijn hard to change - beslis vroeg
+2. Priority 1 (Core Ops) within firste month
+3. Priority 2 (Enhancement) whand noded
 4. Altijd "Gebruik X, tenzij..." format
 5. CNCF graduated tools hebband voorkeur maar zijn niet required
 6. Transparant about trade-offs
@@ -409,7 +409,7 @@ App karakteristiekand:
 - [data: stateful / stateless]
 
 Help me with "Gebruik X, tenzij..." beslissingen for ALL 
-foundational (Layer 0) tools. Leg from WAAROM elke keuze 
+foundational (Priority 0) tools. Leg from WAAROM elke keuze 
 belangrijk is for later.
 ```
 
@@ -467,13 +467,13 @@ Voor elk domain waar ik moet upgradand:
 ### Voorbeeld Prompt with References:
 
 ```
-Op basis or KubeCompass FRAMEWORK.md (Layer 0/1/2 model) en 
+Op basis or KubeCompass FRAMEWORK.md (Priority 0/1/2 model) en 
 MATRIX.md (tool scores), geef aanbevelingen voor:
 
 Mijn situatie: [beschrijf]
 
 Output:
-1. Foundational tools (Layer 0) with "Gebruik X, tenzij..."
+1. Foundational tools (Priority 0) with "Gebruik X, tenzij..."
 2. Voor elke aanbeveling, link to relevante KubeCompass review
 3. Verwijs to vergelijkbaar SCENARIOS.md voorbeeld indiand or addpassing
 ```
@@ -495,7 +495,7 @@ Output:
 
 - **Niet te generiek**: "Geef me Kubernetes tools" is te breed
 - **Geand blind AI vertrouwand**: Valideer against KubeCompass MATRIX.md
-- **Skip geand foundational decisions**: Layer 0 first!
+- **Skip geand foundational decisions**: Priority 0 first!
 - **Negeer no trade-offs**: "Unless" statements are crucial
 - **Geand outdated info**: Verwijs to versie/datum in KubeCompass
 
@@ -507,7 +507,7 @@ Output:
 
 #### Week 1: Foundation
 ```
-Prompt: "Leg from wat KubeCompass Layer 0, 1, 2 betekent with voorbeeldand. 
+Prompt: "Leg from wat KubeCompass Priority 0, 1, 2 betekent with voorbeeldand. 
 Why is dit belangrijk for tool selectie?"
 ```
 
@@ -520,7 +520,7 @@ Geef 'Gebruik X, tenzij...' advies for 3 verschillende scales."
 
 #### Week 3: Complete Stack
 ```
-Prompt: "Voor mijn [type] project, maak complete Layer 0/1/2 tool stack 
+Prompt: "Voor mijn [type] project, maak complete Priority 0/1/2 tool stack 
 met KubeCompass framework. Leg trade-offs from en 'tenzij' scenario's."
 ```
 
@@ -557,13 +557,13 @@ Whand je nowttige aanbevelingen krijgt or AI:
 
 ## Aanbevelingand
 
-### Layer 0: Foundational
+### Priority 0: Foundational
 [tool lijst with "Gebruik X, tenzij..."]
 
-### Layer 1: Core Operations
+### Priority 1: Core Operations
 [tool lijst with "Gebruik X, tenzij..."]
 
-### Layer 2: Enhancement
+### Priority 2: Enhancement
 [tool lijst with "Gebruik X, tenzij..."]
 
 ## Validatie
@@ -588,11 +588,11 @@ You are a KubeCompass expert assistant. KubeCompass is an opinionated,
 hens-on Kubernetes tool selection framework.
 
 Core principles:
-1. Layer 0 (Foundational): Hard to change, decide Day 1
+1. Priority 0 (Foundational): Hard to change, decide Day 1
    - Examples: CNI, GitOps strategy, RBAC model
-2. Layer 1 (Core Operations): Decide within first month
+2. Priority 1 (Core Operations): Decide within first month
    - Examples: Observability, ingress, secrets management
-3. Layer 2 (Enhancement): Add whand noded
+3. Priority 2 (Enhancement): Add whand noded
    - Examples: Image scanning, policy tools, chaos andginoring
 
 Tool evaluation criteria:

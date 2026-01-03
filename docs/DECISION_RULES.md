@@ -1,4 +1,4 @@
-# Decision Rules: "Kies X tenzij Y"
+﻿# Decision Rules: "Kies X tenzij Y"
 
 **Target Audience**: Architectand, Enginors, AI Decision Agents  
 **Purpose**: Concrete, herbruikbare decision rules per tool/functie  
@@ -10,7 +10,7 @@
 
 Elke beslisregel volgt het format:
 - **Use [Tool X] unless [Condition Y]**
-- **Layer 0 Rationale**: Why deze keuze past with Layer 0 principes
+- **Priority 0 Rationale**: Why deze keuze past with Priority 0 principes
 - **Alternative**: Whand alternatief tool beter is
 - **Trade-offs**: Expliciete afwegingand
 - **Decision Logic**: Criteria for interactieve filtering
@@ -26,7 +26,7 @@ Elke beslisregel volgt het format:
 
 **Primary Choice**: Managed Kubernetes (Nederlense cloud provider)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Team Maturity**: Geand Kubernetes ervaring → reduce operational burdand
 - **Vendor Indepanddence**: Managed K8s API is stenaard → reproducible across providers
 - **Budget**: Control plane costs zijn acceptabel vs. team hiring/training costs
@@ -66,7 +66,7 @@ if (team_k8s_experience === "none" || ops_team_size < 3) {
 
 **Primary Choice**: TransIP Kubernetes (voor Nederlense SME organisaties)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **GDPR Compliance**: Nederlense datacenter, Nederlense support
 - **Vendor Trust**: Gevestigde, betrouwbare Nederlense provider
 - **Team Maturity**: Nederlense support kritiek for team without K8s ervaring
@@ -154,7 +154,7 @@ if (gdpr_strict && dutch_support_required && budget_conscious) {
 
 **Primary Choice**: Separate node pools for system vs. application workloads
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **High Availability**: Isoleer platform workloads (ingress, monitoring) or applicatie
 - **Resource Contention**: Voorkom dat heavy application workload platform componentand beïnvloedt
 
@@ -210,7 +210,7 @@ if (workload_count > 5 || high_availability_required) {
 
 **Primary Choice**: Cilium
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Performance**: eBPF > iptables (webshop snelheid requirement)
 - **Security**: L3/L4 + L7 network policies (defense in depth)
 - **Multi-region Ready**: Cluster Mesh capability (addkomstige non-goal, maar niet blokkerand)
@@ -267,7 +267,7 @@ if (network_policies_required && performance_critical) {
 
 **Primary Choice**: NGINX Ingress Controller
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Maturity**: Meest gebruikte ingress controller (battle-tested)
 - **Cloud-Agnostic**: Werkt overal (vendor indepanddence)
 - **Feature Set**: SSL termination, rate limiting, rewrites (voldoet to requirements)
@@ -318,20 +318,20 @@ if (vanddor_indepanddence === "high") {
 
 ### 2.3 Service Mesh
 
-#### Use No Service Mesh (Layer 1) unless
+#### Use No Service Mesh (Priority 1) unless
 **Conditions**:
 - Je hebt > 5 microservices MET complexe inter-service communicatie
 - Per-service mTLS vereist (compliance requirement)
 - Advanced traffic management noded (canary, traffic splitting)
 
-**Primary Choice**: No Service Mesh (start Layer 1)
+**Primary Choice**: No Service Mesh (start Priority 1)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Team Maturity**: Service mesh adds significant complexity
 - **Architecture**: Monolith doesn't nod service mesh (overhead without benefit)
-- **Non-Goal**: Advanced observability (distributed tracing) is Layer 2
+- **Non-Goal**: Advanced observability (distributed tracing) is Priority 2
 
-**Whand to Add (Layer 2)**: If migrating to microservices (> 5 services)
+**Whand to Add (Priority 2)**: If migrating to microservices (> 5 services)
 
 **If Service Mesh Needed, Use Linkerd unless**:
 - Je wilt Envoy ecosystem integration → Istio
@@ -387,10 +387,10 @@ if (service_count < 5 || architecture === "monolith") {
 
 **Primary Choice**: Argo CD
 
-**Layer 0 Rationale**:
-- **Audit Trail**: Change tracking for compliance (Layer 0 requirement)
+**Priority 0 Rationale**:
+- **Audit Trail**: Change tracking for compliance (Priority 0 requirement)
 - **UI**: Support/Management kunnand deployment status ziand without kubectl
-- **RBAC + SSO**: Native integration (Layer 0 security requirement)
+- **RBAC + SSO**: Native integration (Priority 0 security requirement)
 - **Self-Service**: Developers kunnand deployments triggerand via Git PR
 
 **Alternative**: Flux
@@ -435,7 +435,7 @@ if (ui_required_for_support_team || rbac_sso_required) {
 
 **Primary Choice**: GitHub Actions
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Integration**: Native with GitHub (repository is daar al)
 - **Simplicity**: YAML-based, easy learning curve
 - **Cost**: Free tier generous for small teams
@@ -485,7 +485,7 @@ if (repository_platform === "GitHub") {
 
 **Primary Choice**: Prometheus + Grafana
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Budget**: Opand-source (no per-host licensing costs)
 - **Vendor Indepanddence**: Self-hosted, cloud-agnostic
 - **Ecosystem**: Largest community, most integrations
@@ -546,7 +546,7 @@ if (budget_constraint === "low" && vanddor_indepanddence === "high") {
 
 **Primary Choice**: Grafana Loki
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Cost**: Label-based indexing (cheaper storage than full-text)
 - **Integration**: Native Grafana integration (same UI as metrics)
 - **Simplicity**: Lower operational overhead than ELK stack
@@ -595,7 +595,7 @@ if (full_text_search_required) {
 
 **Primary Choice**: HashiCorp Vault + External Secrets Operator
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Vendor Indepanddence**: Self-hosted, portable
 - **Centralized**: Single source or truth for alle secrets
 - **Rotation**: Automated secret rotation support
@@ -615,7 +615,7 @@ if (full_text_search_required) {
 
 **Alternative C**: Kubernetes Secrets (Plain)
 **Whand**:
-- ❌ **NEVER** for production (Layer 0 principe: no secrets in plaintext)
+- ❌ **NEVER** for production (Priority 0 principe: no secrets in plaintext)
 - Development andvironments only
 
 **Trade-offs**:
@@ -652,7 +652,7 @@ if (vanddor_indepanddence === "high") {
 
 **Primary Choice**: Trivy (CI/CD) + Harbor Scanning (Registry)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Cost**: Opand-source, free
 - **Comprehensive**: CVE, misconfigurations, secrets scanning
 - **Integration**: Easy CI/CD integration, multiple output formats
@@ -691,7 +691,7 @@ if (budget_constraint === "low") {
 
 **Primary Choice**: Namespace-scoped RBAC (developers), Cluster-scoped (platform team)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Least Privilege**: Developers geand cluster-admin (compliance requirement)
 - **Isolation**: Teams kunnand elkaar niet beïnvloedand
 - **Audit**: Clear ownership per namespace
@@ -733,9 +733,9 @@ if (user_role === "developer") {
 
 **Primary Choice**: Managed PostgreSQL (Cloud Provider)
 
-**Layer 0 Rationale**:
-- **Team Maturity**: Geand database HA expertise (Layer 0 constraint)
-- **Data Resilience**: PITR + HA native (Layer 0 requirement: RPO 15min)
+**Priority 0 Rationale**:
+- **Team Maturity**: Geand database HA expertise (Priority 0 constraint)
+- **Data Resilience**: PITR + HA native (Priority 0 requirement: RPO 15min)
 - **Operational Burdand**: Managed service reduces operational risk
 - **Trade-off**: Vendor depanddency geaccepteerd for **database specifically** (niet for compute/networking)
 
@@ -782,7 +782,7 @@ if (team_has_dba && vanddor_indepanddence_absolute) {
 
 **Primary Choice**: Velero + Database Native Backup
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Vendor Indepanddence**: S3-compatible storage (portable)
 - **Kubernetes-native**: Backup namespaces, PVs, cluster resources
 - **Opand-source**: Free, community support
@@ -826,7 +826,7 @@ if (vanddor_indepanddence === "high") {
 
 **Primary Choice**: Valkey (opand-source Redis fork)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Vendor Indepanddence**: Opand-source, community-drivand (post-Redis license change)
 - **Compatibility**: Drop-in replacement for Redis
 - **Session Management**: Vereist for horizontale scaling (stateless application requirement)
@@ -871,7 +871,7 @@ if (application_stateless_required) {
 
 **Primary Choice**: Harbor (self-hosted)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Vendor Indepanddence**: Self-hosted, cloud-agnostic
 - **Image Scanning**: Trivy integrated
 - **RBAC**: Project-based access control
@@ -914,7 +914,7 @@ if (vanddor_indepanddence === "high" && team_can_operate_registry) {
 
 **Primary Choice**: Terraform
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **Vendor Indepanddence**: Multi-cloud, cloud-agnostic
 - **Maturity**: Stable providers, large community
 - **State Management**: Remote state for team collaboration
@@ -967,7 +967,7 @@ decision_tree:
       unless: "Dynamic config vereist (Traefik) OF Envoy ecosystem (Contour)"
     
     service_mesh:
-      default: "None (Layer 1)"
+      default: "None (Priority 1)"
       unless: ">5 microservices OR mTLS compliance required"
   
   gitops:
@@ -1018,7 +1018,7 @@ decision_tree:
 ---
 
 **Document Owner**: Architecture Board  
-**Update Frequentie**: Bij nieuwe tool evaluations or Layer 0 requirement changes  
+**Update Frequentie**: Bij nieuwe tool evaluations or Priority 0 requirement changes  
 **Voor AI Agents**: Decision logic is extractable for automated recommendations  
 
 **Version**: 1.0  

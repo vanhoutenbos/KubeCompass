@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KubeCompass - Kubernetes Platform Guidance</title>
+    <title>KubeCompass - Kubernetes Tool Comparisons</title>
     <link rel="stylesheet" href="styles/global.css">
     <style>
         .hero-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 6rem 2rem; text-align: center; color: white; }
         .hero-section h1 { font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 800; }
-        .hero-section .subtitle { font-size: 1.5rem; opacity: 0.95; max-width: 800px; margin: 0 auto 3rem; line-height: 1.4; }
+        .hero-section .subtitle { font-size: 1.5rem; opacity: 0.95; max-width: 700px; margin: 0 auto 3rem; }
         .hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
         .hero-stat { text-align: center; }
         .hero-stat-number { font-size: 3rem; font-weight: 700; display: block; }
@@ -23,7 +23,7 @@
         .tool-badge { background: #edf2f7; color: #4a5568; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; margin: 0.25rem; display: inline-block; }
         .comparison-card-meta { display: flex; gap: 1rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.875rem; color: #718096; flex-wrap: wrap; }
         .features-section { background: #f7fafc; padding: 4rem 2rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 3rem auto 0; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 3rem auto 0; }
         .feature-card { background: white; padding: 2rem; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0; }
         .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
         .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #2d3748; }
@@ -36,21 +36,20 @@
         .btn-primary:hover { background: #f7fafc; transform: translateY(-2px); }
         .btn-secondary { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; }
         .btn-secondary:hover { background: rgba(255,255,255,0.3); }
-        .badge-poc { background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; margin-left: 1rem; }
         @media (max-width: 768px) { .hero-section h1 { font-size: 2.5rem; } .comparisons-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo"><a href="index.html"> KubeCompass <span class="badge-poc">POC</span></a></div>
+            <div class="nav-logo"><a href="index.html">?? KubeCompass</a></div>
             <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="tool-selector-wizard.html"> Wizard</a></li>
-                <li><a href="AI_CHAT_GUIDE.md"> AI Advisor</a></li>
-                <li><a href="#comparisons">Comparisons</a></li>
+                <li><a href="tool-selector-wizard.html">????? Wizard</a></li>
+                <li><a href="#comparisons">Vergelijkingen</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="landscape.html">Landscape</a></li>
-                <li><a href="docs/INDEX.md"> Docs</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
                 <li><a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank">GitHub</a></li>
             </ul>
         </div>
@@ -58,16 +57,16 @@
 
     <section class="hero-section">
         <div class="container">
-            <h1> KubeCompass</h1>
-            <p class="subtitle">Opinionated, hands-on guidance for building production-ready Kubernetes platforms<br> without the vendor fluff.</p>
+            <h1>🧭 KubeCompass</h1>
+            <p class="subtitle">Opinionated, hands-on guidance for building production-ready Kubernetes platforms<br>— without the vendor fluff.</p>
             <div style="margin: 2rem auto; max-width: 700px;">
-                <a href="tool-selector-wizard.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.25rem 2.5rem; margin: 0.5rem;">
-                     Tool Selector Wizard
+                <a href="tool-selector-wizard.html" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.25rem 2.5rem; display: inline-block; margin-right: 1rem;">
+                    🧙‍♂️ Tool Selector Wizard
                 </a>
-                <a href="AI_CHAT_GUIDE.md" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.25rem 2.5rem; margin: 0.5rem;">
-                     AI Case Advisor
+                <a href="AI_CHAT_GUIDE.md" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.25rem 2.5rem; display: inline-block;">
+                    🤖 AI Case Advisor
                 </a>
-                <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">Webshop-style tool filtering or AI-guided architecture recommendations</p>
+                <p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.8;">Webshop-style tool filtering of AI-guided architecture recommendations</p>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat"><span class="hero-stat-number">18</span><span class="hero-stat-label">Domains Mapped</span></div>
@@ -76,9 +75,10 @@
             </div>
         </div>
     </section>
+
     <section id="comparisons" class="comparisons-section">
         <div class="container">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;"> Tool Comparisons</h2>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">📊 Tool Comparisons</h2>
             <p style="text-align: center; color: #718096; font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem;">Hands-on tested tools with "Choose X unless Y" decision rules.</p>
             
             <div class="comparisons-grid">
@@ -87,8 +87,8 @@
                     <h3 class="comparison-card-title">GitOps Tools</h3>
                     <p class="comparison-card-subtitle">ArgoCD vs Flux</p>
                     <div><span class="tool-badge">ArgoCD</span><span class="tool-badge">Flux</span></div>
-                    <p style="color: #4a5568; margin: 1rem 0;">Declarative CD with UI vs. pure GitOps toolkit. Both CNCF Graduated.</p>
-                    <div class="comparison-card-meta"><span> 5 min</span><span> Tested</span><span> Use ArgoCD</span></div>
+                    <p style="color: #4a5568; margin: 1rem 0;">De 2 meest populaire GitOps tools. Welke past bij jouw team?</p>
+                    <div class="comparison-card-meta"><span> 5 min</span><span> Beide getest</span><span> ArgoCD</span></div>
                 </a>
 
                 <a href="compare/secrets.html" class="comparison-card">
@@ -96,17 +96,17 @@
                     <h3 class="comparison-card-title">Secrets Management</h3>
                     <p class="comparison-card-subtitle">ESO vs Sealed Secrets vs SOPS</p>
                     <div><span class="tool-badge">External Secrets</span><span class="tool-badge">Sealed Secrets</span><span class="tool-badge">SOPS</span></div>
-                    <p style="color: #4a5568; margin: 1rem 0;">Cloud-native sync vs GitOps encryption vs file-level security.</p>
-                    <div class="comparison-card-meta"><span> 6 min</span><span> Tested</span><span> Use ESO</span></div>
+                    <p style="color: #4a5568; margin: 1rem 0;">Cloud-native vs GitOps simplicity vs file-level encryption.</p>
+                    <div class="comparison-card-meta"><span> 6 min</span><span> Alle 3</span><span> ESO</span></div>
                 </a>
 
                 <a href="compare/ingress.html" class="comparison-card">
-                    <span class="comparison-card-icon">�</span>
+                    <span class="comparison-card-icon"></span>
                     <h3 class="comparison-card-title">Ingress Controllers</h3>
                     <p class="comparison-card-subtitle">NGINX vs Traefik vs Istio Gateway</p>
                     <div><span class="tool-badge">NGINX</span><span class="tool-badge">Traefik</span><span class="tool-badge">Istio</span></div>
-                    <p style="color: #4a5568; margin: 1rem 0;">Battle-tested stability vs modern UX vs service mesh integration.</p>
-                    <div class="comparison-card-meta"><span> 5 min</span><span> NGINX</span><span> Use NGINX</span></div>
+                    <p style="color: #4a5568; margin: 1rem 0;">Battle-tested vs modern UI vs service mesh integration.</p>
+                    <div class="comparison-card-meta"><span> 5 min</span><span> NGINX</span><span> NGINX</span></div>
                 </a>
 
                 <a href="compare/networking.html" class="comparison-card">
@@ -114,8 +114,8 @@
                     <h3 class="comparison-card-title">CNI Networking</h3>
                     <p class="comparison-card-subtitle">Cilium vs Calico vs Flannel</p>
                     <div><span class="tool-badge">Cilium</span><span class="tool-badge">Calico</span><span class="tool-badge">Flannel</span></div>
-                    <p style="color: #4a5568; margin: 1rem 0;">eBPF L7 policies with Hubble vs BGP routing vs simple overlay.</p>
-                    <div class="comparison-card-meta"><span> 5 min</span><span> Cilium</span><span> Use Cilium</span></div>
+                    <p style="color: #4a5568; margin: 1rem 0;">eBPF vs iptables, L7 vs L3/L4 policies, Hubble observability.</p>
+                    <div class="comparison-card-meta"><span> 5 min</span><span> Cilium</span><span> Cilium</span></div>
                 </a>
 
                 <a href="compare/monitoring.html" class="comparison-card">
@@ -123,36 +123,36 @@
                     <h3 class="comparison-card-title">Monitoring Stacks</h3>
                     <p class="comparison-card-subtitle">Prometheus+Grafana vs Datadog vs New Relic</p>
                     <div><span class="tool-badge">Prometheus</span><span class="tool-badge">Datadog</span><span class="tool-badge">New Relic</span></div>
-                    <p style="color: #4a5568; margin: 1rem 0;">Self-hosted CNCF stack vs commercial SaaS with APM.</p>
-                    <div class="comparison-card-meta"><span> 6 min</span><span> Prom</span><span> Use Prom+Grafana</span></div>
+                    <p style="color: #4a5568; margin: 1rem 0;">Self-hosted vs SaaS, kosten vs simpliciteit, APM features.</p>
+                    <div class="comparison-card-meta"><span> 6 min</span><span> Prometheus</span><span> Prometheus</span></div>
                 </a>
             </div>
         </div>
     </section>
+
     <section id="features" class="features-section">
         <div class="container">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;"> What Makes KubeCompass Different?</h2>
-            <p style="text-align: center; color: #718096; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">Practical, opinionated guidance based on real-world experience  not vendor marketing.</p>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">? Waarom KubeCompass?</h2>
+            <p style="text-align: center; color: #718096; font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Production-tested comparisons met decision frameworks.</p>
             <div class="features-grid">
-                <div class="feature-card"><div class="feature-icon"></div><h3>Tool Selector Wizard</h3><p>Webshop-style filtering: pick your scale, priorities, and preferences to get instant recommendations with export to Markdown/JSON.</p></div>
-                <div class="feature-card"><div class="feature-icon"></div><h3>AI Case Advisor</h3><p>AI-guided conversation asks critical questions and delivers personalized architecture with "Choose X unless Y" rules.</p></div>
-                <div class="feature-card"><div class="feature-icon"></div><h3>Hands-On Tested</h3><p>Every tool is actually tested in real environments with kind/k3s, not just desk research or marketing regurgitation.</p></div>
-                <div class="feature-card"><div class="feature-icon"></div><h3>Timing Guidance</h3><p>Know what to decide Day 1 (CNI, GitOps) vs what can wait (chaos tools, service mesh). Foundational vs additive.</p></div>
-                <div class="feature-card"><div class="feature-icon"></div><h3>Vendor Independent</h3><p>Built by practitioners, for practitioners. No SaaS licenses to sell, no enterprise support contracts, no vendor agenda.</p></div>
-                <div class="feature-card"><div class="feature-icon"></div><h3>Priority Framework</h3><p>Structured methodology: Priority 0 (WHY/requirements)  Priority 1 (WHAT/tools)  Priority 2 (WHEN/enhancements).</p></div>
+                <div class="feature-card"><div class="feature-icon">?????</div><h3>Tool Selector Wizard</h3><p>5 vragen, gepersonaliseerd advies op basis van ervaring, platform, budget en prioriteiten.</p></div>
+                <div class="feature-card"><div class="feature-icon">??</div><h3>Feature Matrices</h3><p>Color-coded vergelijkingen. Zie in ��n oogopslag welke tool wat kan.</p></div>
+                <div class="feature-card"><div class="feature-icon">??</div><h3>Production-Tested</h3><p>Real production experience, niet marketing claims.</p></div>
+                <div class="feature-card"><div class="feature-icon">??</div><h3>100% Open Source</h3><p>Geen vendor lock-in, geen ads, geen tracking.</p></div>
+                <div class="feature-card"><div class="feature-icon">?</div><h3>"Choose X unless Y"</h3><p>Clear decision rules met trade-offs.</p></div>
+                <div class="feature-card"><div class="feature-icon">??</div><h3>Implementation Guides</h3><p>Direct links naar manifests, runbooks, setup guides.</p></div>
             </div>
         </div>
     </section>
 
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Try the wizard for quick filtering, or dive into documentation for deep decision frameworks.</p>
+            <h2>Klaar om te starten?</h2>
+            <p>Begin met de wizard of kies een comparison die jouw team nu nodig heeft.</p>
             <div class="cta-buttons">
-                <a href="tool-selector-wizard.html" class="btn btn-primary"> Start Wizard</a>
-                <a href="AI_CHAT_GUIDE.md" class="btn btn-secondary"> AI Advisor</a>
-                <a href="docs/INDEX.md" class="btn btn-secondary"> Read Docs</a>
-                <a href="https://github.com/vanhoutenbos/KubeCompass" class="btn btn-secondary" target="_blank"> GitHub</a>
+                <a href="tool-selector-wizard.html" class="btn btn-primary">????? Start Wizard</a>
+                <a href="compare/gitops.html" class="btn btn-secondary">?? Bekijk Comparisons</a>
+                <a href="https://github.com/vanhoutenbos/KubeCompass" class="btn btn-secondary" target="_blank">? Star on GitHub</a>
             </div>
         </div>
     </section>
@@ -160,12 +160,12 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-column"><h4>KubeCompass</h4><p>Opinionated, hands-on guidance for building production-ready Kubernetes platforms.<br><strong>Status: POC / Research Phase</strong></p></div>
-                <div class="footer-column"><h4>Tools</h4><ul><li><a href="tool-selector-wizard.html"> Tool Wizard</a></li><li><a href="AI_CHAT_GUIDE.md"> AI Advisor</a></li><li><a href="landscape.html">Landscape</a></li></ul></div>
-                <div class="footer-column"><h4>Comparisons</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">CNI</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
-                <div class="footer-column"><h4>Documentation</h4><ul><li><a href="docs/INDEX.md"> Docs Index</a></li><li><a href="docs/architecture/FRAMEWORK.md">Framework</a></li><li><a href="docs/DECISION_RULES.md">Decision Rules</a></li><li><a href="CONTRIBUTING.md">Contributing</a></li></ul></div>
+                <div class="footer-column"><h4>KubeCompass</h4><p>Open-source beslissingshulp voor Kubernetes tooling</p></div>
+                <div class="footer-column"><h4>Tools</h4><ul><li><a href="tool-selector-wizard.html">????? Tool Wizard</a></li><li><a href="landscape.html">Landscape</a></li></ul></div>
+                <div class="footer-column"><h4>Vergelijkingen</h4><ul><li><a href="compare/gitops.html">GitOps</a></li><li><a href="compare/secrets.html">Secrets</a></li><li><a href="compare/ingress.html">Ingress</a></li><li><a href="compare/networking.html">Networking</a></li><li><a href="compare/monitoring.html">Monitoring</a></li></ul></div>
+                <div class="footer-column"><h4>Community</h4><ul><li><a href="https://github.com/vanhoutenbos/KubeCompass">GitHub</a></li><li><a href="contribute.html">Contributing</a></li></ul></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 KubeCompass by <a href="https://github.com/vanhoutenbos">@vanhoutenbos</a>. Open-source under MIT License.</p></div>
+            <div class="footer-bottom"><p>&copy; 2026 KubeCompass. Open-source onder MIT License.</p></div>
         </div>
     </footer>
     <script src="scripts/comparison.js"></script>

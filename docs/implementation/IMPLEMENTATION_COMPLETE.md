@@ -1,4 +1,4 @@
-# Unified Case Analysis Framework - Implementation Complete ✅
+﻿# Unified Case Analysis Framework - Implementation Complete ✅
 
 **Issue**: #15 - AGENT SESSION: Unified Case Analysis & Restructuring Master Prompt  
 **Status**: ✅ **COMPLETE**  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-Successfully implemented a comprehensive unified case analysis and restructuring framework that transforms raw case documentation (Layer 0/1/2 analysis) into structured, AI-friendly decision frameworks suitable for:
+Successfully implemented a comprehensive unified case analysis and restructuring framework that transforms raw case documentation (Priority 0/1/2 analysis) into structured, AI-friendly decision frameworks suitable for:
 
 - ✅ Interactive case evaluation
 - ✅ Scenario comparison
@@ -76,7 +76,7 @@ Scenario-specific mapping:
 
 - **SME/Startup**: TransIP (⭐⭐⭐⭐⭐), OVHcloud (⭐⭐⭐⭐), Scaleway (⭐⭐⭐⭐)
 - **Enterprise/Government**: Self-managed or managed with compliance
-- **Scale-Up**: Hybrid approach with Layer 2 features
+- **Scale-Up**: Hybrid approach with Priority 2 features
 
 ### 4. Question Prioritization
 
@@ -92,7 +92,7 @@ Scenario-specific mapping:
 - Q14: Business metrics
 - Q18-19: Authentication & break-glass
 
-**Can Defer (24 questions)** - Layer 2 or later
+**Can Defer (24 questions)** - Priority 2 or later
 
 ### 5. Machine-Readable Format (JSON)
 
@@ -111,7 +111,7 @@ Complete structured data including:
 | Criterion | Status |
 |-----------|--------|
 | All goals, non-goals, constraints, risks explicitly documented | ✅ |
-| Layer 0 → Layer 1 → Layer 2 traceability clear | ✅ |
+| Priority 0 → Priority 1 → Priority 2 traceability clear | ✅ |
 | Every tool choice has "Choose X unless Y" rule | ✅ |
 | All 44 open questions mapped to decision point + impact | ✅ |
 | Provider options mapped per scenario with trade-offs | ✅ |
@@ -140,7 +140,7 @@ Complete structured data including:
 ### For Architects
 ```
 1. Review cases/webshop/WEBSHOP_UNIFIED_CASE.md
-2. Validate Layer 0 constraints match organization
+2. Validate Priority 0 constraints match organization
 3. Review "Choose X unless Y" rules
 4. Challenge assumptions in Gaps & Inconsistencies
 5. Use as template for similar organizations
@@ -162,9 +162,9 @@ Complete structured data including:
 ### Structure Transformation
 
 **Input**: 2,378 lines of raw analysis across 3 files
-- LAYER_0_WEBSHOP_CASE.md (1,155 lines)
-- LAYER_1_WEBSHOP_CASE.md (579 lines)
-- LAYER_2_WEBSHOP_CASE.md (644 lines)
+- PRIORITY_0_WEBSHOP_CASE.md (1,155 lines)
+- PRIORITY_1_WEBSHOP_CASE.md (579 lines)
+- PRIORITY_2_WEBSHOP_CASE.md (644 lines)
 
 **Output**: Structured unified case
 - WEBSHOP_UNIFIED_CASE.md (479 lines) - Human-readable
@@ -182,7 +182,7 @@ UNLESS:
   - [Condition C] → [No tool needed] (reason)
 
 RATIONALE: [Why Tool X is default for this scenario]
-LAYER 0 LINK: [Which requirement drives this choice]
+Priority 0 LINK: [Which requirement drives this choice]
 ```
 
 ### Provider Decision Matrix
@@ -258,7 +258,7 @@ KubeCompass/
 - ✅ Code review passed with no issues
 - ✅ All cross-references validated
 - ✅ JSON structure validated (parseable)
-- ✅ All 44 questions from Layer 1 included
+- ✅ All 44 questions from Priority 1 included
 - ✅ "Choose X unless Y" rules consistent
 - ✅ Provider recommendations complete
 - ✅ Documentation integrated
@@ -268,9 +268,9 @@ KubeCompass/
 ## Credits
 
 **Based on original Layer documents:**
-- LAYER_0_WEBSHOP_CASE.md
-- LAYER_1_WEBSHOP_CASE.md  
-- LAYER_2_WEBSHOP_CASE.md
+- PRIORITY_0_WEBSHOP_CASE.md
+- PRIORITY_1_WEBSHOP_CASE.md  
+- PRIORITY_2_WEBSHOP_CASE.md
 
 **Framework Design:**
 - Issue #15 requirements

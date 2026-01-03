@@ -1,4 +1,4 @@
-# CNCF Cloud Native Landscape Alignment Analysis
+﻿# CNCF Cloud Native Landscape Alignment Analysis
 
 *As evaluated by a Kubernetes expert following CNCF Cloud Native Landscape structure*
 
@@ -151,7 +151,7 @@ The CNCF Cloud Native Landscape organizes projects along these primary domains:
 
 ### Purpose and Strategic Positioning
 
-Chaos Engineering in the KubeCompass framework is positioned as a **Layer 2 enhancement** with clear, defendable objectives. This is not a superficial treatment, but a deliberate architectural choice.
+Chaos Engineering in the KubeCompass framework is positioned as a **Priority 2 enhancement** with clear, defendable objectives. This is not a superficial treatment, but a deliberate architectural choice.
 
 **Primary Goals:**
 
@@ -407,13 +407,13 @@ One of the strengths of KubeCompass is that **tools are evaluated in their prima
 
 ## 5. Decision Layer Model vs. CNCF Structure
 
-KubeCompass introduces a **decision timing layer model** (Layer 0/1/2) that doesn't exist in CNCF Landscape but is **highly valuable** for practitioners:
+KubeCompass introduces a **decision timing layer model** (Priority 0/1/2) that doesn't exist in CNCF Landscape but is **highly valuable** for practitioners:
 
 | KubeCompass Layer | Purpose | CNCF Equivalent | Value Added |
 |-------------------|---------|-----------------|-------------|
-| **Layer 0: Foundational** | Decide Day 1, hard to change | *No equivalent* | ⭐ Prioritizes architectural decisions |
-| **Layer 1: Core Operations** | Decide within first month | *No equivalent* | ⭐ Guides implementation sequence |
-| **Layer 2: Enhancement** | Add when needed | *No equivalent* | ⭐ Prevents premature optimization |
+| **Priority 0: Foundational** | Decide Day 1, hard to change | *No equivalent* | ⭐ Prioritizes architectural decisions |
+| **Priority 1: Core Operations** | Decide within first month | *No equivalent* | ⭐ Guides implementation sequence |
+| **Priority 2: Enhancement** | Add when needed | *No equivalent* | ⭐ Prevents premature optimization |
 
 **Insight**: CNCF Landscape is **descriptive** (what exists), while KubeCompass layers are **prescriptive** (when to decide). This is a **differentiator**, not a gap.
 
@@ -434,7 +434,7 @@ KubeCompass introduces a **decision timing layer model** (Layer 0/1/2) that does
 
 3. **Expand Chaos Engineering Coverage** ✅ *COMPLETED*
    - See Section 3.2 for comprehensive coverage of purpose, timing, failure modes, and tooling strategy
-   - Positioned as Layer 2 enhancement with clear strategic rationale
+   - Positioned as Priority 2 enhancement with clear strategic rationale
 
 ### 6.2 Optional Enhancements (Lower Priority)
 
@@ -478,16 +478,16 @@ Decision_Impact: High
 
 | Tool | CNCF Primary | CNCF Secondary | KubeCompass Domain | Layer |
 |------|-------------|----------------|-------------------|-------|
-| **Cilium** | Runtime: CNI | Orchestration: Service Mesh, Observability: Monitoring | 1.5 Networking | Layer 0 |
-| **ArgoCD** | App Definition: CI/CD | Orchestration: Deployment | 1.6 CI/CD & GitOps | Layer 0 |
-| **Prometheus** | Observability: Monitoring | Orchestration: Service Discovery | 1.7 Observability | Layer 1 |
-| **Harbor** | Provisioning: Registry | Security: Scanning, App Definition: Artifacts | 1.9 Container Registry | Layer 1 |
-| **Vault** | Provisioning: Key Management | Security: Encryption | 1.3 Identity & Security | Layer 0 |
-| **NATS** | App Definition: Messaging | Orchestration: Service Communication | 1.10 Message Brokers | Layer 1 |
-| **Valkey** | App Definition: Data Stores | Runtime: In-Memory Store | 1.11 Caching | Layer 1 |
-| **Trivy** | Provisioning: Security & Compliance | Security: Scanning | 1.4 Runtime Security | Layer 2 |
-| **Falco** | Provisioning: Security & Compliance | Observability: Threat Detection | 1.4 Runtime Security | Layer 2 |
-| **Kyverno** | Provisioning: Security & Compliance | Orchestration: Policy Enforcement | 1.13 Governance | Layer 2 |
+| **Cilium** | Runtime: CNI | Orchestration: Service Mesh, Observability: Monitoring | 1.5 Networking | Priority 0 |
+| **ArgoCD** | App Definition: CI/CD | Orchestration: Deployment | 1.6 CI/CD & GitOps | Priority 0 |
+| **Prometheus** | Observability: Monitoring | Orchestration: Service Discovery | 1.7 Observability | Priority 1 |
+| **Harbor** | Provisioning: Registry | Security: Scanning, App Definition: Artifacts | 1.9 Container Registry | Priority 1 |
+| **Vault** | Provisioning: Key Management | Security: Encryption | 1.3 Identity & Security | Priority 0 |
+| **NATS** | App Definition: Messaging | Orchestration: Service Communication | 1.10 Message Brokers | Priority 1 |
+| **Valkey** | App Definition: Data Stores | Runtime: In-Memory Store | 1.11 Caching | Priority 1 |
+| **Trivy** | Provisioning: Security & Compliance | Security: Scanning | 1.4 Runtime Security | Priority 2 |
+| **Falco** | Provisioning: Security & Compliance | Observability: Threat Detection | 1.4 Runtime Security | Priority 2 |
+| **Kyverno** | Provisioning: Security & Compliance | Orchestration: Policy Enforcement | 1.13 Governance | Priority 2 |
 
 ---
 
@@ -550,7 +550,7 @@ For each tool in MATRIX.md, add structured metadata:
 ### Cilium
 **CNCF Categories**: Runtime (CNI), Orchestration (Service Mesh), Observability (Monitoring)  
 **KubeCompass Domain**: 1.5 Networking & Service Mesh  
-**Decision Layer**: Layer 0 - Foundational  
+**Decision Layer**: Priority 0 - Foundational  
 ```
 
 #### Option C: Create Tool Index with Filtering
@@ -679,9 +679,9 @@ For tool tagging and filtering, use this standardized schema:
    - PaaS / Container Services
 
 ### KubeCompass Layers
-- **Layer 0**: Foundational (decide Day 1)
-- **Layer 1**: Core Operations (decide within first month)
-- **Layer 2**: Enhancement (add when needed)
+- **Priority 0**: Foundational (decide Day 1)
+- **Priority 1**: Core Operations (decide within first month)
+- **Priority 2**: Enhancement (add when needed)
 
 ---
 

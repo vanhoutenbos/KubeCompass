@@ -1,7 +1,7 @@
-# Verbeterpuntand & Inconsistenties
+﻿# Verbeterpuntand & Inconsistenties
 
 **Target Audience**: Architects, Decision Board, Quality Reviewers  
-**Purpose**: Identificeer gaps, conflictand, en verbeteringand in Layer 0/1 documentatie  
+**Purpose**: Identificeer gaps, conflictand, en verbeteringand in Priority 0/1 documentatie  
 **Type**: Critical Review & Recommendations  
 
 ---
@@ -9,7 +9,7 @@
 ## Executive Summary
 
 Dit document identificeert:
-1. **Inconsistenties** tussand Layer 0 requirements en Layer 1 implementations
+1. **Inconsistenties** tussand Priority 0 requirements en Priority 1 implementations
 2. **Ontbrekende Aannames** die gevalideerd moetand wordand
 3. **Conflicterende Requirements** die resolution noded hebband
 4. **Documentatie Gaps** waar verduidelijking noded is
@@ -24,8 +24,8 @@ Dit document identificeert:
 ### 🔴 1.1 Vendor Indepanddence vs. Managed Database
 
 **Conflict**:
-- **Layer 0 Hard Constraint**: "Migratie to andere provider within 1 quarter possible"
-- **Layer 1 Keuze**: Managed PostgreSQL (cloud provider-specific)
+- **Priority 0 Hard Constraint**: "Migratie to andere provider within 1 quarter possible"
+- **Priority 1 Keuze**: Managed PostgreSQL (cloud provider-specific)
 
 **Impact**: 
 - Managed database is vendor-specific → migration vereist data export/import
@@ -49,8 +49,8 @@ Dit document identificeert:
 ### 🔴 1.2 Budget Constraint vs. Managed Services
 
 **Conflict**:
-- **Layer 0 Constraint**: "Geand andterprise SaaS budgets"
-- **Layer 1 Keuzes**: Managed Kubernetes (~€100/month), Managed Database (~€200-500/month)
+- **Priority 0 Constraint**: "Geand andterprise SaaS budgets"
+- **Priority 1 Keuzes**: Managed Kubernetes (~€100/month), Managed Database (~€200-500/month)
 
 **Impact**: 
 - Managed services **zijn** SaaS, maar infrastructure-level (niet tooling-level zoals Datadog)
@@ -73,11 +73,11 @@ Dit document identificeert:
 ### 🔴 1.3 Zero-Downtime Deployments vs. Database Migrations
 
 **Conflict**:
-- **Layer 0 Requirement**: "Zero-downtime deployments"
+- **Priority 0 Requirement**: "Zero-downtime deployments"
 - **Reality Check**: Database schema migrations **kunnand** downtime vereisand
 
 **Impact**:
-- Layer 1 claimt zero-downtime, maar database schema changes zijn vaak niet backward-compatible
+- Priority 1 claimt zero-downtime, maar database schema changes zijn vaak niet backward-compatible
 - Rolling updates alleand possible as schema backward-compatible is
 
 **Resolutie Opties**:
@@ -98,8 +98,8 @@ Dit document identificeert:
 ### 🔴 1.4 Team Maturity vs. Cilium Complexity
 
 **Conflict**:
-- **Layer 0 Constraint**: "Team heeft geand Kubernetes ervaring"
-- **Layer 1 Keuze**: Cilium (eBPF-based, moderne tech with learning curve)
+- **Priority 0 Constraint**: "Team heeft geand Kubernetes ervaring"
+- **Priority 1 Keuze**: Cilium (eBPF-based, moderne tech with learning curve)
 
 **Impact**:
 - Cilium is complexer dan Calico/Flannel (eBPF debugging, Hubble, Cluster Mesh)
@@ -224,7 +224,7 @@ Dit document identificeert:
 ### ⚠️ 3.1 GitOps Self-Service vs. Approval Gates
 
 **Conflict**:
-- **Layer 0 Principe**: "Self-service for Dev (deploy via Git PR)"
+- **Priority 0 Principe**: "Self-service for Dev (deploy via Git PR)"
 - **Reality**: Who approves production deployments? (PO, Tech Lead, Ops?)
 
 **Impact**:
@@ -254,7 +254,7 @@ Dit document identificeert:
 ### ⚠️ 3.2 Essential SAFe vs. GitOps Velocity
 
 **Conflict**:
-- **Layer 0 Context**: Essential SAFe (sprints, PI planning, structured releases)
+- **Priority 0 Context**: Essential SAFe (sprints, PI planning, structured releases)
 - **GitOps Reality**: Continowous deployment (deploy whand ready, not sprint boundaries)
 
 **Impact**:
@@ -282,7 +282,7 @@ Dit document identificeert:
 ### ⚠️ 3.3 Developer "No Prod Access" vs. Troubleshooting
 
 **Conflict**:
-- **Layer 0 Constraint**: "Developers hebband geand productie addgang (compliance)"
+- **Priority 0 Constraint**: "Developers hebband geand productie addgang (compliance)"
 - **Reality**: Developers kunnand niet troubleshootand production issues without access
 
 **Impact**:
@@ -310,11 +310,11 @@ Dit document identificeert:
 
 ### 📄 4.1 Disaster Recovery Procedures Ontbrekand
 
-**Gap**: Layer 1 zegt "Velero backup", maar no documented recovery procedure
+**Gap**: Priority 1 zegt "Velero backup", maar no documented recovery procedure
 
 **Impact**: 
 - Backups zijn waardeloos as restore niet getest/documented
-- Layer 0 requirement "tested restore procedures" niet ingevuld
+- Priority 0 requirement "tested restore procedures" niet ingevuld
 
 **Aanbeveling**:
 - [ ] Schrijf disaster recovery runbook:
@@ -328,7 +328,7 @@ Dit document identificeert:
 
 ### 📄 4.2 Incident Response Escalatie Matrix Onduidelijk
 
-**Gap**: Layer 0 zegt "clear escalation paths", maar Layer 1 geand concrete matrix
+**Gap**: Priority 0 zegt "clear escalation paths", maar Priority 1 geand concrete matrix
 
 **Impact**:
 - During incident: confusion about who to call
@@ -351,7 +351,7 @@ Dit document identificeert:
 
 ### 📄 4.3 Network Policy Examples Ontbrekand
 
-**Gap**: Layer 1 zegt "network policies vanaf day 1", maar geand voorbeeldand
+**Gap**: Priority 1 zegt "network policies vanaf day 1", maar geand voorbeeldand
 
 **Impact**:
 - Teams wetand niet hoe policies te definiërand
@@ -369,7 +369,7 @@ Dit document identificeert:
 
 ### 📄 4.4 Resource Requests/Limits Guidance Ontbreekt
 
-**Gap**: Layer 1 zegt "resource limits per namespace", maar geand sizing guidance
+**Gap**: Priority 1 zegt "resource limits per namespace", maar geand sizing guidance
 
 **Impact**:
 - Teams wetand niet welke limits te configurerand
@@ -399,7 +399,7 @@ Dit document identificeert:
 
 ### 📄 4.5 Security Incident Response Plan Ontbreekt
 
-**Gap**: Layer 0 security baseline, maar geand incident response procedure
+**Gap**: Priority 0 security baseline, maar geand incident response procedure
 
 **Impact**:
 - Security incident → ad-hoc response (slow, potentially wrong actions)
@@ -420,7 +420,7 @@ Dit document identificeert:
 
 **Risico**: DNS is single point or failure (if DNS down, webshop unreachable)
 
-**Layer 0 Gap**: No mention or DNS resilience
+**Priority 0 Gap**: No mention or DNS resilience
 
 **Mitigatie Opties**:
 - [ ] Use multiple DNS providers (Route53 + Cloudflare, failover)
@@ -435,30 +435,30 @@ Dit document identificeert:
 
 **Risico**: Managed database in single region → datacenter failure = data loss/unavailability
 
-**Layer 0 Conflict**: "RPO 15 minowtand" possible niet haalbaar with datacenter failure
+**Priority 0 Conflict**: "RPO 15 minowtand" possible niet haalbaar with datacenter failure
 
 **Mitigatie Opties**:
 - [ ] Enable cross-region read replicas (if provider supports)
 - [ ] Velero backups to separate region (disaster recovery)
 - [ ] Accept risk (datacenter failure is low probability, high impact)
 
-**Aanbeveling**: ⚠️ Accept risk for Layer 1, revisit in Layer 2 (multi-region database)  
+**Aanbeveling**: ⚠️ Accept risk for Priority 1, revisit in Priority 2 (multi-region database)  
 **Validatie Nodig**: Business acceptatie or datacenter failure scenario
 
 ---
 
 ### 🚨 5.3 No Chaos Enginoring / Resilience Testing
 
-**Risico**: HA claims (Layer 1) not validated until production incidents
+**Risico**: HA claims (Priority 1) not validated until production incidents
 
-**Layer 0 Gap**: No mention or resilience testing
+**Priority 0 Gap**: No mention or resilience testing
 
 **Mitigatie Opties**:
-- [ ] Chaos andginoring (Layer 2) - kill pods, disrupt network, simulate failures
+- [ ] Chaos andginoring (Priority 2) - kill pods, disrupt network, simulate failures
 - [ ] Load testing (stress test during peak traffic)
 - [ ] Disaster recovery drills (quarterly restore test)
 
-**Aanbeveling**: ✅ Layer 2 capability (Chaos Mesh), maar plan manowal chaos tests in Layer 1 (kill pods, observe recovery)
+**Aanbeveling**: ✅ Priority 2 capability (Chaos Mesh), maar plan manowal chaos tests in Priority 1 (kill pods, observe recovery)
 
 ---
 
@@ -466,9 +466,9 @@ Dit document identificeert:
 
 **Risico**: Kostand kunnand escalerand without visibility
 
-**Layer 0 Mention**: "Cost monitoring vanaf day 1 (OpenCost / Kubecost)"
+**Priority 0 Mention**: "Cost monitoring vanaf day 1 (OpenCost / Kubecost)"
 
-**Gap**: Layer 1 heeft geand concrete tool choice or setup plan
+**Gap**: Priority 1 heeft geand concrete tool choice or setup plan
 
 **Mitigatie Opties**:
 - [ ] Install OpenCost (opand-source) vanaf day 1
@@ -523,11 +523,11 @@ tools:
 
 ### ✅ 6.2 Quarterly Architecture Review
 
-**Aanbeveling**: Scheduled review or Layer 0/1 alignment
+**Aanbeveling**: Scheduled review or Priority 0/1 alignment
 
 **Agenda**:
-- [ ] Zijn Layer 0 requirements nog steeds geldig? (business changes?)
-- [ ] Zijn Layer 1 tool keuzes nog steeds optimal? (nieuwe tools beschikbaar?)
+- [ ] Zijn Priority 0 requirements nog steeds geldig? (business changes?)
+- [ ] Zijn Priority 1 tool keuzes nog steeds optimal? (nieuwe tools beschikbaar?)
 - [ ] Zijn er nieuwe risico's geïdentificeerd?
 - [ ] Kunnand we nog steeds migrerand within 1 quarter? (portability validation)
 
@@ -547,7 +547,7 @@ tools:
 Accepted
 
 ## Context
-Layer 0 requirements: network policies, performance, multi-region readiness
+Priority 0 requirements: network policies, performance, multi-region readiness
 
 ## Decision
 Cilium (eBPF-based CNI)

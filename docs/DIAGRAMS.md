@@ -1,4 +1,4 @@
-# KubeCompass Visual Diagrams
+﻿# KubeCompass Visual Diagrams
 
 This document contains visual representations of KubeCompass domains, subdomains, and decision layers to help you navigate the Kubernetes platform landscape.
 
@@ -80,14 +80,14 @@ This diagram shows all 13 domains covered by KubeCompass and their relationships
 
 ```mermaid
 graph TB
-    subgraph "Layer 0: Foundational (Day 1)"
+    subgraph "Priority 0: Foundational (Day 1)"
         D1[1.1 Provisioning &<br/>Infrastructure]
         D3[1.3 Identity, Access<br/>& Security]
         D5[1.5 Networking &<br/>Service Mesh]
         D6[1.6 CI/CD & GitOps]
     end
     
-    subgraph "Layer 1: Core Operations (Month 1)"
+    subgraph "Priority 1: Core Operations (Month 1)"
         D7[1.7 Observability]
         D8[1.8 Data Management<br/>& Storage]
         D9[1.9 Container Registry<br/>& Artifacts]
@@ -95,7 +95,7 @@ graph TB
         D11[1.11 Data Stores<br/>& Caching]
     end
     
-    subgraph "Layer 2: Enhancement (Add as Needed)"
+    subgraph "Priority 2: Enhancement (Add as Needed)"
         D2[1.2 Application<br/>Deployment]
         D4[1.4 Runtime Security]
         D12[1.12 Developer<br/>Experience]
@@ -129,9 +129,9 @@ graph TB
 ```
 
 **Color Legend:**
-- 🔴 **Red (Layer 0)**: Foundational - Decide Day 1 (High migration cost)
-- 🟡 **Yellow (Layer 1)**: Core Operations - Within Month 1 (Medium migration cost)
-- 🟢 **Green (Layer 2)**: Enhancement - Add as needed (Low migration cost)
+- 🔴 **Red (Priority 0)**: Foundational - Decide Day 1 (High migration cost)
+- 🟡 **Yellow (Priority 1)**: Core Operations - Within Month 1 (Medium migration cost)
+- 🟢 **Green (Priority 2)**: Enhancement - Add as needed (Low migration cost)
 
 ### 1.2 Domain Dependency Flow
 
@@ -194,20 +194,20 @@ gantt
     dateFormat X
     axisFormat %s
     
-    section Layer 0: Foundational
+    section Priority 0: Foundational
     CNI Plugin                    :crit, 0, 1
     GitOps Strategy              :crit, 0, 1
     RBAC Model                   :crit, 0, 1
     Service Mesh Architecture    :crit, 0, 1
     
-    section Layer 1: Core Operations
+    section Priority 1: Core Operations
     Observability Stack          :active, 1, 30
     Secrets Management           :active, 1, 30
     Ingress Controller          :active, 1, 30
     Storage Backend             :active, 1, 30
     Container Registry          :active, 1, 30
     
-    section Layer 2: Enhancement
+    section Priority 2: Enhancement
     Image Scanning              :done, 30, 90
     Policy Enforcement          :done, 30, 90
     Chaos Engineering           :done, 30, 90
@@ -219,9 +219,9 @@ gantt
 ```mermaid
 graph LR
     subgraph "Migration Cost vs. Impact"
-        L0["Layer 0:<br/>High Cost<br/>High Impact<br/>🔴"]
-        L1["Layer 1:<br/>Medium Cost<br/>Medium Impact<br/>🟡"]
-        L2["Layer 2:<br/>Low Cost<br/>Low Impact<br/>🟢"]
+        L0["Priority 0:<br/>High Cost<br/>High Impact<br/>🔴"]
+        L1["Priority 1:<br/>Medium Cost<br/>Medium Impact<br/>🟡"]
+        L2["Priority 2:<br/>Low Cost<br/>Low Impact<br/>🟢"]
     end
     
     L0 --> L1
@@ -538,9 +538,9 @@ graph TD
     FRAMEWORK --> MATRIX[Decision Matrix]
     FRAMEWORK --> SCENARIOS[Real-World Scenarios]
     
-    MATRIX --> L0[Layer 0: Foundational]
-    MATRIX --> L1[Layer 1: Core Ops]
-    MATRIX --> L2[Layer 2: Enhancement]
+    MATRIX --> L0[Priority 0: Foundational]
+    MATRIX --> L1[Priority 1: Core Ops]
+    MATRIX --> L2[Priority 2: Enhancement]
     
     L0 --> D1[Infrastructure]
     L0 --> D3[Security]
@@ -589,8 +589,8 @@ flowchart TD
     MULTI --> Q3{Multi-Region?}
     ENTERPRISE --> Q4{Multi-Cloud?}
     
-    Q2 -->|No| SINGLE_SIMPLE[Minimal Stack<br/>Layer 0 + 1]
-    Q2 -->|Yes| SINGLE_COMPLIANT[Add Layer 2<br/>Policy Tools]
+    Q2 -->|No| SINGLE_SIMPLE[Minimal Stack<br/>Priority 0 + 1]
+    Q2 -->|Yes| SINGLE_COMPLIANT[Add Priority 2<br/>Policy Tools]
     
     Q3 -->|No| MULTI_SINGLE[Single Region<br/>Full Stack]
     Q3 -->|Yes| MULTI_DR[Multi-Region<br/>+ DR]
@@ -605,9 +605,9 @@ flowchart TD
     ENT_SINGLE --> DOCS
     ENT_MULTI --> DOCS
     
-    DOCS --> LAYER0[Start with Layer 0]
-    LAYER0 --> LAYER1[Add Layer 1]
-    LAYER1 --> LAYER2[Enhance with Layer 2]
+    DOCS --> LAYER0[Start with Priority 0]
+    LAYER0 --> LAYER1[Add Priority 1]
+    LAYER1 --> LAYER2[Enhance with Priority 2]
     
     style START fill:#4CAF50
     style SINGLE fill:#81C784

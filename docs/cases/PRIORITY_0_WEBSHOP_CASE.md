@@ -1,4 +1,4 @@
-# Layer 0: Foundation & Context — Webshop Migration Case
+﻿# Priority 0: Foundation & Context — Webshop Migration Case
 
 **Target Audience**: Engineers, Architects, Management  
 **Status**: Foundational — must be established before technical implementation begins  
@@ -6,24 +6,24 @@
 
 ---
 
-## What is Layer 0?
+## What is Priority 0?
 
-Layer 0 defines **the foundation on which all technical decisions are built**. It's not about concrete tools, YAML configurations, or pipelines, but about:
+Priority 0 defines **the foundation on which all technical decisions are built**. It's not about concrete tools, YAML configurations, or pipelines, but about:
 
 - **Non-functional requirements** that determine the platform architecture
 - **Constraints** that cannot be changed without major impact
 - **Principles** that guide all subsequent choices
 - **Boundaries** of what is acceptable and what is not
 
-### Why Layer 0 First?
+### Why Priority 0 First?
 
-Without a clear Layer 0 foundation:
+Without a clear Priority 0 foundation:
 - Fundamental choices are later dismissed as "details" while they determine the architecture
 - Implicit assumptions lead to wrong tool choices
 - There is no clear framework to evaluate decisions
 - Vendor lock-in is accidentally accepted
 
-**Layer 0 must be answered before you even begin with Kubernetes implementation.**
+**Priority 0 must be answered before you even begin with Kubernetes implementation.**
 
 ---
 
@@ -39,7 +39,7 @@ Dutch webshop with Essential SAFe organization (multiple teams: Dev, Ops, Functi
 - 🗄️ SQL database as single point of failure
 - 🔧 Inconsistent VM configuration without systematic patching
 
-### Strategic Goals (Layer 0)
+### Strategic Goals (Priority 0)
 1. **Zero-downtime deployments** — deploy when ready, not when "allowed"
 2. **Proactive monitoring** — detect problems before customers call
 3. **Data resilience** — point-in-time recovery, no transaction loss
@@ -100,13 +100,13 @@ Dutch webshop with Essential SAFe organization (multiple teams: Dev, Ops, Functi
 
 ---
 
-## Explicit Non-Goals (Out of Scope for Layer 0)
+## Explicit Non-Goals (Out of Scope for Priority 0)
 
 ### What We Are NOT Doing (Now)
 1. **Microservices Refactoring** ❌
    - Current MVC monolith remains intact
    - Focus: lift & shift to Kubernetes
-   - Microservices are future option, not Layer 0 requirement
+   - Microservices are future option, not Priority 0 requirement
 
 2. **Multi-Region Deployment** ❌
    - Too complex for organization without Kubernetes experience
@@ -116,7 +116,7 @@ Dutch webshop with Essential SAFe organization (multiple teams: Dev, Ops, Functi
 3. **Advanced Observability** ❌
    - Distributed tracing is nice-to-have, not foundational
    - Focus on metrics and logs first
-   - Tracing can come later (Layer 2)
+   - Tracing can come later (Priority 2)
 
 4. **Service Mesh** ❌
    - Not needed for monolithic application
@@ -134,7 +134,7 @@ Dutch webshop with Essential SAFe organization (multiple teams: Dev, Ops, Functi
    - Read-only dashboards are available
 
 ### Why This Is Important
-Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to build "for the future", which leads to over-engineering and delays. Layer 0 is pragmatic: do what's needed, not what's nice.
+Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to build "for the future", which leads to over-engineering and delays. Priority 0 is pragmatic: do what's needed, not what's nice.
 
 ---
 
@@ -184,7 +184,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 | Trade-off | Choice | Rationale |
 |-----------|--------|-----------|
 | **Managed Kubernetes vs. Self-hosted** | Managed (at Dutch provider) | Team has no experience; managed reduces operational burden |
-| **Managed Database vs. Kubernetes StatefulSet** | TBD in Layer 1 | Balance between vendor independence and operational complexity |
+| **Managed Database vs. Kubernetes StatefulSet** | TBD in Priority 1 | Balance between vendor independence and operational complexity |
 | **Open-source vs. SaaS observability** | Open-source (Prometheus/Grafana) | Budget + vendor independence |
 | **GitOps complexity vs. Control** | Accept learning curve | Security and audit trail justify investment |
 
@@ -295,7 +295,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - No distinction between planned and unplanned downtime
 
 ### 2.2 Target (TO-BE)
-**Qualitative goals** (SLAs come in Layer 1):
+**Qualitative goals** (SLAs come in Priority 1):
 
 1. **Releases without downtime**
    - Deploy when features are ready, not when "downtime is allowed"
@@ -344,7 +344,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - **Limitation**: Point-in-time recovery is not possible
 - **Risk**: Loss of all transactions since last backup
 
-### 3.3 Layer 0 Requirements
+### 3.3 Priority 0 Requirements
 
 **Data Classification**:
 | Data Type | Criticality | RPO (Recovery Point Objective) | RTO (Recovery Time Objective) |
@@ -369,10 +369,10 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
   - Circuit breaker pattern to prevent cascading failures
   - Caching layer (Redis/Valkey) to reduce database load
 
-**What is NOT in Layer 0**:
-- Specific backup tool choice (Velero, Kasten, etc.) → Layer 1
-- Exact backup frequency (hourly, every 4 hours) → Layer 1
-- Database technology choice (PostgreSQL HA, MySQL Cluster) → Layer 1
+**What is NOT in Priority 0**:
+- Specific backup tool choice (Velero, Kasten, etc.) → Priority 1
+- Exact backup frequency (hourly, every 4 hours) → Priority 1
+- Database technology choice (PostgreSQL HA, MySQL Cluster) → Priority 1
 
 ---
 
@@ -383,7 +383,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - No systematic patching
 - Access management poorly documented
 
-### 4.2 Layer 0 Security Principles
+### 4.2 Priority 0 Security Principles
 
 **1. Least Privilege**
 - Developers have **no** production access (unless explicitly needed)
@@ -431,7 +431,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - No proactive monitoring
 - No clear "single pane of glass"
 
-### 5.2 Layer 0 Observability Requirements
+### 5.2 Priority 0 Observability Requirements
 
 **Proactive Detection**:
 - **Before customers notice**: Alerts on critical metrics (response time, error rate, pod crashes)
@@ -454,15 +454,15 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ### 5.3 Realistic Scope
 
-**What IS in Layer 0**:
+**What IS in Priority 0**:
 - ✅ Observability is **non-optional** — must be present from day 1
 - ✅ Metrics, logs, and dashboards for **all workloads**
 - ✅ Alerts for **business-critical scenarios** (payment fails, webshop down)
 
-**What is NOT in Layer 0**:
-- ❌ Tool choice (Prometheus, Datadog, etc.) → Layer 1
-- ❌ Exact metrics and alert thresholds → Layer 1
-- ❌ Distributed tracing (nice to have, can come later) → Layer 2
+**What is NOT in Priority 0**:
+- ❌ Tool choice (Prometheus, Datadog, etc.) → Priority 1
+- ❌ Exact metrics and alert thresholds → Priority 1
+- ❌ Distributed tracing (nice to have, can come later) → Priority 2
 
 ---
 
@@ -473,7 +473,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - **Dev**: Delivers code, limited involvement in production behavior
 - **Support**: First line contact with customers, escalates to Ops
 
-### 6.2 Layer 0 Ownership Principles
+### 6.2 Priority 0 Ownership Principles
 
 **Shared Responsibility Model**:
 
@@ -504,7 +504,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ### 6.3 On-Call & Escalation
 
-**Layer 0 Principle**: Clear escalation paths, not "everything to Ops"
+**Priority 0 Principle**: Clear escalation paths, not "everything to Ops"
 
 | Scenario | First Responder | Escalation |
 |---------|----------------|------------|
@@ -513,7 +513,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 | **Slow performance** | Dev (query optimization) | Ops (if resource exhaustion) |
 | **Security incident** | Ops (isolate threat) | Security Officer + Dev |
 
-**On-Call Rotation** (outside Layer 0 scope, but establish principle):
+**On-Call Rotation** (outside Priority 0 scope, but establish principle):
 - Ops on-call for **platform** (cluster down, node failures)
 - Dev on-call for **application** (bug in code, payment service down) — consider this in later phase
 
@@ -524,7 +524,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 ### 7.1 Explicit Customer Requirement
 > "Vendor lock-in is an explicit concern. We want to be able to migrate to another infrastructure provider within one quarter without functional loss."
 
-### 7.2 Layer 0 Portability Principles
+### 7.2 Priority 0 Portability Principles
 
 **1. Cloud-Agnostic Architecture**
 - **No dependency on cloud-specific services** (AWS ECS, Azure Container Apps, GCP Cloud Run)
@@ -568,7 +568,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 | **Networking** | AWS VPC CNI (EKS-only) | Cilium, Calico (cloud-agnostic) |
 | **GitOps** | Vendor SaaS (without export) | Argo CD, Flux (self-hosted) |
 
-**Layer 0 Decision**: **Open-source and self-hosted preference**, unless managed service has clear advantage (and migration path exists).
+**Priority 0 Decision**: **Open-source and self-hosted preference**, unless managed service has clear advantage (and migration path exists).
 
 ---
 
@@ -578,16 +578,16 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 **Current requirement**: Customers throughout Europe, website slow from Southern Europe.
 
-**Layer 0 Question**: Do we want multi-region from day 1?
+**Priority 0 Question**: Do we want multi-region from day 1?
 
 **Analysis**:
 - **Advantage**: Lower latency, disaster recovery
 - **Disadvantage**: Complexity (data replication, cross-region networking, costs)
 
-**Layer 0 Decision**:
+**Priority 0 Decision**:
 - ❌ **NOT multi-region from day 1** (too complex for organization without Kubernetes experience)
 - ✅ **Architecture that allows multi-region** (no design decisions that block multi-region)
-- ✅ **CDN for static assets** (first step for latency improvement) → Layer 1 decision
+- ✅ **CDN for static assets** (first step for latency improvement) → Priority 1 decision
 
 **Criteria for multi-region in future**:
 - [ ] Single-region setup is stable (> 3 months without major incidents)
@@ -596,22 +596,22 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ### 8.2 Networking & CNI Considerations
 
-**Layer 0 Question**: Which CNI fundamentals are unchangeable?
+**Priority 0 Question**: Which CNI fundamentals are unchangeable?
 
 **Analysis**:
 | CNI Choice | Changeability | Impact |
 |-----------|--------------|--------|
-| **CNI plugin** (Cilium, Calico, Flannel) | Very difficult (requires cluster rebuild or downtime) | ❗ Layer 0 decision |
-| **Service Mesh** (Istio, Linkerd) | Difficult but possible (additive) | ⚠️ Layer 0/1 boundary — not needed from day 1 |
-| **Network Policies** (enabled/disabled) | Easy to enable later | ✅ Layer 1 decision |
+| **CNI plugin** (Cilium, Calico, Flannel) | Very difficult (requires cluster rebuild or downtime) | ❗ Priority 0 decision |
+| **Service Mesh** (Istio, Linkerd) | Difficult but possible (additive) | ⚠️ Priority 0/1 boundary — not needed from day 1 |
+| **Network Policies** (enabled/disabled) | Easy to enable later | ✅ Priority 1 decision |
 
-**Layer 0 Decisions**:
+**Priority 0 Decisions**:
 - ✅ **CNI must be multi-region capable** (no single-zone only solutions)
 - ✅ **CNI must support Network Policies** (security requirement)
 - ✅ **Performance is important** (webshop must be fast)
-- ❌ **Service mesh is NOT a Layer 0 requirement** (can come later, with microservices architecture)
+- ❌ **Service mesh is NOT a Priority 0 requirement** (can come later, with microservices architecture)
 
-**Criteria for CNI choice** (tooling in Layer 1):
+**Criteria for CNI choice** (tooling in Priority 1):
 - Supports Network Policies (security)
 - Cloud-agnostic (portability)
 - Performance (eBPF preference over iptables)
@@ -619,23 +619,23 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ### 8.3 Identity & Access Management
 
-**Layer 0 Question**: How do we authenticate people and machines?
+**Priority 0 Question**: How do we authenticate people and machines?
 
 **Fundamental Choices**:
 1. **User Authentication**: How do developers/ops log in to cluster?
    - **Option A**: kubeconfig files (simple, but not scalable)
    - **Option B**: OIDC provider (Keycloak, cloud IdP) — scalable, audit trails
-   - **Layer 0 Decision**: **OIDC is end state**, but kubeconfig files are acceptable for first months (team is small)
+   - **Priority 0 Decision**: **OIDC is end state**, but kubeconfig files are acceptable for first months (team is small)
 
 2. **Service Account Management**: How do applications authenticate?
    - **Principle**: Each application gets **its own service account** (no shared secrets)
    - **Principle**: Service accounts have **minimal permissions** (namespace-scoped)
-   - **Layer 0 Decision**: **RBAC is mandatory** from day 1
+   - **Priority 0 Decision**: **RBAC is mandatory** from day 1
 
 3. **Secrets Management**: Where do we store credentials?
    - **Principle**: **Never in Git** (not even encrypted — rotation is too difficult)
    - **Principle**: **External secrets** preference (Vault, cloud secret managers)
-   - **Layer 0 Decision**: **Secrets management is Layer 0** — must be right from day 1 (difficult to fix later)
+   - **Priority 0 Decision**: **Secrets management is Priority 0** — must be right from day 1 (difficult to fix later)
 
 **Identity Provider Decision**:
 - ✅ **Self-hosted preference** (Keycloak) for vendor independence
@@ -644,7 +644,7 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ### 8.4 GitOps: Yes or No?
 
-**Layer 0 Question**: Is GitOps a fundamental principle, or "nice to have"?
+**Priority 0 Question**: Is GitOps a fundamental principle, or "nice to have"?
 
 **Arguments for GitOps**:
 - ✅ **Audit trail**: All changes in Git (compliance)
@@ -656,8 +656,8 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 - ⚠️ **Learning curve**: Team must learn Git, PR workflows, and GitOps tool
 - ⚠️ **Initial complexity**: Repo structure, branching strategy, environments
 
-**Layer 0 Decision**: 
-- ✅ **GitOps is Layer 0 principle** — too fundamental for workflow to add later
+**Priority 0 Decision**: 
+- ✅ **GitOps is Priority 0 principle** — too fundamental for workflow to add later
 - ✅ **All deployments via Git** (no manual kubectl apply)
 - ✅ **Architecture must support GitOps** from day 1
 
@@ -665,36 +665,36 @@ Non-goals prevent **scope creep** and **analysis paralysis**. Teams tend to buil
 
 ---
 
-## 9. What Does NOT Belong in Layer 0
+## 9. What Does NOT Belong in Priority 0
 
-Layer 0 is **fundamental and strategic**, not tactical. The following do **not** belong in Layer 0:
+Priority 0 is **fundamental and strategic**, not tactical. The following do **not** belong in Priority 0:
 
 ### 9.1 Concrete Tool Choices
-- ❌ "We use Cilium" → This is Layer 1 (after analysis of CNI requirements)
-- ❌ "We use Argo CD" → This is Layer 1 (after analysis of GitOps requirements)
-- ✅ "We need a CNI that supports Network Policies" → This is Layer 0
+- ❌ "We use Cilium" → This is Priority 1 (after analysis of CNI requirements)
+- ❌ "We use Argo CD" → This is Priority 1 (after analysis of GitOps requirements)
+- ✅ "We need a CNI that supports Network Policies" → This is Priority 0
 
 ### 9.2 Operational Details
-- ❌ Backup frequency (hourly, every 4 hours) → Layer 1
-- ❌ Prometheus retention (15 days, 30 days) → Layer 1
-- ✅ "Backups must support point-in-time recovery" → Layer 0
+- ❌ Backup frequency (hourly, every 4 hours) → Priority 1
+- ❌ Prometheus retention (15 days, 30 days) → Priority 1
+- ✅ "Backups must support point-in-time recovery" → Priority 0
 
 ### 9.3 Implementation Specifications
-- ❌ How many nodes, which instance types → Layer 1 (sizing)
-- ❌ Which namespaces, which resource quotas → Layer 1 (multi-tenancy design)
-- ✅ "Resources must be limited to prevent resource exhaustion" → Layer 0
+- ❌ How many nodes, which instance types → Priority 1 (sizing)
+- ❌ Which namespaces, which resource quotas → Priority 1 (multi-tenancy design)
+- ✅ "Resources must be limited to prevent resource exhaustion" → Priority 0
 
 ### 9.4 Features That Can Come Later
-- ❌ Service mesh (Istio, Linkerd) → Layer 2 (can come later, with microservices architecture)
-- ❌ Chaos engineering (Chaos Mesh) → Layer 2 (valuable, but not foundational)
-- ❌ Advanced observability (distributed tracing) → Layer 2 (metrics and logs first)
-- ✅ "Observability must be proactive" → Layer 0
+- ❌ Service mesh (Istio, Linkerd) → Priority 2 (can come later, with microservices architecture)
+- ❌ Chaos engineering (Chaos Mesh) → Priority 2 (valuable, but not foundational)
+- ❌ Advanced observability (distributed tracing) → Priority 2 (metrics and logs first)
+- ✅ "Observability must be proactive" → Priority 0
 
 ---
 
 ## 10. Assumptions That Must Be Validated (in Subsequent Layers)
 
-Layer 0 makes **strategic choices**, but not everything is known now. The following assumptions must be validated in Layer 1 and beyond:
+Priority 0 makes **strategic choices**, but not everything is known now. The following assumptions must be validated in Priority 1 and beyond:
 
 ### 10.1 Application Architecture Assumptions
 
@@ -756,9 +756,9 @@ Layer 0 makes **strategic choices**, but not everything is known now. The follow
 
 ---
 
-## 11. Summary: Layer 0 Decision Tree
+## 11. Summary: Priority 0 Decision Tree
 
-Before moving to Layer 1 (tool selection), these questions must be **clearly answered**:
+Before moving to Priority 1 (tool selection), these questions must be **clearly answered**:
 
 ### ✅ Availability
 - [ ] **Zero-downtime deployments are a requirement** (rolling updates, health checks)
@@ -799,9 +799,9 @@ Before moving to Layer 1 (tool selection), these questions must be **clearly ans
 
 ---
 
-## 12. Targeted Follow-up Questions for Layer 1 Transition
+## 12. Targeted Follow-up Questions for Priority 1 Transition
 
-Before you can start Layer 1 (concrete tool selection and platform capabilities), the following questions must be answered. These questions are **specific enough** to inform technical decisions, but **abstract enough** to not yet choose tools.
+Before you can start Priority 1 (concrete tool selection and platform capabilities), the following questions must be answered. These questions are **specific enough** to inform technical decisions, but **abstract enough** to not yet choose tools.
 
 ### 12.1 Application Architecture & Readiness
 
@@ -993,16 +993,16 @@ Before you can start Layer 1 (concrete tool selection and platform capabilities)
 
 ---
 
-### Summary: Layer 0 → Layer 1 Readiness Checklist
+### Summary: Priority 0 → Priority 1 Readiness Checklist
 
-✅ **Ready for Layer 1** if:
-- [ ] All 40 questions above are answered (or explicitly marked as "TBD in Layer 1")
+✅ **Ready for Priority 1** if:
+- [ ] All 40 questions above are answered (or explicitly marked as "TBD in Priority 1")
 - [ ] Business context is clear (who are stakeholders, what are their pain points)
 - [ ] Hard constraints are documented (vendor independence, GDPR, budget)
 - [ ] Risks are identified with mitigation plans
 - [ ] Team capabilities are realistically assessed (not over-optimistic)
 
-❌ **NOT yet ready for Layer 1** if:
+❌ **NOT yet ready for Priority 1** if:
 - [ ] There are conflicting requirements (e.g., "zero downtime" vs. "no budget for HA")
 - [ ] Team has no time for training (Kubernetes knowledge is essential)
 - [ ] Infrastructure provider capabilities are unknown (can block during implementation)
@@ -1010,23 +1010,23 @@ Before you can start Layer 1 (concrete tool selection and platform capabilities)
 
 ---
 
-## 13. Next Steps: From Layer 0 to Layer 1
+## 13. Next Steps: From Priority 0 to Priority 1
 
-Now that Layer 0 is established, Layer 1 can begin:
+Now that Priority 0 is established, Priority 1 can begin:
 
-### Layer 1 Scope (Within 1-2 Weeks)
+### Priority 1 Scope (Within 1-2 Weeks)
 - **Tool selection**: Which concrete tools (Cilium vs Calico, Argo CD vs Flux, etc.)
 - **Cluster sizing**: How many nodes, which instance types
 - **Network design**: Subnets, load balancers, DNS
 - **Storage design**: Which StorageClasses, backup strategy
 - **Security design**: RBAC roles, network policies, pod security standards
 
-### Layer 1 Deliverables
+### Priority 1 Deliverables
 - Architecture diagram (network, storage, observability)
 - Tool selection matrix (with rationale per choice)
 - Proof of Concept planning (which features do we test first)
 
-### Layer 2 Scope (Month 2-3)
+### Priority 2 Scope (Month 2-3)
 - Implementation of platform (cluster setup, tooling installation)
 - Migration of first application (test workload)
 - Team training (Kubernetes basics, GitOps workflow)
@@ -1036,9 +1036,9 @@ Now that Layer 0 is established, Layer 1 can begin:
 
 ## 14. Appendix: References to KubeCompass Framework
 
-This Layer 0 document is based on the KubeCompass methodology:
+This Priority 0 document is based on the KubeCompass methodology:
 
-- **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers explanation (Layer 0, 1, 2)
+- **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers explanation (Priority 0, 1, 2)
 - **[METHODOLOGY.md](METHODOLOGY.md)**: Objectivity and scoring rubric
 - **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tenant scenario (comparable to this case)
 - **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance and maturity progression
@@ -1048,7 +1048,7 @@ This Layer 0 document is based on the KubeCompass methodology:
 - This case: Smaller team, no strict compliance, but business-critical
 
 **Relevant KubeCompass Principles**:
-- ✅ **Layer 0 first**: Establish fundamentals before choosing tools
+- ✅ **Priority 0 first**: Establish fundamentals before choosing tools
 - ✅ **Vendor neutrality**: Open-source preference, no lock-in
 - ✅ **Pragmatism**: Not all enterprise features are needed (KISS)
 - ✅ **Business impact**: Decisions based on business value, not tech hype
@@ -1056,9 +1056,9 @@ This Layer 0 document is based on the KubeCompass methodology:
 ---
 
 **Document Status**: ✅ Ready for review with engineers, architects, and management  
-**Next Step**: Layer 1 tool selection and architecture design  
+**Next Step**: Priority 1 tool selection and architecture design  
 **Owner**: Platform Team / Lead Architect  
-**Review Cycle**: After every 3 months (Layer 0 evolves with business needs)
+**Review Cycle**: After every 3 months (Priority 0 evolves with business needs)
 
 ---
 
@@ -1066,25 +1066,25 @@ This Layer 0 document is based on the KubeCompass methodology:
 
 ### For Engineers Using This Document
 
-This Layer 0 document is specifically designed to serve as input for AI auto-copilots (ChatGPT, Claude, Gemini) when elaborating Layer 1 and beyond.
+This Priority 0 document is specifically designed to serve as input for AI auto-copilots (ChatGPT, Claude, Gemini) when elaborating Priority 1 and beyond.
 
 #### How to Use with Auto-Copilot
 
-**Step 1: Layer 0 Validation**
+**Step 1: Priority 0 Validation**
 Give the copilot this complete document and ask:
 ```
-I have done a Layer 0 analysis for a Kubernetes migration.
+I have done a Priority 0 analysis for a Kubernetes migration.
 Analyze this document and identify:
 1. Which assumptions are not validated and pose risks
 2. Which hard constraints can conflict
-3. Which questions from section 12 are critical for Layer 1
+3. Which questions from section 12 are critical for Priority 1
 4. Which risks from "Explicit Risks" section have insufficient mitigation
 ```
 
-**Step 2: Layer 1 Tool Selection**
-After validating Layer 0:
+**Step 2: Priority 1 Tool Selection**
+After validating Priority 0:
 ```
-Based on this Layer 0 analysis, help me with Layer 1 tool selection.
+Based on this Priority 0 analysis, help me with Priority 1 tool selection.
 Give "Use X unless Y" recommendations for:
 1. CNI plugin (Cilium vs Calico vs Flannel)
 2. GitOps tool (Argo CD vs Flux)
@@ -1101,7 +1101,7 @@ For each tool category:
 ```
 For [CNI plugin] choice:
 - What are the trade-offs between Cilium and Calico?
-- How do I measure these trade-offs against Layer 0 requirements?
+- How do I measure these trade-offs against Priority 0 requirements?
   - Performance (webshop must be fast)
   - Network policies support (security requirement)
   - Multi-region capability (future requirement)
@@ -1109,7 +1109,7 @@ For [CNI plugin] choice:
 - What is the migration cost if we want to switch later?
 ```
 
-### Validation Checklist for Layer 0 Completeness
+### Validation Checklist for Priority 0 Completeness
 
 This document is **complete** if:
 - [x] **Explicit Goals** are documented (what we want to achieve)
@@ -1118,8 +1118,8 @@ This document is **complete** if:
 - [x] **Risks with mitigations** are identified (high/medium/low)
 - [x] **Business context** is clear (who, what, why)
 - [x] **Ownership model** is defined (Dev/Ops/Support roles)
-- [x] **Assumptions are explicit** and marked for validation in Layer 1
-- [x] **Follow-up questions for Layer 1** are structured and specific
+- [x] **Assumptions are explicit** and marked for validation in Priority 1
+- [x] **Follow-up questions for Priority 1** are structured and specific
 - [x] **No tool names** in requirements (unless as example of what NOT to do)
 - [x] **No vendor-specific** solutions as requirement
 
@@ -1130,14 +1130,14 @@ This document is **NOT complete** if:
 - [ ] Budget and time constraints are not documented
 - [ ] Rollback scenarios are not defined
 
-### Principles That Were Followed (Layer 0 Discipline)
+### Principles That Were Followed (Priority 0 Discipline)
 
 ✅ **No premature tool choices**: Document mentions Cilium/Calico/Flannel as *examples*, not as decisions  
 ✅ **Vendor neutrality**: Open-source preference is *principle*, not "we use tool X"  
 ✅ **Business driven**: Every requirement is linked to business impact (revenue loss, customer trust)  
 ✅ **Pragmatism**: Non-goals section prevents over-engineering (no microservices day 1, no multi-region day 1)  
 ✅ **Explicit about ignorance**: Section 10 "Assumptions" acknowledges what we DON'T know  
-✅ **Iterative refinement**: Section 12 "Follow-up Questions" makes clear what Layer 1 must answer  
+✅ **Iterative refinement**: Section 12 "Follow-up Questions" makes clear what Priority 1 must answer  
 
 ### Anti-Patterns That Were Avoided
 
@@ -1149,7 +1149,7 @@ This document is **NOT complete** if:
 
 ---
 
-**Layer 0 Document Version**: 2.0  
+**Priority 0 Document Version**: 2.0  
 **Last Update**: December 2024  
 **Author**: KubeCompass Framework + Community Feedback  
 **License**: MIT — free to use and adapt for your own situations

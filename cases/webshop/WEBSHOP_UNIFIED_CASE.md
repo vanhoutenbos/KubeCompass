@@ -1,4 +1,4 @@
-# Webshop Case: Unified Decision Framework
+﻿# Webshop Case: Unified Decision Framework
 
 **Case Type**: SME E-commerce Migration  
 **Version**: 1.0  
@@ -53,9 +53,9 @@
 
 ---
 
-## 2. Layer 0: Foundations
+## 2. Priority 0: Foundations
 
-*For complete Layer 0 details, see [LAYER_0_WEBSHOP_CASE.md](../../LAYER_0_WEBSHOP_CASE.md)*
+*For complete Priority 0 details, see [PRIORITY_0_WEBSHOP_CASE.md](../../PRIORITY_0_WEBSHOP_CASE.md)*
 
 ### Goals (Primary)
 1. **Eliminate Deployment Downtime** - Zero-downtime releases via rolling updates
@@ -67,7 +67,7 @@
 ### Non-Goals (Explicitly Excluded)
 1. ❌ **Microservices Refactoring** - MVC monolith stays intact (lift & shift only)
 2. ❌ **Multi-Region Deployment** - Too complex for team without K8s experience
-3. ❌ **Advanced Observability** - Distributed tracing is Layer 2 (metrics/logs first)
+3. ❌ **Advanced Observability** - Distributed tracing is Priority 2 (metrics/logs first)
 4. ❌ **Service Mesh** - Not needed for monolith (defer until microservices)
 5. ❌ **100% Uptime Guarantee** - Realistic target is 99.9% (30 min/month acceptable)
 6. ❌ **Developer kubectl Access** - GitOps only (security/compliance requirement)
@@ -97,9 +97,9 @@
 
 ---
 
-## 3. Layer 1: Tool Mapping & "Choose X unless Y" Rules
+## 3. Priority 1: Tool Mapping & "Choose X unless Y" Rules
 
-*For complete Layer 1 details with all 44 questions, see [LAYER_1_WEBSHOP_CASE.md](../../LAYER_1_WEBSHOP_CASE.md)*
+*For complete Priority 1 details with all 44 questions, see [PRIORITY_1_WEBSHOP_CASE.md](../../PRIORITY_1_WEBSHOP_CASE.md)*
 
 ### Infrastructure & Provisioning
 
@@ -245,11 +245,11 @@
 
 ---
 
-## 4. Layer 2: Enhancements (Future, Not Day 1)
+## 4. Priority 2: Enhancements (Future, Not Day 1)
 
-*For complete Layer 2 triggers and trade-offs, see [LAYER_2_WEBSHOP_CASE.md](../../LAYER_2_WEBSHOP_CASE.md)*
+*For complete Priority 2 triggers and trade-offs, see [PRIORITY_2_WEBSHOP_CASE.md](../../PRIORITY_2_WEBSHOP_CASE.md)*
 
-### When to Implement Layer 2 Capabilities
+### When to Implement Priority 2 Capabilities
 
 | Capability | Trigger | Complexity | Timing |
 |-----------|---------|------------|--------|
@@ -260,7 +260,7 @@
 | **Cost Visibility** | Budget concerns, multi-tenant | Low | **Day 1** (Kubecost recommended from start) |
 | **Multi-Region** | Latency requirements, DR active-active | High | When international expansion confirmed |
 
-**Key Principle**: Don't build for problems you don't have yet. Layer 2 is about maturity, not day 1.
+**Key Principle**: Don't build for problems you don't have yet. Priority 2 is about maturity, not day 1.
 
 ---
 
@@ -290,16 +290,16 @@
 | **Q19** | Break-glass procedures? | Affects emergency access | Week 2 |
 | **Q35** | Database migration approach? | Affects cutover strategy | Week 2 |
 
-### CAN DEFER (Layer 2 or Implementation Phase)
+### CAN DEFER (Priority 2 or Implementation Phase)
 
 | ID | Question | Can Defer Until |
 |----|----------|-----------------|
-| **Q7** | Hubble UI exposure? | Layer 2 observability |
+| **Q7** | Hubble UI exposure? | Priority 2 observability |
 | **Q12** | Self-hosted CI runners? | When security requires |
 | **Q30** | Session management refactor? | Application containerization phase |
 | **Q42** | External consultant needed? | Recommendation: **YES** (strongly advised) |
 
-**Total Questions**: 44 from Layer 1, categorized by urgency
+**Total Questions**: 44 from Priority 1, categorized by urgency
 
 ---
 
@@ -341,7 +341,7 @@ THEN recommend:
 
 **Enterprise/Government** → Self-managed K8s (control, compliance, transparency) OR managed with strict portability  
 **Startup (solo DevOps)** → Managed K8s (DigitalOcean, Scaleway) - simplicity paramount  
-**Scale-Up (10+ services)** → Self-managed OR managed + Layer 2 features (service mesh, policy enforcement)
+**Scale-Up (10+ services)** → Self-managed OR managed + Priority 2 features (service mesh, policy enforcement)
 
 ---
 
@@ -373,7 +373,7 @@ THEN recommend:
 - **Velero + DB PITR** UNLESS CSI snapshots sufficient OR enterprise features (Kasten K10)
 - **Valkey (Redis fork)** UNLESS existing Redis license OR cloud-managed acceptable
 
-### Layer 2 (Future)
+### Priority 2 (Future)
 - **NO Service Mesh** UNLESS > 5 microservices + security needs
 - **NO Distributed Tracing** UNLESS > 5 services + debugging takes > 1h
 - **YES Cost Visibility (Day 1)** - easier to track from start
@@ -464,9 +464,9 @@ See **[AI_CASE_ADVISOR.md](../AI_CASE_ADVISOR.md)** for complete interactive age
 - **[SCENARIOS.md](../../SCENARIOS.md)** - Enterprise and other scenario examples
 
 ### Original Layer Documents (Source Material)
-- **[LAYER_0_WEBSHOP_CASE.md](../../LAYER_0_WEBSHOP_CASE.md)** - Foundational requirements (1155 lines)
-- **[LAYER_1_WEBSHOP_CASE.md](../../LAYER_1_WEBSHOP_CASE.md)** - Tool selection + 44 questions (579 lines)
-- **[LAYER_2_WEBSHOP_CASE.md](../../LAYER_2_WEBSHOP_CASE.md)** - Enhancement triggers (644 lines)
+- **[PRIORITY_0_WEBSHOP_CASE.md](../../PRIORITY_0_WEBSHOP_CASE.md)** - Foundational requirements (1155 lines)
+- **[PRIORITY_1_WEBSHOP_CASE.md](../../PRIORITY_1_WEBSHOP_CASE.md)** - Tool selection + 44 questions (579 lines)
+- **[PRIORITY_2_WEBSHOP_CASE.md](../../PRIORITY_2_WEBSHOP_CASE.md)** - Enhancement triggers (644 lines)
 
 ### Interactive Tools
 - **[tool-selector-wizard.html](../../tool-selector-wizard.html)** - Web UI for tool selection
@@ -482,4 +482,4 @@ See **[AI_CASE_ADVISOR.md](../AI_CASE_ADVISOR.md)** for complete interactive age
 
 ---
 
-*This document transforms 2378 lines of raw case analysis (Layer 0/1/2) into a structured decision framework suitable for interactive AI advisors, scenario comparison, and automated recommendations.*
+*This document transforms 2378 lines of raw case analysis (Priority 0/1/2) into a structured decision framework suitable for interactive AI advisors, scenario comparison, and automated recommendations.*

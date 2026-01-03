@@ -1,4 +1,4 @@
-# Domain Testing Template
+﻿# Domain Testing Template
 
 **Purpose**: Consistent methodology voor het testen en documenteren van elk domein in KubeCompass.
 
@@ -350,8 +350,8 @@ Common issues en oplossingen:
 **Goal**: [Hoe blijf je provider-agnostisch?]
 
 **Abstraction Layers**:
-1. [Layer 1]: [Beschrijving]
-2. [Layer 2]: [Beschrijving]
+1. [Priority 1]: [Beschrijving]
+2. [Priority 2]: [Beschrijving]
 
 ### Provider Compatibility Matrix
 

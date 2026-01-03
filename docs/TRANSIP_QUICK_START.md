@@ -1,4 +1,4 @@
-# TransIP Kubernetes: Quick Start Guide
+﻿# TransIP Kubernetes: Quick Start Guide
 
 **TL;DR**: How to use TransIP Kubernetes with Infrastructure as Code
 
@@ -14,7 +14,7 @@ TransIP is recommended for Dutch SMEs (GDPR, support, pricing) but **lacks nativ
 
 ```
 ┌─────────────────────────────────────┐
-│ Layer 1: Cluster Lifecycle         │
+│ Priority 1: Cluster Lifecycle         │
 │ Tool: Manual (TransIP Control Panel)│
 │ What: Provision cluster, node pools│
 │ Doc: runbooks/transip-cluster-      │
@@ -22,7 +22,7 @@ TransIP is recommended for Dutch SMEs (GDPR, support, pricing) but **lacks nativ
 └─────────────────────────────────────┘
               ↓ kubeconfig
 ┌─────────────────────────────────────┐
-│ Layer 2: In-Cluster Resources       │
+│ Priority 2: In-Cluster Resources       │
 │ Tool: Terraform (Kubernetes provider)│
 │ What: Namespaces, RBAC, Helm, DNS  │
 │ Doc: terraform/environments/        │
@@ -219,7 +219,7 @@ Build custom Kubernetes operator to call TransIP API
 
 - **[Decision Rules](DECISION_RULES.md)** - Provider selection criteria
 - **[Open Questions](OPEN_QUESTIONS.md)** - TransIP considerations
-- **[Layer 1 Webshop Case](cases/LAYER_1_WEBSHOP_CASE.md)** - Architecture decisions
+- **[Priority 1 Webshop Case](cases/PRIORITY_1_WEBSHOP_CASE.md)** - Architecture decisions
 - **[Webshop Unified Case](../cases/webshop/WEBSHOP_UNIFIED_CASE.md)** - Complete case study
 
 ---
@@ -237,7 +237,7 @@ For SME with predictable traffic: **pragmatic choice**.
 
 ### Q: Can we migrate away from TransIP later?
 
-**A**: Yes, within 1 quarter (Layer 0 requirement):
+**A**: Yes, within 1 quarter (Priority 0 requirement):
 1. Applications are portable (standard K8s)
 2. In-cluster config is in Terraform (reproducible)
 3. Cluster state in Velero backups
@@ -245,9 +245,9 @@ For SME with predictable traffic: **pragmatic choice**.
 
 ### Q: What if TransIP adds Terraform support?
 
-**A**: Perfect! Convert Layer 1 runbook to Terraform:
+**A**: Perfect! Convert Priority 1 runbook to Terraform:
 - Effort: 1-2 days
-- Layer 2 stays unchanged
+- Priority 2 stays unchanged
 - Huge improvement
 
 ### Q: How do we handle Black Friday traffic spikes?

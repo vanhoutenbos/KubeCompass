@@ -1,4 +1,4 @@
-# Documentation Status & Gaps
+﻿# Documentation Status & Gaps
 
 **Purpose**: Track what documentation exists, what's missing, and what needs to be done for Month 1 launch
 
@@ -25,9 +25,9 @@
 
 **Scenarios & Examples**:
 - [x] SCENARIOS.md — Enterprise multi-tenant scenario complete
-- [x] LAYER_0_WEBSHOP_CASE.md — Dutch webshop foundational requirements
-- [x] LAYER_1_WEBSHOP_CASE.md — Tool selection for webshop
-- [x] LAYER_2_WEBSHOP_CASE.md — Enhancement decision framework
+- [x] PRIORITY_0_WEBSHOP_CASE.md — Dutch webshop foundational requirements
+- [x] PRIORITY_1_WEBSHOP_CASE.md — Tool selection for webshop
+- [x] PRIORITY_2_WEBSHOP_CASE.md — Enhancement decision framework
 - [x] ARCHITECTURE_REVIEW_SUMMARY.md — Structured decision support
 
 **Project Meta**:
@@ -73,14 +73,14 @@
 
 ### Tool Reviews (Expand Coverage)
 
-**Layer 0 (Foundational)** — Priority for Month 1:
+**Priority 0 (Foundational)** — Priority for Month 1:
 - [x] CNI: Cilium ✅ COMPLETE
 - [ ] GitOps: Argo CD (testing + review)
 - [ ] Secrets: Vault + External Secrets Operator (testing + review)
 - [ ] Identity: Keycloak OIDC (testing + review)
 - [ ] Storage: Cloud CSI drivers (document decision trade-offs)
 
-**Layer 1 (Core Operations)** — Priority for Month 1:
+**Priority 1 (Core Operations)** — Priority for Month 1:
 - [ ] Observability: Prometheus + Loki + Grafana (testing + review)
 - [ ] Ingress: NGINX Ingress Controller (testing + review)
 - [ ] Registry: Harbor (testing + review)
@@ -89,7 +89,7 @@
 - [ ] Messaging: NATS (testing + review)
 - [ ] Object Storage: MinIO (testing + review)
 
-**Layer 2 (Enhancements)** — Lower priority:
+**Priority 2 (Enhancements)** — Lower priority:
 - [ ] Image Scanning: Trivy (testing + review)
 - [ ] Policy: Kyverno (testing + review)
 - [ ] Runtime Security: Falco (testing + review)
@@ -352,7 +352,7 @@
 
 ### Documentation Completeness (Launch Day)
 
-- [ ] 100% of Layer 0/1 domains have "choose X unless Y" rules
+- [ ] 100% of Priority 0/1 domains have "choose X unless Y" rules
 - [ ] 80%+ of "go-to" tools have hands-on testing documented
 - [ ] 2+ complete real-world scenarios
 - [ ] Zero broken internal links

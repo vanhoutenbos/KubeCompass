@@ -1,4 +1,4 @@
-# KubeCompass Documentation Index
+﻿# KubeCompass Documentation Index
 
 **Complete guide to navigating KubeCompass documentation**
 
@@ -13,9 +13,9 @@
 4. Explore: [Tool Selector Wizard](../tool-selector-wizard.html) - Interactive tool selection
 
 ### Planning a Migration?
-1. Start: [Layer 0 Case Study](cases/LAYER_0_WEBSHOP_CASE.md) - Requirements analysis
-2. Continue: [Layer 1 Case Study](cases/LAYER_1_WEBSHOP_CASE.md) - Tool selection
-3. Advanced: [Layer 2 Case Study](cases/LAYER_2_WEBSHOP_CASE.md) - Enhancement decisions
+1. Start: [Priority 0 Case Study](cases/PRIORITY_0_WEBSHOP_CASE.md) - Requirements analysis
+2. Continue: [Priority 1 Case Study](cases/PRIORITY_1_WEBSHOP_CASE.md) - Tool selection
+3. Advanced: [Priority 2 Case Study](cases/PRIORITY_2_WEBSHOP_CASE.md) - Enhancement decisions
 4. Reference: [Architecture Review Summary](architecture/ARCHITECTURE_REVIEW_SUMMARY.md)
 
 ### Setting Up Locally?
@@ -47,13 +47,13 @@
 
 | Document | Purpose | Audience |
 |----------|---------|----------|
-| [Layer 0: Webshop](cases/LAYER_0_WEBSHOP_CASE.md) | Foundation requirements (Dutch) | Platform Engineers |
-| [Layer 1: Webshop](cases/LAYER_1_WEBSHOP_CASE.md) | Tool selection (Dutch) | Platform Engineers |
-| [Layer 2: Webshop](cases/LAYER_2_WEBSHOP_CASE.md) | Enhancement decisions (Dutch) | Senior Engineers |
+| [Priority 0: Webshop](cases/PRIORITY_0_WEBSHOP_CASE.md) | Foundation requirements (Dutch) | Platform Engineers |
+| [Priority 1: Webshop](cases/PRIORITY_1_WEBSHOP_CASE.md) | Tool selection (Dutch) | Platform Engineers |
+| [Priority 2: Webshop](cases/PRIORITY_2_WEBSHOP_CASE.md) | Enhancement decisions (Dutch) | Senior Engineers |
 | [Unified Case Structure](cases/UNIFIED_CASE_STRUCTURE.md) | Template for new cases | Contributors |
 | [Case Analysis Template](cases/CASE_ANALYSIS_TEMPLATE.md) | How to create cases | Contributors |
-| [Webshop Overview](cases/WEBSHOP_LAYERS_OVERVIEW.md) | All layers combined | All |
-| [Layer 0→1 Mapping](cases/LAYER_0_LAYER_1_MAPPING.md) | Traceability matrix | Architects |
+| [Webshop Overview](cases/WEBSHOP_PRIORITIES_OVERVIEW.md) | All layers combined | All |
+| [Priority 0→1 Mapping](cases/PRIORITY_0_PRIORITY_1_MAPPING.md) | Traceability matrix | Architects |
 
 ### Planning & Comparisons
 
@@ -178,8 +178,8 @@
 3. [Kind Setup](../kind/README.md)
 
 **Planning:**
-1. [Layer 0 Case Study](cases/LAYER_0_WEBSHOP_CASE.md)
-2. [Layer 1 Case Study](cases/LAYER_1_WEBSHOP_CASE.md)
+1. [Priority 0 Case Study](cases/PRIORITY_0_WEBSHOP_CASE.md)
+2. [Priority 1 Case Study](cases/PRIORITY_1_WEBSHOP_CASE.md)
 3. [Decision Matrix](MATRIX.md)
 
 **Implementation:**
@@ -201,7 +201,7 @@
 
 **Decision Support:**
 1. [Decision Matrix](MATRIX.md)
-2. [Layer 0→1 Mapping](cases/LAYER_0_LAYER_1_MAPPING.md)
+2. [Priority 0→1 Mapping](cases/PRIORITY_0_PRIORITY_1_MAPPING.md)
 3. [Open Questions](planning/OPEN_QUESTIONS.md)
 
 **Scenarios:**
@@ -229,7 +229,7 @@
 3. [Scenarios](planning/SCENARIOS.md)
 
 **Business Case:**
-1. [Layer 0 Case Study](cases/LAYER_0_WEBSHOP_CASE.md) (Requirements)
+1. [Priority 0 Case Study](cases/PRIORITY_0_WEBSHOP_CASE.md) (Requirements)
 2. [Challenges](planning/CHALLENGES.md) (Risks)
 3. [Launch Plan](implementation/LAUNCH_PLAN.md) (Timeline)
 
@@ -296,7 +296,7 @@
 → [Implementation Guide](IMPLEMENTATION_GUIDE.md)
 
 ### "I need to understand vendor lock-in"
-→ [Layer 0 Case Study](cases/LAYER_0_WEBSHOP_CASE.md)  
+→ [Priority 0 Case Study](cases/PRIORITY_0_WEBSHOP_CASE.md)  
 → [TransIP IaC Guide](TRANSIP_INFRASTRUCTURE_AS_CODE.md)
 
 ### "I need to contribute"
@@ -333,7 +333,7 @@
 - *(Detailed guide coming soon)*
 
 ### Databases
-- [Layer 1 Case Study](cases/LAYER_1_WEBSHOP_CASE.md) - Managed vs StatefulSet
+- [Priority 1 Case Study](cases/PRIORITY_1_WEBSHOP_CASE.md) - Managed vs StatefulSet
 - Framework: Domain 1.3 (Data Services)
 
 ### CI/CD
@@ -361,7 +361,7 @@
 5. [Smoke Tests](../tests/smoke/README.md) - 30 min
 6. [Decision Matrix](MATRIX.md) - 1 hour
 7. [CNI Comparison](planning/CNI_COMPARISON.md) - 1 hour
-8. [Layer 1 Case Study](cases/LAYER_1_WEBSHOP_CASE.md) - 2 hours
+8. [Priority 1 Case Study](cases/PRIORITY_1_WEBSHOP_CASE.md) - 2 hours
 
 ### Intermediate Path (4-6 hours)
 *(Assumes K8s knowledge)*
@@ -370,13 +370,13 @@
 3. [Decision Rules](DECISION_RULES.md) - 30 min
 4. [CNI Comparison](planning/CNI_COMPARISON.md) - 45 min
 5. [GitOps Guide](planning/GITOPS_GITLAB.md) - 45 min
-6. [Layer 1 Case Study](cases/LAYER_1_WEBSHOP_CASE.md) - 1.5 hours
+6. [Priority 1 Case Study](cases/PRIORITY_1_WEBSHOP_CASE.md) - 1.5 hours
 7. [Production Ready](implementation/PRODUCTION_READY.md) - 30 min
 
 ### Advanced Path (2-3 hours)
 *(Assumes K8s + Platform experience)*
 1. [Architecture Review](architecture/ARCHITECTURE_REVIEW_SUMMARY.md) - 30 min
-2. [Layer 0→1 Mapping](cases/LAYER_0_LAYER_1_MAPPING.md) - 30 min
+2. [Priority 0→1 Mapping](cases/PRIORITY_0_PRIORITY_1_MAPPING.md) - 30 min
 3. [Decision Rules](DECISION_RULES.md) - 20 min
 4. [Open Questions](planning/OPEN_QUESTIONS.md) - 20 min
 5. [Improvement Points](IMPROVEMENT_POINTS.md) - 20 min

@@ -1,4 +1,4 @@
-# Software Delivery Pipeline Visualization
+﻿# Software Delivery Pipeline Visualization
 
 ## Overview
 
@@ -253,7 +253,7 @@ For tool recommendations, see **[MATRIX.md](docs/MATRIX.md)**.
 
 ### Implementing the Pipeline
 
-1. **Start with fundamentals**: Focus on Layer 0 foundational decisions first (see FRAMEWORK.md)
+1. **Start with fundamentals**: Focus on Priority 0 foundational decisions first (see FRAMEWORK.md)
 2. **Implement security early**: Build security into each stage from the beginning
 3. **Automate everything**: Manual gates slow down delivery and introduce errors
 4. **Monitor continuously**: Observability should be baked in, not bolted on

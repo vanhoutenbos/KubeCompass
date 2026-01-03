@@ -1,8 +1,8 @@
-# Layer 1 Implementation Guide - Webshop Kubernetes Migration
+﻿# Priority 1 Implementation Guide - Webshop Kubernetes Migration
 
 ## Executive Summary
 
-This document provides the complete implementation guide for migrating the Dutch webshop to Kubernetes, following the Layer 0 foundational requirements and Layer 1 tool selections.
+This document provides the complete implementation guide for migrating the Dutch webshop to Kubernetes, following the Priority 0 foundational requirements and Priority 1 tool selections.
 
 **Project Duration**: 20 weeks  
 **Team Size**: 3-5 engineers (Platform, DevOps, Developers)  
@@ -480,8 +480,8 @@ To begin implementation:
 
 ## References
 
-- [Layer 0 Foundation](cases/LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
-- [Layer 1 Tool Selection](cases/LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [Priority 0 Foundation](cases/PRIORITY_0_WEBSHOP_CASE.md) - Requirements and constraints
+- [Priority 1 Tool Selection](cases/PRIORITY_1_WEBSHOP_CASE.md) - Tool choices and rationale
 - [Deployment Runbook](runbooks/deployment.md) - Step-by-step deployment guide
 - [Disaster Recovery Runbook](runbooks/disaster-recovery.md) - DR procedures
 - [Terraform README](../terraform/README.md) - Infrastructure documentation

@@ -1,4 +1,4 @@
-# Gap Analysis
+﻿# Gap Analysis
 
 This document identifies key gaps in the current KubeCompass framework and proposes solutions.
 
@@ -47,9 +47,9 @@ Not all tools and patterns are created equal. Some are **foundational** — hard
 
 | Layer | When to Decide | Migration Cost | Examples |
 |-------|----------------|----------------|----------|
-| **Layer 0: Foundational** | Day 1, before workloads | **High** — requires platform rebuild | CNI plugin, GitOps (yes/no), RBAC model, storage backend |
-| **Layer 1: Core Operations** | Within first month | **Medium** — significant but possible | Observability stack, secrets management, ingress |
-| **Layer 2: Enhancement** | Add when needed | **Low** — plug-and-play | Image scanning, policy enforcement, chaos tools |
+| **Priority 0: Foundational** | Day 1, before workloads | **High** — requires platform rebuild | CNI plugin, GitOps (yes/no), RBAC model, storage backend |
+| **Priority 1: Core Operations** | Within first month | **Medium** — significant but possible | Observability stack, secrets management, ingress |
+| **Priority 2: Enhancement** | Add when needed | **Low** — plug-and-play | Image scanning, policy enforcement, chaos tools |
 
 ---
 
@@ -175,7 +175,7 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](../architecture/METHODOLOGY.md) and [MATRIX.md](../MATRIX.md)
 5. ✅ Clarify target audience in README and VISION — [README.md](../../README.md) and [VISION.md](../architecture/VISION.md)
 6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](../../reviews/cilium.md) (first example)
-7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Layer 0/1/2 structure
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Priority 0/1/2 structure
 8. ⏳ Expand tool reviews (GitOps, secrets management, observability)
 9. ⏳ Add more scenarios (startup MVP, edge computing)
 
@@ -230,30 +230,30 @@ By being explicit about our audience, we avoid the trap of trying to serve every
    - Harbor (CNCF Graduated, vulnerability scanning, image signing)
    - Docker Registry (simple, lightweight)
    - Cloud-native options (ECR, ACR, GCR)
-   - Layer 1: Core Operations
+   - Priority 1: Core Operations
 
 2. **Message Brokers & Event Streaming (Domain 1.10)**:
    - NATS (CNCF Incubating, lightweight, Kubernetes-native)
    - RabbitMQ (mature, flexible routing)
    - Apache Kafka (event streaming, high throughput)
    - Apache Pulsar (multi-tenancy, geo-replication)
-   - Layer 1: Core Operations
+   - Priority 1: Core Operations
 
 3. **Data Stores & Caching (Domain 1.11)**:
    - Valkey (Redis fork, fully open-source, Linux Foundation)
    - Redis (mature, data structures, pub/sub)
    - Memcached (simple, fast, pure caching)
    - Hazelcast (distributed cache, in-memory grid)
-   - Layer 1: Core Operations
+   - Priority 1: Core Operations
 
 4. **Object Storage (Domain 1.8, expanded)**:
    - MinIO (S3-compatible, cloud-agnostic)
    - Rook-Ceph S3 (distributed, unified storage)
    - Cloud-native (S3, Azure Blob, GCS)
    - Critical for backups, artifacts, data lakes
-   - Layer 1: Core Operations
+   - Priority 1: Core Operations
 
-**Rationale for Layer 1 Placement**:
+**Rationale for Priority 1 Placement**:
 - Container registries are essential for deployment pipelines
 - Message brokers are foundational for event-driven architectures
 - Caching is critical for application performance
@@ -349,7 +349,7 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 
 2. **Testing Environment Limitations**: Can't test all cloud providers, distributions, and configurations
    - Solution: Community test matrix, ephemeral CI environments, standards-focused tools
-   - Solution: Prioritize Layer 0/1 tools, document known limitations
+   - Solution: Prioritize Priority 0/1 tools, document known limitations
 
 3. **Contributor Shortage**: Currently solo-maintained, limiting scope and velocity
    - Solution: Lower barriers (CONTRIBUTING.md, templates, good first issues)
@@ -379,7 +379,7 @@ By being explicit about our audience, we avoid the trap of trying to serve every
 4. ✅ Build scoring rubric and filter system — [METHODOLOGY.md](../architecture/METHODOLOGY.md) and [MATRIX.md](../MATRIX.md)
 5. ✅ Clarify target audience in README and VISION — [README.md](../../README.md) and [VISION.md](../architecture/VISION.md)
 6. ✅ Implement scoring system in tool reviews — [reviews/cilium.md](../../reviews/cilium.md) (first example)
-7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Layer 0/1/2 structure
+7. ✅ Add "decision timing" guidance to each domain — [MATRIX.md](../MATRIX.md) with Priority 0/1/2 structure
 8. ✅ Expand tool selection criteria — [METHODOLOGY.md](../architecture/METHODOLOGY.md)
 9. ✅ Add missing platform infrastructure domains — [FRAMEWORK.md](../architecture/FRAMEWORK.md) and [MATRIX.md](../MATRIX.md)
 10. ✅ Validate CNCF Cloud Native Landscape alignment — [CNCF_ALIGNMENT.md](CNCF_ALIGNMENT.md)

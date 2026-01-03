@@ -1,4 +1,4 @@
-# KubeCompass - Restructuring Summary
+﻿# KubeCompass - Restructuring Summary
 
 ## What Changed
 
@@ -46,13 +46,13 @@ Organized by platform layer:
 
 ```
 manifests/
-├── base/                      # Layer 2 - Test workloads
+├── base/                      # Priority 2 - Test workloads
 │   ├── echo-server.yaml       # HTTP echo for connectivity testing
 │   └── nginx-test.yaml        # Simple web server
-├── namespaces/                # Layer 0 - Foundation
+├── namespaces/                # Priority 0 - Foundation
 │   └── base-namespaces.yaml   # Layered namespace definitions
-├── rbac/                      # Layer 0 - Access control
-└── networking/                # Layer 0/1 - Network policies
+├── rbac/                      # Priority 0 - Access control
+└── networking/                # Priority 0/1 - Network policies
 ```
 
 **Labels follow Layer philosophy:**
@@ -180,7 +180,7 @@ kubectl get nodes
 - ✅ Reproducible and declarative
 - ✅ Tests multiple CNI options
 - ✅ Follows IaC and GitOps principles
-- ✅ Validates Layer 0/1/2 concepts
+- ✅ Validates Priority 0/1/2 concepts
 
 ## Documentation Improvements
 

@@ -1,4 +1,4 @@
-# Unified Case Analysis & Restructuring Framework
+﻿# Unified Case Analysis & Restructuring Framework
 
 **Version**: 1.0  
 **Purpose**: Transform raw case documentation into uniform, AI-friendly decision frameworks  
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document defines the **standardized structure** for transforming raw case analysis (Layer 0/1/2) into a uniform decision framework suitable for:
+This document defines the **standardized structure** for transforming raw case analysis (Priority 0/1/2) into a uniform decision framework suitable for:
 
 - **Interactive case evaluation** - Users answer questions to get recommendations
 - **Scenario comparison** - Compare different organizational contexts
@@ -52,12 +52,12 @@ Every unified case document should follow this structure:
 
 ---
 
-### 2. Layer 0: Foundations
+### 2. Priority 0: Foundations
 
 **Purpose**: Strategic requirements that define the architectural foundation
 
 ```markdown
-## 2. Layer 0: Foundations
+## 2. Priority 0: Foundations
 
 ### Goals (Primary)
 1. **[Goal Name]**
@@ -101,12 +101,12 @@ Every unified case document should follow this structure:
 
 ---
 
-### 3. Layer 1: Tool Mapping
+### 3. Priority 1: Tool Mapping
 
-**Purpose**: Tactical tool selections based on Layer 0 requirements
+**Purpose**: Tactical tool selections based on Priority 0 requirements
 
 ```markdown
-## 3. Layer 1: Tool Mapping
+## 3. Priority 1: Tool Mapping
 
 ### Infrastructure & Provisioning
 
@@ -119,7 +119,7 @@ Every unified case document should follow this structure:
   - ❌ Vendor independence overrides operational simplicity
   - ❌ Cost optimization requires bare metal
   
-**Layer 0 Link**: [Which requirements drive this decision?]
+**Priority 0 Link**: [Which requirements drive this decision?]
 
 **Provider Options per Scenario**:
 - **SME/Startup**: TransIP, DigitalOcean, Scaleway
@@ -161,12 +161,12 @@ Every unified case document should follow this structure:
 
 ---
 
-### 4. Layer 2: Enhancements
+### 4. Priority 2: Enhancements
 
 **Purpose**: Advanced capabilities with clear trigger conditions
 
 ```markdown
-## 4. Layer 2: Enhancements
+## 4. Priority 2: Enhancements
 
 ### [Capability Name] (e.g., Service Mesh)
 
@@ -195,8 +195,8 @@ Every unified case document should follow this structure:
 - **Right Time**: When debugging inter-service issues takes > 1 hour
 - **Too Late**: If security incidents have already occurred
 
-#### 🔗 Layer 1 Dependencies
-- Requires: [Layer 1 capability X, Y]
+#### 🔗 Priority 1 Dependencies
+- Requires: [Priority 1 capability X, Y]
 - Builds on: [Existing infrastructure]
 ```
 
@@ -224,12 +224,12 @@ Questions that affect architecture but don't block initial setup.
 |----|----------|--------|---------|----------|
 | Q10 | [Question] | Affects GitOps workflow | CI/CD | Week 2 |
 
-### Can Defer (Layer 2+)
+### Can Defer (Priority 2+)
 Questions that can be answered during optimization phase.
 
 | ID | Question | Impact | Can Defer Until |
 |----|----------|--------|-----------------|
-| Q7 | [Question] | UI exposure | Layer 2 observability enhancement |
+| Q7 | [Question] | UI exposure | Priority 2 observability enhancement |
 ```
 
 ---
@@ -379,17 +379,17 @@ UNLESS:
 
 ### For Engineers
 1. Read Executive Summary to understand context
-2. Review Layer 0 to understand constraints
-3. Use Layer 1 "Choose X unless Y" rules for tool selection
+2. Review Priority 0 to understand constraints
+3. Use Priority 1 "Choose X unless Y" rules for tool selection
 4. Check Open Questions for blockers
 5. Apply Provider Recommendations for infrastructure choices
 
 ### For Architects
-1. Validate Layer 0 constraints align with organizational reality
+1. Validate Priority 0 constraints align with organizational reality
 2. Review Trade-offs in each domain
 3. Challenge assumptions in Gaps & Inconsistencies
-4. Ensure Layer 1 choices trace back to Layer 0 requirements
-5. Evaluate Layer 2 triggers for future planning
+4. Ensure Priority 1 choices trace back to Priority 0 requirements
+5. Evaluate Priority 2 triggers for future planning
 
 ### For Management
 1. Review Executive Summary and Success Metrics
@@ -409,8 +409,8 @@ UNLESS:
 
 ## Anti-Patterns to Avoid
 
-❌ **Don't**: Start with tool selection without Layer 0  
-✅ **Do**: Ensure every tool choice traces to a Layer 0 requirement
+❌ **Don't**: Start with tool selection without Priority 0  
+✅ **Do**: Ensure every tool choice traces to a Priority 0 requirement
 
 ❌ **Don't**: Hide assumptions or conflicts  
 ✅ **Do**: Document gaps explicitly for stakeholder resolution
@@ -430,7 +430,7 @@ UNLESS:
 
 Before considering a case analysis complete:
 
-- [ ] All Layer 0 requirements have Layer 1 implementations
+- [ ] All Priority 0 requirements have Priority 1 implementations
 - [ ] Every tool choice has "Choose X unless Y" rationale
 - [ ] All risks have mitigations or explicit acceptance
 - [ ] Non-goals are documented with reasoning

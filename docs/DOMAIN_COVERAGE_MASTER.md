@@ -1,4 +1,4 @@
-# KubeCompass Domain Coverage Master Plan
+﻿# KubeCompass Domain Coverage Master Plan
 
 **Doel**: Volledig overzicht van alle domeinen die gedocumenteerd en getest moeten worden om live te gaan met minimaal 2 tools per domein.
 
@@ -234,7 +234,7 @@ Dit document bevat:
 **Documentatie**:
 - ✅ [FRAMEWORK.md](architecture/FRAMEWORK.md) - Domain definitie
 - ✅ [MATRIX.md](MATRIX.md) - Tool vergelijking (Prometheus, Loki, Grafana)
-- ✅ Layer 1 case study - Observability stack beschreven
+- ✅ Priority 1 case study - Observability stack beschreven
 
 **Geteste Tools**:
 1. ❌ **Prometheus + Grafana** - Gedocumenteerd, niet getest
@@ -427,7 +427,7 @@ Dit document bevat:
 
 ---
 
-## Layer 2: Enhancements (Add When Needed)
+## Priority 2: Enhancements (Add When Needed)
 
 ### 13. Runtime Security (Threat Detection) ⚠️ 🟢
 
@@ -616,7 +616,7 @@ Deze domeinen zijn essentieel voor enterprise/production maar ontbreken volledig
 
 ### Phase 1: Critical Foundations (Week 1-4)
 
-**Doel**: Layer 0 compleet maken (provider-agnostiek fundament)
+**Doel**: Priority 0 compleet maken (provider-agnostiek fundament)
 
 **Prioriteit 1a - Security & Access (Week 1-2)**:
 - [ ] **Domain 3: RBAC & Identity**
@@ -637,7 +637,7 @@ Deze domeinen zijn essentieel voor enterprise/production maar ontbreken volledig
 
 ### Phase 2: Operational Readiness (Week 5-8)
 
-**Doel**: Layer 1 essentials (production-ready operations)
+**Doel**: Priority 1 essentials (production-ready operations)
 
 **Prioriteit 2a - Data & Continuity (Week 5-6)**:
 - [ ] **Domain 8: Container Registry**
@@ -688,7 +688,7 @@ Deze domeinen zijn essentieel voor enterprise/production maar ontbreken volledig
 
 ### Phase 4: Enhancement Layer (Week 11-12)
 
-**Doel**: Layer 2 minimaal coverage voor completeness
+**Doel**: Priority 2 minimaal coverage voor completeness
 
 - [ ] **Domain 13: Runtime Security**
   - [ ] Test Falco vs Tetragon

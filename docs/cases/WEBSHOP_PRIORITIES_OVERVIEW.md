@@ -1,6 +1,6 @@
-# Webshop Kubernetes Migration - Complete Layer Overview
+﻿# Webshop Kubernetes Migration - Complete Layer Overview
 
-**Status**: Decision Frameworks Complete (Layer 0, 1, 2)  
+**Status**: Decision Frameworks Complete (Priority 0, 1, 2)  
 **Type**: Architectural Guidance & Decision Support  
 **Purpose**: Show progression from requirements → capabilities → maturity  
 
@@ -8,10 +8,10 @@
 
 ## Reading Guide: The Three Layers
 
-This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon each other when making Kubernetes platform decisions.
+This overview shows how **Priority 0**, **Priority 1**, and **Priority 2** build upon each other when making Kubernetes platform decisions.
 
-### Layer 0: Foundation & Requirements
-📄 **[LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md)**
+### Priority 0: Foundation & Requirements
+📄 **[PRIORITY_0_WEBSHOP_CASE.md](PRIORITY_0_WEBSHOP_CASE.md)**
 
 **Core Question**: "**Why** are we doing this and **what** are the constraints?"
 
@@ -31,8 +31,8 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ---
 
-### Layer 1: Tool Selection & Platform Capabilities
-📄 **[LAYER_1_WEBSHOP_CASE.md](LAYER_1_WEBSHOP_CASE.md)**
+### Priority 1: Tool Selection & Platform Capabilities
+📄 **[PRIORITY_1_WEBSHOP_CASE.md](PRIORITY_1_WEBSHOP_CASE.md)**
 
 **Core Question**: "**Which** tools do we implement and **how** do we build the platform?"
 
@@ -53,8 +53,8 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ---
 
-### Layer 2: Platform Enhancements & Maturity
-📄 **[LAYER_2_WEBSHOP_CASE.md](LAYER_2_WEBSHOP_CASE.md)**
+### Priority 2: Platform Enhancements & Maturity
+📄 **[PRIORITY_2_WEBSHOP_CASE.md](PRIORITY_2_WEBSHOP_CASE.md)**
 
 **Core Question**: "**When** is extra complexity worth the investment?"
 
@@ -77,56 +77,56 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ---
 
-## The Progression: Layer 0 → 1 → 2
+## The Progression: Priority 0 → 1 → 2
 
 ### Example: Service Mesh Journey
 
-**Layer 0** (Requirement):
+**Priority 0** (Requirement):
 > "Microservices must communicate securely with each other"
 
-**Layer 1** (Implementation):
+**Priority 1** (Implementation):
 > "We implement Cilium Network Policies (L3/L4) for basic security"
 
-**Layer 2** (Enhancement Decision):
+**Priority 2** (Enhancement Decision):
 > "When we have > 5 services AND want per-service metrics AND want automatic mTLS, THEN we consider Linkerd"
 
 ### Example: Observability Journey
 
-**Layer 0** (Requirement):
+**Priority 0** (Requirement):
 > "We must detect problems proactively before customers notice"
 
-**Layer 1** (Implementation):
+**Priority 1** (Implementation):
 > "We implement Prometheus for metrics, Grafana for dashboards, Loki for logs"
 
-**Layer 2** (Enhancement Decision):
+**Priority 2** (Enhancement Decision):
 > "When debugging cross-service issues takes > 1h, THEN we add distributed tracing (Jaeger)"
 
 ### Example: Security Journey
 
-**Layer 0** (Requirement):
+**Priority 0** (Requirement):
 > "Security by design - no secrets in Git, least privilege, audit logging"
 
-**Layer 1** (Implementation):
+**Priority 1** (Implementation):
 > "We implement Vault + External Secrets, RBAC, Network Policies, basic K8s audit logs"
 
-**Layer 2** (Enhancement Decision):
+**Priority 2** (Enhancement Decision):
 > "When we have > 10 developers OR compliance requirements (GDPR/DORA), THEN we automate policy enforcement (Kyverno)"
 
 ---
 
 ## Decision Flow: When To Move To Next Layer?
 
-### ❌ DO NOT move to Layer 2 when:
+### ❌ DO NOT move to Priority 2 when:
 
-- Layer 1 is **not stable** (deployments fail, monitoring doesn't work)
-- Layer 1 is **not complete** (basic observability is missing)
-- Team has **no capacity** (already overloaded with Layer 1)
-- **No clear trigger** (no problem that Layer 2 solves)
+- Priority 1 is **not stable** (deployments fail, monitoring doesn't work)
+- Priority 1 is **not complete** (basic observability is missing)
+- Team has **no capacity** (already overloaded with Priority 1)
+- **No clear trigger** (no problem that Priority 2 solves)
 
-### ✅ DO move to Layer 2 when:
+### ✅ DO move to Priority 2 when:
 
-- Layer 1 **runs stably** (> 1 month without major issues)
-- You have **specific problem** that Layer 2 capability solves
+- Priority 1 **runs stably** (> 1 month without major issues)
+- You have **specific problem** that Priority 2 capability solves
 - Team has **capacity** for additional operational overhead
 - **Business case** is clear (ROI of complexity)
 
@@ -134,7 +134,7 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ## Capability Maturity Model
 
-| Capability | Layer 1 (Basic) | Layer 2 (Enhanced) | Layer 3 (Advanced) |
+| Capability | Priority 1 (Basic) | Priority 2 (Enhanced) | Layer 3 (Advanced) |
 |-----------|----------------|--------------------|--------------------|
 | **Networking** | Cilium CNI, Network Policies | Service Mesh (Linkerd) | Cilium Cluster Mesh (multi-region) |
 | **Observability** | Prometheus, Grafana, Loki | Distributed Tracing (Jaeger), SLO monitoring | Error budget automation, AIOps |
@@ -147,7 +147,7 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ## Which Layer Is For Whom?
 
-### Layer 0: Everyone
+### Priority 0: Everyone
 **Goal**: Get alignment on requirements and constraints
 
 **Target Audience**:
@@ -160,8 +160,8 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ---
 
-### Layer 1: Platform Team
-**Goal**: Build platform that meets Layer 0 requirements
+### Priority 1: Platform Team
+**Goal**: Build platform that meets Priority 0 requirements
 
 **Target Audience**:
 - Platform Engineers (implementation)
@@ -172,7 +172,7 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ---
 
-### Layer 2: Mature Platform Team
+### Priority 2: Mature Platform Team
 **Goal**: Optimize platform and increase maturity
 
 **Target Audience**:
@@ -190,17 +190,17 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 ### ❌ "We do everything at once"
 **Problem**: Overwhelming complexity, team overload, nothing works well
 
-**Solution**: Start with Layer 1, add Layer 2 capabilities one by one
+**Solution**: Start with Priority 1, add Priority 2 capabilities one by one
 
-### ❌ "We didn't do Layer 0"
+### ❌ "We didn't do Priority 0"
 **Problem**: Tool choices are not aligned with business requirements
 
-**Solution**: Go back to Layer 0, validate requirements
+**Solution**: Go back to Priority 0, validate requirements
 
-### ❌ "Layer 2 is the next step after Layer 1"
+### ❌ "Priority 2 is the next step after Priority 1"
 **Problem**: You implement capabilities you don't need
 
-**Solution**: Layer 2 is optional - only implement with clear trigger
+**Solution**: Priority 2 is optional - only implement with clear trigger
 
 ### ❌ "We just follow the KubeCompass decisions"
 **Problem**: Every organization is different, context matters
@@ -211,22 +211,22 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 
 ## Conclusion: Layers as Decision Support
 
-**Layer 0, 1, and 2 are not a checklist.**  
+**Priority 0, 1, and 2 are not a checklist.**  
 **They are decision frameworks for making better choices.**
 
 ### Key Takeaways:
 
-1. **Layer 0 first**: Know why you're doing something before you do it
-2. **Layer 1 next**: Implement basic capabilities that meet requirements
-3. **Layer 2 when triggered**: Add complexity only when it solves an actual problem
+1. **Priority 0 first**: Know why you're doing something before you do it
+2. **Priority 1 next**: Implement basic capabilities that meet requirements
+3. **Priority 2 when triggered**: Add complexity only when it solves an actual problem
 4. **One at a time**: Not everything simultaneously (team overload)
 5. **Measure impact**: Every capability must solve measurable problem
 
 ### For the Webshop Case:
 
-**Layer 0**: ✅ Complete (requirements clear)  
-**Layer 1**: ✅ Complete (tool choices made)  
-**Layer 2**: 📋 Decision framework complete - **implementation only if triggered**
+**Priority 0**: ✅ Complete (requirements clear)  
+**Priority 1**: ✅ Complete (tool choices made)  
+**Priority 2**: 📋 Decision framework complete - **implementation only if triggered**
 
 **Likely NEEDED (triggers present):**
 - Distributed tracing (> 5 services, debugging issues)
@@ -245,15 +245,15 @@ This overview shows how **Layer 0**, **Layer 1**, and **Layer 2** build upon eac
 ## Next Steps
 
 ### For this Project (KubeCompass):
-1. ✅ Layer 0, 1, 2 decision frameworks complete
+1. ✅ Priority 0, 1, 2 decision frameworks complete
 2. 🔜 Layer 3 decision framework (expert-level capabilities)
 3. 🔜 Decision tree tool (interactive wizard)
 4. �� Real-world case studies from teams
 
 ### For Your Organization:
-1. **Start with Layer 0** - alignment on requirements
-2. **Work through Layer 1** - implement basic platform
-3. **Evaluate Layer 2** - which triggers are present for you?
+1. **Start with Priority 0** - alignment on requirements
+2. **Work through Priority 1** - implement basic platform
+3. **Evaluate Priority 2** - which triggers are present for you?
 4. **One capability at a time** - measure impact before continuing
 
 ---

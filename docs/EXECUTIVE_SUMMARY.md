@@ -1,4 +1,4 @@
-# Executive Summary: KubeCompass Launch Readiness
+﻿# Executive Summary: KubeCompass Launch Readiness
 
 **Date**: December 2024  
 **Status**: Documentation Complete — Ready for Tool Testing Phase  
@@ -18,7 +18,7 @@
 - ✅ **SPONSORS.md** — Transparent sponsor needs and editorial independence guarantee
 
 **Existing Strong Foundation**:
-- ✅ Framework with Layer 0/1/2 decision model
+- ✅ Framework with Priority 0/1/2 decision model
 - ✅ Decision Matrix with tool recommendations
 - ✅ "Choose X unless Y" decision rules per domain
 - ✅ Real-world scenarios (Enterprise multi-tenant, Dutch webshop case)
@@ -61,12 +61,12 @@
 
 ### Week 2: Tool Testing & Reviews (Next)
 
-**Priority Layer 0 Tools** (Foundational):
+**Priority Priority 0 Tools** (Foundational):
 - [ ] Argo CD (GitOps)
 - [ ] Vault + External Secrets Operator (Secrets)
-- [ ] Keycloak (Identity) — optional, document as Layer 1
+- [ ] Keycloak (Identity) — optional, document as Priority 1
 
-**Priority Layer 1 Tools** (Core Operations):
+**Priority Priority 1 Tools** (Core Operations):
 - [ ] Prometheus + Loki + Grafana (Observability)
 - [ ] NGINX Ingress Controller
 - [ ] Harbor (Registry) — optional for Month 1
@@ -321,7 +321,7 @@
 ## Success Metrics (Month 1 Launch)
 
 ### Documentation Completeness
-- [ ] 100% of Layer 0/1 domains have "choose X unless Y" rules
+- [ ] 100% of Priority 0/1 domains have "choose X unless Y" rules
 - [ ] 80%+ of "go-to" tools have hands-on testing documented
 - [ ] 2+ complete real-world scenarios
 - [ ] Zero broken internal links

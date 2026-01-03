@@ -1,4 +1,4 @@
-# KubeCompass Domain Implementation Roadmap
+﻿# KubeCompass Domain Implementation Roadmap
 
 **Purpose**: Step-by-step roadmap for implementing and testing Kubernetes platform capabilities, organized by domain.
 
@@ -19,7 +19,7 @@
 ┌───────────────────────────────┐
 │          DOMAINS               │
 ├─────────────┬─────────┬───────┤
-│ Layer 0     │ Layer 1 │ Layer2│
+│ Priority 0     │ Priority 1 │ Layer2│
 ├─────────────┼─────────┼───────┤
 │ CNI         │ Observ. │ Image │
 │ GitOps      │ Ingress │ Policy│
@@ -77,7 +77,7 @@ Based on the problem statement, here are the primary tool examples for each doma
 ┌───────────────────────────────┐
 │        TOOLS / EXAMPLES        │
 ├─────────────┬─────────┬───────┤
-│ Layer 0     │ Layer 1 │ Layer2│
+│ Priority 0     │ Priority 1 │ Layer2│
 ├─────────────┼─────────┼───────┤
 │ Cilium      │ Prom+Loki│Trivy │
 │ ArgoCD      │ NGINX   │Kyverno│
@@ -118,7 +118,7 @@ Additional scenario covered:
 
 ---
 
-## Layer 0: Foundational Domains (Week 1-2)
+## Priority 0: Foundational Domains (Week 1-2)
 
 These decisions are **architecturally significant** and expensive to change later. Decide before deploying workloads.
 
@@ -350,7 +350,7 @@ These decisions are **architecturally significant** and expensive to change late
 
 ---
 
-## Layer 1: Core Operations Domains (Week 2-3)
+## Priority 1: Core Operations Domains (Week 2-3)
 
 These are **important early** but can be replaced with moderate effort. Plan within first month.
 
@@ -688,7 +688,7 @@ These are **important early** but can be replaced with moderate effort. Plan wit
 
 ---
 
-## Layer 2: Enhancement Domains (Week 3-4)
+## Priority 2: Enhancement Domains (Week 3-4)
 
 These are **easy to add later** and have low migration costs. Add when needed.
 
@@ -875,7 +875,7 @@ Document results in `/reviews/[tool-name].md`
 
 ## Week-by-Week Implementation Schedule
 
-### Week 1: Setup & Layer 0 Foundations
+### Week 1: Setup & Priority 0 Foundations
 **Days 1-2**: Environment setup
 - [ ] Setup kind cluster (multi-node)
 - [ ] Setup minikube cluster
@@ -894,7 +894,7 @@ Document results in `/reviews/[tool-name].md`
 - [ ] Document comparison and decision rules
 - [ ] Create review documents
 
-### Week 2: Layer 0 Complete + Layer 1 Start
+### Week 2: Priority 0 Complete + Priority 1 Start
 **Days 1-2**: Identity & Access
 - [ ] Test Keycloak + K8s OIDC integration
 - [ ] Test Dex setup
@@ -911,7 +911,7 @@ Document results in `/reviews/[tool-name].md`
 - [ ] Test VictoriaMetrics (alternative)
 - [ ] Create dashboards and alerts
 
-### Week 3: Layer 1 Core Operations
+### Week 3: Priority 1 Core Operations
 **Days 1-2**: Ingress
 - [ ] Test NGINX Ingress Controller
 - [ ] Test Traefik
@@ -930,7 +930,7 @@ Document results in `/reviews/[tool-name].md`
 - [ ] Test NATS messaging
 - [ ] Test MinIO object storage
 
-### Week 4: Layer 2 Enhancements & Validation
+### Week 4: Priority 2 Enhancements & Validation
 **Days 1-2**: Security Enhancements
 - [ ] Test Trivy image scanning
 - [ ] Test Kyverno policy enforcement
@@ -967,9 +967,9 @@ Document results in `/reviews/[tool-name].md`
 - [ ] NGINX Ingress testing
 
 ### To Do 📋
-- [ ] All remaining Layer 0 domains (Identity, Storage)
-- [ ] All Layer 1 domains (7 domains)
-- [ ] All Layer 2 domains (3 domains)
+- [ ] All remaining Priority 0 domains (Identity, Storage)
+- [ ] All Priority 1 domains (7 domains)
+- [ ] All Priority 2 domains (3 domains)
 - [ ] Complete reviews/ directory
 - [ ] Integration testing
 - [ ] QUICK_START.md guide
@@ -978,23 +978,23 @@ Document results in `/reviews/[tool-name].md`
 
 ## Success Criteria
 
-### Week 1-2 (Layer 0)
-✅ **Layer 0 complete** when:
+### Week 1-2 (Priority 0)
+✅ **Priority 0 complete** when:
 - [ ] All 5 foundational domains tested (2 options each minimum)
 - [ ] Decision rules documented for each domain
 - [ ] Review documents created in reviews/ directory
 - [ ] MATRIX.md updated with findings
 
-### Week 3 (Layer 1)
-✅ **Layer 1 complete** when:
+### Week 3 (Priority 1)
+✅ **Priority 1 complete** when:
 - [ ] All 7 core operation domains tested (2 options each minimum)
 - [ ] Integration testing validates stack works together
 - [ ] Updated SCENARIOS.md with tool selections
 - [ ] Performance and operational complexity documented
 
-### Week 4 (Layer 2 + Launch)
+### Week 4 (Priority 2 + Launch)
 ✅ **Ready for launch** when:
-- [ ] Layer 2 security enhancements tested
+- [ ] Priority 2 security enhancements tested
 - [ ] Complete stack validated end-to-end
 - [ ] All review documents published
 - [ ] QUICK_START.md guide created

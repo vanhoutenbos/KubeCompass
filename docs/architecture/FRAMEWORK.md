@@ -1,4 +1,4 @@
-# KubeCompass Framework
+﻿# KubeCompass Framework
 
 This document outlines the complete decision-making framework for building and operating production-ready Kubernetes platforms.
 
@@ -110,9 +110,9 @@ Not all decisions are equal. Some are **foundational** — hard to change later 
 
 | Layer | When to Decide | Migration Cost | Examples |
 |-------|----------------|----------------|----------|
-| **Layer 0: Foundational** | Day 1, before workloads | **High** — requires platform rebuild or major refactoring | CNI plugin, GitOps (yes/no), RBAC model, storage backend, service mesh architecture |
-| **Layer 1: Core Operations** | Within first month | **Medium** — significant effort but possible | Observability stack, secrets management, ingress controller, backup strategy |
-| **Layer 2: Enhancement** | Add when needed | **Low** — plug-and-play or easy replacement | Image scanning (Trivy), policy enforcement (OPA), chaos tooling, cost monitoring |
+| **Priority 0: Foundational** | Day 1, before workloads | **High** — requires platform rebuild or major refactoring | CNI plugin, GitOps (yes/no), RBAC model, storage backend, service mesh architecture |
+| **Priority 1: Core Operations** | Within first month | **Medium** — significant effort but possible | Observability stack, secrets management, ingress controller, backup strategy |
+| **Priority 2: Enhancement** | Add when needed | **Low** — plug-and-play or easy replacement | Image scanning (Trivy), policy enforcement (OPA), chaos tooling, cost monitoring |
 
 ### Why This Matters
 
@@ -207,9 +207,9 @@ Many cloud-native tools span multiple CNCF categories. KubeCompass places tools 
 
 Unlike the CNCF Landscape (which is descriptive), KubeCompass adds a **prescriptive layer model** to help prioritize decisions:
 
-- **Layer 0 (Foundational)**: Must decide Day 1 — hard to change later
-- **Layer 1 (Core Operations)**: Decide within first month — medium migration cost
-- **Layer 2 (Enhancement)**: Add when needed — low migration cost
+- **Priority 0 (Foundational)**: Must decide Day 1 — hard to change later
+- **Priority 1 (Core Operations)**: Decide within first month — medium migration cost
+- **Priority 2 (Enhancement)**: Add when needed — low migration cost
 
 This timing framework is **unique to KubeCompass** and complements the CNCF taxonomy.
 

@@ -1,4 +1,4 @@
-# Tool Reviews
+﻿# Tool Reviews
 
 This directory contains hands-on reviews of Kubernetes ecosystem tools. Each review follows the [Testing Methodology](../TESTING_METHODOLOGY.md) to ensure consistency and thoroughness.
 
@@ -6,21 +6,21 @@ This directory contains hands-on reviews of Kubernetes ecosystem tools. Each rev
 
 ## Available Reviews
 
-### Layer 0: Foundational (CNI, GitOps, Identity, Secrets, Storage)
+### Priority 0: Foundational (CNI, GitOps, Identity, Secrets, Storage)
 
 - **[Cilium](cilium.md)** — eBPF-based CNI with L7 policies and Hubble observability
 - 🚧 **Argo CD** *(coming soon)* — GitOps with multi-tenant support and rich UI
 - 🚧 **Flux** *(coming soon)* — GitOps-pure toolkit approach
 - 🚧 **Vault + External Secrets Operator** *(coming soon)* — Enterprise secrets management
 
-### Layer 1: Core Operations (Observability, Ingress, Backup)
+### Priority 1: Core Operations (Observability, Ingress, Backup)
 
 - 🚧 **Prometheus** *(coming soon)* — Industry-standard metrics collection
 - 🚧 **Loki** *(coming soon)* — Cost-effective logging with Grafana integration
 - 🚧 **NGINX Ingress** *(coming soon)* — Battle-tested ingress controller
 - 🚧 **Velero** *(coming soon)* — Backup and disaster recovery
 
-### Layer 2: Enhancements (Security, Policy, Cost)
+### Priority 2: Enhancements (Security, Policy, Cost)
 
 - 🚧 **Trivy** *(coming soon)* — Container image vulnerability scanning
 - 🚧 **Kyverno** *(coming soon)* — Kubernetes-native policy enforcement

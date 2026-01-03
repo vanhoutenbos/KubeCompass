@@ -1,14 +1,14 @@
-# Layer 0 → Layer 1 Mapping: Webshop Migratiecase
+﻿# Priority 0 → Priority 1 Mapping: Webshop Migratiecase
 
 **Target Audience**: Architectand, Decision Makers, AI Agents  
-**Purpose**: Traceerbaarheid or alle Layer 1 beslissingen to Layer 0 principes  
+**Purpose**: Traceerbaarheid or alle Priority 1 beslissingen to Priority 0 principes  
 **Status**: Audit-proof decision framework  
 
 ---
 
 ## Executive Summary
 
-Dit document toont de **volledige traceerbaarheid** tussand Layer 0 requirements en Layer 1 implementationkeuzes. Elke Layer 1 beslissing is direct terug te leidand to één or meerdere Layer 0 principes, constraints or requirements.
+Dit document toont de **volledige traceerbaarheid** tussand Priority 0 requirements en Priority 1 implementationkeuzes. Elke Priority 1 beslissing is direct terug te leidand to één or meerdere Priority 0 principes, constraints or requirements.
 
 **Kernprincipe**: Geand technische keuze without business/architectuur rationale.
 
@@ -16,13 +16,13 @@ Dit document toont de **volledige traceerbaarheid** tussand Layer 0 requirements
 
 ## 1. Zero-Downtime Deployments
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Primair Purpose**: Eliminate Deployment Downtime (Section 2: Beschikbaarheid)
 - **Business Impact**: Downtime = direct omzetverlies during checkout
 - **Huidige Pijnpunt**: 1-4 uur downtime per release (alleand monthagnacht)
 - **Target**: 0 minowtand deployment downtime (rolling updates)
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **Rolling Updates** | Kubernetes Deployments | Native K8s capability, zero additional complexity |
@@ -42,13 +42,13 @@ Business Requirement (no downtime)
 
 ## 2. Proactive Monitoring
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Primair Purpose**: Proactive Operations (Section 5: Observability)
 - **Huidige Pijnpunt**: Reactieve incident detectie (klantand belland)
 - **Target**: < 2 minowtand incident detectie via alerts
 - **Stakeholders**: Dev, Ops, Support (ieder eigand dashboards)
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **Metrics** | Prometheus | Opand-source, vendor indepanddence, CNCF graduated |
@@ -65,22 +65,22 @@ Business Requirement (detect before customers notice)
       → Tooling Choice (Prometheus/Grafana stack, opand-source)
 ```
 
-### Layer 0 Constraint Impact
+### Priority 0 Constraint Impact
 - **Budget Realisme** → Opand-source tools (Prometheus/Grafana) vs. SaaS (Datadog/New Relic)
-- **Team Maturity** → Start simpel (metrics + logs), geand distributed tracing (Layer 2)
+- **Team Maturity** → Start simpel (metrics + logs), geand distributed tracing (Priority 2)
 - **Vendor Indepanddence** → Self-hosted observability stack
 
 ---
 
 ## 3. Data Resilience & Recovery
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Primair Purpose**: Data Protection & Recovery (Section 3: Data-Kritikaliteit)
 - **Huidige Pijnpunt**: Nachtelijke backups, geand point-in-time recovery
 - **Target**: RPO 15 minowtand (orders), RTO 30 minowtand (kritieke systemand)
 - **Compliance**: GDPR (data residency EU, andcryption at rest)
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **Cluster Backup** | Velero | Kubernetes-native, S3-compatible storage, namespace-scoped |
@@ -99,7 +99,7 @@ Business Requirement (no transaction loss)
 ### Trade-off Analysis
 **Managed Database vs. StatefulSet**
 - **Keuze**: Managed PostgreSQL
-- **Layer 0 Conflicts**:
+- **Priority 0 Conflicts**:
   - ✅ **Data Resilience** (higher priority) → HA, PITR, automated backups
   - ⚠️ **Vendor Indepanddence** (lower priority for database) → Migration path exists via pg_dump
 - **Rationale**: Team maturity (geand database HA expertise) + critical data (business impact > portability concerns)
@@ -108,12 +108,12 @@ Business Requirement (no transaction loss)
 
 ## 4. Vendor Indepanddence
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Hard Constraint**: Migratie to andere provider within 1 quarter possible (Section 7)
 - **Principe**: Opand-source voorkeur, cloud-agnostic architectuur
 - **Validatie**: Infrastructure as Code moet reproduceerbaar zijn
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **Compute** | Managed Kubernetes (niet cloud-specific ECS/AKS/EKS) | Stenaard K8s API, reproduceerbaar overal |
@@ -142,12 +142,12 @@ Business Constraint (1 quarter migration tijd)
 
 ## 5. Security by Design
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Principe**: Least Privilege, Defense in Depth, Encryption (Section 4: Security Baseline)
 - **Constraint**: Developers geand productie addgang (compliance)
 - **Requirement**: Secrets nooit in Git, andcryption at rest/in transit
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **Secrets Management** | Vault + External Secrets Operator | Centralized secrets, rotation, no secrets in Git |
@@ -165,24 +165,24 @@ Business Constraint (no developer prod access)
       → Tooling Choice (Vault, External Secrets, Cilium, Trivy)
 ```
 
-### Layer 0 Principle Mapping
-| Layer 0 Principe | Layer 1 Implementation |
+### Priority 0 Principle Mapping
+| Priority 0 Principe | Priority 1 Implementation |
 |-----------------|----------------------|
 | **Least Privilege** | RBAC (namespace-scoped), service accounts (minimal permissions) |
 | **Defense in Depth** | Network policies + pod security + image scanning + secrets management |
-| **Encryption** | TLS (ingress) + at-rest (backups, secrets) + in-transit (mTLS optional Layer 2) |
+| **Encryption** | TLS (ingress) + at-rest (backups, secrets) + in-transit (mTLS optional Priority 2) |
 | **Audit Trail** | GitOps (all changes in Git), Kubernetes audit logs |
 
 ---
 
 ## 6. GitOps vanaf Dag 1
 
-### Layer 0 Requirement
-- **Principe**: GitOps is Layer 0 principe (Section 8.4)
+### Priority 0 Requirement
+- **Principe**: GitOps is Priority 0 principe (Section 8.4)
 - **Rationale**: Audit trail, rollback capability, self-service deployments
 - **Constraint**: No kubectl apply henmatig (security + reproducibility)
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Rationale |
 |-----------|---------------|-----------|
 | **GitOps Engine** | Argo CD | UI for Support/Management, SSO, RBAC, audit trail |
@@ -205,20 +205,20 @@ Business Requirement (audit trail, compliance)
 
 **Keuze Argo CD vanwege**:
 - UI requirement (Support team moet deployment status ziand without kubectl)
-- SSO/RBAC native (Layer 0 security requirement)
+- SSO/RBAC native (Priority 0 security requirement)
 - Audit trail out-of-box (compliance requirement)
 
 ---
 
 ## 7. Shared Responsibility Model
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Principe**: Dev + Ops samenwerking, niet "alles to Ops" (Section 6: Ownership)
 - **Ownership Model**: Self-service for Dev, Ops faciliteert platform
 - **Stakeholders**: Dev, Ops, Support (duidelijke escalatie padand)
 
-### Layer 1 Implementatie
-| Responsibility | Owner | Layer 1 Tool Support |
+### Priority 1 Implementatie
+| Responsibility | Owner | Priority 1 Tool Support |
 |----------------|-------|---------------------|
 | **Code Quality** | Dev | CI/CD (GitHub Actions), image scanning (Trivy) |
 | **Deployment** | Dev (trigger) | GitOps (Argo CD) - dev submits PR, Ops approves |
@@ -239,20 +239,20 @@ Business Requirement (clear ownership, no bottlenecks)
 
 ## 8. Team Maturity & Operational Simplicity
 
-### Layer 0 Constraint
+### Priority 0 Constraint
 - **Team Constraint**: No Kubernetes ervaring (Section "Harde Renvoorwaardand")
 - **Implication**: Start simpel, managed services voorkeur, training noded
 - **Validatie**: Platform moet opereerbaar zijn for team or ~10 mensand
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Decision | Choice | Rationale (Team Maturity) |
 |----------|--------|--------------------------|
 | **Kubernetes** | Managed K8s (Nederlense provider) | Reduce operational burdand, control plane managed |
 | **Database** | Managed PostgreSQL | No StatefulSet complexity, HA out-of-box |
 | **Observability** | Prometheus/Grafana (populair, grote community) | Veel documentatie, community support |
 | **CNI** | Cilium (eBPF, moderne tech) | Investment in future, maar training noded |
-| **Service Mesh** | Geand (Layer 2) | Te complex for team without K8s ervaring |
-| **Distributed Tracing** | Geand (Layer 2) | Start with metrics/logs, tracing later |
+| **Service Mesh** | Geand (Priority 2) | Te complex for team without K8s ervaring |
+| **Distributed Tracing** | Geand (Priority 2) | Start with metrics/logs, tracing later |
 
 ### Depanddency Chain
 ```
@@ -262,7 +262,7 @@ Team Constraint (no K8s experience)
       → Tooling Choice (managed K8s, managed DB, stenard CNCF tools)
 ```
 
-### Layer 0 Trade-off
+### Priority 0 Trade-off
 **Managed vs. Self-hosted**
 - **Managed K8s**: ✅ Lower ops burdand → **Team maturity constraint**
 - **Self-hosted K8s**: ❌ Higher control → Conflicts with **team capabilities**
@@ -272,12 +272,12 @@ Team Constraint (no K8s experience)
 
 ## 9. Budget & Cost Constraints
 
-### Layer 0 Constraint
+### Priority 0 Constraint
 - **Budget Realisme**: Geand andterprise SaaS budgets (Section "Harde Renvoorwaardand")
 - **Implication**: Opand-source tooling voorkeur
 - **Validatie**: Cost monitoring vanaf day 1
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Capability | Tool/Techniek | Cost Consideration |
 |-----------|---------------|-------------------|
 | **Observability** | Prometheus/Grafana/Loki (opand-source) | Free vs. Datadog/New Relic ($$$) |
@@ -303,15 +303,15 @@ Budget Constraint (no andterprise SaaS)
 
 ## 10. Multi-Region Readiness (Toekomst)
 
-### Layer 0 Non-Goal
+### Priority 0 Non-Goal
 - **Expliciete Non-Goal**: Multi-region deployment (Section "Non-Goals")
 - **Rationale**: Te complex for team without K8s ervaring
 - **Architectuur Requirement**: Wel multi-region possible makand (niet blokkerand)
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Decision | Choice | Multi-Region Readiness |
 |----------|--------|----------------------|
-| **CNI** | Cilium | ✅ Cluster Mesh capability (Layer 2) |
+| **CNI** | Cilium | ✅ Cluster Mesh capability (Priority 2) |
 | **GitOps** | Argo CD | ✅ Multi-cluster support |
 | **Observability** | Prometheus/Grafana | ✅ Federation possible |
 | **Database** | Managed PostgreSQL | ⚠️ Read replicas cross-region (provider depanddent) |
@@ -328,17 +328,17 @@ Business Non-Goal (no multi-region now)
 
 ## 11. Compliance & Audit Requirements
 
-### Layer 0 Requirement
+### Priority 0 Requirement
 - **Compliance**: GDPR (data residency EU, andcryption, audit logging)
 - **Audit Trail**: Who deed wat whand (GitOps!)
 - **Retention**: Audit logs for minimaal 1 year
 
-### Layer 1 Implementatie
+### Priority 1 Implementatie
 | Requirement | Implementation | Audit Capability |
 |------------|----------------|-----------------|
 | **Data Residency** | EU datacenter, EU backup storage | Infrastructure location validation |
 | **Encryption at Rest** | Cloud KMS (backups), database andcryption | Key management audit trail |
-| **Encryption in Transit** | TLS (ingress), optional mTLS (service mesh Layer 2) | Certificate lifecycle logs |
+| **Encryption in Transit** | TLS (ingress), optional mTLS (service mesh Priority 2) | Certificate lifecycle logs |
 | **Change Audit** | GitOps (all changes in Git) | Git commit history = audit log |
 | **Access Audit** | Kubernetes audit logs + OIDC | Who accessed what whand |
 
@@ -360,7 +360,7 @@ Compliance Requirement (GDPR)
 - Je hebt BGP routing requirements (Calico is sterker in BGP)
 - Je wilt absoluut simpelste setup (Flannel, maar mist veel features)
 
-**Layer 0 Rationale**: Network policies (security), performance (eBPF), multi-region ready (addkomst)
+**Priority 0 Rationale**: Network policies (security), performance (eBPF), multi-region ready (addkomst)
 
 ---
 
@@ -370,7 +370,7 @@ Compliance Requirement (GDPR)
 - Je hebt complexe Helm + image automation → Flux heeft sterkere Helm support
 - Je wilt minimale footprint → Flux is lighter-weight
 
-**Layer 0 Rationale**: Audit trail (compliance), UI for Support, self-service deployments
+**Priority 0 Rationale**: Audit trail (compliance), UI for Support, self-service deployments
 
 ---
 
@@ -379,7 +379,7 @@ Compliance Requirement (GDPR)
 - Je hebt andterprise SaaS budget → Datadog/New Relic (minder operationele overhead)
 - Je wilt vendor-managed → Cloud provider observability (CloudWhatch, Azure Monitor)
 
-**Layer 0 Rationale**: Budget constraint (opand-source), vendor indepanddence, team maturity (grote community)
+**Priority 0 Rationale**: Budget constraint (opand-source), vendor indepanddence, team maturity (grote community)
 
 ---
 
@@ -388,7 +388,7 @@ Compliance Requirement (GDPR)
 - Je bent all-in on cloud provider → Cloud KMS + External Secrets (AWS Secrets Manager, Azure Key Vault)
 - Je wilt absolute simpelheid → Sealed Secrets (maar geand centralized management)
 
-**Layer 0 Rationale**: No secrets in Git, vendor indepanddence (Vault is portable), rotation capability
+**Priority 0 Rationale**: No secrets in Git, vendor indepanddence (Vault is portable), rotation capability
 
 ---
 
@@ -397,7 +397,7 @@ Compliance Requirement (GDPR)
 - Je hebt database HA expertise in-house → StatefulSet + Postgres Operator
 - Vendor indepanddence is absolute requirement → StatefulSet (maar hogere operationele last)
 
-**Layer 0 Rationale**: Team maturity (geand DB HA expertise), data resilience (PITR, HA native), pragmatisme (business impact > portability for database)
+**Priority 0 Rationale**: Team maturity (geand DB HA expertise), data resilience (PITR, HA native), pragmatisme (business impact > portability for database)
 
 ---
 
@@ -406,7 +406,7 @@ Compliance Requirement (GDPR)
 - Je hebt no capacity for registry operations → Cloud provider registry (ECR, ACR, GCR)
 - Je wilt vendor SaaS → Quay.io, Docker Hub (paid tiers)
 
-**Layer 0 Rationale**: Vendor indepanddence, budget (self-hosted is free), image scanning included
+**Priority 0 Rationale**: Vendor indepanddence, budget (self-hosted is free), image scanning included
 
 ---
 
@@ -415,7 +415,7 @@ Compliance Requirement (GDPR)
 - Je wilt dynamische configuration without restarts → Traefik
 - Je bent all-in on Envoy ecosystem → Contour, Istio Gateway
 
-**Layer 0 Rationale**: Maturity (meest gebruikt), cloud-agnostic (portability), feature set (SSL, rate limiting)
+**Priority 0 Rationale**: Maturity (meest gebruikt), cloud-agnostic (portability), feature set (SSL, rate limiting)
 
 ---
 
@@ -424,14 +424,14 @@ Compliance Requirement (GDPR)
 - Je wilt moderne taal (TypeScript/Python) → Pulumi
 - Je wilt Kubernetes-native orchestratie → Crossplane (maar veel complexer)
 
-**Layer 0 Rationale**: Vendor indepanddence (multi-cloud), maturity (stabiele providers), community support
+**Priority 0 Rationale**: Vendor indepanddence (multi-cloud), maturity (stabiele providers), community support
 
 ---
 
 ## 13. Critical Opand Questions Impact Analysis
 
 ### Q1: Which Managed Kubernetes Provider?
-**Layer 0 Impact**: 
+**Priority 0 Impact**: 
 - **Vendor Indepanddence** → Provider moet Terraform support hebband
 - **Data Sovereignty** → EU datacenter vereist
 - **Team Maturity** → Support kwaliteit is kritisch
@@ -441,7 +441,7 @@ Compliance Requirement (GDPR)
 ---
 
 ### Q5: Resource Requirements?
-**Layer 0 Impact**:
+**Priority 0 Impact**:
 - **Budget** → Node sizing bepaalt monthlye takesand
 - **Beschikbaarheid** → Bepaalt aantal nodes for HA
 
@@ -450,7 +450,7 @@ Compliance Requirement (GDPR)
 ---
 
 ### Q10: Git Branching Strategy?
-**Layer 0 Impact**:
+**Priority 0 Impact**:
 - **GitOps Principe** → Moet passand with Essential SAFe proces
 - **Ownership Model** → Bepaalt approval workflows
 
@@ -459,7 +459,7 @@ Compliance Requirement (GDPR)
 ---
 
 ### Q26: Huidige Database?
-**Layer 0 Impact**:
+**Priority 0 Impact**:
 - **Data Resilience** → Migratie complexiteit
 - **Vendor Indepanddence** → Managed DB keuze (PostgreSQL, MySQL, etc.)
 
@@ -468,7 +468,7 @@ Compliance Requirement (GDPR)
 ---
 
 ### Q31-34: Applicatie Stateless? Health Checks?
-**Layer 0 Impact**:
+**Priority 0 Impact**:
 - **Zero-Downtime Deployments** → Vereist stateless applicatie
 - **High Availability** → Vereist horizontale scaling
 
@@ -478,21 +478,21 @@ Compliance Requirement (GDPR)
 
 ## 14. Consistency Validation
 
-### ✅ Alle Layer 1 Keuzes Traceerbaar
-Elke tool keuze in Layer 1 heeft:
-- Duidelijke Layer 0 requirement mapping
+### ✅ Alle Priority 1 Keuzes Traceerbaar
+Elke tool keuze in Priority 1 heeft:
+- Duidelijke Priority 0 requirement mapping
 - Rationale based on constraints (team, budget, vendor indepanddence)
 - "Use X unless Y" decision rule
 - Alternative consideration (waarom niet tool Y?)
 
 ### ✅ Geand Tool Keuzes Zonder Rationale
-Alle tools in Layer 1 hebband:
+Alle tools in Priority 1 hebband:
 - Business/technical requirement
-- Layer 0 principle alignment
+- Priority 0 principle alignment
 - Trade-off analysis
 
 ### ✅ Trade-offs Zijn Expliciet
-Where Layer 0 principes conflicterand:
+Where Priority 0 principes conflicterand:
 - Managed DB (team maturity) vs. StatefulSet (vendor indepanddence)
 - Resolution: Team maturity > vendor indepanddence **voor database**
 - Rationale: Business impact (data resilience) + team capability
@@ -545,7 +545,7 @@ if (audit_trail_required || self_service_required) {
 
 ## 16. Summary: Traceability Matrix
 
-| Layer 0 Requirement | Layer 1 Implementation | Tool Choice | Critical Opand Question |
+| Priority 0 Requirement | Priority 1 Implementation | Tool Choice | Critical Opand Question |
 |---------------------|----------------------|-------------|----------------------|
 | Zero-downtime deployments | Rolling updates + health checks | Kubernetes Deployments, Argo CD, NGINX | Q31-34 (app stateless?) |
 | Proactive monitoring | Metrics + logs + alerts | Prometheus, Grafana, Loki, Alertmanager | Q14 (business metrics?) |
@@ -559,8 +559,8 @@ if (audit_trail_required || self_service_required) {
 ---
 
 **Document Owner**: Platform Architect / Decision Board  
-**Update Frequentie**: Bij elke wijziging in Layer 0 requirements or Layer 1 keuzes  
-**Audit Status**: ✅ Alle beslissingen traceerbaar to Layer 0  
+**Update Frequentie**: Bij elke wijziging in Priority 0 requirements or Priority 1 keuzes  
+**Audit Status**: ✅ Alle beslissingen traceerbaar to Priority 0  
 **Geschiktheid Interactieve Site**: ✅ Decision logic extractable, input variables defined  
 
 ---

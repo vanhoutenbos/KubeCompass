@@ -1,4 +1,4 @@
-# Decision Matrix
+﻿# Decision Matrix
 
 ## How to Use This Matrix
 
@@ -31,7 +31,7 @@ Each tool section now includes **CNCF category tags** to help you understand how
 
 ---
 
-## Layer 0: Foundational Decisions (Decide Day 1)
+## Priority 0: Foundational Decisions (Decide Day 1)
 
 These decisions are **architecturally significant** and expensive to change later. Make them before deploying workloads.
 
@@ -212,7 +212,7 @@ These decisions are **architecturally significant** and expensive to change late
 
 ---
 
-## Layer 1: Core Operations (Decide Within First Month)
+## Priority 1: Core Operations (Decide Within First Month)
 
 These are important for production operations but can be added or changed with moderate effort.
 
@@ -220,7 +220,7 @@ These are important for production operations but can be added or changed with m
 
 **CNCF Categories**: Observability & Analysis (Monitoring), Orchestration & Management (Service Discovery)
 
-**Why it's Layer 1**: You need monitoring early, but metrics backends are swappable with some effort.
+**Why it's Priority 1**: You need monitoring early, but metrics backends are swappable with some effort.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -294,7 +294,7 @@ These are important for production operations but can be added or changed with m
 
 **CNCF Categories**: Provisioning (Container Registry, Security & Compliance), App Definition & Development (Artifact Storage)
 
-**Why it's Layer 1**: Essential for storing and distributing container images; changing registries affects image pull configurations across all workloads.
+**Why it's Priority 1**: Essential for storing and distributing container images; changing registries affects image pull configurations across all workloads.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -325,7 +325,7 @@ These are important for production operations but can be added or changed with m
 
 **CNCF Categories**: Runtime (Cloud Native Storage), App Definition & Development (Data Storage)
 
-**Why it's Layer 1**: Critical for backups, artifacts, and data lakes; choosing the wrong solution can impact DR strategy and costs.
+**Why it's Priority 1**: Critical for backups, artifacts, and data lakes; choosing the wrong solution can impact DR strategy and costs.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -360,7 +360,7 @@ These are important for production operations but can be added or changed with m
 
 **CNCF Categories**: App Definition & Development (Streaming/Messaging), Orchestration & Management (Service Communication)
 
-**Why it's Layer 1**: Event-driven architectures depend on message brokers; changing brokers affects application integration patterns.
+**Why it's Priority 1**: Event-driven architectures depend on message brokers; changing brokers affects application integration patterns.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -397,7 +397,7 @@ These are important for production operations but can be added or changed with m
 
 **CNCF Categories**: App Definition & Development (Databases - In-Memory Data Stores), Runtime (Cloud Native Storage)
 
-**Why it's Layer 1**: Caching is critical for application performance; migration requires careful data transition.
+**Why it's Priority 1**: Caching is critical for application performance; migration requires careful data transition.
 
 | Tool | Maturity | Stars (GitHub) | Vendor Independence | Complexity | Key Features |
 |------|----------|----------------|---------------------|------------|--------------|
@@ -435,7 +435,7 @@ These are important for production operations but can be added or changed with m
 
 ---
 
-## Layer 2: Enhancements (Add When Needed)
+## Priority 2: Enhancements (Add When Needed)
 
 These tools are **plug-and-play** and can be added or removed without disrupting the platform.
 

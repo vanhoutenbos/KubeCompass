@@ -1,4 +1,4 @@
-# Related Initiatives & Why KubeCompass is Different
+﻿# Related Initiatives & Why KubeCompass is Different
 
 This document provides an honest, unfiltered assessment of existing organizations, frameworks, and initiatives in the Kubernetes and cloud-native ecosystem — and explains why KubeCompass fills a unique gap that none of them address.
 
@@ -173,7 +173,7 @@ We're building the guide engineers actually trust — based on hands-on experien
 ThoughtWorks Radar has the right *philosophy* (opinionated, honest, trade-off aware), but KubeCompass adds:
 - Kubernetes-specific focus
 - Complete domain coverage (networking, security, observability, etc.)
-- Decision timing framework (Layer 0/1/2)
+- Decision timing framework (Priority 0/1/2)
 - Hands-on testing methodology
 - "Choose X unless Y" decision rules
 
@@ -291,9 +291,9 @@ Or, as we've said internally:
 **Yes, runtime security deserves to be a domain.**
 
 Not as a tool list, but as a capability with maturity levels:
-- **Layer 0**: Pod Security Standards, basic RBAC
-- **Layer 1**: Network policies, image scanning
-- **Layer 2**: Runtime threat detection (Falco, Tetragon), anomaly detection
+- **Priority 0**: Pod Security Standards, basic RBAC
+- **Priority 1**: Network policies, image scanning
+- **Priority 2**: Runtime threat detection (Falco, Tetragon), anomaly detection
 
 This is already reflected in KubeCompass's **Domain 1.4: Runtime Security** in the [Framework](../architecture/FRAMEWORK.md).
 

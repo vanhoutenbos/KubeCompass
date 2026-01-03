@@ -1,4 +1,4 @@
-# Domain Documentation
+﻿# Domain Documentation
 
 Deze directory bevat diepgaande documentatie voor elk Kubernetes platform domein, georganiseerd per Layer.
 
@@ -8,15 +8,15 @@ Deze directory bevat diepgaande documentatie voor elk Kubernetes platform domein
 
 ```
 domains/
-├── 00-foundations/     # Layer 0 - Foundational (Day 1 decisions)
-├── 01-operations/      # Layer 1 - Core Operations (First month)
-├── 02-enhancements/    # Layer 2 - Enhancements (Add when needed)
+├── 00-foundations/     # Priority 0 - Foundational (Day 1 decisions)
+├── 01-operations/      # Priority 1 - Core Operations (First month)
+├── 02-enhancements/    # Priority 2 - Enhancements (Add when needed)
 └── DOMAIN_TESTING_TEMPLATE.md  # Template voor nieuwe domeinen
 ```
 
 ---
 
-## Layer 0: Foundations (00-foundations/)
+## Priority 0: Foundations (00-foundations/)
 
 **Decision Timing**: Day 1  
 **Migration Cost**: HIGH  
@@ -33,7 +33,7 @@ Domeinen die je vanaf het begin goed moet hebben, omdat ze moeilijk te verandere
 
 ---
 
-## Layer 1: Core Operations (01-operations/)
+## Priority 1: Core Operations (01-operations/)
 
 **Decision Timing**: Within first month  
 **Migration Cost**: MEDIUM  
@@ -50,7 +50,7 @@ Domeinen die essentieel zijn voor productie, maar met matige effort vervangbaar:
 
 ---
 
-## Layer 2: Enhancements (02-enhancements/)
+## Priority 2: Enhancements (02-enhancements/)
 
 **Decision Timing**: Add when needed  
 **Migration Cost**: LOW  

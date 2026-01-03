@@ -1,4 +1,4 @@
-# Enterprise Financial Services Case: Unified Decision Framework
+﻿# Enterprise Financial Services Case: Unified Decision Framework
 
 **Case Type**: Global Enterprise Multi-Cloud Migration  
 **Version**: 1.0  
@@ -60,7 +60,7 @@
 
 ---
 
-## 2. Layer 0: Foundations (Priority 🔴 Critical Path)
+## 2. Priority 0: Foundations (Priority 🔴 Critical Path)
 
 ### Primary Goals
 1. **Multi-Cloud Active-Active** - Eliminate single cloud dependency
@@ -178,7 +178,7 @@
 
 ---
 
-## 3. Layer 1: Tool Mapping & "Choose X unless Y" Rules (Priority 🟠 Operations Ready)
+## 3. Priority 1: Tool Mapping & "Choose X unless Y" Rules (Priority 🟠 Operations Ready)
 
 ### Infrastructure & Provisioning
 

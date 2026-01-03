@@ -1,6 +1,6 @@
-# Layer 1 Webshop Migration - Reference Architecture
+﻿# Priority 1 Webshop Migration - Reference Architecture
 
-This document provides a **reference architecture and design patterns** for migrating a Dutch webshop to Kubernetes, following Layer 0 requirements and Layer 1 tool selections.
+This document provides a **reference architecture and design patterns** for migrating a Dutch webshop to Kubernetes, following Priority 0 requirements and Priority 1 tool selections.
 
 ## ⚠️ Important Note
 
@@ -50,9 +50,9 @@ This reference architecture covers all aspects needed to migrate to Kubernetes:
 ### Step 1: Understand the Patterns
 
 Study the architectural documentation:
-- [📋 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
-- [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
-- [🔍 Layer 0→1 Mapping](LAYER_0_LAYER_1_MAPPING.md) - Traceability matrix
+- [📋 Priority 0 Foundation](PRIORITY_0_WEBSHOP_CASE.md) - Requirements and constraints
+- [🔧 Priority 1 Tool Selection](PRIORITY_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [🔍 Priority 0→1 Mapping](PRIORITY_0_PRIORITY_1_MAPPING.md) - Traceability matrix
 
 ### Step 2: Adapt to Your Context
 
@@ -76,10 +76,10 @@ The architecture is documented across multiple files:
 
 ```
 .
-├── LAYER_0_WEBSHOP_CASE.md          # Foundational requirements
-├── LAYER_1_WEBSHOP_CASE.md          # Tool selection with managed K8s nuances
-├── LAYER_2_WEBSHOP_CASE.md          # Advanced capabilities
-├── LAYER_0_LAYER_1_MAPPING.md       # Traceability matrix
+├── PRIORITY_0_WEBSHOP_CASE.md          # Foundational requirements
+├── PRIORITY_1_WEBSHOP_CASE.md          # Tool selection with managed K8s nuances
+├── PRIORITY_2_WEBSHOP_CASE.md          # Advanced capabilities
+├── PRIORITY_0_PRIORITY_1_MAPPING.md       # Traceability matrix
 ├── DECISION_RULES.md                # "Choose X unless Y" rules
 ├── OPEN_QUESTIONS.md                # Critical questions to answer
 ├── IMPROVEMENT_POINTS.md            # Known gaps and risks
@@ -93,9 +93,9 @@ The architecture is documented across multiple files:
 ## 🎓 Key Documentation
 
 ### Getting Started
-- [📖 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - **START HERE**: Understand requirements first
-- [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices with managed Kubernetes nuances
-- [🔗 Layer 0→1 Mapping](LAYER_0_LAYER_1_MAPPING.md) - How tools map to requirements
+- [📖 Priority 0 Foundation](PRIORITY_0_WEBSHOP_CASE.md) - **START HERE**: Understand requirements first
+- [🔧 Priority 1 Tool Selection](PRIORITY_1_WEBSHOP_CASE.md) - Tool choices with managed Kubernetes nuances
+- [🔗 Priority 0→1 Mapping](PRIORITY_0_PRIORITY_1_MAPPING.md) - How tools map to requirements
 
 ### Decision Support
 - [🎯 Decision Rules](DECISION_RULES.md) - "Choose X unless Y" for all domains
@@ -103,13 +103,13 @@ The architecture is documented across multiple files:
 - [🔍 Improvement Points](IMPROVEMENT_POINTS.md) - Known gaps and risk mitigations
 
 ### Architecture Patterns
-- [📋 Layer 0 Foundation](LAYER_0_WEBSHOP_CASE.md) - Requirements and constraints
-- [🔧 Layer 1 Tool Selection](LAYER_1_WEBSHOP_CASE.md) - Tool choices and rationale
-- [🚀 Layer 2 Enhancements](LAYER_2_WEBSHOP_CASE.md) - Advanced capability patterns
+- [📋 Priority 0 Foundation](PRIORITY_0_WEBSHOP_CASE.md) - Requirements and constraints
+- [🔧 Priority 1 Tool Selection](PRIORITY_1_WEBSHOP_CASE.md) - Tool choices and rationale
+- [🚀 Priority 2 Enhancements](PRIORITY_2_WEBSHOP_CASE.md) - Advanced capability patterns
 
 ## 🎯 Success Criteria
 
-This reference architecture addresses all Layer 0 success criteria:
+This reference architecture addresses all Priority 0 success criteria:
 
 | Criterion | Target | Pattern |
 |-----------|--------|---------|
@@ -177,17 +177,17 @@ This reference architecture addresses all Layer 0 success criteria:
 ## 🛠️ Reference Technology Stack
 
 ### Infrastructure
-- **Cloud Provider**: EU-based managed Kubernetes (see Layer 1 for nuances)
+- **Cloud Provider**: EU-based managed Kubernetes (see Priority 1 for nuances)
 - **IaC**: Terraform (provider-agnostic pattern)
 - **Kubernetes**: 1.28+ (N-1 version strategy)
 
 ### Networking
-- **CNI**: Cilium (eBPF-based, see alternatives in Layer 1)
+- **CNI**: Cilium (eBPF-based, see alternatives in Priority 1)
 - **Ingress**: NGINX Ingress Controller
 - **SSL/TLS**: cert-manager + Let's Encrypt
 
 ### GitOps & CI/CD
-- **GitOps**: ArgoCD (see Flux alternative in Layer 1)
+- **GitOps**: ArgoCD (see Flux alternative in Priority 1)
 - **CI/CD**: GitHub Actions (adaptable to other CI systems)
 - **Registry**: Harbor (self-hosted pattern)
 
@@ -202,15 +202,15 @@ This reference architecture addresses all Layer 0 success criteria:
 - **Policies**: Network Policies (OPA Gatekeeper optional)
 
 ### Storage & Backup
-- **Storage**: Cloud provider CSI (see lock-in analysis in Layer 1)
+- **Storage**: Cloud provider CSI (see lock-in analysis in Priority 1)
 - **Backup**: Velero pattern
-- **Database**: Managed PostgreSQL (see trade-offs in Layer 1)
+- **Database**: Managed PostgreSQL (see trade-offs in Priority 1)
 
 ## 🚦 Documentation Status
 
-- [x] Layer 0 foundational requirements
-- [x] Layer 1 tool selection with managed K8s nuances
-- [x] Layer 2 enhancement patterns
+- [x] Priority 0 foundational requirements
+- [x] Priority 1 tool selection with managed K8s nuances
+- [x] Priority 2 enhancement patterns
 - [x] Decision rules and traceability
 - [x] Open questions framework
 - [x] Implementation patterns and best practices
@@ -250,7 +250,7 @@ See architectural documentation for detailed considerations at each phase.
 
 These are critical decisions from the documentation you must answer:
 
-1. **Which managed Kubernetes provider?** (See Layer 1 lock-in analysis)
+1. **Which managed Kubernetes provider?** (See Priority 1 lock-in analysis)
 2. **Kubernetes version strategy?** (N-1, upgrade frequency)
 3. **Multi-region from day 1?** (Single region initially?)
 4. **Database strategy?** (Managed vs. StatefulSet, see trade-offs)
@@ -262,7 +262,7 @@ See [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) for complete list and prioritization.
 
 This reference architecture is part of the KubeCompass framework. To implement:
 
-1. **Study the patterns** documented across Layer 0, 1, and 2
+1. **Study the patterns** documented across Priority 0, 1, and 2
 2. **Adapt to your context** - provider, requirements, constraints
 3. **Build your own implementation** based on these proven patterns
 4. **Contribute back** - share learnings and improvements
@@ -289,7 +289,7 @@ Focus on teaching principles and decision-making rather than prescriptive copy-p
 Built on open-source tools and standard Kubernetes API patterns with clear lock-in analysis.
 
 ### 3. **Decision Traceability**
-Every tool choice traced back to Layer 0 requirements with "Choose X unless Y" rules.
+Every tool choice traced back to Priority 0 requirements with "Choose X unless Y" rules.
 
 ### 4. **Real-World Trade-offs**
 Honest analysis of managed vs. self-managed Kubernetes, including lock-in points.
@@ -301,7 +301,7 @@ Security, observability, GitOps, disaster recovery—all patterns documented.
 Different patterns for startups, enterprises, and multi-cloud scenarios.
 
 ### 7. **Tested and Validated Patterns**
-Based on real-world Layer 0/Layer 1 analysis with clear success criteria.
+Based on real-world Priority 0/Priority 1 analysis with clear success criteria.
 
 ---
 

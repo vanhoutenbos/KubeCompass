@@ -1,4 +1,4 @@
-# KubeCompass Website Launch Plan
+﻿# KubeCompass Website Launch Plan
 
 **Target**: Launch within 1 month with core tool recommendations and decision framework
 
@@ -19,14 +19,14 @@ This document outlines the step-by-step plan to launch KubeCompass as a producti
 ### What We WILL Deliver
 
 ✅ **Decision Framework**:
-- Complete Layer 0/1/2 structure with timing guidance
+- Complete Priority 0/1/2 structure with timing guidance
 - "Choose X unless Y" decision rules for all core domains
 - Transparent scoring methodology
 
 ✅ **Core Tool Recommendations**:
-- Layer 0 (Foundational): CNI, GitOps, RBAC, Secrets, Storage
-- Layer 1 (Core Operations): Observability, Ingress, Registry, Backup, Caching, Messaging
-- Layer 2 (Enhancements): Image scanning, policy enforcement, runtime security
+- Priority 0 (Foundational): CNI, GitOps, RBAC, Secrets, Storage
+- Priority 1 (Core Operations): Observability, Ingress, Registry, Backup, Caching, Messaging
+- Priority 2 (Enhancements): Image scanning, policy enforcement, runtime security
 
 ✅ **Real-World Scenarios**:
 - Enterprise multi-tenant (finance/government)
@@ -78,12 +78,12 @@ This document outlines the step-by-step plan to launch KubeCompass as a producti
 ### Week 2: Domain-by-Domain Tool Evaluation
 
 **Goals**:
-- [ ] Test and document Layer 0 tools (if not already done)
+- [ ] Test and document Priority 0 tools (if not already done)
   - Cilium (CNI) ✅ DONE
   - Argo CD (GitOps) → test on kind cluster
   - Vault + ESO (Secrets) → test installation and rotation
   - Keycloak (Identity) → test OIDC integration
-- [ ] Test and document Layer 1 tools
+- [ ] Test and document Priority 1 tools
   - Prometheus + Loki + Grafana (Observability)
   - NGINX Ingress (Ingress)
   - Harbor (Registry)
@@ -142,7 +142,7 @@ This document outlines the step-by-step plan to launch KubeCompass as a producti
 - [ ] Set up community channels (GitHub Discussions, social media)
 
 **Launch Checklist**:
-- [ ] All Layer 0/1 tools have decision rules
+- [ ] All Priority 0/1 tools have decision rules
 - [ ] At least 2 real-world scenarios complete
 - [ ] Interactive tools functional
 - [ ] Testing methodology documented
@@ -165,13 +165,13 @@ This document outlines the step-by-step plan to launch KubeCompass as a producti
 
 ### Domain Prioritization
 
-**Priority 1 (Week 2, Days 1-3)**: Foundational Layer 0
+**Priority 1 (Week 2, Days 1-3)**: Foundational Priority 0
 - [x] CNI: Cilium (DONE)
 - [ ] GitOps: Argo CD
 - [ ] Secrets: Vault + External Secrets Operator
 - [ ] Identity: Keycloak (OIDC integration)
 
-**Priority 2 (Week 2, Days 4-7)**: Core Layer 1
+**Priority 2 (Week 2, Days 4-7)**: Core Priority 1
 - [ ] Observability: Prometheus + Loki + Grafana
 - [ ] Ingress: NGINX Ingress Controller
 - [ ] Registry: Harbor
@@ -179,7 +179,7 @@ This document outlines the step-by-step plan to launch KubeCompass as a producti
 - [ ] Caching: Valkey
 - [ ] Messaging: NATS
 
-**Priority 3 (Week 3)**: Enhancement Layer 2
+**Priority 3 (Week 3)**: Enhancement Priority 2
 - [ ] Image Scanning: Trivy (in CI/CD + Harbor)
 - [ ] Policy: Kyverno (basic policies)
 - [ ] Runtime Security: Falco (threat detection)
@@ -374,7 +374,7 @@ kind create cluster --config kind-config.yaml
 ### Month 3: Expanded Coverage
 - [ ] Complete Startup MVP scenario
 - [ ] Add Edge Computing scenario
-- [ ] Expand Layer 2 tool coverage (chaos engineering, cost management)
+- [ ] Expand Priority 2 tool coverage (chaos engineering, cost management)
 - [ ] Create comparison guides ("Argo CD vs Flux", "Prometheus vs VictoriaMetrics")
 
 ### Months 4-6: Enterprise & Compliance Focus
@@ -389,7 +389,7 @@ kind create cluster --config kind-config.yaml
 
 ### Documentation Completeness
 - [ ] All 13 domains have "choose X unless Y" decision rule
-- [ ] All Layer 0/1 tools have hands-on testing documented
+- [ ] All Priority 0/1 tools have hands-on testing documented
 - [ ] At least 2 complete real-world scenarios
 - [ ] Contribution and testing methodology documented
 

@@ -1,4 +1,4 @@
-# Open Questions: Webshop Migration Case
+﻿# Open Questions: Webshop Migration Case
 
 **Target Audience**: Decision Makers, Project Leads, Architects  
 **Purpose**: Overview of all unanswered questions sorted by criticality  
@@ -27,7 +27,7 @@
 ### 🔴 Q1: Which Managed Kubernetes Provider?
 **Category**: Architecture + Budget  
 **Impact**: Determines available features, pricing, support quality  
-**Layer 0 Constraint**: 
+**Priority 0 Constraint**: 
 - EU datacenter (GDPR data residency)
 - Vendor independence (Terraform support required)
 - Team maturity (support quality critical)
@@ -63,7 +63,7 @@
 ### 🔴 Q5: Resource Requirements (CPU/Memory)?
 **Category**: Architecture + Budget  
 **Impact**: Node sizing, number of nodes, monthly costs  
-**Layer 0 Constraint**: Budget realism, availability (HA requires multiple nodes)
+**Priority 0 Constraint**: Budget realism, availability (HA requires multiple nodes)
 
 **To Measure**:
 | Metric | Current Situation | K8s Equivalent |
@@ -104,7 +104,7 @@ application_pod:
 ### 🔴 Q26: Current Database (MySQL/PostgreSQL/SQL Server)?
 **Category**: Architecture + Operational  
 **Impact**: Migration strategy, managed DB choice, HA configuration  
-**Layer 0 Constraint**: Data resilience (PITR requirement), team maturity (no DB HA expertise)
+**Priority 0 Constraint**: Data resilience (PITR requirement), team maturity (no DB HA expertise)
 
 **To Identify**:
 | Aspect | Question | Impact |
@@ -128,7 +128,7 @@ application_pod:
    - ✅ Vendor independence
    - ❌ High operational complexity
 
-**Layer 0 Decision**: Managed DB (Option 2) unless team has DB HA expertise
+**Priority 0 Decision**: Managed DB (Option 2) unless team has DB HA expertise
 
 **Blocking Dependencies**:
 - Managed DB provisioning
@@ -143,7 +143,7 @@ application_pod:
 ### 🔴 Q27: Database Size & Load?
 **Category**: Architecture + Budget  
 **Impact**: Instance sizing, backup window, replication strategy  
-**Layer 0 Constraint**: RPO 15 minutes (transaction data)
+**Priority 0 Constraint**: RPO 15 minutes (transaction data)
 
 **To Measure**:
 | Metric | Current State | K8s Impact |
@@ -173,7 +173,7 @@ Impact: Determines backup frequency for RPO 15min target
 ### 🔴 Q31-34: Application Readiness (Stateless, Scaling, Health Checks)?
 **Category**: Architecture + Operational  
 **Impact**: Zero-downtime deployments, horizontal scaling, rolling updates  
-**Layer 0 Requirement**: Zero-downtime deployments (business critical)
+**Priority 0 Requirement**: Zero-downtime deployments (business critical)
 
 **Critical Validations**:
 
@@ -226,7 +226,7 @@ Impact: Determines backup frequency for RPO 15min target
 ### 🔴 Q43: Current Monthly Infrastructure Costs?
 **Category**: Budget  
 **Impact**: Budget approval, sizing decisions, managed vs. self-hosted trade-offs  
-**Layer 0 Constraint**: Budget realism
+**Priority 0 Constraint**: Budget realism
 
 **To Inventory**:
 | Cost Category | Current (VM-based) | Estimated (K8s) | Delta |
@@ -257,7 +257,7 @@ Impact: Determines backup frequency for RPO 15min target
 ### 🔴 Q44: Budget Approval & Sign-off?
 **Category**: Budget + Governance  
 **Impact**: Project go/no-go  
-**Layer 0 Constraint**: Budget realism
+**Priority 0 Constraint**: Budget realism
 
 **Approval Chain**:
 - [ ] Cost estimation complete (Q43)
@@ -287,7 +287,7 @@ Kubernetes Investment:
 ### 🟠 Q10: Git Branching Strategy?
 **Category**: Operational  
 **Impact**: GitOps configuration, approval workflows, deployment frequency  
-**Layer 0 Principle**: GitOps from day 1, Essential SAFe methodology
+**Priority 0 Principle**: GitOps from day 1, Essential SAFe methodology
 
 **Options**:
 
@@ -327,7 +327,7 @@ development (dev env)
 
 ---
 
-**Layer 0 Context**: Essential SAFe → sprints, PI planning  
+**Priority 0 Context**: Essential SAFe → sprints, PI planning  
 **Recommendation**: Start with Trunk-Based (Option A), feature flags for WIP  
 **Rationale**: GitOps efficiency, faster feedback loops
 
@@ -349,7 +349,7 @@ applications:
 ### 🟠 Q14: Which Business Metrics are Critical?
 **Category**: Operational + Monitoring  
 **Impact**: Custom application metrics, business dashboards, alerting  
-**Layer 0 Requirement**: Proactive monitoring (detect before customers call)
+**Priority 0 Requirement**: Proactive monitoring (detect before customers call)
 
 **To Define**:
 | Metric Category | Examples | Alert Threshold |
@@ -372,7 +372,7 @@ applications:
 ### 🟠 Q18: Identity Provider Integration (OIDC)?
 **Category**: Security + Operational  
 **Impact**: RBAC configuration, SSO, audit logging  
-**Layer 0 Requirement**: No kubeconfig files long-term (not scalable)
+**Priority 0 Requirement**: No kubeconfig files long-term (not scalable)
 
 **Options**:
 
@@ -422,7 +422,7 @@ applications:
 ### 🟠 Q20: Vault Unsealing Strategy?
 **Category**: Security + Operational  
 **Impact**: Disaster recovery, operational burden, security posture  
-**Layer 0 Requirement**: Secrets management from day 1
+**Priority 0 Requirement**: Secrets management from day 1
 
 **Options**:
 
@@ -460,7 +460,7 @@ applications:
 ### 🟠 Q39: Deployment Approval Process?
 **Category**: Operational + Governance  
 **Impact**: GitOps workflow, CD pipeline design  
-**Layer 0 Principle**: Self-service for Dev, but ownership clear
+**Priority 0 Principle**: Self-service for Dev, but ownership clear
 
 **Options**:
 

@@ -1,4 +1,4 @@
-# TransIP & Infrastructure as Code: Challenges and Solutions
+﻿# TransIP & Infrastructure as Code: Challenges and Solutions
 
 **Target Audience**: Platform Engineers, DevOps Teams  
 **Context**: Dutch webshop migration case with TransIP Kubernetes  
@@ -88,7 +88,7 @@ terraform {
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ Layer 1: Cluster Lifecycle (Manual/API)            │
+│ Priority 1: Cluster Lifecycle (Manual/API)            │
 │ - Cluster provisioning via TransIP Control Panel   │
 │ - Node pool creation & initial sizing              │
 │ - Kubernetes version selection                     │
@@ -96,7 +96,7 @@ terraform {
 └─────────────────────────────────────────────────────┘
                       ↓ kubeconfig
 ┌─────────────────────────────────────────────────────┐
-│ Layer 2: Infrastructure Resources (Terraform)      │
+│ Priority 2: Infrastructure Resources (Terraform)      │
 │ - DNS records (TransIP provider)                   │
 │ - Kubernetes namespaces, RBAC, storage classes     │
 │ - Platform components (via Terraform K8s provider) │
@@ -113,7 +113,7 @@ terraform {
 
 ### 2.2 Implementatie Details
 
-#### Layer 1: Cluster Provisioning (Documented Manual Process)
+#### Priority 1: Cluster Provisioning (Documented Manual Process)
 
 **Aanpak**: Documenteer cluster creation als reproduceerbaar proces
 
@@ -175,7 +175,7 @@ kubectl get nodes
 - ⚠️ Geen automated testing van provisioning
 - ⚠️ State drift mogelijk (console changes niet tracked)
 
-#### Layer 2: Infrastructure as Code (Terraform)
+#### Priority 2: Infrastructure as Code (Terraform)
 
 **Aanpak**: Gebruik Terraform Kubernetes provider voor alles IN het cluster
 
@@ -409,7 +409,7 @@ Scales node pool
 
 ### 4.1 Risico Assessment
 
-**Vraag**: Als TransIP geen Terraform heeft, hoe waarborgen we vendor independence (Layer 0 requirement)?
+**Vraag**: Als TransIP geen Terraform heeft, hoe waarborgen we vendor independence (Priority 0 requirement)?
 
 **Antwoord**: Vendor independence heeft meerdere lagen:
 
@@ -494,7 +494,7 @@ Scales node pool
 
 **Primary Choice**: TransIP Kubernetes (voor Nederlandse organisaties)
 
-**Layer 0 Rationale**:
+**Priority 0 Rationale**:
 - **GDPR Compliance**: Nederlandse datacenter, Nederlandse support
 - **Vendor Trust**: Gevestigde Nederlandse provider
 - **Pricing**: Transparant, euro-based pricing
@@ -657,7 +657,7 @@ jobs:
 - **DigitalOcean**: Terraform support, maar US-based bedrijf (datacenter = EU)
 - **Hyperscalers** (AWS/Azure/GCP): Fully Terraform, but more expensive + higher vendor lock-in risk
 
-For the webshop case (Layer 0 constraint: vendor independence, GDPR, budget) TransIP remains valid.
+For the webshop case (Priority 0 constraint: vendor independence, GDPR, budget) TransIP remains valid.
 
 ### Q3: How do we automate disaster recovery without Terraform?
 **A**: 
@@ -669,7 +669,7 @@ For the webshop case (Layer 0 constraint: vendor independence, GDPR, budget) Tra
 Test quarterly: "Kunnen we cluster rebuilden binnen 4 uur?"
 
 ### Q4: Wat als TransIP later Terraform support krijgt?
-**A**: Perfect! Dan migreer je Layer 1 (cluster lifecycle) naar Terraform. Layer 2 (in-cluster) blijft ongewijzigd. Effort: 1-2 dagen om runbook naar Terraform te converteren.
+**A**: Perfect! Dan migreer je Priority 1 (cluster lifecycle) naar Terraform. Priority 2 (in-cluster) blijft ongewijzigd. Effort: 1-2 dagen om runbook naar Terraform te converteren.
 
 ### Q5: Hoe schaal ik tijdens Black Friday zonder autoscaler?
 **A**:
@@ -695,7 +695,7 @@ Voor webshop case (SME, eerste K8s ervaring): manual scaling is **pragmatisch**,
 **Recommendation**: ✅ **TransIP remains the best choice**, despite Terraform limitations
 
 **Rationale**:
-1. **Layer 0 Priorities**:
+1. **Priority 0 Priorities**:
    - ✅ GDPR compliance (Nederlandse datacenter)
    - ✅ Team maturity (Nederlandse support kritiek)
    - ✅ Vendor independence (K8s API is portable)
@@ -757,8 +757,8 @@ Voor webshop case (SME, eerste K8s ervaring): manual scaling is **pragmatisch**,
 - [Best Practices](https://www.arthurkoziel.com/managing-kubernetes-resources-in-terraform-kubernetes-provider/)
 
 ### Related KubeCompass Docs
-- [Layer 0: Foundation](cases/LAYER_0_WEBSHOP_CASE.md)
-- [Layer 1: Tool Selection](cases/LAYER_1_WEBSHOP_CASE.md)
+- [Priority 0: Foundation](cases/PRIORITY_0_WEBSHOP_CASE.md)
+- [Priority 1: Tool Selection](cases/PRIORITY_1_WEBSHOP_CASE.md)
 - [Decision Rules](DECISION_RULES.md)
 - [Open Questions](OPEN_QUESTIONS.md)
 

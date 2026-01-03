@@ -1,9 +1,9 @@
-# Layer 1: Tool Selection & Platform Capabilities — Webshop Migratiecase
+﻿# Priority 1: Tool Selection & Platform Capabilities — Webshop Migratiecase
 
 **Target Audience**: Platform Enginors, DevOps Enginors, Architectand  
 **Status**: Tool Selectie & Architectuur Design  
 **Organization**: Dutch webshop / online store with Essential SAFe methodology  
-**Condition**: [Layer 0 Fundament](LAYER_0_WEBSHOP_CASE.md) must be established first  
+**Condition**: [Priority 0 Fundament](PRIORITY_0_WEBSHOP_CASE.md) must be established first  
 
 ---
 
@@ -11,17 +11,17 @@
 
 📋 **[❓ QUESTION]** marks questions that must be answered before implementation can begin  
 ✅ **"Use X unless Y"** gives clear tool recommendations with alternatives  
-🔗 **Layer 0 Link** shows how tool choices trace back to Layer 0 requirements  
+🔗 **Priority 0 Link** shows how tool choices trace back to Priority 0 requirements  
 
 ---
 
 ## Executive Summary
 
-This document translates the Layer 0 requirements from [LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md) into **concrete tool choices** en **platform capabilities**. 
+This document translates the Priority 0 requirements from [PRIORITY_0_WEBSHOP_CASE.md](PRIORITY_0_WEBSHOP_CASE.md) into **concrete tool choices** en **platform capabilities**. 
 
-### Layer 0 → Layer 1 Mapping
+### Priority 0 → Priority 1 Mapping
 
-| Layer 0 Requirement | Layer 1 Implementation |
+| Priority 0 Requirement | Priority 1 Implementation |
 |---------------------|----------------------|
 | **Zero-downtime deployments** | Rolling updates via Kubernetes Deployments + readiness probes |
 | **Proactive monitoring** | Prowithheus + Grafana + Alertmanager |
@@ -32,7 +32,7 @@ This document translates the Layer 0 requirements from [LAYER_0_WEBSHOP_CASE.md]
 
 ### Key Decisions
 
-1. **Managed Kubernetes with Dutch provider** (Layer 0 → reduce operational complexity)
+1. **Managed Kubernetes with Dutch provider** (Priority 0 → reduce operational complexity)
 2. **Cilium as CNI** (Network policies, eBPF performance, multi-region ready)
 3. **Argo CD for GitOps** (UI for Support/Management, SSO, audit trail)
 4. **Prometheus + Grafana** (Open-source observability, vendor independence)
@@ -45,7 +45,7 @@ This document translates the Layer 0 requirements from [LAYER_0_WEBSHOP_CASE.md]
 
 ### 1.1 Kubernetes Distribution Choice
 
-**🔗 Layer 0 Constraint**: Team heeft geand Kubernetes ervaring (training noded), vendor indepanddence binnand 1 quarter
+**🔗 Priority 0 Constraint**: Team heeft geand Kubernetes ervaring (training noded), vendor indepanddence binnand 1 quarter
 
 **✅ Decision: Managed Kubernetes with Nederlense datacenter provider**
 
@@ -185,7 +185,7 @@ ELIF compliance == STRICT:
 
 ### 1.2 Infrastructure as Code (IaC)
 
-**🔗 Layer 0 Principe**: Infrastructure as Code for reproduceerbare omgevingand
+**🔗 Priority 0 Principe**: Infrastructure as Code for reproduceerbare omgevingand
 
 **✅ Decision: Terraform for cluster provisioning**
 
@@ -235,7 +235,7 @@ infrastructure/
 
 ### 1.3 Cluster Sizing & Node Pools
 
-**🔗 Layer 0 Context**: Huidige VM-setup en resource usage (Q7 in Layer 0 sectie 12.1)
+**🔗 Priority 0 Context**: Huidige VM-setup en resource usage (Q7 in Priority 0 sectie 12.1)
 
 **[❓ QUESTION 5]**: What zijn de huidige resource requirements?
 - CPU: ____ cores per applicatie instance
@@ -273,7 +273,7 @@ Node Pools:
 
 ### 2.1 CNI Plugin
 
-**🔗 Layer 0 Requirements**:
+**🔗 Priority 0 Requirements**:
 - Network policies for security
 - Multi-region capabel (addkomstige eis)
 - Performance (webshop moet snel zijn)
@@ -301,7 +301,7 @@ Node Pools:
 
 ### 2.2 Ingress Controller
 
-**🔗 Layer 0 Requirement**: Zero-downtime deployments, TLS andcryption
+**🔗 Priority 0 Requirement**: Zero-downtime deployments, TLS andcryption
 
 **✅ Decision: NGINX Ingress Controller**
 
@@ -322,7 +322,7 @@ Node Pools:
 
 ### 2.3 Service Mesh
 
-**🔗 Layer 0 Non-Goal**: Service mesh is niet noded for monolithische applicatie
+**🔗 Priority 0 Non-Goal**: Service mesh is niet noded for monolithische applicatie
 
 **✅ Decision: Geand service mesh (day 1)**
 
@@ -334,7 +334,7 @@ Node Pools:
 
 ### 2.4 Network Policies
 
-**🔗 Layer 0 Requirement**: Defense in depth, least privilege
+**🔗 Priority 0 Requirement**: Defense in depth, least privilege
 
 **✅ Decision: Network policies vanaf day 1**
 
@@ -348,7 +348,7 @@ Node Pools:
 
 ### 3.1 GitOps Tool
 
-**🔗 Layer 0 Principe**: GitOps is Layer 0 principe (alle deployments via Git)
+**🔗 Priority 0 Principe**: GitOps is Priority 0 principe (alle deployments via Git)
 
 **✅ Decision: Argo CD**
 
@@ -424,7 +424,7 @@ Node Pools:
 
 ### 5.1 RBAC Model
 
-**🔗 Layer 0 Constraint**: Developers geand productie addgang, Ops heeft namespace-scoped access
+**🔗 Priority 0 Constraint**: Developers geand productie addgang, Ops heeft namespace-scoped access
 
 **[❓ QUESTION 18]**: Identity provider integration?
 - OIDC with Keycloak (self-hosted), Azure AD, Google Workspace?
@@ -626,7 +626,7 @@ Node Pools:
 
 ## 11. Success Criteria
 
-| Criterium | Layer 0 Purpose | Layer 1 Implementatie | Validatie |
+| Criterium | Priority 0 Purpose | Priority 1 Implementatie | Validatie |
 |-----------|-------------|---------------------|-----------|
 | **Deployment downtime** | 0 minowtand | Rolling updates + readiness probes | Deploy tijdens business hours |
 | **Incident detectie** | < 2 minowtand | Prowithheus alerts + UptimeRobot | Simulate failure |
@@ -658,11 +658,11 @@ Node Pools:
 
 ---
 
-## 13. Next Steps: From Layer 1 to Layer 2
+## 13. Next Steps: From Priority 1 to Priority 2
 
-After implementation of Layer 1 (first 4-6 months), Layer 2 (enhancements) can be considered:
+After implementation of Priority 1 (first 4-6 months), Priority 2 (enhancements) can be considered:
 
-### Layer 2 Possibilities (Optional)
+### Priority 2 Possibilities (Optional)
 - **Service mesh** (Istio/Linkerd) - if microservices architecture
 - **Distributed tracing** (Jaeger/Tempo) - for performance debugging
 - **Chaos engineering** (Chaos Mesh) - for resilience testing
@@ -677,7 +677,7 @@ After implementation of Layer 1 (first 4-6 months), Layer 2 (enhancements) can b
 **KubeCompass Framework**:
 - **[FRAMEWORK.md](FRAMEWORK.md)**: Decision layers uitleg
 - **[MATRIX.md](MATRIX.md)**: Tool recommendations with scoring
-- **[LAYER_0_WEBSHOP_CASE.md](LAYER_0_WEBSHOP_CASE.md)**: Foundational requirements
+- **[PRIORITY_0_WEBSHOP_CASE.md](PRIORITY_0_WEBSHOP_CASE.md)**: Foundational requirements
 - **[SCENARIOS.md](SCENARIOS.md)**: Enterprise multi-tenant scenario
 - **[PRODUCTION_READY.md](PRODUCTION_READY.md)**: Compliance requirements
 
@@ -693,11 +693,11 @@ After implementation of Layer 1 (first 4-6 months), Layer 2 (enhancements) can b
 **Document Status**: ⚠️ Draft - Requires answers to [❓ QUESTIONS] before implementation  
 **Eigeinto**: Platform Team / Lead Architect  
 **Review Cyclus**: Na beantwoording or kritieke vragen (Q1, Q5, Q26, Q31-34, Q43-44)  
-**Volgende Fase**: Layer 2 (andhancement) after 6 monthand productie stabiliteit  
+**Volgende Fase**: Priority 2 (andhancement) after 6 monthand productie stabiliteit  
 
 ---
 
-**Layer 1 Document Version**: 1.0  
-**Gebaseerd op**: Layer 0 v2.0 (LAYER_0_WEBSHOP_CASE.md)  
+**Priority 1 Document Version**: 1.0  
+**Gebaseerd op**: Priority 0 v2.0 (PRIORITY_0_WEBSHOP_CASE.md)  
 **Laatste Update**: December 2024  
 **Licentie**: MIT — vrij te gebruikand en to te passand

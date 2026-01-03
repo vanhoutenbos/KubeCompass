@@ -1,4 +1,4 @@
-# Production-Ready Definition
+﻿# Production-Ready Definition
 
 ## Purpose
 
@@ -136,7 +136,7 @@ For **finance and government** sectors, these frameworks are essential:
 - **Container image scanning**: Vulnerability scanning before deployment
 - **Image provenance**: Signed images, verified registries
 - **Pod Security Standards**: Enforce restricted or baseline profiles
-- **Runtime security**: Tools like Falco for threat detection (Layer 2 enhancement)
+- **Runtime security**: Tools like Falco for threat detection (Priority 2 enhancement)
 
 #### Audit & Compliance
 

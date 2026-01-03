@@ -1,4 +1,4 @@
-# Real-World Scenarios
+﻿# Real-World Scenarios
 
 This document provides concrete architectural examples for common Kubernetes use cases. Each scenario includes:
 - Context and requirements
@@ -45,7 +45,7 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
-### Layer 0: Foundational Decisions (Made Day 1)
+### Priority 0: Foundational Decisions (Made Day 1)
 
 #### 1. CNI: Cilium
 
@@ -180,7 +180,7 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
-### Layer 1: Core Operations (Implemented Within First Month)
+### Priority 1: Core Operations (Implemented Within First Month)
 
 #### 6. Observability: Prometheus + Loki + Grafana
 
@@ -337,7 +337,7 @@ This document provides concrete architectural examples for common Kubernetes use
 
 ---
 
-### Layer 2: Security Enhancements (Added After Core Platform is Stable)
+### Priority 2: Security Enhancements (Added After Core Platform is Stable)
 
 #### 13. Image Scanning: Trivy
 
