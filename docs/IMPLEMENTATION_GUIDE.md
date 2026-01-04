@@ -4,7 +4,6 @@
 
 This document provides the complete implementation guide for migrating the Dutch webshop to Kubernetes, following the Priority 0 foundational requirements and Priority 1 tool selections.
 
-**Project Duration**: 20 weeks  
 **Team Size**: 3-5 engineers (Platform, DevOps, Developers)  
 **Budget**: See [Cost Estimation](#cost-estimation)  
 **Success Criteria**: Zero-downtime deployments, <2min incident detection, <15min data recovery
