@@ -452,7 +452,7 @@ components/
 **Met SSG templates**:
 ```html
 <!-- Using Nunjucks/Liquid syntax -->
-{% include "components/navbar.html" %}
+{% include components/navbar.html %}
 ```
 
 **Prioriteit**: 🟡 HOOG - Maintainability
