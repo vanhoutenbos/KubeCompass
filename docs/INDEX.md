@@ -72,6 +72,7 @@
 | [Open Questions](planning/OPEN_QUESTIONS.md) | Unresolved decisions | Architects |
 | [CNCF Alignment](planning/CNCF_ALIGNMENT.md) | CNCF landscape mapping | All |
 | [Related Initiatives](planning/RELATED_INITIATIVES.md) | How we differ from others | All |
+| [awesome-k8s-resources Analysis](planning/AWESOME_K8S_RESOURCES_ANALYSIS.md) | Detailed comparison with awesome-k8s-resources | All |
 
 ### Implementation Guides
 

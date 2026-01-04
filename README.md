@@ -148,6 +148,7 @@ KubeCompass uses a **Priority 0/1/2** model for decisions:
 - **[Secrets Management](docs/planning/SECRETS_MANAGEMENT.md)** - ESO vs Sealed Secrets vs SOPS
 - **[Decision Matrix](docs/MATRIX.md)** - Alle tool aanbevelingen / All tool recommendations
 - **[Decision Rules](docs/DECISION_RULES.md)** - "Kies X tenzij Y" logica / "Choose X unless Y" logic
+- **[Related Initiatives](docs/planning/RELATED_INITIATIVES.md)** - How KubeCompass compares to other resources
 
 ### 🛠️ Implementation
 

@@ -163,6 +163,7 @@ KubeCompass is built on a foundation of hands-on testing, but we also learn from
 
 We actively cite and link to:
 - **Official documentation**: Primary source for tool capabilities and installation
+- **Community awesome lists**: [awesome-k8s-resources](https://github.com/tomhuang12/awesome-k8s-resources) for tool discovery and learning resources
 - **Blog posts**: Real-world experiences and lessons learned from practitioners
 - **Conference talks**: Architecture patterns and case studies (e.g., KubeCon, Cloud Native Rejekts)
 - **YouTube videos**: Technical deep-dives and tutorials
