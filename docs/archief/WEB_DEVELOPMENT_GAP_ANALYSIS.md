@@ -630,14 +630,14 @@ OPTIMIZE (Green): Med/Low Impact, Any Effort
 4. ✅ Kies consistente taal (EN)
 5. ✅ Voeg focus indicators toe
 
-### Must-Have Features (< 2 weken)
+### Must-Have Features (High Priority)
 1. 🔧 Creëer HTML versies van key docs
 2. 🔧 Implementeer breadcrumbs
 3. 🔧 Voeg search functionaliteit toe
 4. 🔧 Consolideer CSS (remove inline)
 5. 🔧 SEO basics (meta descriptions, OG tags)
 
-### Strategic Improvements (< 2 maanden)
+### Strategic Improvements (Lower Priority)
 1. 📊 Migreer naar Static Site Generator
 2. 📊 Build component library
 3. 📊 Implementeer analytics
@@ -747,15 +747,15 @@ KubeCompass heeft een **solide technische basis** maar significante gaps tussen 
 5. ⚠️ Content parity (docs ↔ web)
 6. ⚠️ Toegankelijkheid (a11y)
 
-### Optimalisatie (Week 5+)
+### Optimalisatie (Later Phases)
 7. 🔧 Performance
 8. 🔧 SEO
 9. 🔧 Interactieve features
 
-**Geschatte totale effort**: 80-160 uur (2-4 weken fulltime)
+**Geschatte totale effort**: 80-160 uur
 
 **Recommended approach**: 
-1. Start met Quick Wins (week 1)
+1. Start met Quick Wins
 2. Parallel: Evalueer SSG migratie
 3. Implement in sprints zoals beschreven
 

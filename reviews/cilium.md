@@ -243,7 +243,7 @@ helm install cilium cilium/cilium --version 1.14.5 \
 4. Blue-green switch or rebuild cluster with new CNI
 5. Migrate workloads to new cluster
 
-**Estimated effort**: 1-2 weeks for small cluster, longer for large/complex environments
+**Estimated effort**: Varies by cluster size and complexity
 
 ### Data Portability
 ✅ **Good**

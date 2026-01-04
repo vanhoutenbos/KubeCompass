@@ -217,12 +217,12 @@ Questions that MUST be answered before starting implementation.
 | Q1 | [Question] | Blocks cluster provisioning | Infrastructure | [Assume X] |
 | Q5 | [Question] | Blocks node sizing | Cost, Performance | [Assume Y] |
 
-### Important (Needed in First 2 Weeks)
+### Important (Needed Early)
 Questions that affect architecture but don't block initial setup.
 
-| ID | Question | Impact | Affects | Deadline |
+| ID | Question | Impact | Affects | Priority |
 |----|----------|--------|---------|----------|
-| Q10 | [Question] | Affects GitOps workflow | CI/CD | Week 2 |
+| Q10 | [Question] | Affects GitOps workflow | CI/CD | High |
 
 ### Can Defer (Priority 2+)
 Questions that can be answered during optimization phase.

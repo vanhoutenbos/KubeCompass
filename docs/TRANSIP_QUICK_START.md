@@ -241,12 +241,12 @@ For SME with predictable traffic: **pragmatic choice**.
 1. Applications are portable (standard K8s)
 2. In-cluster config is in Terraform (reproducible)
 3. Cluster state in Velero backups
-4. Migration time: 2-4 weeks
+4. Migration can be completed within the quarter
 
 ### Q: What if TransIP adds Terraform support?
 
 **A**: Perfect! Convert Priority 1 runbook to Terraform:
-- Effort: 1-2 days
+- Effort: Minimal
 - Priority 2 stays unchanged
 - Huge improvement
 

@@ -87,7 +87,7 @@ Scenario-specific mapping:
 - Q31-34: Application architecture
 - Q43-44: Budget approval
 
-**Important (11 questions)** - First 2 weeks:
+**Important (11 questions)** - Early Priority:
 - Q10: Git branching strategy
 - Q14: Business metrics
 - Q18-19: Authentication & break-glass
@@ -101,7 +101,7 @@ Complete structured data including:
 - Decision rules with rationale
 - Provider recommendations with pros/cons
 - Risk assessments (high/medium/low)
-- Implementation phases (5 phases, 20 weeks)
+- Implementation phases (5 phases)
 - Success metrics with validation methods
 
 ---

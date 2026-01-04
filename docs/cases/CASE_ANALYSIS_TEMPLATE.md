@@ -284,7 +284,7 @@ UNLESS: [exception] → [Provider Y]
 - Pattern: "Cannot provision cluster without knowing [X]"
 - Examples: Provider choice, resource sizing, database type, stateless validation
 
-**Important (First 2 Weeks)**:
+**Important (Early Priority)**:
 - Affects architecture but doesn't block initial setup
 - Pattern: "Need to know this to design [X] properly"
 - Examples: Git workflow, identity provider, monitoring metrics
