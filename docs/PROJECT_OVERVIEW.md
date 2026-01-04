@@ -47,9 +47,16 @@ Provide **opinionated, hands-on guidance** for building production-ready Kuberne
 
 Our decision framework is organized in three layers:
 
-#### Priority 0: Foundational Requirements
+#### Priority 0: Day 1 Foundational Decisions
 **When:** Before you start  
-**Focus:** WHY and constraints
+**Focus:** Decisions that are hard to change later and have extreme impact
+
+These are architectural decisions you must make from day 1 because they're expensive or near-impossible to change later. Examples:
+- **CNI (Container Network Interface)** - Switching CNI after deployment is complex and risky
+- **GitOps tooling** - Your deployment workflow should be established from the start
+- **Telemetry foundations** - OTEL instrumentation is easier to add early than retrofit
+- **RBAC model** - Security model should be designed upfront
+- **Storage architecture** - StatefulSet patterns and persistent volume strategy
 
 Key questions:
 - What are your availability requirements?
@@ -60,23 +67,34 @@ Key questions:
 
 **Example:** [Priority 0 Webshop Case](cases/PRIORITY_0_WEBSHOP_CASE.md) (Dutch)
 
-#### Priority 1: Tool Selection
+#### Priority 1: Core Platform Tools
 **When:** Building basic platform  
-**Focus:** WHAT and HOW
+**Focus:** Essential tools for production-ready operations
+
+These are the tools you need to run a production platform but can be swapped more easily than Priority 0 decisions. Examples:
+- **Monitoring stack** - Prometheus/Grafana vs. DataDog vs. VictoriaMetrics
+- **Secrets management** - External Secrets Operator vs. Sealed Secrets
+- **Ingress controller** - Nginx vs. Traefik vs. Envoy Gateway
+- **CI/CD pipeline** - Jenkins vs. GitLab CI vs. GitHub Actions
 
 Key areas:
 - Managed Kubernetes selection
-- CNI (Container Network Interface)
-- GitOps tooling
-- CI/CD pipeline
 - Observability stack
-- Security implementation (RBAC, secrets, network policies)
+- Security implementation (secrets, image scanning)
+- Application deployment patterns
 
 **Example:** [Priority 1 Webshop Case](cases/PRIORITY_1_WEBSHOP_CASE.md) (Dutch)
 
-#### Priority 2: Platform Enhancements
+#### Priority 2: Advanced Enhancements
 **When:** Month 2+ - After basic platform runs  
-**Focus:** WHEN to add complexity
+**Focus:** Advanced capabilities to add when specific needs arise
+
+These are sophisticated tools that add complexity but solve specific problems. Add them when you have a clear need, not "just in case". Examples:
+- **Service mesh** - Add when you have 10+ microservices with complex traffic routing
+- **Distributed tracing** - Add when debugging inter-service issues becomes time-consuming
+- **Chaos engineering** - Add when you need to validate resilience at scale
+- **Advanced policy enforcement** - OPA/Kyverno for complex governance needs
+- **Multi-region readiness** - When geographic distribution becomes necessary
 
 Enhancements to consider:
 - Service mesh

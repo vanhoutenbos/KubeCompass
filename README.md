@@ -87,21 +87,21 @@ kubectl cluster-info
 KubeCompass gebruikt een **Priority 0/1/2** model voor beslissingen:  
 KubeCompass uses a **Priority 0/1/2** model for decisions:
 
-### Priority 0: Foundational Requirements
+### Priority 0: Day 1 Foundational Decisions
 **Wanneer / When:** Voor je begint / Before you start  
-**Focus:** WHY en constraints
+**Focus:** Decisions that are hard to change later and have extreme impact — CNI, GitOps, telemetry foundations, RBAC model
 
 📖 **[Priority 0 Webshop Case](docs/cases/PRIORITY_0_WEBSHOP_CASE.md)** (Nederlands)
 
-### Priority 1: Tool Selection  
+### Priority 1: Core Platform Tools  
 **Wanneer / When:** Basis platform / Basic platform  
-**Focus:** WHAT en HOW
+**Focus:** Essential tools for production — monitoring, secrets management, ingress, deployments
 
 📖 **[Priority 1 Webshop Case](docs/cases/PRIORITY_1_WEBSHOP_CASE.md)** (Nederlands)
 
-### Priority 2: Platform Enhancements
+### Priority 2: Advanced Enhancements
 **Wanneer / When:** Na basis platform / After basic platform  
-**Focus:** WHEN to add complexity
+**Focus:** Advanced capabilities to add when specific needs arise — service mesh, chaos engineering, advanced observability
 
 📖 **[Priority 2 Webshop Case](docs/cases/PRIORITY_2_WEBSHOP_CASE.md)** (Nederlands)
 

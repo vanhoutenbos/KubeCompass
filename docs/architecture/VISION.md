@@ -52,8 +52,9 @@ We don't just read GitHub READMEs and regurgitate marketing copy. Every recommen
 ### ⏰ Decision Timing Matters
 
 Not all decisions are equal:
-- **Foundational choices** (CNI, GitOps, RBAC model) are hard to change later → decide early
-- **Additive tools** (image scanning, chaos engineering) are easy to swap → decide later
+- **Priority 0: Day 1 foundational decisions** (CNI, GitOps, telemetry foundations, RBAC model) are hard to change later → decide early with careful consideration
+- **Priority 1: Core platform tools** (monitoring stack, secrets management, ingress) are easier to swap → decide during platform setup
+- **Priority 2: Advanced enhancements** (service mesh, chaos engineering, distributed tracing) are easy to add → decide later when specific needs arise
 
 We help you prioritize: *What do I need to decide Day 1? What can wait?*
 

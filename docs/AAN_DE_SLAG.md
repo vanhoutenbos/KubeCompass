@@ -233,40 +233,54 @@ Voor ervaren platform engineers:
 
 KubeCompass gebruikt een **Priority 0/1/2** model voor beslissingen:
 
-#### Priority 0: Foundational Requirements
+#### Priority 0: Day 1 Foundational Decisions
 **Wanneer:** Week 1 - Voor je begint  
-**Focus:** WHY en constraints
+**Focus:** Beslissingen die moeilijk te veranderen zijn en extreme impact hebben
 
+Architectuurbeslissingen die je vanaf dag 1 moet maken omdat ze later duur of bijna onmogelijk te wijzigen zijn:
+- **CNI (Container Network Interface)** - CNI wisselen na deployment is complex en risicovol
+- **GitOps tooling** - Je deployment workflow moet vanaf het begin goed zijn
+- **Telemetry foundations** - OTEL instrumentatie is makkelijker vroeg dan later toe te voegen
+- **RBAC model** - Security model moet vooraf ontworpen worden
+- **Storage architecture** - StatefulSet patronen en persistent volume strategie
+
+Extra overwegingen:
 - Availability requirements en downtime tolerantie
 - Data criticality (RPO/RTO)
 - Security baseline
 - Vendor independence principes
-- Foundational architecture beslissingen
 
 **Document:** [Priority 0 Webshop Case](cases/PRIORITY_0_WEBSHOP_CASE.md) (Nederlands)
 
-#### Priority 1: Tool Selection  
+#### Priority 1: Core Platform Tools  
 **Wanneer:** Week 2-4 - Basic platform  
-**Focus:** WHAT en HOW
+**Focus:** Essentiële tools voor productie die relatief makkelijk te wisselen zijn
 
+Tools die je nodig hebt voor een productie platform, maar die je eenvoudiger kunt vervangen dan Priority 0 beslissingen:
+- **Monitoring stack** - Prometheus/Grafana vs. DataDog vs. VictoriaMetrics
+- **Secrets management** - External Secrets Operator vs. Sealed Secrets
+- **Ingress controller** - Nginx vs. Traefik vs. Envoy Gateway
+- **CI/CD pipeline** - Jenkins vs. GitLab CI vs. GitHub Actions
+
+Aanvullend:
 - Managed Kubernetes selectie
-- CNI, GitOps en CI/CD tools
 - Observability stack
-- Security implementation (RBAC, secrets, network policies)
+- Security implementation (secrets, image scanning)
 - Migration roadmap
 
 **Document:** [Priority 1 Webshop Case](cases/PRIORITY_1_WEBSHOP_CASE.md) (Nederlands)
 
-#### Priority 2: Platform Enhancements
+#### Priority 2: Advanced Enhancements
 **Wanneer:** Maand 2+ - Na basis platform draait  
-**Focus:** WHEN to add complexity
+**Focus:** Geavanceerde mogelijkheden om toe te voegen wanneer specifieke behoeften ontstaan
 
-- Service mesh
-- Distributed tracing
-- Chaos engineering
-- Policy enforcement
-- Cost visibility
-- Multi-region readiness
+Geavanceerde tools die complexiteit toevoegen maar specifieke problemen oplossen. Voeg ze toe wanneer je een duidelijke behoefte hebt, niet "voor het geval dat":
+- Service mesh - Toevoegen bij 10+ microservices met complexe traffic routing
+- Distributed tracing - Toevoegen wanneer debuggen van inter-service issues tijdrovend wordt
+- Chaos engineering - Toevoegen wanneer je veerkracht op schaal moet valideren
+- Policy enforcement - OPA/Kyverno voor complexe governance behoeften
+- Cost visibility - Wanneer kostenoptimalisatie prioriteit wordt
+- Multi-region readiness - Wanneer geografische distributie noodzakelijk wordt
 
 **Document:** [Priority 2 Webshop Case](cases/PRIORITY_2_WEBSHOP_CASE.md) (Nederlands)
 
