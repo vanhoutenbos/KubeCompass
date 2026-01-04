@@ -14,6 +14,29 @@ Welcome to KubeCompass! This guide explains how you can contribute to building t
 
 ---
 
+## 🔍 Missing a Tool?
+
+Do you think an important Kubernetes tool is missing from our comparisons? **We'd love to hear about it!** Create a GitHub issue to suggest a tool for review.
+
+**Our selection criteria:** We focus on tools with ~1000+ GitHub stars or CNCF graduated projects. This is our initial guideline to ensure we cover widely-adopted tools first. We're continuously expanding coverage, and if you have a specific tool in mind, we're happy to consider it!
+
+**[📝 Suggest a Tool on GitHub](https://github.com/vanhoutenbos/KubeCompass/issues/new)**
+
+---
+
+## 🤝 We're Looking for Contributors!
+
+KubeCompass is growing fast and we need help maintaining and improving the project! We're especially looking for people who want to help with:
+
+- **Testing software:** Hands-on testing of Kubernetes tools in real environments
+- **Maintaining reviews:** Keep existing tool reviews up-to-date as new versions release
+- **Documentation:** Write guides, create tutorials, and add examples
+- **Share production experience:** Lessons learned from your own Kubernetes deployments
+
+**New to Kubernetes?** That's okay too! There are plenty of tasks that don't require deep expertise, like improving documentation or testing basic functionality.
+
+---
+
 ## Ways to Contribute
 
 ### 1. 🐛 Quick Contributions (15-30 minutes)
