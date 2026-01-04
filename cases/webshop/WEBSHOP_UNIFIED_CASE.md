@@ -288,7 +288,7 @@
 | **Q14** | Critical business metrics? | Affects observability design | High |
 | **Q18** | Identity provider? | Affects authentication setup | High |
 | **Q19** | Break-glass procedures? | Affects emergency access | High |
-| **Q35** | Database migration approach? | Affects cutover strategy | Week 2 |
+| **Q35** | Database migration approach? | Affects cutover strategy | High |
 
 ### CAN DEFER (Priority 2 or Implementation Phase)
 
