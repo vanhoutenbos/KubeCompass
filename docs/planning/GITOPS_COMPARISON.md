@@ -557,19 +557,18 @@ spec:
 1. Install ArgoCD
 2. Create Application CRDs pointing to Git
 3. Enable auto-sync progressively
-⏱️ **Time**: 1-2 weeks
 
 **Flux**:
 1. Bootstrap Flux with existing repo
 2. Convert manifests to Kustomization CRDs
 3. Enable automation
-⏱️ **Time**: 2-3 weeks (steeper learning)
+⏱️ **Note**: Steeper learning curve
 
 **GitLab Agent**:
 1. Register agent in GitLab
 2. Configure manifest projects
 3. Enable GitOps mode
-⏱️ **Time**: 1-2 weeks (if using GitLab)
+⏱️ **Note**: Easier if already using GitLab
 
 #### Exit Strategy (Vendor Independence)
 

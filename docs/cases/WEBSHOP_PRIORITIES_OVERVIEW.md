@@ -40,7 +40,7 @@ This overview shows how **Priority 0**, **Priority 1**, and **Priority 2** build
 - Concrete tool choices with rationale (Cilium, ArgoCD, Prometheus)
 - "Use X unless Y" decision rules
 - Basic platform capabilities (networking, observability, security)
-- Implementation roadmap (20 weeks)
+- Implementation roadmap
 
 **Decisions:**
 - Cilium (CNI) - eBPF, multi-region ready

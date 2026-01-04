@@ -364,7 +364,7 @@ Be conversational, explain WHY each question matters for architecture decisions.
 > - **Cons**: Slower than Redis (database I/O for every request)
 > - **Viable if**: Low traffic, database has capacity
 >
-> **Timeline impact**: Add 1-2 weeks to migration for refactoring + testing
+> **Timeline impact**: Requires time for refactoring + testing before migration
 >
 > **Action items**:
 > 1. [ ] Refactor session management (use Redis/Valkey or database)
@@ -435,7 +435,7 @@ Be conversational, explain WHY each question matters for architecture decisions.
 > 1. Engage external Kubernetes consultant (prioritize this - accelerates everything)
 > 2. Provision Proof of Concept cluster (dev environment, test workflow)
 > 3. Team training (Kubernetes fundamentals, GitOps, observability)
-> 4. Begin Phase 1 implementation (Foundation: weeks 1-4)
+> 4. Begin Phase 1 implementation (Foundation phase)
 >
 > You're ready to move forward! 🚀
 

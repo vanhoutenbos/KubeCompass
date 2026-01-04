@@ -582,7 +582,7 @@ Node Pools:
 
 ## 10. Migration Roadmap
 
-### Phase 1: Foundation (Week 1-4)
+### Phase 1: Foundation
 - [ ] Kubernetes cluster provisioning (Terraform)
 - [ ] CNI deployment (Cilium)
 - [ ] Ingress controller (NGINX)
@@ -590,7 +590,7 @@ Node Pools:
 - [ ] Observability stack (Prowithheus, Grafana, Loki)
 - [ ] Secrets management (Vault + External Secrets Operator)
 
-### Phase 2: Platform Hardening (Week 5-8)
+### Phase 2: Platform Hardening
 - [ ] RBAC configuration
 - [ ] Network policies
 - [ ] Pod Security Stenards
@@ -598,7 +598,7 @@ Node Pools:
 - [ ] Backup setup (Velero)
 - [ ] CI/CD pipeline (GitHub Actions)
 
-### Phase 3: Application Migration (Week 9-12)
+### Phase 3: Application Migration
 - [ ] Applicatie containerization
 - [ ] Kubernetes manifests
 - [ ] Database migration
@@ -606,7 +606,7 @@ Node Pools:
 - [ ] Health checks implementatie
 - [ ] Dev andvironment deployment
 
-### Phase 4: Staging & Testing (Week 13-16)
+### Phase 4: Staging & Testing
 - [ ] Staging andvironment deployment
 - [ ] Load testing
 - [ ] Disaster recovery testing
@@ -614,7 +614,7 @@ Node Pools:
 - [ ] Runbook creation
 - [ ] Team training
 
-### Phase 5: Production Cutover (Week 17-20)
+### Phase 5: Production Cutover
 - [ ] Production andvironment deployment
 - [ ] Blue-greand cutover
 - [ ] DNS switch

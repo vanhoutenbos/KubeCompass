@@ -660,7 +660,7 @@ revenue_streams:
 
 ### What to Build (Prioritized Roadmap)
 
-#### Phase 1: Foundation (MVP - 2-3 weeks)
+#### Phase 1: Foundation (MVP)
 
 **🎯 Goal:** Simple, fast discovery → Link to existing KubeCompass content
 
@@ -708,7 +708,7 @@ revenue_streams:
 
 ---
 
-#### Phase 2: Interactive Decision Tools (4-6 weeks)
+#### Phase 2: Interactive Decision Tools
 
 **🎯 Goal:** Personalized recommendations based on user context
 
@@ -768,7 +768,7 @@ revenue_streams:
 
 ---
 
-#### Phase 3: Community Engagement (8-12 weeks)
+#### Phase 3: Community Engagement
 
 **🎯 Goal:** User-generated validation + keep content fresh
 
@@ -800,7 +800,7 @@ revenue_streams:
 
 ---
 
-#### Phase 4: Advanced Features (12+ weeks, Optional)
+#### Phase 4: Advanced Features (Optional)
 
 **🎯 Goal:** Become definitive Kubernetes decision platform
 

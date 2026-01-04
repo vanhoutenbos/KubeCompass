@@ -48,7 +48,7 @@ Provide **opinionated, hands-on guidance** for building production-ready Kuberne
 Our decision framework is organized in three layers:
 
 #### Priority 0: Foundational Requirements
-**When:** Week 1 - Before you start  
+**When:** Before you start  
 **Focus:** WHY and constraints
 
 Key questions:
@@ -61,7 +61,7 @@ Key questions:
 **Example:** [Priority 0 Webshop Case](cases/PRIORITY_0_WEBSHOP_CASE.md) (Dutch)
 
 #### Priority 1: Tool Selection
-**When:** Week 2-4 - Building basic platform  
+**When:** Building basic platform  
 **Focus:** WHAT and HOW
 
 Key areas:
@@ -188,14 +188,14 @@ Complete Kind-based testing environment:
 
 ## 🚀 Launch Plan
 
-### Week 1-2: Foundation Enhancement (Current)
+### Phase 1: Foundation Enhancement (Current)
 - [x] Documentation restructuring
 - [x] Archive old/redundant files
 - [ ] Consolidate scattered information
 - [ ] Create comprehensive Getting Started guide
 - [ ] Update README with new structure
 
-### Week 3-4: Priority 0 Domains
+### Phase 2: Priority 0 Domains
 **Focus:** CNI, GitOps, Secrets Management
 
 For each domain:
@@ -204,24 +204,24 @@ For each domain:
 3. Create "Choose X unless Y" rules
 4. Write comparison guide
 
-### Week 5-6: Priority 1 Domains
+### Phase 3: Priority 1 Domains
 **Focus:** Observability, Ingress, CI/CD
 
 Continue domain-by-domain testing and documentation.
 
-### Week 7-8: Priority 1 Completion
+### Phase 4: Priority 1 Completion
 **Focus:** RBAC, Storage, Registry
 
 Complete remaining Priority 1 domains.
 
-### Week 9-10: Scenario Development
+### Phase 5: Scenario Development
 **Focus:** Real-world scenarios
 
 - Complete Startup MVP scenario
 - Refine Enterprise scenario
 - Add Edge Computing scenario (if time)
 
-### Week 11-12: Polish & Launch
+### Phase 6: Polish & Launch
 **Focus:** Quality and community readiness
 
 - Link validation (all internal links work)
@@ -440,7 +440,7 @@ We're seeking sponsors for:
 
 ## 🔮 Future Roadmap
 
-### Phase 1: Launch (Week 1-12) - Current
+### Phase 1: Launch - Current
 - Complete Priority 0/1 domain testing
 - Establish documentation structure
 - Build local testing platform

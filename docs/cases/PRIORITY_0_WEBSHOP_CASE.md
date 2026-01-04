@@ -1014,7 +1014,7 @@ Before you can start Priority 1 (concrete tool selection and platform capabiliti
 
 Now that Priority 0 is established, Priority 1 can begin:
 
-### Priority 1 Scope (Within 1-2 Weeks)
+### Priority 1 Scope (Next Phase)
 - **Tool selection**: Which concrete tools (Cilium vs Calico, Argo CD vs Flux, etc.)
 - **Cluster sizing**: How many nodes, which instance types
 - **Network design**: Subnets, load balancers, DNS

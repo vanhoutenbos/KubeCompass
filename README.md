@@ -88,19 +88,19 @@ KubeCompass gebruikt een **Priority 0/1/2** model voor beslissingen:
 KubeCompass uses a **Priority 0/1/2** model for decisions:
 
 ### Priority 0: Foundational Requirements
-**Wanneer / When:** Week 1 - Voor je begint / Before you start  
+**Wanneer / When:** Voor je begint / Before you start  
 **Focus:** WHY en constraints
 
 📖 **[Priority 0 Webshop Case](docs/cases/PRIORITY_0_WEBSHOP_CASE.md)** (Nederlands)
 
 ### Priority 1: Tool Selection  
-**Wanneer / When:** Week 2-4 - Basis platform / Basic platform  
+**Wanneer / When:** Basis platform / Basic platform  
 **Focus:** WHAT en HOW
 
 📖 **[Priority 1 Webshop Case](docs/cases/PRIORITY_1_WEBSHOP_CASE.md)** (Nederlands)
 
 ### Priority 2: Platform Enhancements
-**Wanneer / When:** Maand 2+ - Na basis platform / After basic platform  
+**Wanneer / When:** Na basis platform / After basic platform  
 **Focus:** WHEN to add complexity
 
 📖 **[Priority 2 Webshop Case](docs/cases/PRIORITY_2_WEBSHOP_CASE.md)** (Nederlands)
@@ -129,7 +129,7 @@ KubeCompass uses a **Priority 0/1/2** model for decisions:
 
 - 🌊 [Complete Deployment Flow](deployment-flow.html) - 18 domeinen / 18 domains
 - 📊 [Domain Overview](domain-overview.html) - Per prioriteit / By priority
-- 🗓️ [Timeline View](deployment-order.html) - Week-by-week roadmap
+- 🗓️ [Timeline View](deployment-order.html) - Deployment roadmap
 - 🚢 [Kubernetes Ecosystem](kubernetes-ecosystem.html) - Ecosystem overzicht / Ecosystem overview
 - ⚙️ [Kubernetes Architecture](kubernetes-architecture.html) - Architectuur / Architecture
 
@@ -163,7 +163,7 @@ KubeCompass uses a **Priority 0/1/2** model for decisions:
 **Fase / Phase:** 🚧 POC/Research - Actief bezig met foundation / Actively building foundation
 
 **Domain Coverage:** 0/18 fully tested | 2/18 documented | 4/18 in progress  
-**Target Launch:** Mid-March 2026 (Week 12)
+**Target Launch:** Mid-March 2026
 
 ### Wat is Klaar / What's Ready
 

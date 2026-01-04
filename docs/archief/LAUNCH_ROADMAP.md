@@ -1,7 +1,6 @@
 # KubeCompass Launch Roadmap
 
 **Target**: Live gaan met minimaal 2 geteste tools per critical domein  
-**Timeline**: 12-16 weken (realistisch)  
 **Status**: 2026-01-01 - Planning Phase
 
 ---

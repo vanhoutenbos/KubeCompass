@@ -280,15 +280,15 @@
 | **Q43** | Current monthly infra costs? | Blocks budget planning | €500-2000/month (estimate) |
 | **Q44** | Budget approval obtained? | Blocks entire project | Assume yes (or project wouldn't exist) |
 
-### IMPORTANT (Needed in First 2 Weeks)
+### IMPORTANT (Needed Early)
 
-| ID | Question | Impact | Deadline |
+| ID | Question | Impact | Priority |
 |----|----------|--------|----------|
-| **Q10** | Git branching strategy? | Affects GitOps workflow | Week 1 |
-| **Q14** | Critical business metrics? | Affects observability design | Week 2 |
-| **Q18** | Identity provider? | Affects authentication setup | Week 2 |
-| **Q19** | Break-glass procedures? | Affects emergency access | Week 2 |
-| **Q35** | Database migration approach? | Affects cutover strategy | Week 2 |
+| **Q10** | Git branching strategy? | Affects GitOps workflow | High |
+| **Q14** | Critical business metrics? | Affects observability design | High |
+| **Q18** | Identity provider? | Affects authentication setup | High |
+| **Q19** | Break-glass procedures? | Affects emergency access | High |
+| **Q35** | Database migration approach? | Affects cutover strategy | High |
 
 ### CAN DEFER (Priority 2 or Implementation Phase)
 

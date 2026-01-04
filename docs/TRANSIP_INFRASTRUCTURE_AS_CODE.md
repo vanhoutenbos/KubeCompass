@@ -453,8 +453,8 @@ Scales node pool
 
 **Scenario**: Na 1 jaar wil je naar Scaleway (betere pricing, Terraform support)
 
-**Migratie stappen** (total: 2-4 weken):
-1. **Week 1**: Provision Scaleway cluster via Terraform
+**Migratie stappen**:
+1. **Provisioning**: Provision Scaleway cluster via Terraform
    ```hcl
    # terraform/environments/production/main.tf
    resource "scaleway_k8s_cluster" "webshop" {
@@ -465,21 +465,21 @@ Scales node pool
    }
    ```
 
-2. **Week 2**: Deploy platform components (ArgoCD, monitoring)
+2. **Platform setup**: Deploy platform components (ArgoCD, monitoring)
    - Reuse existing Terraform modules (provider-agnostic)
    - Update DNS to point to new cluster (via Terraform)
 
-3. **Week 3**: Migrate applications
+3. **Application migration**: Migrate applications
    - GitOps sync naar nieuwe cluster
    - Database migration (managed DB → managed DB)
    - Parallel run (old + new)
 
-4. **Week 4**: Cutover
+4. **Cutover**: Switch to new cluster
    - Update DNS (atomic switch)
    - Monitor for 72 hours
    - Decomission TransIP cluster
 
-**Effort**: 2-4 weken voor complete migratie (binnen 1 kwartaal requirement ✅)
+**Effort**: Complete migratie binnen 1 kwartaal (requirement ✅)
 
 ---
 
@@ -735,7 +735,7 @@ Voor webshop case (SME, eerste K8s ervaring): manual scaling is **pragmatisch**,
 
 **Als TransIP toch niet werkt**:
 1. **Migrate to Scaleway** (best Terraform + EU alternative)
-2. **Effort**: 2-4 weken (binnen 1 kwartaal requirement)
+2. **Effort**: Binnen 1 kwartaal (requirement)
 3. **Cost**: Terraform modules zijn grotendeels reusable
 
 ---

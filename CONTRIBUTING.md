@@ -363,7 +363,7 @@ Ready to contribute? Follow these steps:
 A: No! Documentation fixes, typo corrections, and scenario additions don't require deep expertise. Tool reviews do require hands-on testing.
 
 **Q: How long does PR review take?**  
-A: Initial response within 1-3 days. Full review and merge typically 1-2 weeks depending on complexity.
+A: Initial response within a few days. Full review and merge timing depends on complexity.
 
 **Q: Can I use AI to help?**  
 A: Yes, but you must disclose it and validate all technical claims through actual testing.

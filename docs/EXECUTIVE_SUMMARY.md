@@ -47,9 +47,9 @@
 
 ---
 
-## The Plan: Month 1 Launch
+## The Plan: Launch Phases
 
-### Week 1: Foundation ✅ COMPLETE
+### Phase 1: Foundation ✅ COMPLETE
 - [x] Enhanced VISION.md with use cases
 - [x] Created LAUNCH_PLAN.md
 - [x] Created CONTRIBUTING.md
@@ -59,7 +59,7 @@
 
 **Status**: Documentation foundation complete. Ready to start testing.
 
-### Week 2: Tool Testing & Reviews (Next)
+### Phase 2: Tool Testing & Reviews (Next)
 
 **Priority Priority 0 Tools** (Foundational):
 - [ ] Argo CD (GitOps)
@@ -69,15 +69,15 @@
 **Priority Priority 1 Tools** (Core Operations):
 - [ ] Prometheus + Loki + Grafana (Observability)
 - [ ] NGINX Ingress Controller
-- [ ] Harbor (Registry) — optional for Month 1
-- [ ] Velero (Backup) — optional for Month 1
+- [ ] Harbor (Registry) — optional for initial launch
+- [ ] Velero (Backup) — optional for initial launch
 
 **Deliverables**:
 - KIND_CLUSTER_SETUP.md — Reproducible test environment
 - reviews/TEMPLATE.md — Standardized review format
 - 4-5 complete tool reviews with "choose X unless Y" rules
 
-### Week 3: Scenarios & Comparisons
+### Phase 3: Scenarios & Comparisons
 
 **Complete Scenarios**:
 - [ ] Startup MVP (cost-optimized alternative to enterprise)
@@ -98,7 +98,7 @@
 - 2-3 comparison guides
 - 7-8 total tool reviews
 
-### Week 4: Polish & Launch
+### Phase 4: Polish & Launch
 
 **Quality Assurance**:
 - [ ] Link validation (all internal links work)
@@ -389,10 +389,10 @@
 3. **Begin tool testing**: Argo CD and Vault
 4. **Set up automated test cluster** (GitHub Actions)
 
-### Following Weeks
-- Week 2: Tool reviews (Argo CD, Vault, Prometheus, NGINX)
-- Week 3: Scenarios and comparisons (Startup MVP, Argo CD vs Flux)
-- Week 4: Polish and launch preparation
+### Following Phases
+- Phase 2: Tool reviews (Argo CD, Vault, Prometheus, NGINX)
+- Phase 3: Scenarios and comparisons (Startup MVP, Argo CD vs Flux)
+- Phase 4: Polish and launch preparation
 
 ---
 
