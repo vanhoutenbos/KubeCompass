@@ -51,15 +51,16 @@
     --warning: #ed8936;
     --info: #4299e1;
     
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
-    --text-muted: #718096;
+    /* Dark Mode Colors (Default) */
+    --text-primary: #e2e8f0;
+    --text-secondary: #cbd5e0;
+    --text-muted: #a0aec0;
     
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7fafc;
-    --bg-tertiary: #edf2f7;
+    --bg-primary: #1a202c;
+    --bg-secondary: #2d3748;
+    --bg-tertiary: #4a5568;
     
-    --border-color: #e2e8f0;
+    --border-color: #4a5568;
     
     /* Typography */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -74,15 +75,32 @@
     --spacing-xl: 4rem;
     
     /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
     
     /* Border Radius */
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 16px;
+}
+
+/* Light Mode Override */
+[data-theme="light"] {
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7fafc;
+    --bg-tertiary: #edf2f7;
+    
+    --border-color: #e2e8f0;
+    
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 html {
@@ -150,7 +168,7 @@ a:hover {
 
 /* Navigation */
 .navbar {
-    background: white;
+    background: var(--bg-secondary);
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
@@ -447,7 +465,7 @@ a:hover {
         left: -100%;
         top: 60px;
         width: 100%;
-        background: white;
+        background: var(--bg-secondary);
         flex-direction: column;
         align-items: flex-start;
         padding: 2rem 1.5rem;
@@ -536,42 +554,35 @@ a:hover {
     }
 }
 
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-primary: #e2e8f0;
-        --text-secondary: #cbd5e0;
-        --text-muted: #a0aec0;
-        
-        --bg-primary: #1a202c;
-        --bg-secondary: #2d3748;
-        --bg-tertiary: #4a5568;
-        
-        --border-color: #4a5568;
-    }
+/* Dark Mode Support - Now default, no media query needed */
+/* Light mode is activated via [data-theme="light"] attribute */
 
-    .navbar {
-        background: var(--bg-secondary);
-    }
+/* Theme Toggle Button */
+.theme-toggle {
+    background: none;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
 
-    .tool-card {
-        background: var(--bg-secondary);
-    }
+.theme-toggle:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
 
-    .impl-card {
-        background: var(--bg-secondary);
-    }
+.theme-toggle:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
 
-    .related-card {
-        background: var(--bg-secondary);
-    }
-
-    .wizard-container {
-        background: var(--bg-secondary);
-    }
-
-    .option-content {
-        background: var(--bg-tertiary);
-        border-color: var(--border-color);
-    }
+.theme-toggle:active {
+    transform: scale(0.95);
 }
