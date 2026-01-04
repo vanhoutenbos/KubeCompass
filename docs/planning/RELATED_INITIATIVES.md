@@ -182,33 +182,102 @@ ThoughtWorks Radar has the right *philosophy* (opinionated, honest, trade-off aw
 ## 8. Awesome Lists / GitHub Landscapes
 
 **Examples**:
+- [awesome-k8s-resources](https://github.com/tomhuang12/awesome-k8s-resources) ⭐ **Well-maintained**
 - [awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
 - [awesome-cloud-native](https://github.com/rootsongjc/awesome-cloud-native)
 - Platform engineering lists
 
-**Score/Maturity**: ❌ No
+**Score/Maturity**: ❌ No (with one exception)
 
 ### Strengths
 - **Community-driven**: Crowdsourced knowledge
 - **Comprehensive**: Broad tool coverage
+- **Discovery**: Excellent for finding new tools and learning resources
 
-### Weaknesses
-- **Everything listed equally**: No prioritization or context
-- **No decision guidance**: "Here are 50 tools, good luck"
-- **No architecture advice**: Tools listed without explaining how they fit together
-- **Maintenance challenges**: Often outdated or abandoned
+### Special Recognition: awesome-k8s-resources
+
+**[awesome-k8s-resources](https://github.com/tomhuang12/awesome-k8s-resources)** by tomhuang12 stands out as **exceptionally well-curated**:
+
+**What makes it special**:
+- ✅ **Fiery Meter of Awesomeness**: GitHub stars visualization (🔥🔥🔥🔥 = 1000+ stars) provides quick popularity signal
+- ✅ **Open Source indicator**: Clear marking (💚) of OSS projects
+- ✅ **Organized by domain**: Tools categorized (CLI, Networking, Security, Observability, etc.)
+- ✅ **Learning resources included**: Not just tools, but also guides, blogs, videos, and certifications
+- ✅ **Active maintenance**: Regularly updated with new tools and resources
+
+**Structure** (similar to KubeCompass domains):
+- Command Line Tools
+- Cluster Provisioning
+- Automation & CI/CD
+- Secrets Management
+- Networking
+- Storage
+- Testing & Troubleshooting
+- Monitoring & Visualization
+- Security & Compliance
+- Service Mesh
+- Development Tools
+- Guides & Documentation
+- Certification Guides
+
+### Weaknesses (Even Best-in-Class Awesome Lists)
+- **Everything listed equally**: Popularity ≠ right choice for your context
+- **No decision guidance**: 200+ tools listed, but no "choose X unless Y" logic
+- **No architecture advice**: Tools listed without explaining how they fit together or impact platform design
+- **No timing guidance**: Doesn't distinguish between Day 1 foundational decisions vs. later enhancements
+- **No trade-off analysis**: Lists features but not operational complexity or lock-in risk
+- **No exit strategy**: Doesn't document migration difficulty
+- **No hands-on testing**: Community reports, not systematic validation
 
 ### Verdict
-**Good source, terrible guide.**
+**Excellent discovery resource, but not a decision framework.**
 
-Awesome lists are useful for *discovering* tools, but useless for *choosing* between them.
+Awesome lists (especially awesome-k8s-resources) are perfect for:
+- 🔍 **Discovering new tools** in each domain
+- 📚 **Finding learning resources** (guides, videos, blogs)
+- 📊 **Understanding popularity** via GitHub stars
+- 🌐 **Community perspectives** on emerging tools
 
-KubeCompass uses awesome lists as input sources, then adds:
-- Maturity scoring
-- Architecture context
-- Decision timing
-- Trade-off analysis
-- "Choose X unless Y" logic
+But they can't answer:
+- ❓ "Which CNI should I choose for my startup?"
+- ❓ "When do I need a service mesh?"
+- ❓ "What's the migration risk of switching from Tool A to Tool B?"
+- ❓ "What decisions are foundational vs. additive?"
+
+### How KubeCompass Complements Awesome Lists
+
+KubeCompass treats **awesome-k8s-resources as a valuable discovery companion**, then adds:
+
+| awesome-k8s-resources | KubeCompass Adds |
+|----------------------|------------------|
+| Lists 200+ tools | Filters to 2-3 recommended options per domain |
+| Shows GitHub stars (popularity) | Adds maturity, lock-in risk, operational complexity scoring |
+| Categorizes by domain | Adds Priority 0/1/2 timing framework |
+| "Here are the tools" | "Choose X unless Y" decision logic |
+| Lists features | Explains architecture impact and trade-offs |
+| Community curation | Hands-on testing and validation |
+| Discovery-focused | Decision-focused |
+
+### Our Recommendation
+**Use both together**:
+1. **Start with awesome-k8s-resources** to discover tools in your domain of interest
+2. **Use KubeCompass** to narrow down to 2-3 candidates based on your context
+3. **Read both perspectives** — community popularity (awesome-k8s-resources) + practitioner experience (KubeCompass)
+4. **Validate with hands-on testing** using your specific requirements
+
+### Why KubeCompass References awesome-k8s-resources
+
+We actively link to awesome-k8s-resources because:
+- ✅ It's community-maintained and vendor-neutral
+- ✅ It provides broader tool coverage than we can hands-on test
+- ✅ It includes excellent learning resources (blogs, videos, guides)
+- ✅ It serves a complementary purpose (discovery vs. decision)
+- ✅ It represents community wisdom, which we respect
+
+**Where we reference it**:
+- In domain comparison guides as "Additional tools worth considering"
+- In learning paths as "Further exploration resources"
+- In contributor guides as a source for discovering tools to review
 
 ---
 
@@ -343,10 +412,11 @@ This comparative analysis informs several KubeCompass components:
 - **OpenSSF Scorecard**: [https://scorecard.dev](https://scorecard.dev)
 - **SLSA**: [https://slsa.dev](https://slsa.dev)
 - **ThoughtWorks Technology Radar**: [https://www.thoughtworks.com/radar](https://www.thoughtworks.com/radar)
+- **awesome-k8s-resources**: [https://github.com/tomhuang12/awesome-k8s-resources](https://github.com/tomhuang12/awesome-k8s-resources) ⭐ **Highly Recommended**
 - **awesome-kubernetes**: [https://github.com/ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
 
 ---
 
-**Last Updated**: 2025-12-28
+**Last Updated**: 2026-01-04
 
 **Want to discuss?** [Open an issue](https://github.com/vanhoutenbos/KubeCompass/issues) or [start a discussion](https://github.com/vanhoutenbos/KubeCompass/discussions).
