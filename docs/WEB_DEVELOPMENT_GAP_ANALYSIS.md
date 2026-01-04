@@ -452,7 +452,7 @@ components/
 **Met SSG templates**:
 ```html
 <!-- Using Nunjucks/Liquid syntax -->
-{% include components/navbar.html %}
+{% raw %}{% include components/navbar.html %}{% endraw %}
 ```
 
 **Prioriteit**: 🟡 HOOG - Maintainability
