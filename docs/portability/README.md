@@ -466,7 +466,6 @@ portability_migration_readiness_score{target_provider="azure"} 85
 
 **Company**: Dutch webshop (zie [cases/webshop](../../cases/webshop/))  
 **Reason**: Outgrown DO, need enterprise features  
-**Timeline**: 2 weeks  
 **Downtime**: 0 minutes
 
 **Lessons Learned**:

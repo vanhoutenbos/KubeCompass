@@ -509,7 +509,6 @@
   "implementation_phases": [
     {
       "phase": "1: Foundation",
-      "weeks": "1-4",
       "activities": [
         "Answer critical questions",
         "Engage external consultant",
@@ -523,7 +522,6 @@
     },
     {
       "phase": "2: Hardening",
-      "weeks": "5-8",
       "activities": [
         "RBAC configuration",
         "Network policies",
@@ -535,7 +533,6 @@
     },
     {
       "phase": "3: Migration",
-      "weeks": "9-12",
       "activities": [
         "Application containerization",
         "Kubernetes manifests",
@@ -547,7 +544,6 @@
     },
     {
       "phase": "4: Testing",
-      "weeks": "13-16",
       "activities": [
         "Staging environment deployment",
         "Load testing",
@@ -559,7 +555,6 @@
     },
     {
       "phase": "5: Cutover",
-      "weeks": "17-20",
       "activities": [
         "Production environment deployment",
         "Blue-green cutover",
