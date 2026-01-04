@@ -6,20 +6,21 @@
     <meta name="description" content="Opinionated Kubernetes tool recommendations. Production-ready guidance without vendor bias. Compare 18 domains with hands-on testing.">
     <title>KubeCompass - Kubernetes Platform Guidance</title>
     <link rel="stylesheet" href="styles/global.css">
+    <script src="scripts/theme.js"></script>
     <style>
         /* Base Styles */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #1a202c; line-height: 1.6; background: #f7fafc; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--text-primary); line-height: 1.6; background: var(--bg-secondary); }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        h2 { color: #2d3748; }
+        h2 { color: var(--text-primary); }
         
         /* Navbar */
-        .navbar { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .navbar { background: var(--bg-secondary); box-shadow: 0 2px 4px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { font-size: 1.5rem; font-weight: 700; }
         .nav-logo a { color: #667eea; text-decoration: none; }
         .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-menu a { color: #2d3748; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-menu a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
         .nav-menu a:hover { color: #667eea; }
         .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
         
@@ -33,23 +34,23 @@
         .hero-stat-label { font-size: 1rem; opacity: 0.9; }
         
         /* Comparisons Section */
-        .comparisons-section { background: white; padding: 4rem 2rem; }
+        .comparisons-section { background: var(--bg-primary); padding: 4rem 2rem; }
         .comparisons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 3rem auto 0; }
-        .comparison-card { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 2rem; text-decoration: none; color: inherit; transition: all 0.3s; display: flex; flex-direction: column; }
+        .comparison-card { background: var(--bg-secondary); border: 2px solid var(--border-color); border-radius: 12px; padding: 2rem; text-decoration: none; color: inherit; transition: all 0.3s; display: flex; flex-direction: column; }
         .comparison-card:hover { border-color: #667eea; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15); }
         .comparison-card-icon { font-size: 2.5rem; }
-        .comparison-card-title { font-size: 1.5rem; font-weight: 700; color: #2d3748; margin: 0.5rem 0; }
-        .comparison-card-subtitle { color: #718096; font-size: 1.1rem; margin-bottom: 1rem; }
-        .tool-badge { background: #e2e8f0; color: #2d3748; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; margin: 0.25rem; display: inline-block; }
-        .comparison-card-meta { display: flex; gap: 1rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.875rem; color: #718096; flex-wrap: wrap; }
+        .comparison-card-title { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0.5rem 0; }
+        .comparison-card-subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; }
+        .tool-badge { background: var(--bg-tertiary); color: var(--text-primary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; margin: 0.25rem; display: inline-block; }
+        .comparison-card-meta { display: flex; gap: 1rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
         
         /* Features Section */
-        .features-section { background: #f7fafc; padding: 4rem 2rem; }
+        .features-section { background: var(--bg-secondary); padding: 4rem 2rem; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 3rem auto 0; }
-        .feature-card { background: white; padding: 2rem; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0; }
+        .feature-card { background: var(--bg-primary); padding: 2rem; border-radius: 12px; text-align: center; border: 1px solid var(--border-color); }
         .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #2d3748; }
-        .feature-card p { color: #718096; line-height: 1.6; }
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .feature-card p { color: var(--text-muted); line-height: 1.6; }
         
         /* CTA Section */
         .cta-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 2rem; text-align: center; }
@@ -99,6 +100,7 @@
                 <li><a href="landscape.html">Landscape</a></li>
                 <li><a href="docs/index.html">📚 Docs</a></li>
                 <li><a href="https://github.com/vanhoutenbos/KubeCompass" target="_blank" rel="noopener">GitHub</a></li>
+                <li><button id="themeToggle" class="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode">☀️</button></li>
             </ul>
         </div>
     </nav>
