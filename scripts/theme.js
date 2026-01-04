@@ -47,11 +47,11 @@
         toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
         toggleBtn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
         
-        // Update button text/icon
+        // Update button text/icon - using textContent for better accessibility
         if (isDark) {
-            toggleBtn.innerHTML = '☀️'; // Sun icon for switching to light
+            toggleBtn.textContent = '☀️'; // Sun icon for switching to light
         } else {
-            toggleBtn.innerHTML = '🌙'; // Moon icon for switching to dark
+            toggleBtn.textContent = '🌙'; // Moon icon for switching to dark
         }
     }
     
@@ -73,10 +73,6 @@
                 e.preventDefault();
                 toggleTheme();
             });
-            
-            // Ensure button is correctly initialized
-            const currentTheme = getStoredTheme();
-            updateToggleButton(currentTheme);
         }
     });
     
