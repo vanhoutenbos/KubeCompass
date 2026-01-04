@@ -233,39 +233,43 @@ Voor ervaren platform engineers:
 
 KubeCompass gebruikt een **Priority 0/1/2** model voor beslissingen:
 
-#### Priority 0: Foundational Requirements
+#### Priority 0: Foundational Day-1 Decisions
 **Wanneer:** Week 1 - Voor je begint  
-**Focus:** WHY en constraints
+**Focus:** Kritieke beslissingen die je vanaf dag 1 moet nemen voordat je live gaat, of keuzes met extreme impact als je dit niet meteen doet
 
+- **GitOps approach**: ArgoCD, Flux (bepaalt je hele deployment workflow)
+- **Telemetry foundation**: OpenTelemetry instrumentatie (moeilijk om later aan alle services toe te voegen)
+- **CNI keuze**: Cilium, Calico (lastig te migreren na productie workloads)
+- **Observability foundation**: Metrics, logging, tracing infrastructuur
+- **Security baseline**: RBAC, network policies, secrets management aanpak
 - Availability requirements en downtime tolerantie
 - Data criticality (RPO/RTO)
-- Security baseline
 - Vendor independence principes
-- Foundational architecture beslissingen
 
 **Document:** [Priority 0 Webshop Case](cases/PRIORITY_0_WEBSHOP_CASE.md) (Nederlands)
 
-#### Priority 1: Tool Selection  
+#### Priority 1: Core Platform Tools  
 **Wanneer:** Week 2-4 - Basic platform  
-**Focus:** WHAT en HOW
+**Focus:** Essentiële tools om je platform te bouwen en te draaien
 
 - Managed Kubernetes selectie
-- CNI, GitOps en CI/CD tools
-- Observability stack
-- Security implementation (RBAC, secrets, network policies)
-- Migration roadmap
+- Ingress controller
+- CI/CD pipeline
+- Container registry
+- Basis monitoring en alerting
+- Security implementation (secrets, RBAC)
 
 **Document:** [Priority 1 Webshop Case](cases/PRIORITY_1_WEBSHOP_CASE.md) (Nederlands)
 
 #### Priority 2: Platform Enhancements
 **Wanneer:** Maand 2+ - Na basis platform draait  
-**Focus:** WHEN to add complexity
+**Focus:** Optionele verbeteringen om toe te voegen wanneer gerechtvaardigd door schaal of specifieke behoeften
 
 - Service mesh
 - Distributed tracing
 - Chaos engineering
-- Policy enforcement
-- Cost visibility
+- Advanced policy enforcement
+- Cost visibility tools
 - Multi-region readiness
 
 **Document:** [Priority 2 Webshop Case](cases/PRIORITY_2_WEBSHOP_CASE.md) (Nederlands)

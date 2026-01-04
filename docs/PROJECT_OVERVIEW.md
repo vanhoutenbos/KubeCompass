@@ -47,9 +47,22 @@ Provide **opinionated, hands-on guidance** for building production-ready Kuberne
 
 Our decision framework is organized in three layers:
 
-#### Priority 0: Foundational Requirements
+#### Priority 0: Foundational Day-1 Decisions
 **When:** Week 1 - Before you start  
-**Focus:** WHY and constraints
+**Focus:** Critical decisions needed from day 1 before going live, or choices with extreme impact if not done immediately
+
+These are decisions that:
+- Must be made before deploying to production
+- Have significant time and cost impact if changed later
+- Form the foundation for all subsequent tooling choices
+- Affect your entire platform architecture
+
+Key examples:
+- **GitOps approach**: ArgoCD, Flux, or manual deployments (affects entire deployment workflow)
+- **Telemetry foundation**: OpenTelemetry instrumentation (hard to add retroactively to all services)
+- **CNI choice**: Cilium, Calico, or other (difficult to migrate after production workloads)
+- **Observability foundation**: Metrics, logging, and tracing infrastructure
+- **Security baseline**: RBAC, network policies, secrets management approach
 
 Key questions:
 - What are your availability requirements?
@@ -60,23 +73,23 @@ Key questions:
 
 **Example:** [Priority 0 Webshop Case](cases/PRIORITY_0_WEBSHOP_CASE.md) (Dutch)
 
-#### Priority 1: Tool Selection
+#### Priority 1: Core Platform Tools
 **When:** Week 2-4 - Building basic platform  
-**Focus:** WHAT and HOW
+**Focus:** Essential tools needed to build and operate your platform
 
 Key areas:
 - Managed Kubernetes selection
-- CNI (Container Network Interface)
-- GitOps tooling
+- Ingress controller
 - CI/CD pipeline
-- Observability stack
-- Security implementation (RBAC, secrets, network policies)
+- Container registry
+- Basic monitoring and alerting
+- Security implementation (secrets, RBAC)
 
 **Example:** [Priority 1 Webshop Case](cases/PRIORITY_1_WEBSHOP_CASE.md) (Dutch)
 
 #### Priority 2: Platform Enhancements
 **When:** Month 2+ - After basic platform runs  
-**Focus:** WHEN to add complexity
+**Focus:** Optional enhancements to add when justified by scale or specific needs
 
 Enhancements to consider:
 - Service mesh
