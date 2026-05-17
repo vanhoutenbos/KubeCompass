@@ -2,12 +2,30 @@
    Comparison Page Styles
    ========================================================================== */
 
+/* Section Background Pattern - Alternating for Visual Rhythm */
+:root {
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.hero-section {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 4rem 0 3rem;
+}
+
+.hero-section h1,
+.hero-section h2,
+.hero-section h3,
+.hero-section p {
+    color: white;
+}
+
 /* Quick Decision Section */
 .quick-decision {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
     color: white;
     padding: 3rem 0;
-    margin-bottom: 4rem;
+    margin-bottom: 0;
 }
 
 .decision-card {
@@ -31,6 +49,8 @@
     opacity: 0.95;
 }
 
+/* Shared grid styling for decision options */
+.decision-grid,
 .decision-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -79,10 +99,15 @@
     font-weight: 600;
 }
 
-/* Tool Cards */
+/* Comparison Section - Tool Cards */
+.comparison-section {
+    padding: 4rem 0;
+    background: white;
+}
+
 .tool-cards {
     padding: 4rem 0;
-    background: #f7fafc;
+    background: white;
 }
 
 .cards-grid {
@@ -93,7 +118,7 @@
 }
 
 .tool-card {
-    background: white;
+    background: #f7fafc;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -188,7 +213,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     padding: 1.5rem 2rem;
-    background: #f7fafc;
+    background: white;
 }
 
 .signal {
@@ -196,7 +221,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: #4a5568;
+    color: #2d3748;
 }
 
 .signal .icon {
@@ -276,9 +301,14 @@
 }
 
 /* Comparison Matrix */
+.matrix-section {
+    padding: 4rem 0;
+    background: #f7fafc;
+}
+
 .comparison-matrix {
     padding: 4rem 0;
-    background: white;
+    background: #f7fafc;
 }
 
 .comparison-matrix h2 {
@@ -353,9 +383,14 @@
 }
 
 /* Decision Wizard */
+.wizard-section {
+    padding: 4rem 0;
+    background: white;
+}
+
 .decision-wizard {
     padding: 4rem 0;
-    background: linear-gradient(to bottom, #f7fafc, white);
+    background: white;
 }
 
 .decision-wizard h2 {
@@ -485,6 +520,11 @@
 }
 
 /* Implementation Preview */
+.implementation-section {
+    padding: 4rem 0;
+    background: #f7fafc;
+}
+
 .implementation-preview {
     padding: 4rem 0;
     background: #f7fafc;
@@ -549,6 +589,12 @@
 }
 
 /* Community Feedback */
+.feedback-section {
+    padding: 3rem 0;
+    background: white;
+    text-align: center;
+}
+
 .community-feedback {
     padding: 3rem 0;
     background: white;
@@ -628,6 +674,11 @@
 }
 
 /* Related Comparisons */
+.related-section {
+    padding: 4rem 0;
+    background: #f7fafc;
+}
+
 .related-comparisons {
     padding: 4rem 0;
     background: #f7fafc;
